@@ -25,7 +25,7 @@ export type MPV<T> = {
 /**
  *  MPVMap is an object where each key is a MPV
  */
-export type MPVMap<T> = { [P in keyof T]: MPV<T> }
+export type MPVMap<T> = { [P in keyof T]: MPV<T[P]> }
 
 /**
  * deepResolve takes a value and resolves all keys recursively to their promise-resolved values. Call this function to transform an object of promises and values to just their values.
