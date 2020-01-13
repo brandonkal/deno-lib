@@ -7,6 +7,9 @@
  * @license MIT
  */
 
+
+
+
 /**
  * MPV or Maybe Promise Value is an object where values can
  * either be a concrete value or a promise of that value.
@@ -18,6 +21,11 @@ export type MPV<T> = {
     ? MPV<T[P]>
     : PromiseLike<T[P]> | T[P];
 };
+
+/**
+ *  MPVMap is an object where each key is a MPV
+ */
+export type MPVMap<T> = { [P in keyof T]: MPV<T> }
 
 /**
  * deepResolve takes a value and resolves all keys recursively to their promise-resolved values. Call this function to transform an object of promises and values to just their values.
