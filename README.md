@@ -3,7 +3,7 @@
 A collection of useful Typescript libraries for Deno.
 Each utility is provided in its own file at the root.
 
-# Included Utilities
+## Included Utilities
 
 - yaml-tag.ts
   - y (yaml text tagged template function)
@@ -11,13 +11,16 @@ Each utility is provided in its own file at the root.
 - dedent.ts
   - dedent (remove common indentation from tagged template)
   - calcIndent (determine common indent from given string)
+- resolve-promise-object.ts
+  - deepResolve (Recursively resolve any promises in an object to form a resulting JSON structure)
+  - type MPV (Maybe Promise Value)
 - unraw.ts
   - unraw (reverse String.raw)
 
-# Contributions Welcome
+## Contributions Welcome
 
 Contributions for focused utilities are welcome.
 
-# License
+## License
 
 © 2020 Brandon Kalinowski. See individual files for license information.
