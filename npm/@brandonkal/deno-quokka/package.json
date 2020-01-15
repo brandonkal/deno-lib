@@ -1,0 +1,21 @@
+{
+  "name": "@brandonkal/deno-quokka",
+  "version": "0.2.0",
+  "author": "Brandon Kalinowski",
+  "description": "A Quokka plugin for running Deno code. Injects Deno global.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "quokka",
+    "deno",
+    "babel"
+  ],
+  "repository": {
+    "directory": "npm/@brandonkal/deno-quokka",
+    "type": "git",
+    "url": "https://github.com/brandonkal/deno-lib.git"
+  },
+  "license": "MIT"
+}

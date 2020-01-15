@@ -1,0 +1,18 @@
+{
+  "name": "babel-plugin-deno",
+  "author": "Brandon Kalinowski",
+  "version": "0.2.0",
+  "description": "A babel plugin to support basic deno programs in node",
+  "main": "index.js",
+  "keywords": [
+    "quokka",
+    "deno",
+    "babel"
+  ],
+  "repository": {
+    "directory": "npm/babel-plugin-deno",
+    "type": "git",
+    "url": "https://github.com/brandonkal/deno-lib.git"
+  },
+  "license": "MIT"
+}
