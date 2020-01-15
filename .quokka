@@ -1,7 +1,0 @@
-{
-  "ts": {
-    "compilerOptions": {
-      "target": "es2015"
-    }
-  }
-}
