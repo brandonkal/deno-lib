@@ -1,3 +1,4 @@
+// Copyright 2020 Brandon Kalinowski.
 // Copyright 2016-2018, Pulumi Corporation.
 // source: pulumi-kubernetes@088bf769c1
 //
@@ -19,7 +20,6 @@ import (
 	"fmt"
 
 	"github.com/cbroglie/mustache"
-	providerVersion "github.com/pulumi/pulumi-kubernetes/pkg/version"
 )
 
 // --------------------------------------------------------------------------
@@ -28,137 +28,46 @@ import (
 
 // --------------------------------------------------------------------------
 
-type GroupTS struct {
-	Versions map[string]*VersionTS
-	Index    string
-}
-
-type VersionTS struct {
-	Kinds map[string]string
-	Index string
-}
-
 // NodeJSClient will generate a Pulumi Kubernetes provider client SDK for nodejs.
-func NodeJSClient(swagger map[string]interface{}, templateDir string,
-) (inputsts, outputsts, indexts, yamlts, packagejson string, groupsts map[string]*GroupTS, err error) {
+func NodeJSClient(
+	swagger map[string]interface{}, templateDir string,
+) (inputsts, groupsts string, err error) {
 	definitions := swagger["definitions"].(map[string]interface{})
 
-	groupsSlice := createGroups(definitions, nodeJSOpts())
-
-	inputsts, err = mustache.RenderFile(fmt.Sprintf("%s/typesInput.ts.mustache", templateDir),
+	groupsSlice := createGroups(definitions, shapesOpts())
+	inputsts, err = mustache.RenderFile(fmt.Sprintf("%s/shapes.ts.mustache", templateDir),
 		map[string]interface{}{
 			"Groups": groupsSlice,
 		})
 	if err != nil {
-		return
+		return "", "", err
 	}
 
-	outputsts, err = mustache.RenderFile(fmt.Sprintf("%s/typesOutput.ts.mustache", templateDir),
-		map[string]interface{}{
-			"Groups": groupsSlice,
-		})
-	if err != nil {
-		return
-	}
-
-	groupsts = make(map[string]*GroupTS)
+	groupsSlice = createGroups(definitions, apiOpts())
+	// filter api by top level
+	filteredApi := make([]*GroupConfig, 0)
 	for _, group := range groupsSlice {
 		if !group.HasTopLevelKinds() {
 			continue
 		}
 
-		groupTS := &GroupTS{}
+		singleGroup := &GroupConfig{group: group.group, hasTopLevelKinds: true}
 		for _, version := range group.Versions() {
 			if !version.HasTopLevelKinds() {
 				continue
 			}
-
-			if groupTS.Versions == nil {
-				groupTS.Versions = make(map[string]*VersionTS)
-			}
-			versionTS := &VersionTS{}
-			for _, kind := range version.TopLevelKinds() {
-				if versionTS.Kinds == nil {
-					versionTS.Kinds = make(map[string]string)
-				}
-				inputMap := map[string]interface{}{
-					"DeprecationComment":      kind.DeprecationComment(),
-					"Comment":                 kind.Comment(),
-					"Group":                   group.Group(),
-					"Kind":                    kind.Kind(),
-					"Properties":              kind.Properties(),
-					"RequiredInputProperties": kind.RequiredInputProperties(),
-					"OptionalInputProperties": kind.OptionalInputProperties(),
-					"AdditionalSecretOutputs": kind.AdditionalSecretOutputs(),
-					"Aliases":                 kind.Aliases(),
-					"URNAPIVersion":           kind.URNAPIVersion(),
-					"Version":                 version.Version(),
-					"PulumiComment":           kind.PulumiComment(),
-				}
-				// Since mustache templates are logic-less, we have to add some extra variables
-				// to selectively disable code generation for empty lists.
-				additionalSecretOutputsPresent := len(kind.AdditionalSecretOutputs()) > 0
-				aliasesPresent := len(kind.Aliases()) > 0
-				inputMap["MergeOptsRequired"] = additionalSecretOutputsPresent || aliasesPresent
-				inputMap["AdditionalSecretOutputsPresent"] = additionalSecretOutputsPresent
-				inputMap["AliasesPresent"] = aliasesPresent
-
-				kindts, err := mustache.RenderFile(fmt.Sprintf("%s/kind.ts.mustache", templateDir), inputMap)
-				if err != nil {
-					return "", "", "", "", "", nil, err
-				}
-				versionTS.Kinds[kind.Kind()] = kindts
-			}
-
-			kindIndexTS, err := mustache.RenderFile(fmt.Sprintf("%s/kindIndex.ts.mustache", templateDir),
-				map[string]interface{}{
-					"Kinds": version.TopLevelKinds(),
-				})
-			if err != nil {
-				return "", "", "", "", "", nil, err
-			}
-			versionTS.Index = kindIndexTS
-			groupTS.Versions[version.Version()] = versionTS
+			singleGroup.versions = append(singleGroup.versions, version)
 		}
-
-		versionIndexTS, err := mustache.RenderFile(fmt.Sprintf("%s/versionIndex.ts.mustache", templateDir),
-			map[string]interface{}{
-				"Versions": group.Versions(),
-			})
-		if err != nil {
-			return "", "", "", "", "", nil, err
-		}
-
-		if group.Group() == "apiextensions" {
-			versionIndexTS += fmt.Sprint(`export * from "./CustomResource"`)
-		}
-		groupTS.Index = versionIndexTS
-		groupsts[group.Group()] = groupTS
+		filteredApi = append(filteredApi, group)
 	}
 
-	packagejson, err = mustache.RenderFile(fmt.Sprintf("%s/package.json.mustache", templateDir),
+	groupsts, err = mustache.RenderFile(fmt.Sprintf("%s/api.ts.mustache", templateDir),
 		map[string]interface{}{
-			"ProviderVersion": providerVersion.Version,
+			"Groups": filteredApi,
 		})
 	if err != nil {
-		return
+		return "", "", err
 	}
 
-	indexts, err = mustache.RenderFile(fmt.Sprintf("%s/providerIndex.ts.mustache", templateDir),
-		map[string]interface{}{
-			"Groups": groupsSlice,
-		})
-	if err != nil {
-		return
-	}
-
-	yamlts, err = mustache.RenderFile(fmt.Sprintf("%s/yaml.ts.mustache", templateDir),
-		map[string]interface{}{
-			"Groups": groupsSlice,
-		})
-	if err != nil {
-		return
-	}
-
-	return inputsts, outputsts, indexts, yamlts, packagejson, groupsts, nil
+	return inputsts, groupsts, nil
 }
