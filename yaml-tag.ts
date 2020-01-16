@@ -24,7 +24,8 @@ export function printYaml(input: any, sortKeys: boolean = true): string {
         "---\n" +
         yaml.stringify(doc, {
           schema: yaml.JSON_SCHEMA,
-          sortKeys
+          sortKeys,
+          skipInvalid: true
         })
     )
     .join("");
