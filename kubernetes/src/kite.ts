@@ -1,4 +1,3 @@
-import { green, red, bold } from "https://deno.land/std/fmt/colors.ts"
 import { printYaml } from "../../yaml-tag.ts"
 
 let output: Resource[] = []
@@ -25,6 +24,9 @@ class Resource {
         }
       })
     }
+    if (containsEmptyArray(desc)) {
+      throw new Error(`Resource ${name} contains an unexpected empty array`)
+    }
     registerResource(name, desc, this)
   }
 }
@@ -42,6 +44,38 @@ function registerResource(name: string, desc: object, instance: Resource) {
   } catch(e) {
     throw new Error(`Unable to resolve resource inputs for ${name}: ${e}`)
   }
+}
+
+/**
+ * Returns true if x is an object, false otherwise.
+ */
+const isObject = (x: any): boolean => x &&
+	typeof x === 'object' &&
+	x.constructor === Object;
+
+/**
+ * deeply searches an object for an empty array. Returns true if found.
+ */
+export function containsEmptyArray(search: any) {
+  const visited = new Set()
+  function deepFind(o: any): boolean {
+    if (visited.has(o)) {
+      return false
+    }
+    if (isObject(o)) {
+      visited.add(o)
+      return Object.values(o).some(deepFind)
+    } else if (Array.isArray(o)) {
+      visited.add(o)
+      if (o.length === 0) {
+        return true
+      }
+      return o.some(deepFind)
+    } else {
+      return false
+    }
+  }
+  return deepFind(search)
 }
 
 /**
