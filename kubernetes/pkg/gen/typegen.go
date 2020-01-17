@@ -466,7 +466,7 @@ func makeType(prop map[string]interface{}, opts groupOpts) string {
 
 //@from upstream
 
-func isTopLevel(d *definition) bool {
+func isDefTopLevel(d *definition) bool {
 	gvks, gvkExists :=
 		d.data["x-kubernetes-group-version-kind"].([]interface{})
 	hasGVK := gvkExists && len(gvks) > 0
@@ -587,7 +587,7 @@ func createGroups(definitionsJSON map[string]interface{}, opts groupOpts) []*Gro
 			// `admissionregistration.k8s.io/v1alpha1` instead of `admissionregistration/v1alpha1`).
 			defaultGroupVersion := d.gvk.Group
 			var fqGroupVersion string
-			isTopLevel := isTopLevel(d)
+			isTopLevel := isDefTopLevel(d)
 			if gvks, gvkExists :=
 				d.data["x-kubernetes-group-version-kind"].([]interface{}); gvkExists && len(gvks) > 0 {
 				gvk := gvks[0].(map[string]interface{})

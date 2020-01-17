@@ -1,6 +1,6 @@
 import { green, red, bold } from "https://deno.land/std/fmt/colors.ts"
 import { deepResolve } from "../../resolve-promise-object.ts"
-import { PromiseObject } from "../../promise-obj.ts"
+import { PromiseObject } from "../../promise-object.ts"
 import { printYaml } from "../../yaml-tag.ts"
 import go from "../../go.ts"
 import { proxymise } from "../../proxymise.ts"

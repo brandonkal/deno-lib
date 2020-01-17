@@ -56,6 +56,14 @@ func NodeJSClient(
 			if !version.HasTopLevelKinds() {
 				continue
 			}
+			filteredKindConfig := make([]*KindConfig, 0)
+			for _, kind := range version.Kinds() {
+				if kind.IsNested() {
+					continue
+				}
+				filteredKindConfig = append(filteredKindConfig, kind)
+			}
+			version.kinds = filteredKindConfig
 			singleGroup.versions = append(singleGroup.versions, version)
 		}
 		filteredApi = append(filteredApi, group)
