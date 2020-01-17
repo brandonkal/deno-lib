@@ -31,11 +31,11 @@ import (
 // NodeJSClient will generate a Pulumi Kubernetes provider client SDK for nodejs.
 func NodeJSClient(
 	swagger map[string]interface{}, templateDir string,
-) (inputsts, groupsts string, err error) {
+) (typests, apits string, err error) {
 	definitions := swagger["definitions"].(map[string]interface{})
 
 	groupsSlice := createGroups(definitions, shapesOpts())
-	inputsts, err = mustache.RenderFile(fmt.Sprintf("%s/shapes.ts.mustache", templateDir),
+	typests, err = mustache.RenderFile(fmt.Sprintf("%s/types.ts.mustache", templateDir),
 		map[string]interface{}{
 			"Groups": groupsSlice,
 		})
@@ -69,7 +69,7 @@ func NodeJSClient(
 		filteredApi = append(filteredApi, group)
 	}
 
-	groupsts, err = mustache.RenderFile(fmt.Sprintf("%s/api.ts.mustache", templateDir),
+	apits, err = mustache.RenderFile(fmt.Sprintf("%s/api.ts.mustache", templateDir),
 		map[string]interface{}{
 			"Groups": filteredApi,
 		})
@@ -77,5 +77,5 @@ func NodeJSClient(
 		return "", "", err
 	}
 
-	return inputsts, groupsts, nil
+	return typests, apits, nil
 }
