@@ -16,7 +16,7 @@ export namespace {{Group}} {
     export class {{Kind}} extends kite.Resource {
       {{#Properties}}
       {{{Comment}}}
-      readonly {{Name}}?: {{{OutputsAPIType}}};
+      readonly {{Name}}{{^Required}}?{{/Required}}: {{{Type}}};
 
       {{/Properties}}
 
@@ -27,14 +27,14 @@ export namespace {{Group}} {
       * @param name The _unique_ name of the resource. Will configure metadata.name by default.
       * @param desc The description to use to populate this object's properties.
       */
-      constructor(name: string, desc?: types.{{Group}}.{{Version}}.{{Kind}}) {
+      constructor(name: string, desc{{DescQuestionMark}}: types.{{Group}}.{{Version}}.{{Kind}}) {
           const props: any = {}
           {{#Properties}}
           props.{{Name}} = {{{DefaultValue}}};
           {{/Properties}}
           Object.assign(props.metadata, { name });
 
-          super(name, props)
+          super(name, props);
       }
     {{/HasMeta}}
     }
@@ -45,3 +45,5 @@ export namespace {{Group}} {
 }
 
 {{/Groups}}
+
+export { types }

@@ -35,7 +35,7 @@ func NodeJSClient(
 ) (typests, apits string, err error) {
 	definitions := swagger["definitions"].(map[string]interface{})
 
-	groupsSlice := createGroups(definitions, typesOpts())
+	groupsSlice := createGroups(definitions)
 	typests, err = mustache.RenderFile(fmt.Sprintf("%s/types.ts.mustache", templateDir),
 		map[string]interface{}{
 			"Groups": groupsSlice,
@@ -46,7 +46,7 @@ func NodeJSClient(
 
 	typests = strings.ReplaceAll(typests, ": types.", ": ")
 
-	groupsSlice = createGroups(definitions, apiOpts())
+	groupsSlice = createGroups(definitions)
 	// filter api by top level
 	filteredApi := make([]*GroupConfig, 0)
 	for _, group := range groupsSlice {

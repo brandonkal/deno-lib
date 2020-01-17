@@ -17,19 +17,19 @@ export namespace admissionregistration {
        * not include any versions known to the API Server, calls to the webhook will fail and be
        * subject to the failure policy.
        */
-      admissionReviewVersions: string[]
+      admissionReviewVersions: string[];
 
       /**
        * ClientConfig defines how to communicate with the hook. Required
        */
-      clientConfig: admissionregistration.v1.WebhookClientConfig
+      clientConfig: admissionregistration.v1.WebhookClientConfig;
 
       /**
        * The name of the admission webhook. Name should be fully qualified, e.g.,
        * imagepolicy.kubernetes.io, where "imagepolicy" is the name of the webhook, and
        * kubernetes.io is the name of the organization. Required.
        */
-      name: string
+      name: string;
 
       /**
        * SideEffects states whether this webhook has side effects. Acceptable values are: None,
@@ -39,39 +39,39 @@ export namespace admissionregistration {
        * Requests with the dryRun attribute will be auto-rejected if they match a webhook with
        * sideEffects == Unknown or Some.
        */
-      sideEffects: string
+      sideEffects: string;
 
       /**
        * FailurePolicy defines how unrecognized errors from the admission endpoint are handled -
        * allowed values are Ignore or Fail. Defaults to Fail.
        */
-      failurePolicy?: string
+      failurePolicy?: string;
 
       /**
        * matchPolicy defines how the "rules" list is used to match incoming requests. Allowed values
        * are "Exact" or "Equivalent".
-       * 
+       *
        * - Exact: match a request only if it exactly matches a specified rule. For example, if
        * deployments can be modified via apps/v1, apps/v1beta1, and extensions/v1beta1, but "rules"
        * only included `apiGroups:["apps"], apiVersions:["v1"], resources: ["deployments"]`, a
        * request to apps/v1beta1 or extensions/v1beta1 would not be sent to the webhook.
-       * 
+       *
        * - Equivalent: match a request if modifies a resource listed in rules, even via another API
        * group or version. For example, if deployments can be modified via apps/v1, apps/v1beta1,
        * and extensions/v1beta1, and "rules" only included `apiGroups:["apps"], apiVersions:["v1"],
        * resources: ["deployments"]`, a request to apps/v1beta1 or extensions/v1beta1 would be
        * converted to apps/v1 and sent to the webhook.
-       * 
+       *
        * Defaults to "Equivalent"
        */
-      matchPolicy?: string
+      matchPolicy?: string;
 
       /**
        * NamespaceSelector decides whether to run the webhook on an object based on whether the
        * namespace for that object matches the selector. If the object itself is a namespace, the
        * matching is performed on object.metadata.labels. If the object is another cluster scoped
        * resource, it never skips the webhook.
-       * 
+       *
        * For example, to run the webhook on any objects whose namespace is not associated with
        * "runlevel" of "0" or "1";  you will set the selector as follows: "namespaceSelector": {
        *   "matchExpressions": [
@@ -85,7 +85,7 @@ export namespace admissionregistration {
        *     }
        *   ]
        * }
-       * 
+       *
        * If instead you want to only run the webhook on any objects whose namespace is associated
        * with the "environment" of "prod" or "staging"; you will set the selector as follows:
        * "namespaceSelector": {
@@ -100,13 +100,13 @@ export namespace admissionregistration {
        *     }
        *   ]
        * }
-       * 
+       *
        * See https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/ for more
        * examples of label selectors.
-       * 
+       *
        * Default to the empty LabelSelector, which matches everything.
        */
-      namespaceSelector?: meta.v1.LabelSelector
+      namespaceSelector?: meta.v1.LabelSelector;
 
       /**
        * ObjectSelector decides whether to run the webhook based on if the object has matching
@@ -118,14 +118,14 @@ export namespace admissionregistration {
        * users may skip the admission webhook by setting the labels. Default to the empty
        * LabelSelector, which matches everything.
        */
-      objectSelector?: meta.v1.LabelSelector
+      objectSelector?: meta.v1.LabelSelector;
 
       /**
        * reinvocationPolicy indicates whether this webhook should be called multiple times as part
        * of a single admission evaluation. Allowed values are "Never" and "IfNeeded".
-       * 
+       *
        * Never: the webhook will not be called more than once in a single admission evaluation.
-       * 
+       *
        * IfNeeded: the webhook will be called at least one additional time as part of the admission
        * evaluation if the object being admitted is modified by other admission plugins after the
        * initial webhook call. Webhooks that specify this option *must* be idempotent, able to
@@ -135,10 +135,10 @@ export namespace admissionregistration {
        * that use this option may be reordered to minimize the number of additional invocations. *
        * to validate an object after all mutations are guaranteed complete, use a validating
        * admission webhook instead.
-       * 
+       *
        * Defaults to "Never".
        */
-      reinvocationPolicy?: string
+      reinvocationPolicy?: string;
 
       /**
        * Rules describes what operations on what resources/subresources the webhook cares about. The
@@ -148,17 +148,15 @@ export namespace admissionregistration {
        * ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks are never called on admission
        * requests for ValidatingWebhookConfiguration and MutatingWebhookConfiguration objects.
        */
-      rules?: admissionregistration.v1.RuleWithOperations[]
+      rules?: admissionregistration.v1.RuleWithOperations[];
 
       /**
        * TimeoutSeconds specifies the timeout for this webhook. After the timeout passes, the
        * webhook call will be ignored or the API call will fail based on the failure policy. The
        * timeout value must be between 1 and 30 seconds. Default to 10 seconds.
        */
-      timeoutSeconds?: number
-
+      timeoutSeconds?: number;
     }
-
 
     /**
      * MutatingWebhookConfiguration describes the configuration of and admission webhook that accept
@@ -171,7 +169,7 @@ export namespace admissionregistration {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "admissionregistration.k8s.io/v1"
+      apiVersion?: "admissionregistration.k8s.io/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -179,23 +177,27 @@ export namespace admissionregistration {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "MutatingWebhookConfiguration"
+      kind?: "MutatingWebhookConfiguration";
 
       /**
        * Standard object metadata; More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata.
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Webhooks is a list of webhooks and the affected resources and operations.
        */
-      webhooks?: admissionregistration.v1.MutatingWebhook[]
-
+      webhooks?: admissionregistration.v1.MutatingWebhook[];
     }
 
-    export function isMutatingWebhookConfiguration(o: any): o is MutatingWebhookConfiguration {
-      return o.apiVersion == "admissionregistration.k8s.io/v1" && o.kind == "MutatingWebhookConfiguration";
+    export function isMutatingWebhookConfiguration(
+      o: any
+    ): o is MutatingWebhookConfiguration {
+      return (
+        o.apiVersion == "admissionregistration.k8s.io/v1" &&
+        o.kind == "MutatingWebhookConfiguration"
+      );
     }
 
     /**
@@ -205,7 +207,7 @@ export namespace admissionregistration {
       /**
        * List of MutatingWebhookConfiguration.
        */
-      items: admissionregistration.v1.MutatingWebhookConfiguration[]
+      items: admissionregistration.v1.MutatingWebhookConfiguration[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -213,7 +215,7 @@ export namespace admissionregistration {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "admissionregistration.k8s.io/v1"
+      apiVersion?: "admissionregistration.k8s.io/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -221,18 +223,22 @@ export namespace admissionregistration {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "MutatingWebhookConfigurationList"
+      kind?: "MutatingWebhookConfigurationList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
-    export function isMutatingWebhookConfigurationList(o: any): o is MutatingWebhookConfigurationList {
-      return o.apiVersion == "admissionregistration.k8s.io/v1" && o.kind == "MutatingWebhookConfigurationList";
+    export function isMutatingWebhookConfigurationList(
+      o: any
+    ): o is MutatingWebhookConfigurationList {
+      return (
+        o.apiVersion == "admissionregistration.k8s.io/v1" &&
+        o.kind == "MutatingWebhookConfigurationList"
+      );
     }
 
     /**
@@ -244,33 +250,33 @@ export namespace admissionregistration {
        * APIGroups is the API groups the resources belong to. '*' is all groups. If '*' is present,
        * the length of the slice must be one. Required.
        */
-      apiGroups?: string[]
+      apiGroups?: string[];
 
       /**
        * APIVersions is the API versions the resources belong to. '*' is all versions. If '*' is
        * present, the length of the slice must be one. Required.
        */
-      apiVersions?: string[]
+      apiVersions?: string[];
 
       /**
        * Operations is the operations the admission hook cares about - CREATE, UPDATE, or * for all
        * operations. If '*' is present, the length of the slice must be one. Required.
        */
-      operations?: string[]
+      operations?: string[];
 
       /**
        * Resources is a list of resources this rule applies to.
-       * 
+       *
        * For example: 'pods' means pods. 'pods/log' means the log subresource of pods. '*' means all
        * resources, but not subresources. 'pods/*' means all subresources of pods. '*&#8205;/scale'
        * means all scale subresources. '*&#8205;/*' means all resources and their subresources.
-       * 
+       *
        * If wildcard is present, the validation rule will ensure resources do not overlap with each
        * other.
-       * 
+       *
        * Depending on the enclosing object, subresources might not be allowed. Required.
        */
-      resources?: string[]
+      resources?: string[];
 
       /**
        * scope specifies the scope of this rule. Valid values are "Cluster", "Namespaced", and "*"
@@ -279,10 +285,8 @@ export namespace admissionregistration {
        * this rule. "*" means that there are no scope restrictions. Subresources match the scope of
        * their parent resource. Default is "*".
        */
-      scope?: string
-
+      scope?: string;
     }
-
 
     /**
      * ServiceReference holds a reference to Service.legacy.k8s.io
@@ -291,26 +295,24 @@ export namespace admissionregistration {
       /**
        * `name` is the name of the service. Required
        */
-      name: string
+      name: string;
 
       /**
        * `namespace` is the namespace of the service. Required
        */
-      namespace: string
+      namespace: string;
 
       /**
        * `path` is an optional URL path which will be sent in any request to this service.
        */
-      path?: string
+      path?: string;
 
       /**
        * If specified, the port on the service that hosting webhook. Default to 443 for backward
        * compatibility. `port` should be a valid port number (1-65535, inclusive).
        */
-      port?: number
-
+      port?: number;
     }
-
 
     /**
      * ValidatingWebhook describes an admission webhook and the resources and operations it applies
@@ -325,19 +327,19 @@ export namespace admissionregistration {
        * not include any versions known to the API Server, calls to the webhook will fail and be
        * subject to the failure policy.
        */
-      admissionReviewVersions: string[]
+      admissionReviewVersions: string[];
 
       /**
        * ClientConfig defines how to communicate with the hook. Required
        */
-      clientConfig: admissionregistration.v1.WebhookClientConfig
+      clientConfig: admissionregistration.v1.WebhookClientConfig;
 
       /**
        * The name of the admission webhook. Name should be fully qualified, e.g.,
        * imagepolicy.kubernetes.io, where "imagepolicy" is the name of the webhook, and
        * kubernetes.io is the name of the organization. Required.
        */
-      name: string
+      name: string;
 
       /**
        * SideEffects states whether this webhook has side effects. Acceptable values are: None,
@@ -347,39 +349,39 @@ export namespace admissionregistration {
        * Requests with the dryRun attribute will be auto-rejected if they match a webhook with
        * sideEffects == Unknown or Some.
        */
-      sideEffects: string
+      sideEffects: string;
 
       /**
        * FailurePolicy defines how unrecognized errors from the admission endpoint are handled -
        * allowed values are Ignore or Fail. Defaults to Fail.
        */
-      failurePolicy?: string
+      failurePolicy?: string;
 
       /**
        * matchPolicy defines how the "rules" list is used to match incoming requests. Allowed values
        * are "Exact" or "Equivalent".
-       * 
+       *
        * - Exact: match a request only if it exactly matches a specified rule. For example, if
        * deployments can be modified via apps/v1, apps/v1beta1, and extensions/v1beta1, but "rules"
        * only included `apiGroups:["apps"], apiVersions:["v1"], resources: ["deployments"]`, a
        * request to apps/v1beta1 or extensions/v1beta1 would not be sent to the webhook.
-       * 
+       *
        * - Equivalent: match a request if modifies a resource listed in rules, even via another API
        * group or version. For example, if deployments can be modified via apps/v1, apps/v1beta1,
        * and extensions/v1beta1, and "rules" only included `apiGroups:["apps"], apiVersions:["v1"],
        * resources: ["deployments"]`, a request to apps/v1beta1 or extensions/v1beta1 would be
        * converted to apps/v1 and sent to the webhook.
-       * 
+       *
        * Defaults to "Equivalent"
        */
-      matchPolicy?: string
+      matchPolicy?: string;
 
       /**
        * NamespaceSelector decides whether to run the webhook on an object based on whether the
        * namespace for that object matches the selector. If the object itself is a namespace, the
        * matching is performed on object.metadata.labels. If the object is another cluster scoped
        * resource, it never skips the webhook.
-       * 
+       *
        * For example, to run the webhook on any objects whose namespace is not associated with
        * "runlevel" of "0" or "1";  you will set the selector as follows: "namespaceSelector": {
        *   "matchExpressions": [
@@ -393,7 +395,7 @@ export namespace admissionregistration {
        *     }
        *   ]
        * }
-       * 
+       *
        * If instead you want to only run the webhook on any objects whose namespace is associated
        * with the "environment" of "prod" or "staging"; you will set the selector as follows:
        * "namespaceSelector": {
@@ -408,13 +410,13 @@ export namespace admissionregistration {
        *     }
        *   ]
        * }
-       * 
+       *
        * See https://kubernetes.io/docs/concepts/overview/working-with-objects/labels for more
        * examples of label selectors.
-       * 
+       *
        * Default to the empty LabelSelector, which matches everything.
        */
-      namespaceSelector?: meta.v1.LabelSelector
+      namespaceSelector?: meta.v1.LabelSelector;
 
       /**
        * ObjectSelector decides whether to run the webhook based on if the object has matching
@@ -426,7 +428,7 @@ export namespace admissionregistration {
        * users may skip the admission webhook by setting the labels. Default to the empty
        * LabelSelector, which matches everything.
        */
-      objectSelector?: meta.v1.LabelSelector
+      objectSelector?: meta.v1.LabelSelector;
 
       /**
        * Rules describes what operations on what resources/subresources the webhook cares about. The
@@ -436,17 +438,15 @@ export namespace admissionregistration {
        * ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks are never called on admission
        * requests for ValidatingWebhookConfiguration and MutatingWebhookConfiguration objects.
        */
-      rules?: admissionregistration.v1.RuleWithOperations[]
+      rules?: admissionregistration.v1.RuleWithOperations[];
 
       /**
        * TimeoutSeconds specifies the timeout for this webhook. After the timeout passes, the
        * webhook call will be ignored or the API call will fail based on the failure policy. The
        * timeout value must be between 1 and 30 seconds. Default to 10 seconds.
        */
-      timeoutSeconds?: number
-
+      timeoutSeconds?: number;
     }
-
 
     /**
      * ValidatingWebhookConfiguration describes the configuration of and admission webhook that
@@ -459,7 +459,7 @@ export namespace admissionregistration {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "admissionregistration.k8s.io/v1"
+      apiVersion?: "admissionregistration.k8s.io/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -467,23 +467,27 @@ export namespace admissionregistration {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ValidatingWebhookConfiguration"
+      kind?: "ValidatingWebhookConfiguration";
 
       /**
        * Standard object metadata; More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata.
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Webhooks is a list of webhooks and the affected resources and operations.
        */
-      webhooks?: admissionregistration.v1.ValidatingWebhook[]
-
+      webhooks?: admissionregistration.v1.ValidatingWebhook[];
     }
 
-    export function isValidatingWebhookConfiguration(o: any): o is ValidatingWebhookConfiguration {
-      return o.apiVersion == "admissionregistration.k8s.io/v1" && o.kind == "ValidatingWebhookConfiguration";
+    export function isValidatingWebhookConfiguration(
+      o: any
+    ): o is ValidatingWebhookConfiguration {
+      return (
+        o.apiVersion == "admissionregistration.k8s.io/v1" &&
+        o.kind == "ValidatingWebhookConfiguration"
+      );
     }
 
     /**
@@ -493,7 +497,7 @@ export namespace admissionregistration {
       /**
        * List of ValidatingWebhookConfiguration.
        */
-      items: admissionregistration.v1.ValidatingWebhookConfiguration[]
+      items: admissionregistration.v1.ValidatingWebhookConfiguration[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -501,7 +505,7 @@ export namespace admissionregistration {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "admissionregistration.k8s.io/v1"
+      apiVersion?: "admissionregistration.k8s.io/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -509,18 +513,22 @@ export namespace admissionregistration {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ValidatingWebhookConfigurationList"
+      kind?: "ValidatingWebhookConfigurationList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
-    export function isValidatingWebhookConfigurationList(o: any): o is ValidatingWebhookConfigurationList {
-      return o.apiVersion == "admissionregistration.k8s.io/v1" && o.kind == "ValidatingWebhookConfigurationList";
+    export function isValidatingWebhookConfigurationList(
+      o: any
+    ): o is ValidatingWebhookConfigurationList {
+      return (
+        o.apiVersion == "admissionregistration.k8s.io/v1" &&
+        o.kind == "ValidatingWebhookConfigurationList"
+      );
     }
 
     /**
@@ -531,45 +539,41 @@ export namespace admissionregistration {
        * `caBundle` is a PEM encoded CA bundle which will be used to validate the webhook's server
        * certificate. If unspecified, system trust roots on the apiserver are used.
        */
-      caBundle?: string
+      caBundle?: string;
 
       /**
        * `service` is a reference to the service for this webhook. Either `service` or `url` must be
        * specified.
-       * 
+       *
        * If the webhook is running within the cluster, then you should use `service`.
        */
-      service?: admissionregistration.v1.ServiceReference
+      service?: admissionregistration.v1.ServiceReference;
 
       /**
        * `url` gives the location of the webhook, in standard URL form (`scheme://host:port/path`).
        * Exactly one of `url` or `service` must be specified.
-       * 
+       *
        * The `host` should not refer to a service running in the cluster; use the `service` field
        * instead. The host might be resolved via external DNS in some apiservers (e.g.,
        * `kube-apiserver` cannot resolve in-cluster DNS as that would be a layering violation).
        * `host` may also be an IP address.
-       * 
+       *
        * Please note that using `localhost` or `127.0.0.1` as a `host` is risky unless you take
        * great care to run this webhook on all hosts which run an apiserver which might need to make
        * calls to this webhook. Such installs are likely to be non-portable, i.e., not easy to turn
        * up in a new cluster.
-       * 
+       *
        * The scheme must be "https"; the URL must begin with "https://".
-       * 
+       *
        * A path is optional, and if present may be any string permissible in a URL. You may use the
        * path to pass an arbitrary string to the webhook, for example, a cluster identifier.
-       * 
+       *
        * Attempting to use a user or basic auth e.g. "user:password@" is not allowed. Fragments
        * ("#...") and query parameters ("?...") are not allowed, either.
        */
-      url?: string
-
+      url?: string;
     }
-
-
   }
-
   export namespace v1beta1 {
     /**
      * MutatingWebhook describes an admission webhook and the resources and operations it applies
@@ -579,14 +583,14 @@ export namespace admissionregistration {
       /**
        * ClientConfig defines how to communicate with the hook. Required
        */
-      clientConfig: admissionregistration.v1beta1.WebhookClientConfig
+      clientConfig: admissionregistration.v1beta1.WebhookClientConfig;
 
       /**
        * The name of the admission webhook. Name should be fully qualified, e.g.,
        * imagepolicy.kubernetes.io, where "imagepolicy" is the name of the webhook, and
        * kubernetes.io is the name of the organization. Required.
        */
-      name: string
+      name: string;
 
       /**
        * AdmissionReviewVersions is an ordered list of preferred `AdmissionReview` versions the
@@ -596,39 +600,39 @@ export namespace admissionregistration {
        * not include any versions known to the API Server, calls to the webhook will fail and be
        * subject to the failure policy. Default to `['v1beta1']`.
        */
-      admissionReviewVersions?: string[]
+      admissionReviewVersions?: string[];
 
       /**
        * FailurePolicy defines how unrecognized errors from the admission endpoint are handled -
        * allowed values are Ignore or Fail. Defaults to Ignore.
        */
-      failurePolicy?: string
+      failurePolicy?: string;
 
       /**
        * matchPolicy defines how the "rules" list is used to match incoming requests. Allowed values
        * are "Exact" or "Equivalent".
-       * 
+       *
        * - Exact: match a request only if it exactly matches a specified rule. For example, if
        * deployments can be modified via apps/v1, apps/v1beta1, and extensions/v1beta1, but "rules"
        * only included `apiGroups:["apps"], apiVersions:["v1"], resources: ["deployments"]`, a
        * request to apps/v1beta1 or extensions/v1beta1 would not be sent to the webhook.
-       * 
+       *
        * - Equivalent: match a request if modifies a resource listed in rules, even via another API
        * group or version. For example, if deployments can be modified via apps/v1, apps/v1beta1,
        * and extensions/v1beta1, and "rules" only included `apiGroups:["apps"], apiVersions:["v1"],
        * resources: ["deployments"]`, a request to apps/v1beta1 or extensions/v1beta1 would be
        * converted to apps/v1 and sent to the webhook.
-       * 
+       *
        * Defaults to "Exact"
        */
-      matchPolicy?: string
+      matchPolicy?: string;
 
       /**
        * NamespaceSelector decides whether to run the webhook on an object based on whether the
        * namespace for that object matches the selector. If the object itself is a namespace, the
        * matching is performed on object.metadata.labels. If the object is another cluster scoped
        * resource, it never skips the webhook.
-       * 
+       *
        * For example, to run the webhook on any objects whose namespace is not associated with
        * "runlevel" of "0" or "1";  you will set the selector as follows: "namespaceSelector": {
        *   "matchExpressions": [
@@ -642,7 +646,7 @@ export namespace admissionregistration {
        *     }
        *   ]
        * }
-       * 
+       *
        * If instead you want to only run the webhook on any objects whose namespace is associated
        * with the "environment" of "prod" or "staging"; you will set the selector as follows:
        * "namespaceSelector": {
@@ -657,13 +661,13 @@ export namespace admissionregistration {
        *     }
        *   ]
        * }
-       * 
+       *
        * See https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/ for more
        * examples of label selectors.
-       * 
+       *
        * Default to the empty LabelSelector, which matches everything.
        */
-      namespaceSelector?: meta.v1.LabelSelector
+      namespaceSelector?: meta.v1.LabelSelector;
 
       /**
        * ObjectSelector decides whether to run the webhook based on if the object has matching
@@ -675,14 +679,14 @@ export namespace admissionregistration {
        * users may skip the admission webhook by setting the labels. Default to the empty
        * LabelSelector, which matches everything.
        */
-      objectSelector?: meta.v1.LabelSelector
+      objectSelector?: meta.v1.LabelSelector;
 
       /**
        * reinvocationPolicy indicates whether this webhook should be called multiple times as part
        * of a single admission evaluation. Allowed values are "Never" and "IfNeeded".
-       * 
+       *
        * Never: the webhook will not be called more than once in a single admission evaluation.
-       * 
+       *
        * IfNeeded: the webhook will be called at least one additional time as part of the admission
        * evaluation if the object being admitted is modified by other admission plugins after the
        * initial webhook call. Webhooks that specify this option *must* be idempotent, able to
@@ -692,10 +696,10 @@ export namespace admissionregistration {
        * that use this option may be reordered to minimize the number of additional invocations. *
        * to validate an object after all mutations are guaranteed complete, use a validating
        * admission webhook instead.
-       * 
+       *
        * Defaults to "Never".
        */
-      reinvocationPolicy?: string
+      reinvocationPolicy?: string;
 
       /**
        * Rules describes what operations on what resources/subresources the webhook cares about. The
@@ -705,7 +709,7 @@ export namespace admissionregistration {
        * ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks are never called on admission
        * requests for ValidatingWebhookConfiguration and MutatingWebhookConfiguration objects.
        */
-      rules?: admissionregistration.v1beta1.RuleWithOperations[]
+      rules?: admissionregistration.v1beta1.RuleWithOperations[];
 
       /**
        * SideEffects states whether this webhook has side effects. Acceptable values are: Unknown,
@@ -715,17 +719,15 @@ export namespace admissionregistration {
        * auto-rejected if they match a webhook with sideEffects == Unknown or Some. Defaults to
        * Unknown.
        */
-      sideEffects?: string
+      sideEffects?: string;
 
       /**
        * TimeoutSeconds specifies the timeout for this webhook. After the timeout passes, the
        * webhook call will be ignored or the API call will fail based on the failure policy. The
        * timeout value must be between 1 and 30 seconds. Default to 30 seconds.
        */
-      timeoutSeconds?: number
-
+      timeoutSeconds?: number;
     }
-
 
     /**
      * MutatingWebhookConfiguration describes the configuration of and admission webhook that accept
@@ -739,7 +741,7 @@ export namespace admissionregistration {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "admissionregistration.k8s.io/v1beta1"
+      apiVersion?: "admissionregistration.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -747,23 +749,27 @@ export namespace admissionregistration {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "MutatingWebhookConfiguration"
+      kind?: "MutatingWebhookConfiguration";
 
       /**
        * Standard object metadata; More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata.
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Webhooks is a list of webhooks and the affected resources and operations.
        */
-      webhooks?: admissionregistration.v1beta1.MutatingWebhook[]
-
+      webhooks?: admissionregistration.v1beta1.MutatingWebhook[];
     }
 
-    export function isMutatingWebhookConfiguration(o: any): o is MutatingWebhookConfiguration {
-      return o.apiVersion == "admissionregistration.k8s.io/v1beta1" && o.kind == "MutatingWebhookConfiguration";
+    export function isMutatingWebhookConfiguration(
+      o: any
+    ): o is MutatingWebhookConfiguration {
+      return (
+        o.apiVersion == "admissionregistration.k8s.io/v1beta1" &&
+        o.kind == "MutatingWebhookConfiguration"
+      );
     }
 
     /**
@@ -773,7 +779,7 @@ export namespace admissionregistration {
       /**
        * List of MutatingWebhookConfiguration.
        */
-      items: admissionregistration.v1beta1.MutatingWebhookConfiguration[]
+      items: admissionregistration.v1beta1.MutatingWebhookConfiguration[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -781,7 +787,7 @@ export namespace admissionregistration {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "admissionregistration.k8s.io/v1beta1"
+      apiVersion?: "admissionregistration.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -789,18 +795,22 @@ export namespace admissionregistration {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "MutatingWebhookConfigurationList"
+      kind?: "MutatingWebhookConfigurationList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
-    export function isMutatingWebhookConfigurationList(o: any): o is MutatingWebhookConfigurationList {
-      return o.apiVersion == "admissionregistration.k8s.io/v1beta1" && o.kind == "MutatingWebhookConfigurationList";
+    export function isMutatingWebhookConfigurationList(
+      o: any
+    ): o is MutatingWebhookConfigurationList {
+      return (
+        o.apiVersion == "admissionregistration.k8s.io/v1beta1" &&
+        o.kind == "MutatingWebhookConfigurationList"
+      );
     }
 
     /**
@@ -812,33 +822,33 @@ export namespace admissionregistration {
        * APIGroups is the API groups the resources belong to. '*' is all groups. If '*' is present,
        * the length of the slice must be one. Required.
        */
-      apiGroups?: string[]
+      apiGroups?: string[];
 
       /**
        * APIVersions is the API versions the resources belong to. '*' is all versions. If '*' is
        * present, the length of the slice must be one. Required.
        */
-      apiVersions?: string[]
+      apiVersions?: string[];
 
       /**
        * Operations is the operations the admission hook cares about - CREATE, UPDATE, or * for all
        * operations. If '*' is present, the length of the slice must be one. Required.
        */
-      operations?: string[]
+      operations?: string[];
 
       /**
        * Resources is a list of resources this rule applies to.
-       * 
+       *
        * For example: 'pods' means pods. 'pods/log' means the log subresource of pods. '*' means all
        * resources, but not subresources. 'pods/*' means all subresources of pods. '*&#8205;/scale'
        * means all scale subresources. '*&#8205;/*' means all resources and their subresources.
-       * 
+       *
        * If wildcard is present, the validation rule will ensure resources do not overlap with each
        * other.
-       * 
+       *
        * Depending on the enclosing object, subresources might not be allowed. Required.
        */
-      resources?: string[]
+      resources?: string[];
 
       /**
        * scope specifies the scope of this rule. Valid values are "Cluster", "Namespaced", and "*"
@@ -847,10 +857,8 @@ export namespace admissionregistration {
        * this rule. "*" means that there are no scope restrictions. Subresources match the scope of
        * their parent resource. Default is "*".
        */
-      scope?: string
-
+      scope?: string;
     }
-
 
     /**
      * ServiceReference holds a reference to Service.legacy.k8s.io
@@ -859,26 +867,24 @@ export namespace admissionregistration {
       /**
        * `name` is the name of the service. Required
        */
-      name: string
+      name: string;
 
       /**
        * `namespace` is the namespace of the service. Required
        */
-      namespace: string
+      namespace: string;
 
       /**
        * `path` is an optional URL path which will be sent in any request to this service.
        */
-      path?: string
+      path?: string;
 
       /**
        * If specified, the port on the service that hosting webhook. Default to 443 for backward
        * compatibility. `port` should be a valid port number (1-65535, inclusive).
        */
-      port?: number
-
+      port?: number;
     }
-
 
     /**
      * ValidatingWebhook describes an admission webhook and the resources and operations it applies
@@ -888,14 +894,14 @@ export namespace admissionregistration {
       /**
        * ClientConfig defines how to communicate with the hook. Required
        */
-      clientConfig: admissionregistration.v1beta1.WebhookClientConfig
+      clientConfig: admissionregistration.v1beta1.WebhookClientConfig;
 
       /**
        * The name of the admission webhook. Name should be fully qualified, e.g.,
        * imagepolicy.kubernetes.io, where "imagepolicy" is the name of the webhook, and
        * kubernetes.io is the name of the organization. Required.
        */
-      name: string
+      name: string;
 
       /**
        * AdmissionReviewVersions is an ordered list of preferred `AdmissionReview` versions the
@@ -905,39 +911,39 @@ export namespace admissionregistration {
        * not include any versions known to the API Server, calls to the webhook will fail and be
        * subject to the failure policy. Default to `['v1beta1']`.
        */
-      admissionReviewVersions?: string[]
+      admissionReviewVersions?: string[];
 
       /**
        * FailurePolicy defines how unrecognized errors from the admission endpoint are handled -
        * allowed values are Ignore or Fail. Defaults to Ignore.
        */
-      failurePolicy?: string
+      failurePolicy?: string;
 
       /**
        * matchPolicy defines how the "rules" list is used to match incoming requests. Allowed values
        * are "Exact" or "Equivalent".
-       * 
+       *
        * - Exact: match a request only if it exactly matches a specified rule. For example, if
        * deployments can be modified via apps/v1, apps/v1beta1, and extensions/v1beta1, but "rules"
        * only included `apiGroups:["apps"], apiVersions:["v1"], resources: ["deployments"]`, a
        * request to apps/v1beta1 or extensions/v1beta1 would not be sent to the webhook.
-       * 
+       *
        * - Equivalent: match a request if modifies a resource listed in rules, even via another API
        * group or version. For example, if deployments can be modified via apps/v1, apps/v1beta1,
        * and extensions/v1beta1, and "rules" only included `apiGroups:["apps"], apiVersions:["v1"],
        * resources: ["deployments"]`, a request to apps/v1beta1 or extensions/v1beta1 would be
        * converted to apps/v1 and sent to the webhook.
-       * 
+       *
        * Defaults to "Exact"
        */
-      matchPolicy?: string
+      matchPolicy?: string;
 
       /**
        * NamespaceSelector decides whether to run the webhook on an object based on whether the
        * namespace for that object matches the selector. If the object itself is a namespace, the
        * matching is performed on object.metadata.labels. If the object is another cluster scoped
        * resource, it never skips the webhook.
-       * 
+       *
        * For example, to run the webhook on any objects whose namespace is not associated with
        * "runlevel" of "0" or "1";  you will set the selector as follows: "namespaceSelector": {
        *   "matchExpressions": [
@@ -951,7 +957,7 @@ export namespace admissionregistration {
        *     }
        *   ]
        * }
-       * 
+       *
        * If instead you want to only run the webhook on any objects whose namespace is associated
        * with the "environment" of "prod" or "staging"; you will set the selector as follows:
        * "namespaceSelector": {
@@ -966,13 +972,13 @@ export namespace admissionregistration {
        *     }
        *   ]
        * }
-       * 
+       *
        * See https://kubernetes.io/docs/concepts/overview/working-with-objects/labels for more
        * examples of label selectors.
-       * 
+       *
        * Default to the empty LabelSelector, which matches everything.
        */
-      namespaceSelector?: meta.v1.LabelSelector
+      namespaceSelector?: meta.v1.LabelSelector;
 
       /**
        * ObjectSelector decides whether to run the webhook based on if the object has matching
@@ -984,7 +990,7 @@ export namespace admissionregistration {
        * users may skip the admission webhook by setting the labels. Default to the empty
        * LabelSelector, which matches everything.
        */
-      objectSelector?: meta.v1.LabelSelector
+      objectSelector?: meta.v1.LabelSelector;
 
       /**
        * Rules describes what operations on what resources/subresources the webhook cares about. The
@@ -994,7 +1000,7 @@ export namespace admissionregistration {
        * ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks are never called on admission
        * requests for ValidatingWebhookConfiguration and MutatingWebhookConfiguration objects.
        */
-      rules?: admissionregistration.v1beta1.RuleWithOperations[]
+      rules?: admissionregistration.v1beta1.RuleWithOperations[];
 
       /**
        * SideEffects states whether this webhook has side effects. Acceptable values are: Unknown,
@@ -1004,17 +1010,15 @@ export namespace admissionregistration {
        * auto-rejected if they match a webhook with sideEffects == Unknown or Some. Defaults to
        * Unknown.
        */
-      sideEffects?: string
+      sideEffects?: string;
 
       /**
        * TimeoutSeconds specifies the timeout for this webhook. After the timeout passes, the
        * webhook call will be ignored or the API call will fail based on the failure policy. The
        * timeout value must be between 1 and 30 seconds. Default to 30 seconds.
        */
-      timeoutSeconds?: number
-
+      timeoutSeconds?: number;
     }
-
 
     /**
      * ValidatingWebhookConfiguration describes the configuration of and admission webhook that
@@ -1028,7 +1032,7 @@ export namespace admissionregistration {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "admissionregistration.k8s.io/v1beta1"
+      apiVersion?: "admissionregistration.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -1036,23 +1040,27 @@ export namespace admissionregistration {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ValidatingWebhookConfiguration"
+      kind?: "ValidatingWebhookConfiguration";
 
       /**
        * Standard object metadata; More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata.
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Webhooks is a list of webhooks and the affected resources and operations.
        */
-      webhooks?: admissionregistration.v1beta1.ValidatingWebhook[]
-
+      webhooks?: admissionregistration.v1beta1.ValidatingWebhook[];
     }
 
-    export function isValidatingWebhookConfiguration(o: any): o is ValidatingWebhookConfiguration {
-      return o.apiVersion == "admissionregistration.k8s.io/v1beta1" && o.kind == "ValidatingWebhookConfiguration";
+    export function isValidatingWebhookConfiguration(
+      o: any
+    ): o is ValidatingWebhookConfiguration {
+      return (
+        o.apiVersion == "admissionregistration.k8s.io/v1beta1" &&
+        o.kind == "ValidatingWebhookConfiguration"
+      );
     }
 
     /**
@@ -1062,7 +1070,7 @@ export namespace admissionregistration {
       /**
        * List of ValidatingWebhookConfiguration.
        */
-      items: admissionregistration.v1beta1.ValidatingWebhookConfiguration[]
+      items: admissionregistration.v1beta1.ValidatingWebhookConfiguration[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -1070,7 +1078,7 @@ export namespace admissionregistration {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "admissionregistration.k8s.io/v1beta1"
+      apiVersion?: "admissionregistration.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -1078,18 +1086,22 @@ export namespace admissionregistration {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ValidatingWebhookConfigurationList"
+      kind?: "ValidatingWebhookConfigurationList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
-    export function isValidatingWebhookConfigurationList(o: any): o is ValidatingWebhookConfigurationList {
-      return o.apiVersion == "admissionregistration.k8s.io/v1beta1" && o.kind == "ValidatingWebhookConfigurationList";
+    export function isValidatingWebhookConfigurationList(
+      o: any
+    ): o is ValidatingWebhookConfigurationList {
+      return (
+        o.apiVersion == "admissionregistration.k8s.io/v1beta1" &&
+        o.kind == "ValidatingWebhookConfigurationList"
+      );
     }
 
     /**
@@ -1100,45 +1112,41 @@ export namespace admissionregistration {
        * `caBundle` is a PEM encoded CA bundle which will be used to validate the webhook's server
        * certificate. If unspecified, system trust roots on the apiserver are used.
        */
-      caBundle?: string
+      caBundle?: string;
 
       /**
        * `service` is a reference to the service for this webhook. Either `service` or `url` must be
        * specified.
-       * 
+       *
        * If the webhook is running within the cluster, then you should use `service`.
        */
-      service?: admissionregistration.v1beta1.ServiceReference
+      service?: admissionregistration.v1beta1.ServiceReference;
 
       /**
        * `url` gives the location of the webhook, in standard URL form (`scheme://host:port/path`).
        * Exactly one of `url` or `service` must be specified.
-       * 
+       *
        * The `host` should not refer to a service running in the cluster; use the `service` field
        * instead. The host might be resolved via external DNS in some apiservers (e.g.,
        * `kube-apiserver` cannot resolve in-cluster DNS as that would be a layering violation).
        * `host` may also be an IP address.
-       * 
+       *
        * Please note that using `localhost` or `127.0.0.1` as a `host` is risky unless you take
        * great care to run this webhook on all hosts which run an apiserver which might need to make
        * calls to this webhook. Such installs are likely to be non-portable, i.e., not easy to turn
        * up in a new cluster.
-       * 
+       *
        * The scheme must be "https"; the URL must begin with "https://".
-       * 
+       *
        * A path is optional, and if present may be any string permissible in a URL. You may use the
        * path to pass an arbitrary string to the webhook, for example, a cluster identifier.
-       * 
+       *
        * Attempting to use a user or basic auth e.g. "user:password@" is not allowed. Fragments
        * ("#...") and query parameters ("?...") are not allowed, either.
        */
-      url?: string
-
+      url?: string;
     }
-
-
   }
-
 }
 
 export namespace apiextensions {
@@ -1151,24 +1159,24 @@ export namespace apiextensions {
        * jsonPath is a simple JSON path (i.e. with array notation) which is evaluated against each
        * custom resource to produce the value for this column.
        */
-      jsonPath: string
+      jsonPath: string;
 
       /**
        * name is a human readable name for the column.
        */
-      name: string
+      name: string;
 
       /**
        * type is an OpenAPI type definition for this column. See
        * https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for
        * details.
        */
-      type: string
+      type: string;
 
       /**
        * description is a human readable description of this column.
        */
-      description?: string
+      description?: string;
 
       /**
        * format is an optional OpenAPI type definition for this column. The 'name' format is applied
@@ -1177,17 +1185,15 @@ export namespace apiextensions {
        * https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for
        * details.
        */
-      format?: string
+      format?: string;
 
       /**
        * priority is an integer defining the relative importance of this column compared to others.
        * Lower numbers are considered higher priority. Columns that may be omitted in limited space
        * scenarios should be given a priority greater than 0.
        */
-      priority?: number
-
+      priority?: number;
     }
-
 
     /**
      * CustomResourceConversion describes how to convert different versions of a CR.
@@ -1201,16 +1207,14 @@ export namespace apiextensions {
        *   is needed for this option. This requires spec.preserveUnknownFields to be false, and
        * spec.conversion.webhook to be set.
        */
-      strategy: string
+      strategy: string;
 
       /**
        * webhook describes how to call the conversion webhook. Required when `strategy` is set to
        * `Webhook`.
        */
-      webhook?: apiextensions.v1.WebhookConversion
-
+      webhook?: apiextensions.v1.WebhookConversion;
     }
-
 
     /**
      * CustomResourceDefinition represents a resource that should be exposed on the API server.  Its
@@ -1220,7 +1224,7 @@ export namespace apiextensions {
       /**
        * spec describes how the user wants the resources to appear
        */
-      spec: apiextensions.v1.CustomResourceDefinitionSpec
+      spec: apiextensions.v1.CustomResourceDefinitionSpec;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -1228,7 +1232,7 @@ export namespace apiextensions {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apiextensions.k8s.io/v1"
+      apiVersion?: "apiextensions.k8s.io/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -1236,15 +1240,18 @@ export namespace apiextensions {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "CustomResourceDefinition"
+      kind?: "CustomResourceDefinition";
 
-      
-      metadata?: meta.v1.ObjectMeta
-
+      metadata?: meta.v1.ObjectMeta;
     }
 
-    export function isCustomResourceDefinition(o: any): o is CustomResourceDefinition {
-      return o.apiVersion == "apiextensions.k8s.io/v1" && o.kind == "CustomResourceDefinition";
+    export function isCustomResourceDefinition(
+      o: any
+    ): o is CustomResourceDefinition {
+      return (
+        o.apiVersion == "apiextensions.k8s.io/v1" &&
+        o.kind == "CustomResourceDefinition"
+      );
     }
 
     /**
@@ -1255,25 +1262,23 @@ export namespace apiextensions {
        * type is the type of the condition. Types include Established, NamesAccepted and
        * Terminating.
        */
-      type: string
+      type: string;
 
       /**
        * lastTransitionTime last time the condition transitioned from one status to another.
        */
-      lastTransitionTime?: string
+      lastTransitionTime?: string;
 
       /**
        * message is a human-readable message indicating details about last transition.
        */
-      message?: string
+      message?: string;
 
       /**
        * reason is a unique, one-word, CamelCase reason for the condition's last transition.
        */
-      reason?: string
-
+      reason?: string;
     }
-
 
     /**
      * CustomResourceDefinitionList is a list of CustomResourceDefinition objects.
@@ -1282,7 +1287,7 @@ export namespace apiextensions {
       /**
        * items list individual CustomResourceDefinition objects
        */
-      items: apiextensions.v1.CustomResourceDefinition[]
+      items: apiextensions.v1.CustomResourceDefinition[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -1290,7 +1295,7 @@ export namespace apiextensions {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apiextensions.k8s.io/v1"
+      apiVersion?: "apiextensions.k8s.io/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -1298,15 +1303,18 @@ export namespace apiextensions {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "CustomResourceDefinitionList"
+      kind?: "CustomResourceDefinitionList";
 
-      
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
-    export function isCustomResourceDefinitionList(o: any): o is CustomResourceDefinitionList {
-      return o.apiVersion == "apiextensions.k8s.io/v1" && o.kind == "CustomResourceDefinitionList";
+    export function isCustomResourceDefinitionList(
+      o: any
+    ): o is CustomResourceDefinitionList {
+      return (
+        o.apiVersion == "apiextensions.k8s.io/v1" &&
+        o.kind == "CustomResourceDefinitionList"
+      );
     }
 
     /**
@@ -1317,41 +1325,39 @@ export namespace apiextensions {
        * kind is the serialized kind of the resource. It is normally CamelCase and singular. Custom
        * resource instances will use this value as the `kind` attribute in API calls.
        */
-      kind: string
+      kind: "CustomResourceDefinitionNames";
 
       /**
        * plural is the plural name of the resource to serve. The custom resources are served under
        * `/apis/<group>/<version>/.../<plural>`. Must match the name of the CustomResourceDefinition
        * (in the form `<names.plural>.<group>`). Must be all lowercase.
        */
-      plural: string
+      plural: string;
 
       /**
        * categories is a list of grouped resources this custom resource belongs to (e.g. 'all').
        * This is published in API discovery documents, and used by clients to support invocations
        * like `kubectl get all`.
        */
-      categories?: string[]
+      categories?: string[];
 
       /**
        * listKind is the serialized kind of the list for this resource. Defaults to "`kind`List".
        */
-      listKind?: string
+      listKind?: string;
 
       /**
        * shortNames are short names for the resource, exposed in API discovery documents, and used
        * by clients to support invocations like `kubectl get <shortname>`. It must be all lowercase.
        */
-      shortNames?: string[]
+      shortNames?: string[];
 
       /**
        * singular is the singular name of the resource. It must be all lowercase. Defaults to
        * lowercased `kind`.
        */
-      singular?: string
-
+      singular?: string;
     }
-
 
     /**
      * CustomResourceDefinitionSpec describes how a user wants their resource to appear
@@ -1362,18 +1368,18 @@ export namespace apiextensions {
        * under `/apis/<group>/...`. Must match the name of the CustomResourceDefinition (in the form
        * `<names.plural>.<group>`).
        */
-      group: string
+      group: string;
 
       /**
        * names specify the resource and kind names for the custom resource.
        */
-      names: apiextensions.v1.CustomResourceDefinitionNames
+      names: apiextensions.v1.CustomResourceDefinitionNames;
 
       /**
        * scope indicates whether the defined custom resource is cluster- or namespace-scoped.
        * Allowed values are `Cluster` and `Namespaced`.
        */
-      scope: string
+      scope: string;
 
       /**
        * versions is the list of all API versions of the defined custom resource. Version names are
@@ -1386,12 +1392,12 @@ export namespace apiextensions {
        * minor version. An example sorted list of versions: v10, v2, v1, v11beta2, v10beta3,
        * v3beta1, v12alpha1, v11alpha2, foo1, foo10.
        */
-      versions: apiextensions.v1.CustomResourceDefinitionVersion[]
+      versions: apiextensions.v1.CustomResourceDefinitionVersion[];
 
       /**
        * conversion defines conversion settings for the CRD.
        */
-      conversion?: apiextensions.v1.CustomResourceConversion
+      conversion?: apiextensions.v1.CustomResourceConversion;
 
       /**
        * preserveUnknownFields indicates that object fields which are not specified in the OpenAPI
@@ -1401,10 +1407,8 @@ export namespace apiextensions {
        * https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/#pruning-versus-preserving-unknown-fields
        * for details.
        */
-      preserveUnknownFields?: boolean
-
+      preserveUnknownFields?: boolean;
     }
-
 
     /**
      * CustomResourceDefinitionVersion describes a version for CRD.
@@ -1414,18 +1418,18 @@ export namespace apiextensions {
        * name is the version name, e.g. “v1”, “v2beta1”, etc. The custom resources are
        * served under this version at `/apis/<group>/<version>/...` if `served` is true.
        */
-      name: string
+      name: string;
 
       /**
        * served is a flag enabling/disabling this version from being served via REST APIs
        */
-      served: boolean
+      served: boolean;
 
       /**
        * storage indicates this version should be used when persisting custom resources to storage.
        * There must be exactly one version with storage=true.
        */
-      storage: boolean
+      storage: boolean;
 
       /**
        * additionalPrinterColumns specifies additional columns returned in Table output. See
@@ -1433,21 +1437,19 @@ export namespace apiextensions {
        * for details. If no columns are specified, a single column displaying the age of the custom
        * resource is used.
        */
-      additionalPrinterColumns?: apiextensions.v1.CustomResourceColumnDefinition[]
+      additionalPrinterColumns?: apiextensions.v1.CustomResourceColumnDefinition[];
 
       /**
        * schema describes the schema used for validation, pruning, and defaulting of this version of
        * the custom resource.
        */
-      schema?: apiextensions.v1.CustomResourceValidation
+      schema?: apiextensions.v1.CustomResourceValidation;
 
       /**
        * subresources specify what subresources this version of the defined custom resource have.
        */
-      subresources?: apiextensions.v1.CustomResourceSubresources
-
+      subresources?: apiextensions.v1.CustomResourceSubresources;
     }
-
 
     /**
      * CustomResourceSubresourceScale defines how to serve the scale subresource for
@@ -1460,7 +1462,7 @@ export namespace apiextensions {
        * JSON Path under `.spec`. If there is no value under the given path in the custom resource,
        * the `/scale` subresource will return an error on GET.
        */
-      specReplicasPath: string
+      specReplicasPath: string;
 
       /**
        * statusReplicasPath defines the JSON path inside of a custom resource that corresponds to
@@ -1468,7 +1470,7 @@ export namespace apiextensions {
        * JSON Path under `.status`. If there is no value under the given path in the custom
        * resource, the `status.replicas` value in the `/scale` subresource will default to 0.
        */
-      statusReplicasPath: string
+      statusReplicasPath: string;
 
       /**
        * labelSelectorPath defines the JSON path inside of a custom resource that corresponds to
@@ -1480,10 +1482,8 @@ export namespace apiextensions {
        * If there is no value under the given path in the custom resource, the `status.selector`
        * value in the `/scale` subresource will default to the empty string.
        */
-      labelSelectorPath?: string
-
+      labelSelectorPath?: string;
     }
-
 
     /**
      * CustomResourceSubresources defines the status and scale subresources for CustomResources.
@@ -1493,10 +1493,8 @@ export namespace apiextensions {
        * scale indicates the custom resource should serve a `/scale` subresource that returns an
        * `autoscaling/v1` Scale object.
        */
-      scale?: apiextensions.v1.CustomResourceSubresourceScale
-
+      scale?: apiextensions.v1.CustomResourceSubresourceScale;
     }
-
 
     /**
      * CustomResourceValidation is a list of validation methods for CustomResources.
@@ -1505,81 +1503,61 @@ export namespace apiextensions {
       /**
        * openAPIV3Schema is the OpenAPI v3 schema to use for validation and pruning.
        */
-      openAPIV3Schema?: apiextensions.v1.JSONSchemaProps
-
+      openAPIV3Schema?: apiextensions.v1.JSONSchemaProps;
     }
-
 
     /**
      * ExternalDocumentation allows referencing an external resource for extended documentation.
      */
     export interface ExternalDocumentation {
-      
-      description?: string
+      description?: string;
 
-      
-      url?: string
-
+      url?: string;
     }
-
 
     /**
      * JSONSchemaProps is a JSON-Schema following Specification Draft 4 (http://json-schema.org/).
      */
     export interface JSONSchemaProps {
-      
-      $ref?: string
+      $ref?: string;
 
-      
-      $schema?: string
+      $schema?: string;
 
-      
-      additionalItems?: apiextensions.v1.JSONSchemaPropsOrBool
+      additionalItems?: apiextensions.v1.JSONSchemaProps | boolean;
 
-      
-      additionalProperties?: apiextensions.v1.JSONSchemaPropsOrBool
+      additionalProperties?: apiextensions.v1.JSONSchemaProps | boolean;
 
-      
-      allOf?: apiextensions.v1.JSONSchemaProps[]
+      allOf?: apiextensions.v1.JSONSchemaProps[];
 
-      
-      anyOf?: apiextensions.v1.JSONSchemaProps[]
+      anyOf?: apiextensions.v1.JSONSchemaProps[];
 
       /**
        * default is a default value for undefined object fields. Defaulting is a beta feature under
        * the CustomResourceDefaulting feature gate. Defaulting requires spec.preserveUnknownFields
        * to be false.
        */
-      default?: apiextensions.v1.JSON
+      default?: any;
 
-      
-      definitions?: object
+      definitions?: object;
 
-      
-      dependencies?: object
+      dependencies?: object;
 
-      
-      description?: string
+      description?: string;
 
-      
-      enum?: apiextensions.v1.JSON[]
+      enum?: any[];
 
-      
-      example?: apiextensions.v1.JSON
+      example?: any;
 
-      
-      exclusiveMaximum?: boolean
+      exclusiveMaximum?: boolean;
 
-      
-      exclusiveMinimum?: boolean
+      exclusiveMinimum?: boolean;
 
-      
-      externalDocs?: apiextensions.v1.ExternalDocumentation
+      externalDocs?: apiextensions.v1.ExternalDocumentation;
 
       /**
        * format is an OpenAPI v3 format string. Unknown formats are ignored. The following formats
        * are validated:
-       * 
+       *
        * - bsonobjectid: a bson object ID, i.e. a 24 characters hex string - uri: an URI as parsed
        * by Golang net/url.ParseRequestURI - email: an email address as parsed by Golang
        * net/mail.ParseAddress - hostname: a valid representation for an Internet host name, as
@@ -1607,70 +1585,49 @@ export namespace apiextensions {
        * compatible with Scala duration format - datetime: a date time string like
        * "2014-12-15T19:30:20.000Z" as defined by date-time in RFC3339.
        */
-      format?: string
+      format?: string;
 
-      
-      id?: string
+      id?: string;
 
-      
-      items?: apiextensions.v1.JSONSchemaPropsOrArray
+      items?: apiextensions.v1.JSONSchemaProps | any[];
 
-      
-      maxItems?: number
+      maxItems?: number;
 
-      
-      maxLength?: number
+      maxLength?: number;
 
-      
-      maxProperties?: number
+      maxProperties?: number;
 
-      
-      maximum?: number
+      maximum?: number;
 
-      
-      minItems?: number
+      minItems?: number;
 
-      
-      minLength?: number
+      minLength?: number;
 
-      
-      minProperties?: number
+      minProperties?: number;
 
-      
-      minimum?: number
+      minimum?: number;
 
-      
-      multipleOf?: number
+      multipleOf?: number;
 
-      
-      not?: apiextensions.v1.JSONSchemaProps
+      not?: apiextensions.v1.JSONSchemaProps;
 
-      
-      nullable?: boolean
+      nullable?: boolean;
 
-      
-      oneOf?: apiextensions.v1.JSONSchemaProps[]
+      oneOf?: apiextensions.v1.JSONSchemaProps[];
 
-      
-      pattern?: string
+      pattern?: string;
 
-      
-      patternProperties?: object
+      patternProperties?: object;
 
-      
-      properties?: object
+      properties?: object;
 
-      
-      required?: string[]
+      required?: string[];
 
-      
-      title?: string
+      title?: string;
 
-      
-      type?: string
+      type?: string;
 
-      
-      uniqueItems?: boolean
+      uniqueItems?: boolean;
 
       /**
        * x-kubernetes-embedded-resource defines that the value is an embedded Kubernetes
@@ -1679,13 +1636,13 @@ export namespace apiextensions {
        * automatically. x-kubernetes-preserve-unknown-fields is allowed to be true, but does not
        * have to be if the object is fully specified (up to kind, apiVersion, metadata).
        */
-      x_kubernetes_embedded_resource?: boolean
+      x_kubernetes_embedded_resource?: boolean;
 
       /**
        * x-kubernetes-int-or-string specifies that this value is either an integer or a string. If
        * this is true, an empty type is allowed and type as child of anyOf is permitted if following
        * one of the following patterns:
-       * 
+       *
        * 1) anyOf:
        *    - type: integer
        *    - type: string
@@ -1695,22 +1652,22 @@ export namespace apiextensions {
        *      - type: string
        *    - ... zero or more
        */
-      x_kubernetes_int_or_string?: boolean
+      x_kubernetes_int_or_string?: boolean;
 
       /**
        * x-kubernetes-list-map-keys annotates an array with the x-kubernetes-list-type `map` by
        * specifying the keys used as the index of the map.
-       * 
+       *
        * This tag MUST only be used on lists that have the "x-kubernetes-list-type" extension set to
        * "map". Also, the values specified for this attribute must be a scalar typed field of the
        * child structure (no nesting is supported).
        */
-      x_kubernetes_list_map_keys?: string[]
+      x_kubernetes_list_map_keys?: string[];
 
       /**
        * x-kubernetes-list-type annotates an array to further describe its topology. This extension
        * must only be used on lists and may have 3 possible values:
-       * 
+       *
        * 1) `atomic`: the list is treated as a single entity, like a scalar.
        *      Atomic lists will be entirely replaced when updated. This extension
        *      may be used on any type of list (struct, scalar, ...).
@@ -1724,12 +1681,12 @@ export namespace apiextensions {
        *      must only be used on a list with elements of type object.
        * Defaults to atomic for arrays.
        */
-      x_kubernetes_list_type?: string
+      x_kubernetes_list_type?: string;
 
       /**
        * x-kubernetes-map-type annotates an object to further describe its topology. This extension
        * must only be used when type is object and may have 2 possible values:
-       * 
+       *
        * 1) `granular`:
        *      These maps are actual maps (key-value pairs) and each fields are independent
        *      from each other (they can each be manipulated by separate actors). This is
@@ -1737,7 +1694,7 @@ export namespace apiextensions {
        * 2) `atomic`: the list is treated as a single entity, like a scalar.
        *      Atomic maps will be entirely replaced when updated.
        */
-      x_kubernetes_map_type?: string
+      x_kubernetes_map_type?: string;
 
       /**
        * x-kubernetes-preserve-unknown-fields stops the API server decoding step from pruning fields
@@ -1745,10 +1702,8 @@ export namespace apiextensions {
        * switches back to normal pruning behaviour if nested properties or additionalProperties are
        * specified in the schema. This can either be true or undefined. False is forbidden.
        */
-      x_kubernetes_preserve_unknown_fields?: boolean
-
+      x_kubernetes_preserve_unknown_fields?: boolean;
     }
-
 
     /**
      * ServiceReference holds a reference to Service.legacy.k8s.io
@@ -1757,26 +1712,24 @@ export namespace apiextensions {
       /**
        * name is the name of the service. Required
        */
-      name: string
+      name: string;
 
       /**
        * namespace is the namespace of the service. Required
        */
-      namespace: string
+      namespace: string;
 
       /**
        * path is an optional URL path at which the webhook will be contacted.
        */
-      path?: string
+      path?: string;
 
       /**
        * port is an optional service port at which the webhook will be contacted. `port` should be a
        * valid port number (1-65535, inclusive). Defaults to 443 for backward compatibility.
        */
-      port?: number
-
+      port?: number;
     }
-
 
     /**
      * WebhookClientConfig contains the information to make a TLS connection with the webhook.
@@ -1786,42 +1739,40 @@ export namespace apiextensions {
        * caBundle is a PEM encoded CA bundle which will be used to validate the webhook's server
        * certificate. If unspecified, system trust roots on the apiserver are used.
        */
-      caBundle?: string
+      caBundle?: string;
 
       /**
        * service is a reference to the service for this webhook. Either service or url must be
        * specified.
-       * 
+       *
        * If the webhook is running within the cluster, then you should use `service`.
        */
-      service?: apiextensions.v1.ServiceReference
+      service?: apiextensions.v1.ServiceReference;
 
       /**
        * url gives the location of the webhook, in standard URL form (`scheme://host:port/path`).
        * Exactly one of `url` or `service` must be specified.
-       * 
+       *
        * The `host` should not refer to a service running in the cluster; use the `service` field
        * instead. The host might be resolved via external DNS in some apiservers (e.g.,
        * `kube-apiserver` cannot resolve in-cluster DNS as that would be a layering violation).
        * `host` may also be an IP address.
-       * 
+       *
        * Please note that using `localhost` or `127.0.0.1` as a `host` is risky unless you take
        * great care to run this webhook on all hosts which run an apiserver which might need to make
        * calls to this webhook. Such installs are likely to be non-portable, i.e., not easy to turn
        * up in a new cluster.
-       * 
+       *
        * The scheme must be "https"; the URL must begin with "https://".
-       * 
+       *
        * A path is optional, and if present may be any string permissible in a URL. You may use the
        * path to pass an arbitrary string to the webhook, for example, a cluster identifier.
-       * 
+       *
        * Attempting to use a user or basic auth e.g. "user:password@" is not allowed. Fragments
        * ("#...") and query parameters ("?...") are not allowed, either.
        */
-      url?: string
-
+      url?: string;
     }
-
 
     /**
      * WebhookConversion describes how to call a conversion webhook
@@ -1835,18 +1786,14 @@ export namespace apiextensions {
        * versions and does not include any versions known to the API Server, calls to the webhook
        * will fail.
        */
-      conversionReviewVersions: string[]
+      conversionReviewVersions: string[];
 
       /**
        * clientConfig is the instructions for how to call the webhook if strategy is `Webhook`.
        */
-      clientConfig?: apiextensions.v1.WebhookClientConfig
-
+      clientConfig?: apiextensions.v1.WebhookClientConfig;
     }
-
-
   }
-
   export namespace v1beta1 {
     /**
      * CustomResourceColumnDefinition specifies a column for server side printing.
@@ -1856,24 +1803,24 @@ export namespace apiextensions {
        * JSONPath is a simple JSON path (i.e. with array notation) which is evaluated against each
        * custom resource to produce the value for this column.
        */
-      JSONPath: string
+      JSONPath: string;
 
       /**
        * name is a human readable name for the column.
        */
-      name: string
+      name: string;
 
       /**
        * type is an OpenAPI type definition for this column. See
        * https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for
        * details.
        */
-      type: string
+      type: string;
 
       /**
        * description is a human readable description of this column.
        */
-      description?: string
+      description?: string;
 
       /**
        * format is an optional OpenAPI type definition for this column. The 'name' format is applied
@@ -1882,17 +1829,15 @@ export namespace apiextensions {
        * https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for
        * details.
        */
-      format?: string
+      format?: string;
 
       /**
        * priority is an integer defining the relative importance of this column compared to others.
        * Lower numbers are considered higher priority. Columns that may be omitted in limited space
        * scenarios should be given a priority greater than 0.
        */
-      priority?: number
-
+      priority?: number;
     }
-
 
     /**
      * CustomResourceConversion describes how to convert different versions of a CR.
@@ -1906,7 +1851,7 @@ export namespace apiextensions {
        *   is needed for this option. This requires spec.preserveUnknownFields to be false, and
        * spec.conversion.webhookClientConfig to be set.
        */
-      strategy: string
+      strategy: string;
 
       /**
        * conversionReviewVersions is an ordered list of preferred `ConversionReview` versions the
@@ -1916,16 +1861,14 @@ export namespace apiextensions {
        * versions and does not include any versions known to the API Server, calls to the webhook
        * will fail. Defaults to `["v1beta1"]`.
        */
-      conversionReviewVersions?: string[]
+      conversionReviewVersions?: string[];
 
       /**
        * webhookClientConfig is the instructions for how to call the webhook if strategy is
        * `Webhook`. Required when `strategy` is set to `Webhook`.
        */
-      webhookClientConfig?: apiextensions.v1beta1.WebhookClientConfig
-
+      webhookClientConfig?: apiextensions.v1beta1.WebhookClientConfig;
     }
-
 
     /**
      * CustomResourceDefinition represents a resource that should be exposed on the API server.  Its
@@ -1936,7 +1879,7 @@ export namespace apiextensions {
       /**
        * spec describes how the user wants the resources to appear
        */
-      spec: apiextensions.v1beta1.CustomResourceDefinitionSpec
+      spec: apiextensions.v1beta1.CustomResourceDefinitionSpec;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -1944,7 +1887,7 @@ export namespace apiextensions {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apiextensions.k8s.io/v1beta1"
+      apiVersion?: "apiextensions.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -1952,15 +1895,18 @@ export namespace apiextensions {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "CustomResourceDefinition"
+      kind?: "CustomResourceDefinition";
 
-      
-      metadata?: meta.v1.ObjectMeta
-
+      metadata?: meta.v1.ObjectMeta;
     }
 
-    export function isCustomResourceDefinition(o: any): o is CustomResourceDefinition {
-      return o.apiVersion == "apiextensions.k8s.io/v1beta1" && o.kind == "CustomResourceDefinition";
+    export function isCustomResourceDefinition(
+      o: any
+    ): o is CustomResourceDefinition {
+      return (
+        o.apiVersion == "apiextensions.k8s.io/v1beta1" &&
+        o.kind == "CustomResourceDefinition"
+      );
     }
 
     /**
@@ -1971,25 +1917,23 @@ export namespace apiextensions {
        * type is the type of the condition. Types include Established, NamesAccepted and
        * Terminating.
        */
-      type: string
+      type: string;
 
       /**
        * lastTransitionTime last time the condition transitioned from one status to another.
        */
-      lastTransitionTime?: string
+      lastTransitionTime?: string;
 
       /**
        * message is a human-readable message indicating details about last transition.
        */
-      message?: string
+      message?: string;
 
       /**
        * reason is a unique, one-word, CamelCase reason for the condition's last transition.
        */
-      reason?: string
-
+      reason?: string;
     }
-
 
     /**
      * CustomResourceDefinitionList is a list of CustomResourceDefinition objects.
@@ -1998,7 +1942,7 @@ export namespace apiextensions {
       /**
        * items list individual CustomResourceDefinition objects
        */
-      items: apiextensions.v1beta1.CustomResourceDefinition[]
+      items: apiextensions.v1beta1.CustomResourceDefinition[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -2006,7 +1950,7 @@ export namespace apiextensions {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apiextensions.k8s.io/v1beta1"
+      apiVersion?: "apiextensions.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -2014,15 +1958,18 @@ export namespace apiextensions {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "CustomResourceDefinitionList"
+      kind?: "CustomResourceDefinitionList";
 
-      
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
-    export function isCustomResourceDefinitionList(o: any): o is CustomResourceDefinitionList {
-      return o.apiVersion == "apiextensions.k8s.io/v1beta1" && o.kind == "CustomResourceDefinitionList";
+    export function isCustomResourceDefinitionList(
+      o: any
+    ): o is CustomResourceDefinitionList {
+      return (
+        o.apiVersion == "apiextensions.k8s.io/v1beta1" &&
+        o.kind == "CustomResourceDefinitionList"
+      );
     }
 
     /**
@@ -2033,41 +1980,39 @@ export namespace apiextensions {
        * kind is the serialized kind of the resource. It is normally CamelCase and singular. Custom
        * resource instances will use this value as the `kind` attribute in API calls.
        */
-      kind: string
+      kind: "CustomResourceDefinitionNames";
 
       /**
        * plural is the plural name of the resource to serve. The custom resources are served under
        * `/apis/<group>/<version>/.../<plural>`. Must match the name of the CustomResourceDefinition
        * (in the form `<names.plural>.<group>`). Must be all lowercase.
        */
-      plural: string
+      plural: string;
 
       /**
        * categories is a list of grouped resources this custom resource belongs to (e.g. 'all').
        * This is published in API discovery documents, and used by clients to support invocations
        * like `kubectl get all`.
        */
-      categories?: string[]
+      categories?: string[];
 
       /**
        * listKind is the serialized kind of the list for this resource. Defaults to "`kind`List".
        */
-      listKind?: string
+      listKind?: string;
 
       /**
        * shortNames are short names for the resource, exposed in API discovery documents, and used
        * by clients to support invocations like `kubectl get <shortname>`. It must be all lowercase.
        */
-      shortNames?: string[]
+      shortNames?: string[];
 
       /**
        * singular is the singular name of the resource. It must be all lowercase. Defaults to
        * lowercased `kind`.
        */
-      singular?: string
-
+      singular?: string;
     }
-
 
     /**
      * CustomResourceDefinitionSpec describes how a user wants their resource to appear
@@ -2078,18 +2023,18 @@ export namespace apiextensions {
        * under `/apis/<group>/...`. Must match the name of the CustomResourceDefinition (in the form
        * `<names.plural>.<group>`).
        */
-      group: string
+      group: string;
 
       /**
        * names specify the resource and kind names for the custom resource.
        */
-      names: apiextensions.v1beta1.CustomResourceDefinitionNames
+      names: apiextensions.v1beta1.CustomResourceDefinitionNames;
 
       /**
        * scope indicates whether the defined custom resource is cluster- or namespace-scoped.
        * Allowed values are `Cluster` and `Namespaced`. Default is `Namespaced`.
        */
-      scope: string
+      scope: string;
 
       /**
        * additionalPrinterColumns specifies additional columns returned in Table output. See
@@ -2098,12 +2043,12 @@ export namespace apiextensions {
        * per-version columns are mutually exclusive. If no top-level or per-version columns are
        * specified, a single column displaying the age of the custom resource is used.
        */
-      additionalPrinterColumns?: apiextensions.v1beta1.CustomResourceColumnDefinition[]
+      additionalPrinterColumns?: apiextensions.v1beta1.CustomResourceColumnDefinition[];
 
       /**
        * conversion defines conversion settings for the CRD.
        */
-      conversion?: apiextensions.v1beta1.CustomResourceConversion
+      conversion?: apiextensions.v1beta1.CustomResourceConversion;
 
       /**
        * preserveUnknownFields indicates that object fields which are not specified in the OpenAPI
@@ -2115,21 +2060,21 @@ export namespace apiextensions {
        * https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/#pruning-versus-preserving-unknown-fields
        * for details.
        */
-      preserveUnknownFields?: boolean
+      preserveUnknownFields?: boolean;
 
       /**
        * subresources specify what subresources the defined custom resource has. If present, this
        * field configures subresources for all versions. Top-level and per-version subresources are
        * mutually exclusive.
        */
-      subresources?: apiextensions.v1beta1.CustomResourceSubresources
+      subresources?: apiextensions.v1beta1.CustomResourceSubresources;
 
       /**
        * validation describes the schema used for validation and pruning of the custom resource. If
        * present, this validation schema is used to validate all versions. Top-level and per-version
        * schemas are mutually exclusive.
        */
-      validation?: apiextensions.v1beta1.CustomResourceValidation
+      validation?: apiextensions.v1beta1.CustomResourceValidation;
 
       /**
        * version is the API version of the defined custom resource. The custom resources are served
@@ -2137,7 +2082,7 @@ export namespace apiextensions {
        * `versions` list if `version` and `versions` are both specified. Optional if `versions` is
        * specified. Deprecated: use `versions` instead.
        */
-      version?: string
+      version?: string;
 
       /**
        * versions is the list of all API versions of the defined custom resource. Optional if
@@ -2152,10 +2097,8 @@ export namespace apiextensions {
        * version. An example sorted list of versions: v10, v2, v1, v11beta2, v10beta3, v3beta1,
        * v12alpha1, v11alpha2, foo1, foo10.
        */
-      versions?: apiextensions.v1beta1.CustomResourceDefinitionVersion[]
-
+      versions?: apiextensions.v1beta1.CustomResourceDefinitionVersion[];
     }
-
 
     /**
      * CustomResourceDefinitionVersion describes a version for CRD.
@@ -2165,18 +2108,18 @@ export namespace apiextensions {
        * name is the version name, e.g. “v1”, “v2beta1”, etc. The custom resources are
        * served under this version at `/apis/<group>/<version>/...` if `served` is true.
        */
-      name: string
+      name: string;
 
       /**
        * served is a flag enabling/disabling this version from being served via REST APIs
        */
-      served: boolean
+      served: boolean;
 
       /**
        * storage indicates this version should be used when persisting custom resources to storage.
        * There must be exactly one version with storage=true.
        */
-      storage: boolean
+      storage: boolean;
 
       /**
        * additionalPrinterColumns specifies additional columns returned in Table output. See
@@ -2186,7 +2129,7 @@ export namespace apiextensions {
        * top-level or per-version columns are specified, a single column displaying the age of the
        * custom resource is used.
        */
-      additionalPrinterColumns?: apiextensions.v1beta1.CustomResourceColumnDefinition[]
+      additionalPrinterColumns?: apiextensions.v1beta1.CustomResourceColumnDefinition[];
 
       /**
        * schema describes the schema used for validation and pruning of this version of the custom
@@ -2194,17 +2137,15 @@ export namespace apiextensions {
        * must not all be set to identical values (top-level validation schema should be used
        * instead).
        */
-      schema?: apiextensions.v1beta1.CustomResourceValidation
+      schema?: apiextensions.v1beta1.CustomResourceValidation;
 
       /**
        * subresources specify what subresources this version of the defined custom resource have.
        * Top-level and per-version subresources are mutually exclusive. Per-version subresources
        * must not all be set to identical values (top-level subresources should be used instead).
        */
-      subresources?: apiextensions.v1beta1.CustomResourceSubresources
-
+      subresources?: apiextensions.v1beta1.CustomResourceSubresources;
     }
-
 
     /**
      * CustomResourceSubresourceScale defines how to serve the scale subresource for
@@ -2217,7 +2158,7 @@ export namespace apiextensions {
        * JSON Path under `.spec`. If there is no value under the given path in the custom resource,
        * the `/scale` subresource will return an error on GET.
        */
-      specReplicasPath: string
+      specReplicasPath: string;
 
       /**
        * statusReplicasPath defines the JSON path inside of a custom resource that corresponds to
@@ -2225,7 +2166,7 @@ export namespace apiextensions {
        * JSON Path under `.status`. If there is no value under the given path in the custom
        * resource, the `status.replicas` value in the `/scale` subresource will default to 0.
        */
-      statusReplicasPath: string
+      statusReplicasPath: string;
 
       /**
        * labelSelectorPath defines the JSON path inside of a custom resource that corresponds to
@@ -2237,10 +2178,8 @@ export namespace apiextensions {
        * If there is no value under the given path in the custom resource, the `status.selector`
        * value in the `/scale` subresource will default to the empty string.
        */
-      labelSelectorPath?: string
-
+      labelSelectorPath?: string;
     }
-
 
     /**
      * CustomResourceSubresources defines the status and scale subresources for CustomResources.
@@ -2250,10 +2189,8 @@ export namespace apiextensions {
        * scale indicates the custom resource should serve a `/scale` subresource that returns an
        * `autoscaling/v1` Scale object.
        */
-      scale?: apiextensions.v1beta1.CustomResourceSubresourceScale
-
+      scale?: apiextensions.v1beta1.CustomResourceSubresourceScale;
     }
-
 
     /**
      * CustomResourceValidation is a list of validation methods for CustomResources.
@@ -2262,81 +2199,61 @@ export namespace apiextensions {
       /**
        * openAPIV3Schema is the OpenAPI v3 schema to use for validation and pruning.
        */
-      openAPIV3Schema?: apiextensions.v1beta1.JSONSchemaProps
-
+      openAPIV3Schema?: apiextensions.v1beta1.JSONSchemaProps;
     }
-
 
     /**
      * ExternalDocumentation allows referencing an external resource for extended documentation.
      */
     export interface ExternalDocumentation {
-      
-      description?: string
+      description?: string;
 
-      
-      url?: string
-
+      url?: string;
     }
-
 
     /**
      * JSONSchemaProps is a JSON-Schema following Specification Draft 4 (http://json-schema.org/).
      */
     export interface JSONSchemaProps {
-      
-      $ref?: string
+      $ref?: string;
 
-      
-      $schema?: string
+      $schema?: string;
 
-      
-      additionalItems?: apiextensions.v1beta1.JSONSchemaProps | boolean
+      additionalItems?: apiextensions.v1beta1.JSONSchemaProps | boolean;
 
-      
-      additionalProperties?: apiextensions.v1beta1.JSONSchemaProps | boolean
+      additionalProperties?: apiextensions.v1beta1.JSONSchemaProps | boolean;
 
-      
-      allOf?: apiextensions.v1beta1.JSONSchemaProps[]
+      allOf?: apiextensions.v1beta1.JSONSchemaProps[];
 
-      
-      anyOf?: apiextensions.v1beta1.JSONSchemaProps[]
+      anyOf?: apiextensions.v1beta1.JSONSchemaProps[];
 
       /**
        * default is a default value for undefined object fields. Defaulting is a beta feature under
        * the CustomResourceDefaulting feature gate. CustomResourceDefinitions with defaults must be
        * created using the v1 (or newer) CustomResourceDefinition API.
        */
-      default?: any
+      default?: any;
 
-      
-      definitions?: object
+      definitions?: object;
 
-      
-      dependencies?: object
+      dependencies?: object;
 
-      
-      description?: string
+      description?: string;
 
-      
-      enum?: any[]
+      enum?: any[];
 
-      
-      example?: any
+      example?: any;
 
-      
-      exclusiveMaximum?: boolean
+      exclusiveMaximum?: boolean;
 
-      
-      exclusiveMinimum?: boolean
+      exclusiveMinimum?: boolean;
 
-      
-      externalDocs?: apiextensions.v1beta1.ExternalDocumentation
+      externalDocs?: apiextensions.v1beta1.ExternalDocumentation;
 
       /**
        * format is an OpenAPI v3 format string. Unknown formats are ignored. The following formats
        * are validated:
-       * 
+       *
        * - bsonobjectid: a bson object ID, i.e. a 24 characters hex string - uri: an URI as parsed
        * by Golang net/url.ParseRequestURI - email: an email address as parsed by Golang
        * net/mail.ParseAddress - hostname: a valid representation for an Internet host name, as
@@ -2364,70 +2281,49 @@ export namespace apiextensions {
        * compatible with Scala duration format - datetime: a date time string like
        * "2014-12-15T19:30:20.000Z" as defined by date-time in RFC3339.
        */
-      format?: string
+      format?: string;
 
-      
-      id?: string
+      id?: string;
 
-      
-      items?: apiextensions.v1beta1.JSONSchemaProps | any[]
+      items?: apiextensions.v1beta1.JSONSchemaProps | any[];
 
-      
-      maxItems?: number
+      maxItems?: number;
 
-      
-      maxLength?: number
+      maxLength?: number;
 
-      
-      maxProperties?: number
+      maxProperties?: number;
 
-      
-      maximum?: number
+      maximum?: number;
 
-      
-      minItems?: number
+      minItems?: number;
 
-      
-      minLength?: number
+      minLength?: number;
 
-      
-      minProperties?: number
+      minProperties?: number;
 
-      
-      minimum?: number
+      minimum?: number;
 
-      
-      multipleOf?: number
+      multipleOf?: number;
 
-      
-      not?: apiextensions.v1beta1.JSONSchemaProps
+      not?: apiextensions.v1beta1.JSONSchemaProps;
 
-      
-      nullable?: boolean
+      nullable?: boolean;
 
-      
-      oneOf?: apiextensions.v1beta1.JSONSchemaProps[]
+      oneOf?: apiextensions.v1beta1.JSONSchemaProps[];
 
-      
-      pattern?: string
+      pattern?: string;
 
-      
-      patternProperties?: object
+      patternProperties?: object;
 
-      
-      properties?: object
+      properties?: object;
 
-      
-      required?: string[]
+      required?: string[];
 
-      
-      title?: string
+      title?: string;
 
-      
-      type?: string
+      type?: string;
 
-      
-      uniqueItems?: boolean
+      uniqueItems?: boolean;
 
       /**
        * x-kubernetes-embedded-resource defines that the value is an embedded Kubernetes
@@ -2436,13 +2332,13 @@ export namespace apiextensions {
        * automatically. x-kubernetes-preserve-unknown-fields is allowed to be true, but does not
        * have to be if the object is fully specified (up to kind, apiVersion, metadata).
        */
-      x_kubernetes_embedded_resource?: boolean
+      x_kubernetes_embedded_resource?: boolean;
 
       /**
        * x-kubernetes-int-or-string specifies that this value is either an integer or a string. If
        * this is true, an empty type is allowed and type as child of anyOf is permitted if following
        * one of the following patterns:
-       * 
+       *
        * 1) anyOf:
        *    - type: integer
        *    - type: string
@@ -2452,22 +2348,22 @@ export namespace apiextensions {
        *      - type: string
        *    - ... zero or more
        */
-      x_kubernetes_int_or_string?: boolean
+      x_kubernetes_int_or_string?: boolean;
 
       /**
        * x-kubernetes-list-map-keys annotates an array with the x-kubernetes-list-type `map` by
        * specifying the keys used as the index of the map.
-       * 
+       *
        * This tag MUST only be used on lists that have the "x-kubernetes-list-type" extension set to
        * "map". Also, the values specified for this attribute must be a scalar typed field of the
        * child structure (no nesting is supported).
        */
-      x_kubernetes_list_map_keys?: string[]
+      x_kubernetes_list_map_keys?: string[];
 
       /**
        * x-kubernetes-list-type annotates an array to further describe its topology. This extension
        * must only be used on lists and may have 3 possible values:
-       * 
+       *
        * 1) `atomic`: the list is treated as a single entity, like a scalar.
        *      Atomic lists will be entirely replaced when updated. This extension
        *      may be used on any type of list (struct, scalar, ...).
@@ -2481,12 +2377,12 @@ export namespace apiextensions {
        *      must only be used on a list with elements of type object.
        * Defaults to atomic for arrays.
        */
-      x_kubernetes_list_type?: string
+      x_kubernetes_list_type?: string;
 
       /**
        * x-kubernetes-map-type annotates an object to further describe its topology. This extension
        * must only be used when type is object and may have 2 possible values:
-       * 
+       *
        * 1) `granular`:
        *      These maps are actual maps (key-value pairs) and each fields are independent
        *      from each other (they can each be manipulated by separate actors). This is
@@ -2494,7 +2390,7 @@ export namespace apiextensions {
        * 2) `atomic`: the list is treated as a single entity, like a scalar.
        *      Atomic maps will be entirely replaced when updated.
        */
-      x_kubernetes_map_type?: string
+      x_kubernetes_map_type?: string;
 
       /**
        * x-kubernetes-preserve-unknown-fields stops the API server decoding step from pruning fields
@@ -2502,10 +2398,8 @@ export namespace apiextensions {
        * switches back to normal pruning behaviour if nested properties or additionalProperties are
        * specified in the schema. This can either be true or undefined. False is forbidden.
        */
-      x_kubernetes_preserve_unknown_fields?: boolean
-
+      x_kubernetes_preserve_unknown_fields?: boolean;
     }
-
 
     /**
      * ServiceReference holds a reference to Service.legacy.k8s.io
@@ -2514,26 +2408,24 @@ export namespace apiextensions {
       /**
        * name is the name of the service. Required
        */
-      name: string
+      name: string;
 
       /**
        * namespace is the namespace of the service. Required
        */
-      namespace: string
+      namespace: string;
 
       /**
        * path is an optional URL path at which the webhook will be contacted.
        */
-      path?: string
+      path?: string;
 
       /**
        * port is an optional service port at which the webhook will be contacted. `port` should be a
        * valid port number (1-65535, inclusive). Defaults to 443 for backward compatibility.
        */
-      port?: number
-
+      port?: number;
     }
-
 
     /**
      * WebhookClientConfig contains the information to make a TLS connection with the webhook.
@@ -2543,45 +2435,41 @@ export namespace apiextensions {
        * caBundle is a PEM encoded CA bundle which will be used to validate the webhook's server
        * certificate. If unspecified, system trust roots on the apiserver are used.
        */
-      caBundle?: string
+      caBundle?: string;
 
       /**
        * service is a reference to the service for this webhook. Either service or url must be
        * specified.
-       * 
+       *
        * If the webhook is running within the cluster, then you should use `service`.
        */
-      service?: apiextensions.v1beta1.ServiceReference
+      service?: apiextensions.v1beta1.ServiceReference;
 
       /**
        * url gives the location of the webhook, in standard URL form (`scheme://host:port/path`).
        * Exactly one of `url` or `service` must be specified.
-       * 
+       *
        * The `host` should not refer to a service running in the cluster; use the `service` field
        * instead. The host might be resolved via external DNS in some apiservers (e.g.,
        * `kube-apiserver` cannot resolve in-cluster DNS as that would be a layering violation).
        * `host` may also be an IP address.
-       * 
+       *
        * Please note that using `localhost` or `127.0.0.1` as a `host` is risky unless you take
        * great care to run this webhook on all hosts which run an apiserver which might need to make
        * calls to this webhook. Such installs are likely to be non-portable, i.e., not easy to turn
        * up in a new cluster.
-       * 
+       *
        * The scheme must be "https"; the URL must begin with "https://".
-       * 
+       *
        * A path is optional, and if present may be any string permissible in a URL. You may use the
        * path to pass an arbitrary string to the webhook, for example, a cluster identifier.
-       * 
+       *
        * Attempting to use a user or basic auth e.g. "user:password@" is not allowed. Fragments
        * ("#...") and query parameters ("?...") are not allowed, either.
        */
-      url?: string
-
+      url?: string;
     }
-
-
   }
-
 }
 
 export namespace apiregistration {
@@ -2596,7 +2484,7 @@ export namespace apiregistration {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apiregistration.k8s.io/v1"
+      apiVersion?: "apiregistration.k8s.io/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -2604,20 +2492,20 @@ export namespace apiregistration {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "APIService"
+      kind?: "APIService";
 
-      
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Spec contains information for locating and communicating with a server
        */
-      spec?: apiregistration.v1.APIServiceSpec
-
+      spec?: apiregistration.v1.APIServiceSpec;
     }
 
     export function isAPIService(o: any): o is APIService {
-      return o.apiVersion == "apiregistration.k8s.io/v1" && o.kind == "APIService";
+      return (
+        o.apiVersion == "apiregistration.k8s.io/v1" && o.kind == "APIService"
+      );
     }
 
     /**
@@ -2627,32 +2515,29 @@ export namespace apiregistration {
       /**
        * Type is the type of the condition.
        */
-      type: string
+      type: string;
 
       /**
        * Last time the condition transitioned from one status to another.
        */
-      lastTransitionTime?: string
+      lastTransitionTime?: string;
 
       /**
        * Human-readable message indicating details about last transition.
        */
-      message?: string
+      message?: string;
 
       /**
        * Unique, one-word, CamelCase reason for the condition's last transition.
        */
-      reason?: string
-
+      reason?: string;
     }
-
 
     /**
      * APIServiceList is a list of APIService objects.
      */
     export interface APIServiceList {
-      
-      items: apiregistration.v1.APIService[]
+      items: apiregistration.v1.APIService[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -2660,7 +2545,7 @@ export namespace apiregistration {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apiregistration.k8s.io/v1"
+      apiVersion?: "apiregistration.k8s.io/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -2668,15 +2553,16 @@ export namespace apiregistration {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "APIServiceList"
+      kind?: "APIServiceList";
 
-      
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isAPIServiceList(o: any): o is APIServiceList {
-      return o.apiVersion == "apiregistration.k8s.io/v1" && o.kind == "APIServiceList";
+      return (
+        o.apiVersion == "apiregistration.k8s.io/v1" &&
+        o.kind == "APIServiceList"
+      );
     }
 
     /**
@@ -2694,14 +2580,14 @@ export namespace apiregistration {
        * like: *.k8s.io (except extensions) at 18000 and PaaSes (OpenShift, Deis) are recommended to
        * be in the 2000s
        */
-      groupPriorityMinimum: number
+      groupPriorityMinimum: number;
 
       /**
        * Service is a reference to the service for this API server.  It must communicate on port 443
        * If the Service is nil, that means the handling for the API groupversion is handled locally
        * on this server. The call will simply delegate to the normal handler chain to be fulfilled.
        */
-      service: apiregistration.v1.ServiceReference
+      service: apiregistration.v1.ServiceReference;
 
       /**
        * VersionPriority controls the ordering of this API version inside of its group.  Must be
@@ -2716,32 +2602,30 @@ export namespace apiregistration {
        * major version, then minor version. An example sorted list of versions: v10, v2, v1,
        * v11beta2, v10beta3, v3beta1, v12alpha1, v11alpha2, foo1, foo10.
        */
-      versionPriority: number
+      versionPriority: number;
 
       /**
        * CABundle is a PEM encoded CA bundle which will be used to validate an API server's serving
        * certificate. If unspecified, system trust roots on the apiserver are used.
        */
-      caBundle?: string
+      caBundle?: string;
 
       /**
        * Group is the API group name this server hosts
        */
-      group?: string
+      group?: string;
 
       /**
        * InsecureSkipTLSVerify disables TLS certificate verification when communicating with this
        * server. This is strongly discouraged.  You should use the CABundle instead.
        */
-      insecureSkipTLSVerify?: boolean
+      insecureSkipTLSVerify?: boolean;
 
       /**
        * Version is the API version this server hosts.  For example, "v1"
        */
-      version?: string
-
+      version?: string;
     }
-
 
     /**
      * ServiceReference holds a reference to Service.legacy.k8s.io
@@ -2750,24 +2634,20 @@ export namespace apiregistration {
       /**
        * Name is the name of the service
        */
-      name?: string
+      name?: string;
 
       /**
        * Namespace is the namespace of the service
        */
-      namespace?: string
+      namespace?: string;
 
       /**
        * If specified, the port on the service that hosting webhook. Default to 443 for backward
        * compatibility. `port` should be a valid port number (1-65535, inclusive).
        */
-      port?: number
-
+      port?: number;
     }
-
-
   }
-
   export namespace v1beta1 {
     /**
      * APIService represents a server for a particular GroupVersion. Name must be "version.group".
@@ -2779,7 +2659,7 @@ export namespace apiregistration {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apiregistration.k8s.io/v1beta1"
+      apiVersion?: "apiregistration.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -2787,20 +2667,21 @@ export namespace apiregistration {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "APIService"
+      kind?: "APIService";
 
-      
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Spec contains information for locating and communicating with a server
        */
-      spec?: apiregistration.v1beta1.APIServiceSpec
-
+      spec?: apiregistration.v1beta1.APIServiceSpec;
     }
 
     export function isAPIService(o: any): o is APIService {
-      return o.apiVersion == "apiregistration.k8s.io/v1beta1" && o.kind == "APIService";
+      return (
+        o.apiVersion == "apiregistration.k8s.io/v1beta1" &&
+        o.kind == "APIService"
+      );
     }
 
     /**
@@ -2810,32 +2691,29 @@ export namespace apiregistration {
       /**
        * Type is the type of the condition.
        */
-      type: string
+      type: string;
 
       /**
        * Last time the condition transitioned from one status to another.
        */
-      lastTransitionTime?: string
+      lastTransitionTime?: string;
 
       /**
        * Human-readable message indicating details about last transition.
        */
-      message?: string
+      message?: string;
 
       /**
        * Unique, one-word, CamelCase reason for the condition's last transition.
        */
-      reason?: string
-
+      reason?: string;
     }
-
 
     /**
      * APIServiceList is a list of APIService objects.
      */
     export interface APIServiceList {
-      
-      items: apiregistration.v1beta1.APIService[]
+      items: apiregistration.v1beta1.APIService[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -2843,7 +2721,7 @@ export namespace apiregistration {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apiregistration.k8s.io/v1beta1"
+      apiVersion?: "apiregistration.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -2851,15 +2729,16 @@ export namespace apiregistration {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "APIServiceList"
+      kind?: "APIServiceList";
 
-      
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isAPIServiceList(o: any): o is APIServiceList {
-      return o.apiVersion == "apiregistration.k8s.io/v1beta1" && o.kind == "APIServiceList";
+      return (
+        o.apiVersion == "apiregistration.k8s.io/v1beta1" &&
+        o.kind == "APIServiceList"
+      );
     }
 
     /**
@@ -2877,14 +2756,14 @@ export namespace apiregistration {
        * like: *.k8s.io (except extensions) at 18000 and PaaSes (OpenShift, Deis) are recommended to
        * be in the 2000s
        */
-      groupPriorityMinimum: number
+      groupPriorityMinimum: number;
 
       /**
        * Service is a reference to the service for this API server.  It must communicate on port 443
        * If the Service is nil, that means the handling for the API groupversion is handled locally
        * on this server. The call will simply delegate to the normal handler chain to be fulfilled.
        */
-      service: apiregistration.v1beta1.ServiceReference
+      service: apiregistration.v1beta1.ServiceReference;
 
       /**
        * VersionPriority controls the ordering of this API version inside of its group.  Must be
@@ -2899,32 +2778,30 @@ export namespace apiregistration {
        * major version, then minor version. An example sorted list of versions: v10, v2, v1,
        * v11beta2, v10beta3, v3beta1, v12alpha1, v11alpha2, foo1, foo10.
        */
-      versionPriority: number
+      versionPriority: number;
 
       /**
        * CABundle is a PEM encoded CA bundle which will be used to validate an API server's serving
        * certificate. If unspecified, system trust roots on the apiserver are used.
        */
-      caBundle?: string
+      caBundle?: string;
 
       /**
        * Group is the API group name this server hosts
        */
-      group?: string
+      group?: string;
 
       /**
        * InsecureSkipTLSVerify disables TLS certificate verification when communicating with this
        * server. This is strongly discouraged.  You should use the CABundle instead.
        */
-      insecureSkipTLSVerify?: boolean
+      insecureSkipTLSVerify?: boolean;
 
       /**
        * Version is the API version this server hosts.  For example, "v1"
        */
-      version?: string
-
+      version?: string;
     }
-
 
     /**
      * ServiceReference holds a reference to Service.legacy.k8s.io
@@ -2933,24 +2810,20 @@ export namespace apiregistration {
       /**
        * Name is the name of the service
        */
-      name?: string
+      name?: string;
 
       /**
        * Namespace is the namespace of the service
        */
-      namespace?: string
+      namespace?: string;
 
       /**
        * If specified, the port on the service that hosting webhook. Default to 443 for backward
        * compatibility. `port` should be a valid port number (1-65535, inclusive).
        */
-      port?: number
-
+      port?: number;
     }
-
-
   }
-
 }
 
 export namespace apps {
@@ -2969,7 +2842,7 @@ export namespace apps {
       /**
        * Revision indicates the revision of the state represented by Data.
        */
-      revision: number
+      revision: number;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -2977,12 +2850,12 @@ export namespace apps {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apps/v1"
+      apiVersion?: "apps/v1";
 
       /**
        * Data is the serialized representation of the state.
        */
-      data?: pkg.runtime.RawExtension
+      data?: object;
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -2990,14 +2863,13 @@ export namespace apps {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ControllerRevision"
+      kind?: "ControllerRevision";
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
-
+      metadata?: meta.v1.ObjectMeta;
     }
 
     export function isControllerRevision(o: any): o is ControllerRevision {
@@ -3011,7 +2883,7 @@ export namespace apps {
       /**
        * Items is the list of ControllerRevisions
        */
-      items: apps.v1.ControllerRevision[]
+      items: apps.v1.ControllerRevision[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -3019,7 +2891,7 @@ export namespace apps {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apps/v1"
+      apiVersion?: "apps/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3027,17 +2899,18 @@ export namespace apps {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ControllerRevisionList"
+      kind?: "ControllerRevisionList";
 
       /**
        * More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
-    export function isControllerRevisionList(o: any): o is ControllerRevisionList {
+    export function isControllerRevisionList(
+      o: any
+    ): o is ControllerRevisionList {
       return o.apiVersion == "apps/v1" && o.kind == "ControllerRevisionList";
     }
 
@@ -3051,7 +2924,7 @@ export namespace apps {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apps/v1"
+      apiVersion?: "apps/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3059,20 +2932,19 @@ export namespace apps {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "DaemonSet"
+      kind?: "DaemonSet";
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * The desired behavior of this daemon set. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
        */
-      spec?: apps.v1.DaemonSetSpec
-
+      spec?: apps.v1.DaemonSetSpec;
     }
 
     export function isDaemonSet(o: any): o is DaemonSet {
@@ -3086,25 +2958,23 @@ export namespace apps {
       /**
        * Type of DaemonSet condition.
        */
-      type: string
+      type: string;
 
       /**
        * Last time the condition transitioned from one status to another.
        */
-      lastTransitionTime?: string
+      lastTransitionTime?: string;
 
       /**
        * A human readable message indicating details about the transition.
        */
-      message?: string
+      message?: string;
 
       /**
        * The reason for the condition's last transition.
        */
-      reason?: string
-
+      reason?: string;
     }
-
 
     /**
      * DaemonSetList is a collection of daemon sets.
@@ -3113,7 +2983,7 @@ export namespace apps {
       /**
        * A list of daemon sets.
        */
-      items: apps.v1.DaemonSet[]
+      items: apps.v1.DaemonSet[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -3121,7 +2991,7 @@ export namespace apps {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apps/v1"
+      apiVersion?: "apps/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3129,14 +2999,13 @@ export namespace apps {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "DaemonSetList"
+      kind?: "DaemonSetList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isDaemonSetList(o: any): o is DaemonSetList {
@@ -3152,7 +3021,7 @@ export namespace apps {
        * controlled. It must match the pod template's labels. More info:
        * https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors
        */
-      selector: meta.v1.LabelSelector
+      selector: meta.v1.LabelSelector;
 
       /**
        * An object that describes the pod that will be created. The DaemonSet will create exactly
@@ -3160,28 +3029,26 @@ export namespace apps {
        * node if no node selector is specified). More info:
        * https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template
        */
-      template: core.v1.PodTemplateSpec
+      template: core.v1.PodTemplateSpec;
 
       /**
        * The minimum number of seconds for which a newly created DaemonSet pod should be ready
        * without any of its container crashing, for it to be considered available. Defaults to 0
        * (pod will be considered available as soon as it is ready).
        */
-      minReadySeconds?: number
+      minReadySeconds?: number;
 
       /**
        * The number of old history to retain to allow rollback. This is a pointer to distinguish
        * between explicit zero and not specified. Defaults to 10.
        */
-      revisionHistoryLimit?: number
+      revisionHistoryLimit?: number;
 
       /**
        * An update strategy to replace existing DaemonSet pods with new pods.
        */
-      updateStrategy?: apps.v1.DaemonSetUpdateStrategy
-
+      updateStrategy?: apps.v1.DaemonSetUpdateStrategy;
     }
-
 
     /**
      * DaemonSetUpdateStrategy is a struct used to control the update strategy for a DaemonSet.
@@ -3190,15 +3057,13 @@ export namespace apps {
       /**
        * Rolling update config params. Present only if type = "RollingUpdate".
        */
-      rollingUpdate?: apps.v1.RollingUpdateDaemonSet
+      rollingUpdate?: apps.v1.RollingUpdateDaemonSet;
 
       /**
        * Type of daemon set update. Can be "RollingUpdate" or "OnDelete". Default is RollingUpdate.
        */
-      type?: string
-
+      type?: string;
     }
-
 
     /**
      * Deployment enables declarative updates for Pods and ReplicaSets.
@@ -3210,7 +3075,7 @@ export namespace apps {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apps/v1"
+      apiVersion?: "apps/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3218,18 +3083,17 @@ export namespace apps {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "Deployment"
+      kind?: "Deployment";
 
       /**
        * Standard object metadata.
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Specification of the desired behavior of the Deployment.
        */
-      spec?: apps.v1.DeploymentSpec
-
+      spec?: apps.v1.DeploymentSpec;
     }
 
     export function isDeployment(o: any): o is Deployment {
@@ -3243,30 +3107,28 @@ export namespace apps {
       /**
        * Type of deployment condition.
        */
-      type: string
+      type: string;
 
       /**
        * Last time the condition transitioned from one status to another.
        */
-      lastTransitionTime?: string
+      lastTransitionTime?: string;
 
       /**
        * The last time this condition was updated.
        */
-      lastUpdateTime?: string
+      lastUpdateTime?: string;
 
       /**
        * A human readable message indicating details about the transition.
        */
-      message?: string
+      message?: string;
 
       /**
        * The reason for the condition's last transition.
        */
-      reason?: string
-
+      reason?: string;
     }
-
 
     /**
      * DeploymentList is a list of Deployments.
@@ -3275,7 +3137,7 @@ export namespace apps {
       /**
        * Items is the list of Deployments.
        */
-      items: apps.v1.Deployment[]
+      items: apps.v1.Deployment[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -3283,7 +3145,7 @@ export namespace apps {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apps/v1"
+      apiVersion?: "apps/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3291,13 +3153,12 @@ export namespace apps {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "DeploymentList"
+      kind?: "DeploymentList";
 
       /**
        * Standard list metadata.
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isDeploymentList(o: any): o is DeploymentList {
@@ -3312,24 +3173,24 @@ export namespace apps {
        * Label selector for pods. Existing ReplicaSets whose pods are selected by this will be the
        * ones affected by this deployment. It must match the pod template's labels.
        */
-      selector: meta.v1.LabelSelector
+      selector: meta.v1.LabelSelector;
 
       /**
        * Template describes the pods that will be created.
        */
-      template: core.v1.PodTemplateSpec
+      template: core.v1.PodTemplateSpec;
 
       /**
        * Minimum number of seconds for which a newly created pod should be ready without any of its
        * container crashing, for it to be considered available. Defaults to 0 (pod will be
        * considered available as soon as it is ready)
        */
-      minReadySeconds?: number
+      minReadySeconds?: number;
 
       /**
        * Indicates that the deployment is paused.
        */
-      paused?: boolean
+      paused?: boolean;
 
       /**
        * The maximum time in seconds for a deployment to make progress before it is considered to be
@@ -3338,27 +3199,25 @@ export namespace apps {
        * Note that progress will not be estimated during the time a deployment is paused. Defaults
        * to 600s.
        */
-      progressDeadlineSeconds?: number
+      progressDeadlineSeconds?: number;
 
       /**
        * Number of desired pods. This is a pointer to distinguish between explicit zero and not
        * specified. Defaults to 1.
        */
-      replicas?: number
+      replicas?: number;
 
       /**
        * The number of old ReplicaSets to retain to allow rollback. This is a pointer to distinguish
        * between explicit zero and not specified. Defaults to 10.
        */
-      revisionHistoryLimit?: number
+      revisionHistoryLimit?: number;
 
       /**
        * The deployment strategy to use to replace existing pods with new ones.
        */
-      strategy?: apps.v1.DeploymentStrategy
-
+      strategy?: apps.v1.DeploymentStrategy;
     }
-
 
     /**
      * DeploymentStrategy describes how to replace existing pods with new ones.
@@ -3367,15 +3226,13 @@ export namespace apps {
       /**
        * Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate.
        */
-      rollingUpdate?: apps.v1.RollingUpdateDeployment
+      rollingUpdate?: apps.v1.RollingUpdateDeployment;
 
       /**
        * Type of deployment. Can be "Recreate" or "RollingUpdate". Default is RollingUpdate.
        */
-      type?: string
-
+      type?: string;
     }
-
 
     /**
      * ReplicaSet ensures that a specified number of pod replicas are running at any given time.
@@ -3387,7 +3244,7 @@ export namespace apps {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apps/v1"
+      apiVersion?: "apps/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3395,21 +3252,20 @@ export namespace apps {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ReplicaSet"
+      kind?: "ReplicaSet";
 
       /**
        * If the Labels of a ReplicaSet are empty, they are defaulted to be the same as the Pod(s)
        * that the ReplicaSet manages. Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Spec defines the specification of the desired behavior of the ReplicaSet. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
        */
-      spec?: apps.v1.ReplicaSetSpec
-
+      spec?: apps.v1.ReplicaSetSpec;
     }
 
     export function isReplicaSet(o: any): o is ReplicaSet {
@@ -3423,25 +3279,23 @@ export namespace apps {
       /**
        * Type of replica set condition.
        */
-      type: string
+      type: string;
 
       /**
        * The last time the condition transitioned from one status to another.
        */
-      lastTransitionTime?: string
+      lastTransitionTime?: string;
 
       /**
        * A human readable message indicating details about the transition.
        */
-      message?: string
+      message?: string;
 
       /**
        * The reason for the condition's last transition.
        */
-      reason?: string
-
+      reason?: string;
     }
-
 
     /**
      * ReplicaSetList is a collection of ReplicaSets.
@@ -3451,7 +3305,7 @@ export namespace apps {
        * List of ReplicaSets. More info:
        * https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller
        */
-      items: apps.v1.ReplicaSet[]
+      items: apps.v1.ReplicaSet[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -3459,7 +3313,7 @@ export namespace apps {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apps/v1"
+      apiVersion?: "apps/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3467,14 +3321,13 @@ export namespace apps {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ReplicaSetList"
+      kind?: "ReplicaSetList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isReplicaSetList(o: any): o is ReplicaSetList {
@@ -3491,31 +3344,29 @@ export namespace apps {
        * template's labels. More info:
        * https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors
        */
-      selector: meta.v1.LabelSelector
+      selector: meta.v1.LabelSelector;
 
       /**
        * Minimum number of seconds for which a newly created pod should be ready without any of its
        * container crashing, for it to be considered available. Defaults to 0 (pod will be
        * considered available as soon as it is ready)
        */
-      minReadySeconds?: number
+      minReadySeconds?: number;
 
       /**
        * Replicas is the number of desired replicas. This is a pointer to distinguish between
        * explicit zero and unspecified. Defaults to 1. More info:
        * https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/#what-is-a-replicationcontroller
        */
-      replicas?: number
+      replicas?: number;
 
       /**
        * Template is the object that describes the pod that will be created if insufficient replicas
        * are detected. More info:
        * https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template
        */
-      template?: core.v1.PodTemplateSpec
-
+      template?: core.v1.PodTemplateSpec;
     }
-
 
     /**
      * Spec to control the desired behavior of daemon set rolling update.
@@ -3533,10 +3384,8 @@ export namespace apps {
        * DaemonSet pods, thus ensuring that at least 70% of original number of DaemonSet pods are
        * available at all times during the update.
        */
-      maxUnavailable?: number | string
-
+      maxUnavailable?: number | string;
     }
-
 
     /**
      * Spec to control the desired behavior of rolling update.
@@ -3552,7 +3401,7 @@ export namespace apps {
        * scaled up further, ensuring that total number of pods running at any time during the update
        * is at most 130% of desired pods.
        */
-      maxSurge?: number | string
+      maxSurge?: number | string;
 
       /**
        * The maximum number of pods that can be unavailable during the update. Value can be an
@@ -3564,10 +3413,8 @@ export namespace apps {
        * that the total number of pods available at all times during the update is at least 70% of
        * desired pods.
        */
-      maxUnavailable?: number | string
-
+      maxUnavailable?: number | string;
     }
-
 
     /**
      * RollingUpdateStatefulSetStrategy is used to communicate parameter for
@@ -3578,10 +3425,8 @@ export namespace apps {
        * Partition indicates the ordinal at which the StatefulSet should be partitioned. Default
        * value is 0.
        */
-      partition?: number
-
+      partition?: number;
     }
-
 
     /**
      * StatefulSet represents a set of pods with consistent identities. Identities are defined as:
@@ -3597,7 +3442,7 @@ export namespace apps {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apps/v1"
+      apiVersion?: "apps/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3605,16 +3450,14 @@ export namespace apps {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "StatefulSet"
+      kind?: "StatefulSet";
 
-      
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Spec defines the desired identities of pods in this set.
        */
-      spec?: apps.v1.StatefulSetSpec
-
+      spec?: apps.v1.StatefulSetSpec;
     }
 
     export function isStatefulSet(o: any): o is StatefulSet {
@@ -3628,32 +3471,29 @@ export namespace apps {
       /**
        * Type of statefulset condition.
        */
-      type: string
+      type: string;
 
       /**
        * Last time the condition transitioned from one status to another.
        */
-      lastTransitionTime?: string
+      lastTransitionTime?: string;
 
       /**
        * A human readable message indicating details about the transition.
        */
-      message?: string
+      message?: string;
 
       /**
        * The reason for the condition's last transition.
        */
-      reason?: string
-
+      reason?: string;
     }
-
 
     /**
      * StatefulSetList is a collection of StatefulSets.
      */
     export interface StatefulSetList {
-      
-      items: apps.v1.StatefulSet[]
+      items: apps.v1.StatefulSet[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -3661,7 +3501,7 @@ export namespace apps {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apps/v1"
+      apiVersion?: "apps/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3669,11 +3509,9 @@ export namespace apps {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "StatefulSetList"
+      kind?: "StatefulSetList";
 
-      
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isStatefulSetList(o: any): o is StatefulSetList {
@@ -3689,7 +3527,7 @@ export namespace apps {
        * pod template's labels. More info:
        * https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors
        */
-      selector: meta.v1.LabelSelector
+      selector: meta.v1.LabelSelector;
 
       /**
        * serviceName is the name of the service that governs this StatefulSet. This service must
@@ -3698,14 +3536,14 @@ export namespace apps {
        * pod-specific-string.serviceName.default.svc.cluster.local where "pod-specific-string" is
        * managed by the StatefulSet controller.
        */
-      serviceName: string
+      serviceName: string;
 
       /**
        * template is the object that describes the pod that will be created if insufficient replicas
        * are detected. Each pod stamped out by the StatefulSet will fulfill this Template, but have
        * a unique identity from the rest of the StatefulSet.
        */
-      template: core.v1.PodTemplateSpec
+      template: core.v1.PodTemplateSpec;
 
       /**
        * podManagementPolicy controls how pods are created during initial scale up, when replacing
@@ -3715,27 +3553,27 @@ export namespace apps {
        * opposite order. The alternative policy is `Parallel` which will create pods in parallel to
        * match the desired scale without waiting, and on scale down will delete all pods at once.
        */
-      podManagementPolicy?: string
+      podManagementPolicy?: string;
 
       /**
        * replicas is the desired number of replicas of the given Template. These are replicas in the
        * sense that they are instantiations of the same Template, but individual replicas also have
        * a consistent identity. If unspecified, defaults to 1.
        */
-      replicas?: number
+      replicas?: number;
 
       /**
        * revisionHistoryLimit is the maximum number of revisions that will be maintained in the
        * StatefulSet's revision history. The revision history consists of all revisions not
        * represented by a currently applied StatefulSetSpec version. The default value is 10.
        */
-      revisionHistoryLimit?: number
+      revisionHistoryLimit?: number;
 
       /**
        * updateStrategy indicates the StatefulSetUpdateStrategy that will be employed to update Pods
        * in the StatefulSet when a revision is made to Template.
        */
-      updateStrategy?: apps.v1.StatefulSetUpdateStrategy
+      updateStrategy?: apps.v1.StatefulSetUpdateStrategy;
 
       /**
        * volumeClaimTemplates is a list of claims that pods are allowed to reference. The
@@ -3744,10 +3582,8 @@ export namespace apps {
        * matching (by name) volumeMount in one container in the template. A claim in this list takes
        * precedence over any volumes in the template, with the same name.
        */
-      volumeClaimTemplates?: core.v1.PersistentVolumeClaim[]
-
+      volumeClaimTemplates?: core.v1.PersistentVolumeClaim[];
     }
-
 
     /**
      * StatefulSetUpdateStrategy indicates the strategy that the StatefulSet controller will use to
@@ -3759,18 +3595,14 @@ export namespace apps {
        * RollingUpdate is used to communicate parameters when Type is
        * RollingUpdateStatefulSetStrategyType.
        */
-      rollingUpdate?: apps.v1.RollingUpdateStatefulSetStrategy
+      rollingUpdate?: apps.v1.RollingUpdateStatefulSetStrategy;
 
       /**
        * Type indicates the type of the StatefulSetUpdateStrategy. Default is RollingUpdate.
        */
-      type?: string
-
+      type?: string;
     }
-
-
   }
-
   export namespace v1beta1 {
     /**
      * ControllerRevision implements an immutable snapshot of state data. Clients are responsible
@@ -3781,7 +3613,7 @@ export namespace apps {
      * controllers for update and rollback, this object is beta. However, it may be subject to name
      * and representation changes in future releases, and clients should not depend on its
      * stability. It is primarily for internal use by controllers.
-     * 
+     *
      * @deprecated apps/v1beta1/ControllerRevision is deprecated by apps/v1/ControllerRevision and
      * not supported by Kubernetes v1.16+ clusters.
      */
@@ -3789,7 +3621,7 @@ export namespace apps {
       /**
        * Revision indicates the revision of the state represented by Data.
        */
-      revision: number
+      revision: number;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -3797,12 +3629,12 @@ export namespace apps {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apps/v1beta1"
+      apiVersion?: "apps/v1beta1";
 
       /**
        * Data is the serialized representation of the state.
        */
-      data?: pkg.runtime.RawExtension
+      data?: object;
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3810,14 +3642,13 @@ export namespace apps {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ControllerRevision"
+      kind?: "ControllerRevision";
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
-
+      metadata?: meta.v1.ObjectMeta;
     }
 
     export function isControllerRevision(o: any): o is ControllerRevision {
@@ -3831,7 +3662,7 @@ export namespace apps {
       /**
        * Items is the list of ControllerRevisions
        */
-      items: apps.v1beta1.ControllerRevision[]
+      items: apps.v1beta1.ControllerRevision[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -3839,7 +3670,7 @@ export namespace apps {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apps/v1beta1"
+      apiVersion?: "apps/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3847,23 +3678,26 @@ export namespace apps {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ControllerRevisionList"
+      kind?: "ControllerRevisionList";
 
       /**
        * More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
-    export function isControllerRevisionList(o: any): o is ControllerRevisionList {
-      return o.apiVersion == "apps/v1beta1" && o.kind == "ControllerRevisionList";
+    export function isControllerRevisionList(
+      o: any
+    ): o is ControllerRevisionList {
+      return (
+        o.apiVersion == "apps/v1beta1" && o.kind == "ControllerRevisionList"
+      );
     }
 
     /**
      * Deployment enables declarative updates for Pods and ReplicaSets.
-     * 
+     *
      * @deprecated apps/v1beta1/Deployment is deprecated by apps/v1/Deployment and not supported by
      * Kubernetes v1.16+ clusters.
      */
@@ -3874,7 +3708,7 @@ export namespace apps {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apps/v1beta1"
+      apiVersion?: "apps/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3882,18 +3716,17 @@ export namespace apps {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "Deployment"
+      kind?: "Deployment";
 
       /**
        * Standard object metadata.
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Specification of the desired behavior of the Deployment.
        */
-      spec?: apps.v1beta1.DeploymentSpec
-
+      spec?: apps.v1beta1.DeploymentSpec;
     }
 
     export function isDeployment(o: any): o is Deployment {
@@ -3907,30 +3740,28 @@ export namespace apps {
       /**
        * Type of deployment condition.
        */
-      type: string
+      type: string;
 
       /**
        * Last time the condition transitioned from one status to another.
        */
-      lastTransitionTime?: string
+      lastTransitionTime?: string;
 
       /**
        * The last time this condition was updated.
        */
-      lastUpdateTime?: string
+      lastUpdateTime?: string;
 
       /**
        * A human readable message indicating details about the transition.
        */
-      message?: string
+      message?: string;
 
       /**
        * The reason for the condition's last transition.
        */
-      reason?: string
-
+      reason?: string;
     }
-
 
     /**
      * DeploymentList is a list of Deployments.
@@ -3939,7 +3770,7 @@ export namespace apps {
       /**
        * Items is the list of Deployments.
        */
-      items: apps.v1beta1.Deployment[]
+      items: apps.v1beta1.Deployment[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -3947,7 +3778,7 @@ export namespace apps {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apps/v1beta1"
+      apiVersion?: "apps/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3955,13 +3786,12 @@ export namespace apps {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "DeploymentList"
+      kind?: "DeploymentList";
 
       /**
        * Standard list metadata.
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isDeploymentList(o: any): o is DeploymentList {
@@ -3975,12 +3805,12 @@ export namespace apps {
       /**
        * Required: This must match the Name of a deployment.
        */
-      name: string
+      name: string;
 
       /**
        * The config of this deployment rollback.
        */
-      rollbackTo: apps.v1beta1.RollbackConfig
+      rollbackTo: apps.v1beta1.RollbackConfig;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -3988,7 +3818,7 @@ export namespace apps {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: string
+      apiVersion?: "apps/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3996,13 +3826,12 @@ export namespace apps {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: string
+      kind?: "DeploymentRollback";
 
       /**
        * The annotations to be updated to a deployment
        */
-      updatedAnnotations?: {[key: string]: string}
-
+      updatedAnnotations?: { [key: string]: string };
     }
 
     export function isDeploymentRollback(o: any): o is DeploymentRollback {
@@ -4016,19 +3845,19 @@ export namespace apps {
       /**
        * Template describes the pods that will be created.
        */
-      template: core.v1.PodTemplateSpec
+      template: core.v1.PodTemplateSpec;
 
       /**
        * Minimum number of seconds for which a newly created pod should be ready without any of its
        * container crashing, for it to be considered available. Defaults to 0 (pod will be
        * considered available as soon as it is ready)
        */
-      minReadySeconds?: number
+      minReadySeconds?: number;
 
       /**
        * Indicates that the deployment is paused.
        */
-      paused?: boolean
+      paused?: boolean;
 
       /**
        * The maximum time in seconds for a deployment to make progress before it is considered to be
@@ -4037,39 +3866,37 @@ export namespace apps {
        * Note that progress will not be estimated during the time a deployment is paused. Defaults
        * to 600s.
        */
-      progressDeadlineSeconds?: number
+      progressDeadlineSeconds?: number;
 
       /**
        * Number of desired pods. This is a pointer to distinguish between explicit zero and not
        * specified. Defaults to 1.
        */
-      replicas?: number
+      replicas?: number;
 
       /**
        * The number of old ReplicaSets to retain to allow rollback. This is a pointer to distinguish
        * between explicit zero and not specified. Defaults to 2.
        */
-      revisionHistoryLimit?: number
+      revisionHistoryLimit?: number;
 
       /**
        * DEPRECATED. The config this deployment is rolling back to. Will be cleared after rollback
        * is done.
        */
-      rollbackTo?: apps.v1beta1.RollbackConfig
+      rollbackTo?: apps.v1beta1.RollbackConfig;
 
       /**
        * Label selector for pods. Existing ReplicaSets whose pods are selected by this will be the
        * ones affected by this deployment.
        */
-      selector?: meta.v1.LabelSelector
+      selector?: meta.v1.LabelSelector;
 
       /**
        * The deployment strategy to use to replace existing pods with new ones.
        */
-      strategy?: apps.v1beta1.DeploymentStrategy
-
+      strategy?: apps.v1beta1.DeploymentStrategy;
     }
-
 
     /**
      * DeploymentStrategy describes how to replace existing pods with new ones.
@@ -4078,15 +3905,13 @@ export namespace apps {
       /**
        * Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate.
        */
-      rollingUpdate?: apps.v1beta1.RollingUpdateDeployment
+      rollingUpdate?: apps.v1beta1.RollingUpdateDeployment;
 
       /**
        * Type of deployment. Can be "Recreate" or "RollingUpdate". Default is RollingUpdate.
        */
-      type?: string
-
+      type?: string;
     }
-
 
     /**
      * DEPRECATED.
@@ -4095,10 +3920,8 @@ export namespace apps {
       /**
        * The revision to rollback to. If set to 0, rollback to the last revision.
        */
-      revision?: number
-
+      revision?: number;
     }
-
 
     /**
      * Spec to control the desired behavior of rolling update.
@@ -4114,7 +3937,7 @@ export namespace apps {
        * scaled up further, ensuring that total number of pods running at any time during the update
        * is at most 130% of desired pods.
        */
-      maxSurge?: number | string
+      maxSurge?: number | string;
 
       /**
        * The maximum number of pods that can be unavailable during the update. Value can be an
@@ -4126,10 +3949,8 @@ export namespace apps {
        * that the total number of pods available at all times during the update is at least 70% of
        * desired pods.
        */
-      maxUnavailable?: number | string
-
+      maxUnavailable?: number | string;
     }
-
 
     /**
      * RollingUpdateStatefulSetStrategy is used to communicate parameter for
@@ -4139,10 +3960,8 @@ export namespace apps {
       /**
        * Partition indicates the ordinal at which the StatefulSet should be partitioned.
        */
-      partition?: number
-
+      partition?: number;
     }
-
 
     /**
      * Scale represents a scaling request for a resource.
@@ -4154,7 +3973,7 @@ export namespace apps {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: string
+      apiVersion?: "apps/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -4162,20 +3981,19 @@ export namespace apps {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: string
+      kind?: "Scale";
 
       /**
        * Standard object metadata; More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata.
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * defines the behavior of the scale. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status.
        */
-      spec?: apps.v1beta1.ScaleSpec
-
+      spec?: apps.v1beta1.ScaleSpec;
     }
 
     export function isScale(o: any): o is Scale {
@@ -4189,10 +4007,8 @@ export namespace apps {
       /**
        * desired number of instances for the scaled object.
        */
-      replicas?: number
-
+      replicas?: number;
     }
-
 
     /**
      * StatefulSet represents a set of pods with consistent identities. Identities are defined as:
@@ -4200,7 +4016,7 @@ export namespace apps {
      *  - Storage: As many VolumeClaims as requested.
      * The StatefulSet guarantees that a given network identity will always map to the same storage
      * identity.
-     * 
+     *
      * @deprecated apps/v1beta1/StatefulSet is deprecated by apps/v1/StatefulSet and not supported
      * by Kubernetes v1.16+ clusters.
      */
@@ -4211,7 +4027,7 @@ export namespace apps {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apps/v1beta1"
+      apiVersion?: "apps/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -4219,16 +4035,14 @@ export namespace apps {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "StatefulSet"
+      kind?: "StatefulSet";
 
-      
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Spec defines the desired identities of pods in this set.
        */
-      spec?: apps.v1beta1.StatefulSetSpec
-
+      spec?: apps.v1beta1.StatefulSetSpec;
     }
 
     export function isStatefulSet(o: any): o is StatefulSet {
@@ -4242,32 +4056,29 @@ export namespace apps {
       /**
        * Type of statefulset condition.
        */
-      type: string
+      type: string;
 
       /**
        * Last time the condition transitioned from one status to another.
        */
-      lastTransitionTime?: string
+      lastTransitionTime?: string;
 
       /**
        * A human readable message indicating details about the transition.
        */
-      message?: string
+      message?: string;
 
       /**
        * The reason for the condition's last transition.
        */
-      reason?: string
-
+      reason?: string;
     }
-
 
     /**
      * StatefulSetList is a collection of StatefulSets.
      */
     export interface StatefulSetList {
-      
-      items: apps.v1beta1.StatefulSet[]
+      items: apps.v1beta1.StatefulSet[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -4275,7 +4086,7 @@ export namespace apps {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apps/v1beta1"
+      apiVersion?: "apps/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -4283,11 +4094,9 @@ export namespace apps {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "StatefulSetList"
+      kind?: "StatefulSetList";
 
-      
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isStatefulSetList(o: any): o is StatefulSetList {
@@ -4305,14 +4114,14 @@ export namespace apps {
        * pod-specific-string.serviceName.default.svc.cluster.local where "pod-specific-string" is
        * managed by the StatefulSet controller.
        */
-      serviceName: string
+      serviceName: string;
 
       /**
        * template is the object that describes the pod that will be created if insufficient replicas
        * are detected. Each pod stamped out by the StatefulSet will fulfill this Template, but have
        * a unique identity from the rest of the StatefulSet.
        */
-      template: core.v1.PodTemplateSpec
+      template: core.v1.PodTemplateSpec;
 
       /**
        * podManagementPolicy controls how pods are created during initial scale up, when replacing
@@ -4322,34 +4131,34 @@ export namespace apps {
        * opposite order. The alternative policy is `Parallel` which will create pods in parallel to
        * match the desired scale without waiting, and on scale down will delete all pods at once.
        */
-      podManagementPolicy?: string
+      podManagementPolicy?: string;
 
       /**
        * replicas is the desired number of replicas of the given Template. These are replicas in the
        * sense that they are instantiations of the same Template, but individual replicas also have
        * a consistent identity. If unspecified, defaults to 1.
        */
-      replicas?: number
+      replicas?: number;
 
       /**
        * revisionHistoryLimit is the maximum number of revisions that will be maintained in the
        * StatefulSet's revision history. The revision history consists of all revisions not
        * represented by a currently applied StatefulSetSpec version. The default value is 10.
        */
-      revisionHistoryLimit?: number
+      revisionHistoryLimit?: number;
 
       /**
        * selector is a label query over pods that should match the replica count. If empty,
        * defaulted to labels on the pod template. More info:
        * https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors
        */
-      selector?: meta.v1.LabelSelector
+      selector?: meta.v1.LabelSelector;
 
       /**
        * updateStrategy indicates the StatefulSetUpdateStrategy that will be employed to update Pods
        * in the StatefulSet when a revision is made to Template.
        */
-      updateStrategy?: apps.v1beta1.StatefulSetUpdateStrategy
+      updateStrategy?: apps.v1beta1.StatefulSetUpdateStrategy;
 
       /**
        * volumeClaimTemplates is a list of claims that pods are allowed to reference. The
@@ -4358,10 +4167,8 @@ export namespace apps {
        * matching (by name) volumeMount in one container in the template. A claim in this list takes
        * precedence over any volumes in the template, with the same name.
        */
-      volumeClaimTemplates?: core.v1.PersistentVolumeClaim[]
-
+      volumeClaimTemplates?: core.v1.PersistentVolumeClaim[];
     }
-
 
     /**
      * StatefulSetUpdateStrategy indicates the strategy that the StatefulSet controller will use to
@@ -4373,18 +4180,14 @@ export namespace apps {
        * RollingUpdate is used to communicate parameters when Type is
        * RollingUpdateStatefulSetStrategyType.
        */
-      rollingUpdate?: apps.v1beta1.RollingUpdateStatefulSetStrategy
+      rollingUpdate?: apps.v1beta1.RollingUpdateStatefulSetStrategy;
 
       /**
        * Type indicates the type of the StatefulSetUpdateStrategy.
        */
-      type?: string
-
+      type?: string;
     }
-
-
   }
-
   export namespace v1beta2 {
     /**
      * ControllerRevision implements an immutable snapshot of state data. Clients are responsible
@@ -4395,7 +4198,7 @@ export namespace apps {
      * controllers for update and rollback, this object is beta. However, it may be subject to name
      * and representation changes in future releases, and clients should not depend on its
      * stability. It is primarily for internal use by controllers.
-     * 
+     *
      * @deprecated apps/v1beta2/ControllerRevision is deprecated by apps/v1/ControllerRevision and
      * not supported by Kubernetes v1.16+ clusters.
      */
@@ -4403,7 +4206,7 @@ export namespace apps {
       /**
        * Revision indicates the revision of the state represented by Data.
        */
-      revision: number
+      revision: number;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -4411,12 +4214,12 @@ export namespace apps {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apps/v1beta2"
+      apiVersion?: "apps/v1beta2";
 
       /**
        * Data is the serialized representation of the state.
        */
-      data?: pkg.runtime.RawExtension
+      data?: object;
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -4424,14 +4227,13 @@ export namespace apps {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ControllerRevision"
+      kind?: "ControllerRevision";
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
-
+      metadata?: meta.v1.ObjectMeta;
     }
 
     export function isControllerRevision(o: any): o is ControllerRevision {
@@ -4445,7 +4247,7 @@ export namespace apps {
       /**
        * Items is the list of ControllerRevisions
        */
-      items: apps.v1beta2.ControllerRevision[]
+      items: apps.v1beta2.ControllerRevision[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -4453,7 +4255,7 @@ export namespace apps {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apps/v1beta2"
+      apiVersion?: "apps/v1beta2";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -4461,23 +4263,26 @@ export namespace apps {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ControllerRevisionList"
+      kind?: "ControllerRevisionList";
 
       /**
        * More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
-    export function isControllerRevisionList(o: any): o is ControllerRevisionList {
-      return o.apiVersion == "apps/v1beta2" && o.kind == "ControllerRevisionList";
+    export function isControllerRevisionList(
+      o: any
+    ): o is ControllerRevisionList {
+      return (
+        o.apiVersion == "apps/v1beta2" && o.kind == "ControllerRevisionList"
+      );
     }
 
     /**
      * DaemonSet represents the configuration of a daemon set.
-     * 
+     *
      * @deprecated apps/v1beta2/DaemonSet is deprecated by apps/v1/DaemonSet and not supported by
      * Kubernetes v1.16+ clusters.
      */
@@ -4488,7 +4293,7 @@ export namespace apps {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apps/v1beta2"
+      apiVersion?: "apps/v1beta2";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -4496,20 +4301,19 @@ export namespace apps {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "DaemonSet"
+      kind?: "DaemonSet";
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * The desired behavior of this daemon set. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
        */
-      spec?: apps.v1beta2.DaemonSetSpec
-
+      spec?: apps.v1beta2.DaemonSetSpec;
     }
 
     export function isDaemonSet(o: any): o is DaemonSet {
@@ -4523,25 +4327,23 @@ export namespace apps {
       /**
        * Type of DaemonSet condition.
        */
-      type: string
+      type: string;
 
       /**
        * Last time the condition transitioned from one status to another.
        */
-      lastTransitionTime?: string
+      lastTransitionTime?: string;
 
       /**
        * A human readable message indicating details about the transition.
        */
-      message?: string
+      message?: string;
 
       /**
        * The reason for the condition's last transition.
        */
-      reason?: string
-
+      reason?: string;
     }
-
 
     /**
      * DaemonSetList is a collection of daemon sets.
@@ -4550,7 +4352,7 @@ export namespace apps {
       /**
        * A list of daemon sets.
        */
-      items: apps.v1beta2.DaemonSet[]
+      items: apps.v1beta2.DaemonSet[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -4558,7 +4360,7 @@ export namespace apps {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apps/v1beta2"
+      apiVersion?: "apps/v1beta2";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -4566,14 +4368,13 @@ export namespace apps {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "DaemonSetList"
+      kind?: "DaemonSetList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isDaemonSetList(o: any): o is DaemonSetList {
@@ -4589,7 +4390,7 @@ export namespace apps {
        * controlled. It must match the pod template's labels. More info:
        * https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors
        */
-      selector: meta.v1.LabelSelector
+      selector: meta.v1.LabelSelector;
 
       /**
        * An object that describes the pod that will be created. The DaemonSet will create exactly
@@ -4597,28 +4398,26 @@ export namespace apps {
        * node if no node selector is specified). More info:
        * https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template
        */
-      template: core.v1.PodTemplateSpec
+      template: core.v1.PodTemplateSpec;
 
       /**
        * The minimum number of seconds for which a newly created DaemonSet pod should be ready
        * without any of its container crashing, for it to be considered available. Defaults to 0
        * (pod will be considered available as soon as it is ready).
        */
-      minReadySeconds?: number
+      minReadySeconds?: number;
 
       /**
        * The number of old history to retain to allow rollback. This is a pointer to distinguish
        * between explicit zero and not specified. Defaults to 10.
        */
-      revisionHistoryLimit?: number
+      revisionHistoryLimit?: number;
 
       /**
        * An update strategy to replace existing DaemonSet pods with new pods.
        */
-      updateStrategy?: apps.v1beta2.DaemonSetUpdateStrategy
-
+      updateStrategy?: apps.v1beta2.DaemonSetUpdateStrategy;
     }
-
 
     /**
      * DaemonSetUpdateStrategy is a struct used to control the update strategy for a DaemonSet.
@@ -4627,19 +4426,17 @@ export namespace apps {
       /**
        * Rolling update config params. Present only if type = "RollingUpdate".
        */
-      rollingUpdate?: apps.v1beta2.RollingUpdateDaemonSet
+      rollingUpdate?: apps.v1beta2.RollingUpdateDaemonSet;
 
       /**
        * Type of daemon set update. Can be "RollingUpdate" or "OnDelete". Default is RollingUpdate.
        */
-      type?: string
-
+      type?: string;
     }
-
 
     /**
      * Deployment enables declarative updates for Pods and ReplicaSets.
-     * 
+     *
      * @deprecated apps/v1beta2/Deployment is deprecated by apps/v1/Deployment and not supported by
      * Kubernetes v1.16+ clusters.
      */
@@ -4650,7 +4447,7 @@ export namespace apps {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apps/v1beta2"
+      apiVersion?: "apps/v1beta2";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -4658,18 +4455,17 @@ export namespace apps {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "Deployment"
+      kind?: "Deployment";
 
       /**
        * Standard object metadata.
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Specification of the desired behavior of the Deployment.
        */
-      spec?: apps.v1beta2.DeploymentSpec
-
+      spec?: apps.v1beta2.DeploymentSpec;
     }
 
     export function isDeployment(o: any): o is Deployment {
@@ -4683,30 +4479,28 @@ export namespace apps {
       /**
        * Type of deployment condition.
        */
-      type: string
+      type: string;
 
       /**
        * Last time the condition transitioned from one status to another.
        */
-      lastTransitionTime?: string
+      lastTransitionTime?: string;
 
       /**
        * The last time this condition was updated.
        */
-      lastUpdateTime?: string
+      lastUpdateTime?: string;
 
       /**
        * A human readable message indicating details about the transition.
        */
-      message?: string
+      message?: string;
 
       /**
        * The reason for the condition's last transition.
        */
-      reason?: string
-
+      reason?: string;
     }
-
 
     /**
      * DeploymentList is a list of Deployments.
@@ -4715,7 +4509,7 @@ export namespace apps {
       /**
        * Items is the list of Deployments.
        */
-      items: apps.v1beta2.Deployment[]
+      items: apps.v1beta2.Deployment[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -4723,7 +4517,7 @@ export namespace apps {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apps/v1beta2"
+      apiVersion?: "apps/v1beta2";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -4731,13 +4525,12 @@ export namespace apps {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "DeploymentList"
+      kind?: "DeploymentList";
 
       /**
        * Standard list metadata.
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isDeploymentList(o: any): o is DeploymentList {
@@ -4752,24 +4545,24 @@ export namespace apps {
        * Label selector for pods. Existing ReplicaSets whose pods are selected by this will be the
        * ones affected by this deployment. It must match the pod template's labels.
        */
-      selector: meta.v1.LabelSelector
+      selector: meta.v1.LabelSelector;
 
       /**
        * Template describes the pods that will be created.
        */
-      template: core.v1.PodTemplateSpec
+      template: core.v1.PodTemplateSpec;
 
       /**
        * Minimum number of seconds for which a newly created pod should be ready without any of its
        * container crashing, for it to be considered available. Defaults to 0 (pod will be
        * considered available as soon as it is ready)
        */
-      minReadySeconds?: number
+      minReadySeconds?: number;
 
       /**
        * Indicates that the deployment is paused.
        */
-      paused?: boolean
+      paused?: boolean;
 
       /**
        * The maximum time in seconds for a deployment to make progress before it is considered to be
@@ -4778,27 +4571,25 @@ export namespace apps {
        * Note that progress will not be estimated during the time a deployment is paused. Defaults
        * to 600s.
        */
-      progressDeadlineSeconds?: number
+      progressDeadlineSeconds?: number;
 
       /**
        * Number of desired pods. This is a pointer to distinguish between explicit zero and not
        * specified. Defaults to 1.
        */
-      replicas?: number
+      replicas?: number;
 
       /**
        * The number of old ReplicaSets to retain to allow rollback. This is a pointer to distinguish
        * between explicit zero and not specified. Defaults to 10.
        */
-      revisionHistoryLimit?: number
+      revisionHistoryLimit?: number;
 
       /**
        * The deployment strategy to use to replace existing pods with new ones.
        */
-      strategy?: apps.v1beta2.DeploymentStrategy
-
+      strategy?: apps.v1beta2.DeploymentStrategy;
     }
-
 
     /**
      * DeploymentStrategy describes how to replace existing pods with new ones.
@@ -4807,19 +4598,17 @@ export namespace apps {
       /**
        * Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate.
        */
-      rollingUpdate?: apps.v1beta2.RollingUpdateDeployment
+      rollingUpdate?: apps.v1beta2.RollingUpdateDeployment;
 
       /**
        * Type of deployment. Can be "Recreate" or "RollingUpdate". Default is RollingUpdate.
        */
-      type?: string
-
+      type?: string;
     }
-
 
     /**
      * ReplicaSet ensures that a specified number of pod replicas are running at any given time.
-     * 
+     *
      * @deprecated apps/v1beta2/ReplicaSet is deprecated by apps/v1/ReplicaSet and not supported by
      * Kubernetes v1.16+ clusters.
      */
@@ -4830,7 +4619,7 @@ export namespace apps {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apps/v1beta2"
+      apiVersion?: "apps/v1beta2";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -4838,21 +4627,20 @@ export namespace apps {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ReplicaSet"
+      kind?: "ReplicaSet";
 
       /**
        * If the Labels of a ReplicaSet are empty, they are defaulted to be the same as the Pod(s)
        * that the ReplicaSet manages. Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Spec defines the specification of the desired behavior of the ReplicaSet. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
        */
-      spec?: apps.v1beta2.ReplicaSetSpec
-
+      spec?: apps.v1beta2.ReplicaSetSpec;
     }
 
     export function isReplicaSet(o: any): o is ReplicaSet {
@@ -4866,25 +4654,23 @@ export namespace apps {
       /**
        * Type of replica set condition.
        */
-      type: string
+      type: string;
 
       /**
        * The last time the condition transitioned from one status to another.
        */
-      lastTransitionTime?: string
+      lastTransitionTime?: string;
 
       /**
        * A human readable message indicating details about the transition.
        */
-      message?: string
+      message?: string;
 
       /**
        * The reason for the condition's last transition.
        */
-      reason?: string
-
+      reason?: string;
     }
-
 
     /**
      * ReplicaSetList is a collection of ReplicaSets.
@@ -4894,7 +4680,7 @@ export namespace apps {
        * List of ReplicaSets. More info:
        * https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller
        */
-      items: apps.v1beta2.ReplicaSet[]
+      items: apps.v1beta2.ReplicaSet[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -4902,7 +4688,7 @@ export namespace apps {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apps/v1beta2"
+      apiVersion?: "apps/v1beta2";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -4910,14 +4696,13 @@ export namespace apps {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ReplicaSetList"
+      kind?: "ReplicaSetList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isReplicaSetList(o: any): o is ReplicaSetList {
@@ -4934,31 +4719,29 @@ export namespace apps {
        * template's labels. More info:
        * https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors
        */
-      selector: meta.v1.LabelSelector
+      selector: meta.v1.LabelSelector;
 
       /**
        * Minimum number of seconds for which a newly created pod should be ready without any of its
        * container crashing, for it to be considered available. Defaults to 0 (pod will be
        * considered available as soon as it is ready)
        */
-      minReadySeconds?: number
+      minReadySeconds?: number;
 
       /**
        * Replicas is the number of desired replicas. This is a pointer to distinguish between
        * explicit zero and unspecified. Defaults to 1. More info:
        * https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/#what-is-a-replicationcontroller
        */
-      replicas?: number
+      replicas?: number;
 
       /**
        * Template is the object that describes the pod that will be created if insufficient replicas
        * are detected. More info:
        * https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template
        */
-      template?: core.v1.PodTemplateSpec
-
+      template?: core.v1.PodTemplateSpec;
     }
-
 
     /**
      * Spec to control the desired behavior of daemon set rolling update.
@@ -4976,10 +4759,8 @@ export namespace apps {
        * DaemonSet pods, thus ensuring that at least 70% of original number of DaemonSet pods are
        * available at all times during the update.
        */
-      maxUnavailable?: number | string
-
+      maxUnavailable?: number | string;
     }
-
 
     /**
      * Spec to control the desired behavior of rolling update.
@@ -4995,7 +4776,7 @@ export namespace apps {
        * scaled up further, ensuring that total number of pods running at any time during the update
        * is at most 130% of desired pods.
        */
-      maxSurge?: number | string
+      maxSurge?: number | string;
 
       /**
        * The maximum number of pods that can be unavailable during the update. Value can be an
@@ -5007,10 +4788,8 @@ export namespace apps {
        * that the total number of pods available at all times during the update is at least 70% of
        * desired pods.
        */
-      maxUnavailable?: number | string
-
+      maxUnavailable?: number | string;
     }
-
 
     /**
      * RollingUpdateStatefulSetStrategy is used to communicate parameter for
@@ -5021,10 +4800,8 @@ export namespace apps {
        * Partition indicates the ordinal at which the StatefulSet should be partitioned. Default
        * value is 0.
        */
-      partition?: number
-
+      partition?: number;
     }
-
 
     /**
      * Scale represents a scaling request for a resource.
@@ -5036,7 +4813,7 @@ export namespace apps {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: string
+      apiVersion?: "apps/v1beta2";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -5044,20 +4821,19 @@ export namespace apps {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: string
+      kind?: "Scale";
 
       /**
        * Standard object metadata; More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata.
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * defines the behavior of the scale. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status.
        */
-      spec?: apps.v1beta2.ScaleSpec
-
+      spec?: apps.v1beta2.ScaleSpec;
     }
 
     export function isScale(o: any): o is Scale {
@@ -5071,10 +4847,8 @@ export namespace apps {
       /**
        * desired number of instances for the scaled object.
        */
-      replicas?: number
-
+      replicas?: number;
     }
-
 
     /**
      * StatefulSet represents a set of pods with consistent identities. Identities are defined as:
@@ -5082,7 +4856,7 @@ export namespace apps {
      *  - Storage: As many VolumeClaims as requested.
      * The StatefulSet guarantees that a given network identity will always map to the same storage
      * identity.
-     * 
+     *
      * @deprecated apps/v1beta2/StatefulSet is deprecated by apps/v1/StatefulSet and not supported
      * by Kubernetes v1.16+ clusters.
      */
@@ -5093,7 +4867,7 @@ export namespace apps {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apps/v1beta2"
+      apiVersion?: "apps/v1beta2";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -5101,16 +4875,14 @@ export namespace apps {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "StatefulSet"
+      kind?: "StatefulSet";
 
-      
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Spec defines the desired identities of pods in this set.
        */
-      spec?: apps.v1beta2.StatefulSetSpec
-
+      spec?: apps.v1beta2.StatefulSetSpec;
     }
 
     export function isStatefulSet(o: any): o is StatefulSet {
@@ -5124,32 +4896,29 @@ export namespace apps {
       /**
        * Type of statefulset condition.
        */
-      type: string
+      type: string;
 
       /**
        * Last time the condition transitioned from one status to another.
        */
-      lastTransitionTime?: string
+      lastTransitionTime?: string;
 
       /**
        * A human readable message indicating details about the transition.
        */
-      message?: string
+      message?: string;
 
       /**
        * The reason for the condition's last transition.
        */
-      reason?: string
-
+      reason?: string;
     }
-
 
     /**
      * StatefulSetList is a collection of StatefulSets.
      */
     export interface StatefulSetList {
-      
-      items: apps.v1beta2.StatefulSet[]
+      items: apps.v1beta2.StatefulSet[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -5157,7 +4926,7 @@ export namespace apps {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apps/v1beta2"
+      apiVersion?: "apps/v1beta2";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -5165,11 +4934,9 @@ export namespace apps {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "StatefulSetList"
+      kind?: "StatefulSetList";
 
-      
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isStatefulSetList(o: any): o is StatefulSetList {
@@ -5185,7 +4952,7 @@ export namespace apps {
        * pod template's labels. More info:
        * https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors
        */
-      selector: meta.v1.LabelSelector
+      selector: meta.v1.LabelSelector;
 
       /**
        * serviceName is the name of the service that governs this StatefulSet. This service must
@@ -5194,14 +4961,14 @@ export namespace apps {
        * pod-specific-string.serviceName.default.svc.cluster.local where "pod-specific-string" is
        * managed by the StatefulSet controller.
        */
-      serviceName: string
+      serviceName: string;
 
       /**
        * template is the object that describes the pod that will be created if insufficient replicas
        * are detected. Each pod stamped out by the StatefulSet will fulfill this Template, but have
        * a unique identity from the rest of the StatefulSet.
        */
-      template: core.v1.PodTemplateSpec
+      template: core.v1.PodTemplateSpec;
 
       /**
        * podManagementPolicy controls how pods are created during initial scale up, when replacing
@@ -5211,27 +4978,27 @@ export namespace apps {
        * opposite order. The alternative policy is `Parallel` which will create pods in parallel to
        * match the desired scale without waiting, and on scale down will delete all pods at once.
        */
-      podManagementPolicy?: string
+      podManagementPolicy?: string;
 
       /**
        * replicas is the desired number of replicas of the given Template. These are replicas in the
        * sense that they are instantiations of the same Template, but individual replicas also have
        * a consistent identity. If unspecified, defaults to 1.
        */
-      replicas?: number
+      replicas?: number;
 
       /**
        * revisionHistoryLimit is the maximum number of revisions that will be maintained in the
        * StatefulSet's revision history. The revision history consists of all revisions not
        * represented by a currently applied StatefulSetSpec version. The default value is 10.
        */
-      revisionHistoryLimit?: number
+      revisionHistoryLimit?: number;
 
       /**
        * updateStrategy indicates the StatefulSetUpdateStrategy that will be employed to update Pods
        * in the StatefulSet when a revision is made to Template.
        */
-      updateStrategy?: apps.v1beta2.StatefulSetUpdateStrategy
+      updateStrategy?: apps.v1beta2.StatefulSetUpdateStrategy;
 
       /**
        * volumeClaimTemplates is a list of claims that pods are allowed to reference. The
@@ -5240,10 +5007,8 @@ export namespace apps {
        * matching (by name) volumeMount in one container in the template. A claim in this list takes
        * precedence over any volumes in the template, with the same name.
        */
-      volumeClaimTemplates?: core.v1.PersistentVolumeClaim[]
-
+      volumeClaimTemplates?: core.v1.PersistentVolumeClaim[];
     }
-
 
     /**
      * StatefulSetUpdateStrategy indicates the strategy that the StatefulSet controller will use to
@@ -5255,18 +5020,14 @@ export namespace apps {
        * RollingUpdate is used to communicate parameters when Type is
        * RollingUpdateStatefulSetStrategyType.
        */
-      rollingUpdate?: apps.v1beta2.RollingUpdateStatefulSetStrategy
+      rollingUpdate?: apps.v1beta2.RollingUpdateStatefulSetStrategy;
 
       /**
        * Type indicates the type of the StatefulSetUpdateStrategy. Default is RollingUpdate.
        */
-      type?: string
-
+      type?: string;
     }
-
-
   }
-
 }
 
 export namespace auditregistration {
@@ -5281,7 +5042,7 @@ export namespace auditregistration {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "auditregistration.k8s.io/v1alpha1"
+      apiVersion?: "auditregistration.k8s.io/v1alpha1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -5289,20 +5050,21 @@ export namespace auditregistration {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "AuditSink"
+      kind?: "AuditSink";
 
-      
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Spec defines the audit configuration spec
        */
-      spec?: auditregistration.v1alpha1.AuditSinkSpec
-
+      spec?: auditregistration.v1alpha1.AuditSinkSpec;
     }
 
     export function isAuditSink(o: any): o is AuditSink {
-      return o.apiVersion == "auditregistration.k8s.io/v1alpha1" && o.kind == "AuditSink";
+      return (
+        o.apiVersion == "auditregistration.k8s.io/v1alpha1" &&
+        o.kind == "AuditSink"
+      );
     }
 
     /**
@@ -5312,7 +5074,7 @@ export namespace auditregistration {
       /**
        * List of audit configurations.
        */
-      items: auditregistration.v1alpha1.AuditSink[]
+      items: auditregistration.v1alpha1.AuditSink[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -5320,7 +5082,7 @@ export namespace auditregistration {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "auditregistration.k8s.io/v1alpha1"
+      apiVersion?: "auditregistration.k8s.io/v1alpha1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -5328,15 +5090,16 @@ export namespace auditregistration {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "AuditSinkList"
+      kind?: "AuditSinkList";
 
-      
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isAuditSinkList(o: any): o is AuditSinkList {
-      return o.apiVersion == "auditregistration.k8s.io/v1alpha1" && o.kind == "AuditSinkList";
+      return (
+        o.apiVersion == "auditregistration.k8s.io/v1alpha1" &&
+        o.kind == "AuditSinkList"
+      );
     }
 
     /**
@@ -5346,15 +5109,13 @@ export namespace auditregistration {
       /**
        * Policy defines the policy for selecting which events should be sent to the webhook required
        */
-      policy: auditregistration.v1alpha1.Policy
+      policy: auditregistration.v1alpha1.Policy;
 
       /**
        * Webhook to send events required
        */
-      webhook: auditregistration.v1alpha1.Webhook
-
+      webhook: auditregistration.v1alpha1.Webhook;
     }
-
 
     /**
      * Policy defines the configuration of how audit events are logged
@@ -5364,15 +5125,13 @@ export namespace auditregistration {
        * The Level that all requests are recorded at. available options: None, Metadata, Request,
        * RequestResponse required
        */
-      level: string
+      level: string;
 
       /**
        * Stages is a list of stages for which events are created.
        */
-      stages?: string[]
-
+      stages?: string[];
     }
-
 
     /**
      * ServiceReference holds a reference to Service.legacy.k8s.io
@@ -5381,26 +5140,24 @@ export namespace auditregistration {
       /**
        * `name` is the name of the service. Required
        */
-      name: string
+      name: string;
 
       /**
        * `namespace` is the namespace of the service. Required
        */
-      namespace: string
+      namespace: string;
 
       /**
        * `path` is an optional URL path which will be sent in any request to this service.
        */
-      path?: string
+      path?: string;
 
       /**
        * If specified, the port on the service that hosting webhook. Default to 443 for backward
        * compatibility. `port` should be a valid port number (1-65535, inclusive).
        */
-      port?: number
-
+      port?: number;
     }
-
 
     /**
      * Webhook holds the configuration of the webhook
@@ -5409,15 +5166,13 @@ export namespace auditregistration {
       /**
        * ClientConfig holds the connection parameters for the webhook required
        */
-      clientConfig: auditregistration.v1alpha1.WebhookClientConfig
+      clientConfig: auditregistration.v1alpha1.WebhookClientConfig;
 
       /**
        * Throttle holds the options for throttling the webhook
        */
-      throttle?: auditregistration.v1alpha1.WebhookThrottleConfig
-
+      throttle?: auditregistration.v1alpha1.WebhookThrottleConfig;
     }
-
 
     /**
      * WebhookClientConfig contains the information to make a connection with the webhook
@@ -5427,42 +5182,40 @@ export namespace auditregistration {
        * `caBundle` is a PEM encoded CA bundle which will be used to validate the webhook's server
        * certificate. If unspecified, system trust roots on the apiserver are used.
        */
-      caBundle?: string
+      caBundle?: string;
 
       /**
        * `service` is a reference to the service for this webhook. Either `service` or `url` must be
        * specified.
-       * 
+       *
        * If the webhook is running within the cluster, then you should use `service`.
        */
-      service?: auditregistration.v1alpha1.ServiceReference
+      service?: auditregistration.v1alpha1.ServiceReference;
 
       /**
        * `url` gives the location of the webhook, in standard URL form (`scheme://host:port/path`).
        * Exactly one of `url` or `service` must be specified.
-       * 
+       *
        * The `host` should not refer to a service running in the cluster; use the `service` field
        * instead. The host might be resolved via external DNS in some apiservers (e.g.,
        * `kube-apiserver` cannot resolve in-cluster DNS as that would be a layering violation).
        * `host` may also be an IP address.
-       * 
+       *
        * Please note that using `localhost` or `127.0.0.1` as a `host` is risky unless you take
        * great care to run this webhook on all hosts which run an apiserver which might need to make
        * calls to this webhook. Such installs are likely to be non-portable, i.e., not easy to turn
        * up in a new cluster.
-       * 
+       *
        * The scheme must be "https"; the URL must begin with "https://".
-       * 
+       *
        * A path is optional, and if present may be any string permissible in a URL. You may use the
        * path to pass an arbitrary string to the webhook, for example, a cluster identifier.
-       * 
+       *
        * Attempting to use a user or basic auth e.g. "user:password@" is not allowed. Fragments
        * ("#...") and query parameters ("?...") are not allowed, either.
        */
-      url?: string
-
+      url?: string;
     }
-
 
     /**
      * WebhookThrottleConfig holds the configuration for throttling events
@@ -5471,18 +5224,14 @@ export namespace auditregistration {
       /**
        * ThrottleBurst is the maximum number of events sent at the same moment default 15 QPS
        */
-      burst?: number
+      burst?: number;
 
       /**
        * ThrottleQPS maximum number of batches per second default 10 QPS
        */
-      qps?: number
-
+      qps?: number;
     }
-
-
   }
-
 }
 
 export namespace authentication {
@@ -5494,35 +5243,35 @@ export namespace authentication {
       /**
        * API version of the referent.
        */
-      apiVersion?: string
+      apiVersion?: "authentication/v1";
 
       /**
        * Kind of the referent. Valid kinds are 'Pod' and 'Secret'.
        */
-      kind?: string
+      kind?: "BoundObjectReference";
 
       /**
        * Name of the referent.
        */
-      name?: string
+      name?: string;
 
       /**
        * UID of the referent.
        */
-      uid?: string
-
+      uid?: string;
     }
 
     export function isBoundObjectReference(o: any): o is BoundObjectReference {
-      return o.apiVersion == "authentication/v1" && o.kind == "BoundObjectReference";
+      return (
+        o.apiVersion == "authentication/v1" && o.kind == "BoundObjectReference"
+      );
     }
 
     /**
      * TokenRequest requests a token for a given service account.
      */
     export interface TokenRequest {
-      
-      spec: authentication.v1.TokenRequestSpec
+      spec: authentication.v1.TokenRequestSpec;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -5530,7 +5279,7 @@ export namespace authentication {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "authentication.k8s.io/v1"
+      apiVersion?: "authentication.k8s.io/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -5538,15 +5287,15 @@ export namespace authentication {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "TokenRequest"
+      kind?: "TokenRequest";
 
-      
-      metadata?: meta.v1.ObjectMeta
-
+      metadata?: meta.v1.ObjectMeta;
     }
 
     export function isTokenRequest(o: any): o is TokenRequest {
-      return o.apiVersion == "authentication.k8s.io/v1" && o.kind == "TokenRequest";
+      return (
+        o.apiVersion == "authentication.k8s.io/v1" && o.kind == "TokenRequest"
+      );
     }
 
     /**
@@ -5560,7 +5309,7 @@ export namespace authentication {
        * any of the audiences listed but implies a high degree of trust between the target
        * audiences.
        */
-      audiences: string[]
+      audiences: string[];
 
       /**
        * BoundObjectRef is a reference to an object that the token will be bound to. The token will
@@ -5568,17 +5317,15 @@ export namespace authentication {
        * endpoint will validate the BoundObjectRef, but other audiences may not. Keep
        * ExpirationSeconds small if you want prompt revocation.
        */
-      boundObjectRef?: authentication.v1.BoundObjectReference
+      boundObjectRef?: authentication.v1.BoundObjectReference;
 
       /**
        * ExpirationSeconds is the requested duration of validity of the request. The token issuer
        * may return a token with a different validity duration so a client needs to check the
        * 'expiration' field in a response.
        */
-      expirationSeconds?: number
-
+      expirationSeconds?: number;
     }
-
 
     /**
      * TokenReview attempts to authenticate a token to a known user. Note: TokenReview requests may
@@ -5588,7 +5335,7 @@ export namespace authentication {
       /**
        * Spec holds information about the request being evaluated
        */
-      spec: authentication.v1.TokenReviewSpec
+      spec: authentication.v1.TokenReviewSpec;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -5596,7 +5343,7 @@ export namespace authentication {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "authentication.k8s.io/v1"
+      apiVersion?: "authentication.k8s.io/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -5604,15 +5351,15 @@ export namespace authentication {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "TokenReview"
+      kind?: "TokenReview";
 
-      
-      metadata?: meta.v1.ObjectMeta
-
+      metadata?: meta.v1.ObjectMeta;
     }
 
     export function isTokenReview(o: any): o is TokenReview {
-      return o.apiVersion == "authentication.k8s.io/v1" && o.kind == "TokenReview";
+      return (
+        o.apiVersion == "authentication.k8s.io/v1" && o.kind == "TokenReview"
+      );
     }
 
     /**
@@ -5625,15 +5372,13 @@ export namespace authentication {
        * for at least one of the audiences in this list. If no audiences are provided, the audience
        * will default to the audience of the Kubernetes apiserver.
        */
-      audiences?: string[]
+      audiences?: string[];
 
       /**
        * Token is the opaque bearer token.
        */
-      token?: string
-
+      token?: string;
     }
-
 
     /**
      * UserInfo holds the information about the user needed to implement the user.Info interface.
@@ -5642,29 +5387,25 @@ export namespace authentication {
       /**
        * Any additional information provided by the authenticator.
        */
-      extra?: object
+      extra?: object;
 
       /**
        * The names of groups this user is a part of.
        */
-      groups?: string[]
+      groups?: string[];
 
       /**
        * A unique value that identifies this user across time. If this user is deleted and another
        * user by the same name is added, they will have different UIDs.
        */
-      uid?: string
+      uid?: string;
 
       /**
        * The name that uniquely identifies this user among all active users.
        */
-      username?: string
-
+      username?: string;
     }
-
-
   }
-
   export namespace v1beta1 {
     /**
      * TokenReview attempts to authenticate a token to a known user. Note: TokenReview requests may
@@ -5674,7 +5415,7 @@ export namespace authentication {
       /**
        * Spec holds information about the request being evaluated
        */
-      spec: authentication.v1beta1.TokenReviewSpec
+      spec: authentication.v1beta1.TokenReviewSpec;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -5682,7 +5423,7 @@ export namespace authentication {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "authentication.k8s.io/v1beta1"
+      apiVersion?: "authentication.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -5690,15 +5431,16 @@ export namespace authentication {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "TokenReview"
+      kind?: "TokenReview";
 
-      
-      metadata?: meta.v1.ObjectMeta
-
+      metadata?: meta.v1.ObjectMeta;
     }
 
     export function isTokenReview(o: any): o is TokenReview {
-      return o.apiVersion == "authentication.k8s.io/v1beta1" && o.kind == "TokenReview";
+      return (
+        o.apiVersion == "authentication.k8s.io/v1beta1" &&
+        o.kind == "TokenReview"
+      );
     }
 
     /**
@@ -5711,15 +5453,13 @@ export namespace authentication {
        * for at least one of the audiences in this list. If no audiences are provided, the audience
        * will default to the audience of the Kubernetes apiserver.
        */
-      audiences?: string[]
+      audiences?: string[];
 
       /**
        * Token is the opaque bearer token.
        */
-      token?: string
-
+      token?: string;
     }
-
 
     /**
      * UserInfo holds the information about the user needed to implement the user.Info interface.
@@ -5728,29 +5468,25 @@ export namespace authentication {
       /**
        * Any additional information provided by the authenticator.
        */
-      extra?: object
+      extra?: object;
 
       /**
        * The names of groups this user is a part of.
        */
-      groups?: string[]
+      groups?: string[];
 
       /**
        * A unique value that identifies this user across time. If this user is deleted and another
        * user by the same name is added, they will have different UIDs.
        */
-      uid?: string
+      uid?: string;
 
       /**
        * The name that uniquely identifies this user among all active users.
        */
-      username?: string
-
+      username?: string;
     }
-
-
   }
-
 }
 
 export namespace authorization {
@@ -5765,7 +5501,7 @@ export namespace authorization {
        * Spec holds information about the request being evaluated.  spec.namespace must be equal to
        * the namespace you made the request against.  If empty, it is defaulted.
        */
-      spec: authorization.v1.SubjectAccessReviewSpec
+      spec: authorization.v1.SubjectAccessReviewSpec;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -5773,7 +5509,7 @@ export namespace authorization {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "authorization.k8s.io/v1"
+      apiVersion?: "authorization.k8s.io/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -5781,15 +5517,18 @@ export namespace authorization {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "LocalSubjectAccessReview"
+      kind?: "LocalSubjectAccessReview";
 
-      
-      metadata?: meta.v1.ObjectMeta
-
+      metadata?: meta.v1.ObjectMeta;
     }
 
-    export function isLocalSubjectAccessReview(o: any): o is LocalSubjectAccessReview {
-      return o.apiVersion == "authorization.k8s.io/v1" && o.kind == "LocalSubjectAccessReview";
+    export function isLocalSubjectAccessReview(
+      o: any
+    ): o is LocalSubjectAccessReview {
+      return (
+        o.apiVersion == "authorization.k8s.io/v1" &&
+        o.kind == "LocalSubjectAccessReview"
+      );
     }
 
     /**
@@ -5800,15 +5539,13 @@ export namespace authorization {
       /**
        * Path is the URL path of the request
        */
-      path?: string
+      path?: string;
 
       /**
        * Verb is the standard HTTP verb
        */
-      verb?: string
-
+      verb?: string;
     }
-
 
     /**
      * NonResourceRule holds information that describes a rule for the non-resource
@@ -5818,16 +5555,14 @@ export namespace authorization {
        * Verb is a list of kubernetes non-resource API verbs, like: get, post, put, delete, patch,
        * head, options.  "*" means all.
        */
-      verbs: string[]
+      verbs: string[];
 
       /**
        * NonResourceURLs is a set of partial urls that a user should have access to.  *s are
        * allowed, but only as the full, final step in the path.  "*" means all.
        */
-      nonResourceURLs?: string[]
-
+      nonResourceURLs?: string[];
     }
-
 
     /**
      * ResourceAttributes includes the authorization attributes available for resource requests to
@@ -5837,13 +5572,13 @@ export namespace authorization {
       /**
        * Group is the API Group of the Resource.  "*" means all.
        */
-      group?: string
+      group?: string;
 
       /**
        * Name is the name of the resource being requested for a "get" or deleted for a "delete". ""
        * (empty) means all.
        */
-      name?: string
+      name?: string;
 
       /**
        * Namespace is the namespace of the action being requested.  Currently, there is no
@@ -5851,31 +5586,29 @@ export namespace authorization {
        * LocalSubjectAccessReviews "" (empty) is empty for cluster-scoped resources "" (empty) means
        * "all" for namespace scoped resources from a SubjectAccessReview or SelfSubjectAccessReview
        */
-      namespace?: string
+      namespace?: string;
 
       /**
        * Resource is one of the existing resource types.  "*" means all.
        */
-      resource?: string
+      resource?: string;
 
       /**
        * Subresource is one of the existing resource types.  "" means none.
        */
-      subresource?: string
+      subresource?: string;
 
       /**
        * Verb is a kubernetes resource API verb, like: get, list, watch, create, update, delete,
        * proxy.  "*" means all.
        */
-      verb?: string
+      verb?: string;
 
       /**
        * Version is the API Version of the Resource.  "*" means all.
        */
-      version?: string
-
+      version?: string;
     }
-
 
     /**
      * ResourceRule is the list of actions the subject is allowed to perform on resources. The list
@@ -5886,20 +5619,20 @@ export namespace authorization {
        * Verb is a list of kubernetes resource API verbs, like: get, list, watch, create, update,
        * delete, proxy.  "*" means all.
        */
-      verbs: string[]
+      verbs: string[];
 
       /**
        * APIGroups is the name of the APIGroup that contains the resources.  If multiple API groups
        * are specified, any action requested against one of the enumerated resources in any API
        * group will be allowed.  "*" means all.
        */
-      apiGroups?: string[]
+      apiGroups?: string[];
 
       /**
        * ResourceNames is an optional white list of names that the rule applies to.  An empty set
        * means that everything is allowed.  "*" means all.
        */
-      resourceNames?: string[]
+      resourceNames?: string[];
 
       /**
        * Resources is a list of resources this rule applies to.  "*" means all in the specified
@@ -5907,10 +5640,8 @@ export namespace authorization {
        *  "*&#8205;/foo" represents the subresource 'foo' for all resources in the specified
        * apiGroups.
        */
-      resources?: string[]
-
+      resources?: string[];
     }
-
 
     /**
      * SelfSubjectAccessReview checks whether or the current user can perform an action.  Not
@@ -5921,7 +5652,7 @@ export namespace authorization {
       /**
        * Spec holds information about the request being evaluated.  user and groups must be empty
        */
-      spec: authorization.v1.SelfSubjectAccessReviewSpec
+      spec: authorization.v1.SelfSubjectAccessReviewSpec;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -5929,7 +5660,7 @@ export namespace authorization {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "authorization.k8s.io/v1"
+      apiVersion?: "authorization.k8s.io/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -5937,15 +5668,18 @@ export namespace authorization {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "SelfSubjectAccessReview"
+      kind?: "SelfSubjectAccessReview";
 
-      
-      metadata?: meta.v1.ObjectMeta
-
+      metadata?: meta.v1.ObjectMeta;
     }
 
-    export function isSelfSubjectAccessReview(o: any): o is SelfSubjectAccessReview {
-      return o.apiVersion == "authorization.k8s.io/v1" && o.kind == "SelfSubjectAccessReview";
+    export function isSelfSubjectAccessReview(
+      o: any
+    ): o is SelfSubjectAccessReview {
+      return (
+        o.apiVersion == "authorization.k8s.io/v1" &&
+        o.kind == "SelfSubjectAccessReview"
+      );
     }
 
     /**
@@ -5956,15 +5690,13 @@ export namespace authorization {
       /**
        * NonResourceAttributes describes information for a non-resource access request
        */
-      nonResourceAttributes?: authorization.v1.NonResourceAttributes
+      nonResourceAttributes?: authorization.v1.NonResourceAttributes;
 
       /**
        * ResourceAuthorizationAttributes describes information for a resource access request
        */
-      resourceAttributes?: authorization.v1.ResourceAttributes
-
+      resourceAttributes?: authorization.v1.ResourceAttributes;
     }
-
 
     /**
      * SelfSubjectRulesReview enumerates the set of actions the current user can perform within a
@@ -5980,7 +5712,7 @@ export namespace authorization {
       /**
        * Spec holds information about the request being evaluated.
        */
-      spec: authorization.v1.SelfSubjectRulesReviewSpec
+      spec: authorization.v1.SelfSubjectRulesReviewSpec;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -5988,7 +5720,7 @@ export namespace authorization {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "authorization.k8s.io/v1"
+      apiVersion?: "authorization.k8s.io/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -5996,28 +5728,29 @@ export namespace authorization {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "SelfSubjectRulesReview"
+      kind?: "SelfSubjectRulesReview";
 
-      
-      metadata?: meta.v1.ObjectMeta
-
+      metadata?: meta.v1.ObjectMeta;
     }
 
-    export function isSelfSubjectRulesReview(o: any): o is SelfSubjectRulesReview {
-      return o.apiVersion == "authorization.k8s.io/v1" && o.kind == "SelfSubjectRulesReview";
+    export function isSelfSubjectRulesReview(
+      o: any
+    ): o is SelfSubjectRulesReview {
+      return (
+        o.apiVersion == "authorization.k8s.io/v1" &&
+        o.kind == "SelfSubjectRulesReview"
+      );
     }
 
     /**
-     * 
+     *
      */
     export interface SelfSubjectRulesReviewSpec {
       /**
        * Namespace to evaluate rules for. Required.
        */
-      namespace?: string
-
+      namespace?: string;
     }
-
 
     /**
      * SubjectAccessReview checks whether or not a user or group can perform an action.
@@ -6026,7 +5759,7 @@ export namespace authorization {
       /**
        * Spec holds information about the request being evaluated
        */
-      spec: authorization.v1.SubjectAccessReviewSpec
+      spec: authorization.v1.SubjectAccessReviewSpec;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -6034,7 +5767,7 @@ export namespace authorization {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "authorization.k8s.io/v1"
+      apiVersion?: "authorization.k8s.io/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -6042,15 +5775,16 @@ export namespace authorization {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "SubjectAccessReview"
+      kind?: "SubjectAccessReview";
 
-      
-      metadata?: meta.v1.ObjectMeta
-
+      metadata?: meta.v1.ObjectMeta;
     }
 
     export function isSubjectAccessReview(o: any): o is SubjectAccessReview {
-      return o.apiVersion == "authorization.k8s.io/v1" && o.kind == "SubjectAccessReview";
+      return (
+        o.apiVersion == "authorization.k8s.io/v1" &&
+        o.kind == "SubjectAccessReview"
+      );
     }
 
     /**
@@ -6062,39 +5796,35 @@ export namespace authorization {
        * Extra corresponds to the user.Info.GetExtra() method from the authenticator.  Since that is
        * input to the authorizer it needs a reflection here.
        */
-      extra?: object
+      extra?: object;
 
       /**
        * Groups is the groups you're testing for.
        */
-      groups?: string[]
+      groups?: string[];
 
       /**
        * NonResourceAttributes describes information for a non-resource access request
        */
-      nonResourceAttributes?: authorization.v1.NonResourceAttributes
+      nonResourceAttributes?: authorization.v1.NonResourceAttributes;
 
       /**
        * ResourceAuthorizationAttributes describes information for a resource access request
        */
-      resourceAttributes?: authorization.v1.ResourceAttributes
+      resourceAttributes?: authorization.v1.ResourceAttributes;
 
       /**
        * UID information about the requesting user.
        */
-      uid?: string
+      uid?: string;
 
       /**
        * User is the user you're testing for. If you specify "User" but not "Groups", then is it
        * interpreted as "What if User were not a member of any groups
        */
-      user?: string
-
+      user?: string;
     }
-
-
   }
-
   export namespace v1beta1 {
     /**
      * LocalSubjectAccessReview checks whether or not a user or group can perform an action in a
@@ -6106,7 +5836,7 @@ export namespace authorization {
        * Spec holds information about the request being evaluated.  spec.namespace must be equal to
        * the namespace you made the request against.  If empty, it is defaulted.
        */
-      spec: authorization.v1beta1.SubjectAccessReviewSpec
+      spec: authorization.v1beta1.SubjectAccessReviewSpec;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -6114,7 +5844,7 @@ export namespace authorization {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "authorization.k8s.io/v1beta1"
+      apiVersion?: "authorization.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -6122,15 +5852,18 @@ export namespace authorization {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "LocalSubjectAccessReview"
+      kind?: "LocalSubjectAccessReview";
 
-      
-      metadata?: meta.v1.ObjectMeta
-
+      metadata?: meta.v1.ObjectMeta;
     }
 
-    export function isLocalSubjectAccessReview(o: any): o is LocalSubjectAccessReview {
-      return o.apiVersion == "authorization.k8s.io/v1beta1" && o.kind == "LocalSubjectAccessReview";
+    export function isLocalSubjectAccessReview(
+      o: any
+    ): o is LocalSubjectAccessReview {
+      return (
+        o.apiVersion == "authorization.k8s.io/v1beta1" &&
+        o.kind == "LocalSubjectAccessReview"
+      );
     }
 
     /**
@@ -6141,15 +5874,13 @@ export namespace authorization {
       /**
        * Path is the URL path of the request
        */
-      path?: string
+      path?: string;
 
       /**
        * Verb is the standard HTTP verb
        */
-      verb?: string
-
+      verb?: string;
     }
-
 
     /**
      * NonResourceRule holds information that describes a rule for the non-resource
@@ -6159,16 +5890,14 @@ export namespace authorization {
        * Verb is a list of kubernetes non-resource API verbs, like: get, post, put, delete, patch,
        * head, options.  "*" means all.
        */
-      verbs: string[]
+      verbs: string[];
 
       /**
        * NonResourceURLs is a set of partial urls that a user should have access to.  *s are
        * allowed, but only as the full, final step in the path.  "*" means all.
        */
-      nonResourceURLs?: string[]
-
+      nonResourceURLs?: string[];
     }
-
 
     /**
      * ResourceAttributes includes the authorization attributes available for resource requests to
@@ -6178,13 +5907,13 @@ export namespace authorization {
       /**
        * Group is the API Group of the Resource.  "*" means all.
        */
-      group?: string
+      group?: string;
 
       /**
        * Name is the name of the resource being requested for a "get" or deleted for a "delete". ""
        * (empty) means all.
        */
-      name?: string
+      name?: string;
 
       /**
        * Namespace is the namespace of the action being requested.  Currently, there is no
@@ -6192,31 +5921,29 @@ export namespace authorization {
        * LocalSubjectAccessReviews "" (empty) is empty for cluster-scoped resources "" (empty) means
        * "all" for namespace scoped resources from a SubjectAccessReview or SelfSubjectAccessReview
        */
-      namespace?: string
+      namespace?: string;
 
       /**
        * Resource is one of the existing resource types.  "*" means all.
        */
-      resource?: string
+      resource?: string;
 
       /**
        * Subresource is one of the existing resource types.  "" means none.
        */
-      subresource?: string
+      subresource?: string;
 
       /**
        * Verb is a kubernetes resource API verb, like: get, list, watch, create, update, delete,
        * proxy.  "*" means all.
        */
-      verb?: string
+      verb?: string;
 
       /**
        * Version is the API Version of the Resource.  "*" means all.
        */
-      version?: string
-
+      version?: string;
     }
-
 
     /**
      * ResourceRule is the list of actions the subject is allowed to perform on resources. The list
@@ -6227,20 +5954,20 @@ export namespace authorization {
        * Verb is a list of kubernetes resource API verbs, like: get, list, watch, create, update,
        * delete, proxy.  "*" means all.
        */
-      verbs: string[]
+      verbs: string[];
 
       /**
        * APIGroups is the name of the APIGroup that contains the resources.  If multiple API groups
        * are specified, any action requested against one of the enumerated resources in any API
        * group will be allowed.  "*" means all.
        */
-      apiGroups?: string[]
+      apiGroups?: string[];
 
       /**
        * ResourceNames is an optional white list of names that the rule applies to.  An empty set
        * means that everything is allowed.  "*" means all.
        */
-      resourceNames?: string[]
+      resourceNames?: string[];
 
       /**
        * Resources is a list of resources this rule applies to.  "*" means all in the specified
@@ -6248,10 +5975,8 @@ export namespace authorization {
        *  "*&#8205;/foo" represents the subresource 'foo' for all resources in the specified
        * apiGroups.
        */
-      resources?: string[]
-
+      resources?: string[];
     }
-
 
     /**
      * SelfSubjectAccessReview checks whether or the current user can perform an action.  Not
@@ -6262,7 +5987,7 @@ export namespace authorization {
       /**
        * Spec holds information about the request being evaluated.  user and groups must be empty
        */
-      spec: authorization.v1beta1.SelfSubjectAccessReviewSpec
+      spec: authorization.v1beta1.SelfSubjectAccessReviewSpec;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -6270,7 +5995,7 @@ export namespace authorization {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "authorization.k8s.io/v1beta1"
+      apiVersion?: "authorization.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -6278,15 +6003,18 @@ export namespace authorization {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "SelfSubjectAccessReview"
+      kind?: "SelfSubjectAccessReview";
 
-      
-      metadata?: meta.v1.ObjectMeta
-
+      metadata?: meta.v1.ObjectMeta;
     }
 
-    export function isSelfSubjectAccessReview(o: any): o is SelfSubjectAccessReview {
-      return o.apiVersion == "authorization.k8s.io/v1beta1" && o.kind == "SelfSubjectAccessReview";
+    export function isSelfSubjectAccessReview(
+      o: any
+    ): o is SelfSubjectAccessReview {
+      return (
+        o.apiVersion == "authorization.k8s.io/v1beta1" &&
+        o.kind == "SelfSubjectAccessReview"
+      );
     }
 
     /**
@@ -6297,15 +6025,13 @@ export namespace authorization {
       /**
        * NonResourceAttributes describes information for a non-resource access request
        */
-      nonResourceAttributes?: authorization.v1beta1.NonResourceAttributes
+      nonResourceAttributes?: authorization.v1beta1.NonResourceAttributes;
 
       /**
        * ResourceAuthorizationAttributes describes information for a resource access request
        */
-      resourceAttributes?: authorization.v1beta1.ResourceAttributes
-
+      resourceAttributes?: authorization.v1beta1.ResourceAttributes;
     }
-
 
     /**
      * SelfSubjectRulesReview enumerates the set of actions the current user can perform within a
@@ -6321,7 +6047,7 @@ export namespace authorization {
       /**
        * Spec holds information about the request being evaluated.
        */
-      spec: authorization.v1beta1.SelfSubjectRulesReviewSpec
+      spec: authorization.v1beta1.SelfSubjectRulesReviewSpec;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -6329,7 +6055,7 @@ export namespace authorization {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "authorization.k8s.io/v1beta1"
+      apiVersion?: "authorization.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -6337,28 +6063,29 @@ export namespace authorization {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "SelfSubjectRulesReview"
+      kind?: "SelfSubjectRulesReview";
 
-      
-      metadata?: meta.v1.ObjectMeta
-
+      metadata?: meta.v1.ObjectMeta;
     }
 
-    export function isSelfSubjectRulesReview(o: any): o is SelfSubjectRulesReview {
-      return o.apiVersion == "authorization.k8s.io/v1beta1" && o.kind == "SelfSubjectRulesReview";
+    export function isSelfSubjectRulesReview(
+      o: any
+    ): o is SelfSubjectRulesReview {
+      return (
+        o.apiVersion == "authorization.k8s.io/v1beta1" &&
+        o.kind == "SelfSubjectRulesReview"
+      );
     }
 
     /**
-     * 
+     *
      */
     export interface SelfSubjectRulesReviewSpec {
       /**
        * Namespace to evaluate rules for. Required.
        */
-      namespace?: string
-
+      namespace?: string;
     }
-
 
     /**
      * SubjectAccessReview checks whether or not a user or group can perform an action.
@@ -6367,7 +6094,7 @@ export namespace authorization {
       /**
        * Spec holds information about the request being evaluated
        */
-      spec: authorization.v1beta1.SubjectAccessReviewSpec
+      spec: authorization.v1beta1.SubjectAccessReviewSpec;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -6375,7 +6102,7 @@ export namespace authorization {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "authorization.k8s.io/v1beta1"
+      apiVersion?: "authorization.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -6383,15 +6110,16 @@ export namespace authorization {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "SubjectAccessReview"
+      kind?: "SubjectAccessReview";
 
-      
-      metadata?: meta.v1.ObjectMeta
-
+      metadata?: meta.v1.ObjectMeta;
     }
 
     export function isSubjectAccessReview(o: any): o is SubjectAccessReview {
-      return o.apiVersion == "authorization.k8s.io/v1beta1" && o.kind == "SubjectAccessReview";
+      return (
+        o.apiVersion == "authorization.k8s.io/v1beta1" &&
+        o.kind == "SubjectAccessReview"
+      );
     }
 
     /**
@@ -6403,39 +6131,35 @@ export namespace authorization {
        * Extra corresponds to the user.Info.GetExtra() method from the authenticator.  Since that is
        * input to the authorizer it needs a reflection here.
        */
-      extra?: object
+      extra?: object;
 
       /**
        * Groups is the groups you're testing for.
        */
-      group?: string[]
+      group?: string[];
 
       /**
        * NonResourceAttributes describes information for a non-resource access request
        */
-      nonResourceAttributes?: authorization.v1beta1.NonResourceAttributes
+      nonResourceAttributes?: authorization.v1beta1.NonResourceAttributes;
 
       /**
        * ResourceAuthorizationAttributes describes information for a resource access request
        */
-      resourceAttributes?: authorization.v1beta1.ResourceAttributes
+      resourceAttributes?: authorization.v1beta1.ResourceAttributes;
 
       /**
        * UID information about the requesting user.
        */
-      uid?: string
+      uid?: string;
 
       /**
        * User is the user you're testing for. If you specify "User" but not "Group", then is it
        * interpreted as "What if User were not a member of any groups
        */
-      user?: string
-
+      user?: string;
     }
-
-
   }
-
 }
 
 export namespace autoscaling {
@@ -6449,22 +6173,26 @@ export namespace autoscaling {
        * Kind of the referent; More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"
        */
-      kind: string
+      kind: "CrossVersionObjectReference";
 
       /**
        * Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
        */
-      name: string
+      name: string;
 
       /**
        * API version of the referent
        */
-      apiVersion?: string
-
+      apiVersion?: "autoscaling/v1";
     }
 
-    export function isCrossVersionObjectReference(o: any): o is CrossVersionObjectReference {
-      return o.apiVersion == "autoscaling/v1" && o.kind == "CrossVersionObjectReference";
+    export function isCrossVersionObjectReference(
+      o: any
+    ): o is CrossVersionObjectReference {
+      return (
+        o.apiVersion == "autoscaling/v1" &&
+        o.kind == "CrossVersionObjectReference"
+      );
     }
 
     /**
@@ -6477,7 +6205,7 @@ export namespace autoscaling {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "autoscaling/v1"
+      apiVersion?: "autoscaling/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -6485,24 +6213,27 @@ export namespace autoscaling {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "HorizontalPodAutoscaler"
+      kind?: "HorizontalPodAutoscaler";
 
       /**
        * Standard object metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * behaviour of autoscaler. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status.
        */
-      spec?: autoscaling.v1.HorizontalPodAutoscalerSpec
-
+      spec?: autoscaling.v1.HorizontalPodAutoscalerSpec;
     }
 
-    export function isHorizontalPodAutoscaler(o: any): o is HorizontalPodAutoscaler {
-      return o.apiVersion == "autoscaling/v1" && o.kind == "HorizontalPodAutoscaler";
+    export function isHorizontalPodAutoscaler(
+      o: any
+    ): o is HorizontalPodAutoscaler {
+      return (
+        o.apiVersion == "autoscaling/v1" && o.kind == "HorizontalPodAutoscaler"
+      );
     }
 
     /**
@@ -6512,7 +6243,7 @@ export namespace autoscaling {
       /**
        * list of horizontal pod autoscaler objects.
        */
-      items: autoscaling.v1.HorizontalPodAutoscaler[]
+      items: autoscaling.v1.HorizontalPodAutoscaler[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -6520,7 +6251,7 @@ export namespace autoscaling {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "autoscaling/v1"
+      apiVersion?: "autoscaling/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -6528,17 +6259,21 @@ export namespace autoscaling {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "HorizontalPodAutoscalerList"
+      kind?: "HorizontalPodAutoscalerList";
 
       /**
        * Standard list metadata.
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
-    export function isHorizontalPodAutoscalerList(o: any): o is HorizontalPodAutoscalerList {
-      return o.apiVersion == "autoscaling/v1" && o.kind == "HorizontalPodAutoscalerList";
+    export function isHorizontalPodAutoscalerList(
+      o: any
+    ): o is HorizontalPodAutoscalerList {
+      return (
+        o.apiVersion == "autoscaling/v1" &&
+        o.kind == "HorizontalPodAutoscalerList"
+      );
     }
 
     /**
@@ -6549,13 +6284,13 @@ export namespace autoscaling {
        * upper limit for the number of pods that can be set by the autoscaler; cannot be smaller
        * than MinReplicas.
        */
-      maxReplicas: number
+      maxReplicas: number;
 
       /**
        * reference to scaled resource; horizontal pod autoscaler will learn the current resource
        * consumption and will set the desired number of pods by using its Scale subresource.
        */
-      scaleTargetRef: autoscaling.v1.CrossVersionObjectReference
+      scaleTargetRef: autoscaling.v1.CrossVersionObjectReference;
 
       /**
        * minReplicas is the lower limit for the number of replicas to which the autoscaler can scale
@@ -6563,16 +6298,14 @@ export namespace autoscaling {
        * HPAScaleToZero is enabled and at least one Object or External metric is configured.
        * Scaling is active as long as at least one metric value is available.
        */
-      minReplicas?: number
+      minReplicas?: number;
 
       /**
        * target average CPU utilization (represented as a percentage of requested CPU) over all the
        * pods; if not specified the default autoscaling policy will be used.
        */
-      targetCPUUtilizationPercentage?: number
-
+      targetCPUUtilizationPercentage?: number;
     }
-
 
     /**
      * Scale represents a scaling request for a resource.
@@ -6584,7 +6317,7 @@ export namespace autoscaling {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: string
+      apiVersion?: "autoscaling/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -6592,20 +6325,19 @@ export namespace autoscaling {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: string
+      kind?: "Scale";
 
       /**
        * Standard object metadata; More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata.
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * defines the behavior of the scale. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status.
        */
-      spec?: autoscaling.v1.ScaleSpec
-
+      spec?: autoscaling.v1.ScaleSpec;
     }
 
     export function isScale(o: any): o is Scale {
@@ -6619,13 +6351,9 @@ export namespace autoscaling {
       /**
        * desired number of instances for the scaled object.
        */
-      replicas?: number
-
+      replicas?: number;
     }
-
-
   }
-
   export namespace v2beta1 {
     /**
      * CrossVersionObjectReference contains enough information to let you identify the referred
@@ -6636,22 +6364,26 @@ export namespace autoscaling {
        * Kind of the referent; More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"
        */
-      kind: string
+      kind: "CrossVersionObjectReference";
 
       /**
        * Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
        */
-      name: string
+      name: string;
 
       /**
        * API version of the referent
        */
-      apiVersion?: string
-
+      apiVersion?: "autoscaling/v2beta1";
     }
 
-    export function isCrossVersionObjectReference(o: any): o is CrossVersionObjectReference {
-      return o.apiVersion == "autoscaling/v2beta1" && o.kind == "CrossVersionObjectReference";
+    export function isCrossVersionObjectReference(
+      o: any
+    ): o is CrossVersionObjectReference {
+      return (
+        o.apiVersion == "autoscaling/v2beta1" &&
+        o.kind == "CrossVersionObjectReference"
+      );
     }
 
     /**
@@ -6663,27 +6395,25 @@ export namespace autoscaling {
       /**
        * metricName is the name of the metric in question.
        */
-      metricName: string
+      metricName: string;
 
       /**
        * metricSelector is used to identify a specific time series within a given metric.
        */
-      metricSelector?: meta.v1.LabelSelector
+      metricSelector?: meta.v1.LabelSelector;
 
       /**
        * targetAverageValue is the target per-pod value of global metric (as a quantity). Mutually
        * exclusive with TargetValue.
        */
-      targetAverageValue?: string
+      targetAverageValue?: string;
 
       /**
        * targetValue is the target value of the metric (as a quantity). Mutually exclusive with
        * TargetAverageValue.
        */
-      targetValue?: string
-
+      targetValue?: string;
     }
-
 
     /**
      * HorizontalPodAutoscaler is the configuration for a horizontal pod autoscaler, which
@@ -6697,7 +6427,7 @@ export namespace autoscaling {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "autoscaling/v2beta1"
+      apiVersion?: "autoscaling/v2beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -6705,24 +6435,28 @@ export namespace autoscaling {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "HorizontalPodAutoscaler"
+      kind?: "HorizontalPodAutoscaler";
 
       /**
        * metadata is the standard object metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * spec is the specification for the behaviour of the autoscaler. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status.
        */
-      spec?: autoscaling.v2beta1.HorizontalPodAutoscalerSpec
-
+      spec?: autoscaling.v2beta1.HorizontalPodAutoscalerSpec;
     }
 
-    export function isHorizontalPodAutoscaler(o: any): o is HorizontalPodAutoscaler {
-      return o.apiVersion == "autoscaling/v2beta1" && o.kind == "HorizontalPodAutoscaler";
+    export function isHorizontalPodAutoscaler(
+      o: any
+    ): o is HorizontalPodAutoscaler {
+      return (
+        o.apiVersion == "autoscaling/v2beta1" &&
+        o.kind == "HorizontalPodAutoscaler"
+      );
     }
 
     /**
@@ -6733,25 +6467,23 @@ export namespace autoscaling {
       /**
        * type describes the current condition
        */
-      type: string
+      type: string;
 
       /**
        * lastTransitionTime is the last time the condition transitioned from one status to another
        */
-      lastTransitionTime?: string
+      lastTransitionTime?: string;
 
       /**
        * message is a human-readable explanation containing details about the transition
        */
-      message?: string
+      message?: string;
 
       /**
        * reason is the reason for the condition's last transition.
        */
-      reason?: string
-
+      reason?: string;
     }
-
 
     /**
      * HorizontalPodAutoscaler is a list of horizontal pod autoscaler objects.
@@ -6760,7 +6492,7 @@ export namespace autoscaling {
       /**
        * items is the list of horizontal pod autoscaler objects.
        */
-      items: autoscaling.v2beta1.HorizontalPodAutoscaler[]
+      items: autoscaling.v2beta1.HorizontalPodAutoscaler[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -6768,7 +6500,7 @@ export namespace autoscaling {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "autoscaling/v2beta1"
+      apiVersion?: "autoscaling/v2beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -6776,17 +6508,21 @@ export namespace autoscaling {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "HorizontalPodAutoscalerList"
+      kind?: "HorizontalPodAutoscalerList";
 
       /**
        * metadata is the standard list metadata.
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
-    export function isHorizontalPodAutoscalerList(o: any): o is HorizontalPodAutoscalerList {
-      return o.apiVersion == "autoscaling/v2beta1" && o.kind == "HorizontalPodAutoscalerList";
+    export function isHorizontalPodAutoscalerList(
+      o: any
+    ): o is HorizontalPodAutoscalerList {
+      return (
+        o.apiVersion == "autoscaling/v2beta1" &&
+        o.kind == "HorizontalPodAutoscalerList"
+      );
     }
 
     /**
@@ -6798,13 +6534,13 @@ export namespace autoscaling {
        * maxReplicas is the upper limit for the number of replicas to which the autoscaler can scale
        * up. It cannot be less that minReplicas.
        */
-      maxReplicas: number
+      maxReplicas: number;
 
       /**
        * scaleTargetRef points to the target resource to scale, and is used to the pods for which
        * metrics should be collected, as well as to actually change the replica count.
        */
-      scaleTargetRef: autoscaling.v2beta1.CrossVersionObjectReference
+      scaleTargetRef: autoscaling.v2beta1.CrossVersionObjectReference;
 
       /**
        * metrics contains the specifications for which to use to calculate the desired replica count
@@ -6814,7 +6550,7 @@ export namespace autoscaling {
        * and vice-versa.  See the individual metric source types for more information about how each
        * type of metric must respond.
        */
-      metrics?: autoscaling.v2beta1.MetricSpec[]
+      metrics?: autoscaling.v2beta1.MetricSpec[];
 
       /**
        * minReplicas is the lower limit for the number of replicas to which the autoscaler can scale
@@ -6822,10 +6558,8 @@ export namespace autoscaling {
        * HPAScaleToZero is enabled and at least one Object or External metric is configured.
        * Scaling is active as long as at least one metric value is available.
        */
-      minReplicas?: number
-
+      minReplicas?: number;
     }
-
 
     /**
      * MetricSpec specifies how to scale based on a single metric (only `type` and one other
@@ -6836,7 +6570,7 @@ export namespace autoscaling {
        * type is the type of metric source.  It should be one of "Object", "Pods" or "Resource",
        * each mapping to a matching field in the object.
        */
-      type: string
+      type: string;
 
       /**
        * external refers to a global metric that is not associated with any Kubernetes object. It
@@ -6844,20 +6578,20 @@ export namespace autoscaling {
        * (for example length of queue in cloud messaging service, or QPS from loadbalancer running
        * outside of cluster).
        */
-      external?: autoscaling.v2beta1.ExternalMetricSource
+      external?: autoscaling.v2beta1.ExternalMetricSource;
 
       /**
        * object refers to a metric describing a single kubernetes object (for example,
        * hits-per-second on an Ingress object).
        */
-      object?: autoscaling.v2beta1.ObjectMetricSource
+      object?: autoscaling.v2beta1.ObjectMetricSource;
 
       /**
        * pods refers to a metric describing each pod in the current scale target (for example,
        * transactions-processed-per-second).  The values will be averaged together before being
        * compared to the target value.
        */
-      pods?: autoscaling.v2beta1.PodsMetricSource
+      pods?: autoscaling.v2beta1.PodsMetricSource;
 
       /**
        * resource refers to a resource metric (such as those specified in requests and limits) known
@@ -6865,10 +6599,8 @@ export namespace autoscaling {
        * metrics are built in to Kubernetes, and have special scaling options on top of those
        * available to normal per-pod metrics using the "pods" source.
        */
-      resource?: autoscaling.v2beta1.ResourceMetricSource
-
+      resource?: autoscaling.v2beta1.ResourceMetricSource;
     }
-
 
     /**
      * ObjectMetricSource indicates how to scale on a metric describing a kubernetes object (for
@@ -6878,33 +6610,31 @@ export namespace autoscaling {
       /**
        * metricName is the name of the metric in question.
        */
-      metricName: string
+      metricName: string;
 
       /**
        * target is the described Kubernetes object.
        */
-      target: autoscaling.v2beta1.CrossVersionObjectReference
+      target: autoscaling.v2beta1.CrossVersionObjectReference;
 
       /**
        * targetValue is the target value of the metric (as a quantity).
        */
-      targetValue: string
+      targetValue: string;
 
       /**
        * averageValue is the target value of the average of the metric across all relevant pods (as
        * a quantity)
        */
-      averageValue?: string
+      averageValue?: string;
 
       /**
        * selector is the string-encoded form of a standard kubernetes label selector for the given
        * metric When set, it is passed as an additional parameter to the metrics server for more
        * specific metrics scoping When unset, just the metricName will be used to gather metrics.
        */
-      selector?: meta.v1.LabelSelector
-
+      selector?: meta.v1.LabelSelector;
     }
-
 
     /**
      * PodsMetricSource indicates how to scale on a metric describing each pod in the current scale
@@ -6915,23 +6645,21 @@ export namespace autoscaling {
       /**
        * metricName is the name of the metric in question
        */
-      metricName: string
+      metricName: string;
 
       /**
        * targetAverageValue is the target value of the average of the metric across all relevant
        * pods (as a quantity)
        */
-      targetAverageValue: string
+      targetAverageValue: string;
 
       /**
        * selector is the string-encoded form of a standard kubernetes label selector for the given
        * metric When set, it is passed as an additional parameter to the metrics server for more
        * specific metrics scoping When unset, just the metricName will be used to gather metrics.
        */
-      selector?: meta.v1.LabelSelector
-
+      selector?: meta.v1.LabelSelector;
     }
-
 
     /**
      * ResourceMetricSource indicates how to scale on a resource metric known to Kubernetes, as
@@ -6945,27 +6673,23 @@ export namespace autoscaling {
       /**
        * name is the name of the resource in question.
        */
-      name: string
+      name: string;
 
       /**
        * targetAverageUtilization is the target value of the average of the resource metric across
        * all relevant pods, represented as a percentage of the requested value of the resource for
        * the pods.
        */
-      targetAverageUtilization?: number
+      targetAverageUtilization?: number;
 
       /**
        * targetAverageValue is the target value of the average of the resource metric across all
        * relevant pods, as a raw value (instead of as a percentage of the request), similar to the
        * "pods" metric source type.
        */
-      targetAverageValue?: string
-
+      targetAverageValue?: string;
     }
-
-
   }
-
   export namespace v2beta2 {
     /**
      * CrossVersionObjectReference contains enough information to let you identify the referred
@@ -6976,22 +6700,26 @@ export namespace autoscaling {
        * Kind of the referent; More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"
        */
-      kind: string
+      kind: "CrossVersionObjectReference";
 
       /**
        * Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
        */
-      name: string
+      name: string;
 
       /**
        * API version of the referent
        */
-      apiVersion?: string
-
+      apiVersion?: "autoscaling/v2beta2";
     }
 
-    export function isCrossVersionObjectReference(o: any): o is CrossVersionObjectReference {
-      return o.apiVersion == "autoscaling/v2beta2" && o.kind == "CrossVersionObjectReference";
+    export function isCrossVersionObjectReference(
+      o: any
+    ): o is CrossVersionObjectReference {
+      return (
+        o.apiVersion == "autoscaling/v2beta2" &&
+        o.kind == "CrossVersionObjectReference"
+      );
     }
 
     /**
@@ -7003,15 +6731,13 @@ export namespace autoscaling {
       /**
        * metric identifies the target metric by name and selector
        */
-      metric: autoscaling.v2beta2.MetricIdentifier
+      metric: autoscaling.v2beta2.MetricIdentifier;
 
       /**
        * target specifies the target value for the given metric
        */
-      target: autoscaling.v2beta2.MetricTarget
-
+      target: autoscaling.v2beta2.MetricTarget;
     }
-
 
     /**
      * HorizontalPodAutoscaler is the configuration for a horizontal pod autoscaler, which
@@ -7025,7 +6751,7 @@ export namespace autoscaling {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "autoscaling/v2beta2"
+      apiVersion?: "autoscaling/v2beta2";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -7033,24 +6759,28 @@ export namespace autoscaling {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "HorizontalPodAutoscaler"
+      kind?: "HorizontalPodAutoscaler";
 
       /**
        * metadata is the standard object metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * spec is the specification for the behaviour of the autoscaler. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status.
        */
-      spec?: autoscaling.v2beta2.HorizontalPodAutoscalerSpec
-
+      spec?: autoscaling.v2beta2.HorizontalPodAutoscalerSpec;
     }
 
-    export function isHorizontalPodAutoscaler(o: any): o is HorizontalPodAutoscaler {
-      return o.apiVersion == "autoscaling/v2beta2" && o.kind == "HorizontalPodAutoscaler";
+    export function isHorizontalPodAutoscaler(
+      o: any
+    ): o is HorizontalPodAutoscaler {
+      return (
+        o.apiVersion == "autoscaling/v2beta2" &&
+        o.kind == "HorizontalPodAutoscaler"
+      );
     }
 
     /**
@@ -7061,25 +6791,23 @@ export namespace autoscaling {
       /**
        * type describes the current condition
        */
-      type: string
+      type: string;
 
       /**
        * lastTransitionTime is the last time the condition transitioned from one status to another
        */
-      lastTransitionTime?: string
+      lastTransitionTime?: string;
 
       /**
        * message is a human-readable explanation containing details about the transition
        */
-      message?: string
+      message?: string;
 
       /**
        * reason is the reason for the condition's last transition.
        */
-      reason?: string
-
+      reason?: string;
     }
-
 
     /**
      * HorizontalPodAutoscalerList is a list of horizontal pod autoscaler objects.
@@ -7088,7 +6816,7 @@ export namespace autoscaling {
       /**
        * items is the list of horizontal pod autoscaler objects.
        */
-      items: autoscaling.v2beta2.HorizontalPodAutoscaler[]
+      items: autoscaling.v2beta2.HorizontalPodAutoscaler[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -7096,7 +6824,7 @@ export namespace autoscaling {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "autoscaling/v2beta2"
+      apiVersion?: "autoscaling/v2beta2";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -7104,17 +6832,21 @@ export namespace autoscaling {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "HorizontalPodAutoscalerList"
+      kind?: "HorizontalPodAutoscalerList";
 
       /**
        * metadata is the standard list metadata.
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
-    export function isHorizontalPodAutoscalerList(o: any): o is HorizontalPodAutoscalerList {
-      return o.apiVersion == "autoscaling/v2beta2" && o.kind == "HorizontalPodAutoscalerList";
+    export function isHorizontalPodAutoscalerList(
+      o: any
+    ): o is HorizontalPodAutoscalerList {
+      return (
+        o.apiVersion == "autoscaling/v2beta2" &&
+        o.kind == "HorizontalPodAutoscalerList"
+      );
     }
 
     /**
@@ -7126,13 +6858,13 @@ export namespace autoscaling {
        * maxReplicas is the upper limit for the number of replicas to which the autoscaler can scale
        * up. It cannot be less that minReplicas.
        */
-      maxReplicas: number
+      maxReplicas: number;
 
       /**
        * scaleTargetRef points to the target resource to scale, and is used to the pods for which
        * metrics should be collected, as well as to actually change the replica count.
        */
-      scaleTargetRef: autoscaling.v2beta2.CrossVersionObjectReference
+      scaleTargetRef: autoscaling.v2beta2.CrossVersionObjectReference;
 
       /**
        * metrics contains the specifications for which to use to calculate the desired replica count
@@ -7143,7 +6875,7 @@ export namespace autoscaling {
        * type of metric must respond. If not set, the default metric will be set to 80% average CPU
        * utilization.
        */
-      metrics?: autoscaling.v2beta2.MetricSpec[]
+      metrics?: autoscaling.v2beta2.MetricSpec[];
 
       /**
        * minReplicas is the lower limit for the number of replicas to which the autoscaler can scale
@@ -7151,10 +6883,8 @@ export namespace autoscaling {
        * HPAScaleToZero is enabled and at least one Object or External metric is configured.
        * Scaling is active as long as at least one metric value is available.
        */
-      minReplicas?: number
-
+      minReplicas?: number;
     }
-
 
     /**
      * MetricIdentifier defines the name and optionally selector for a metric
@@ -7163,17 +6893,15 @@ export namespace autoscaling {
       /**
        * name is the name of the given metric
        */
-      name: string
+      name: string;
 
       /**
        * selector is the string-encoded form of a standard kubernetes label selector for the given
        * metric When set, it is passed as an additional parameter to the metrics server for more
        * specific metrics scoping. When unset, just the metricName will be used to gather metrics.
        */
-      selector?: meta.v1.LabelSelector
-
+      selector?: meta.v1.LabelSelector;
     }
-
 
     /**
      * MetricSpec specifies how to scale based on a single metric (only `type` and one other
@@ -7184,7 +6912,7 @@ export namespace autoscaling {
        * type is the type of metric source.  It should be one of "Object", "Pods" or "Resource",
        * each mapping to a matching field in the object.
        */
-      type: string
+      type: string;
 
       /**
        * external refers to a global metric that is not associated with any Kubernetes object. It
@@ -7192,20 +6920,20 @@ export namespace autoscaling {
        * (for example length of queue in cloud messaging service, or QPS from loadbalancer running
        * outside of cluster).
        */
-      external?: autoscaling.v2beta2.ExternalMetricSource
+      external?: autoscaling.v2beta2.ExternalMetricSource;
 
       /**
        * object refers to a metric describing a single kubernetes object (for example,
        * hits-per-second on an Ingress object).
        */
-      object?: autoscaling.v2beta2.ObjectMetricSource
+      object?: autoscaling.v2beta2.ObjectMetricSource;
 
       /**
        * pods refers to a metric describing each pod in the current scale target (for example,
        * transactions-processed-per-second).  The values will be averaged together before being
        * compared to the target value.
        */
-      pods?: autoscaling.v2beta2.PodsMetricSource
+      pods?: autoscaling.v2beta2.PodsMetricSource;
 
       /**
        * resource refers to a resource metric (such as those specified in requests and limits) known
@@ -7213,10 +6941,8 @@ export namespace autoscaling {
        * metrics are built in to Kubernetes, and have special scaling options on top of those
        * available to normal per-pod metrics using the "pods" source.
        */
-      resource?: autoscaling.v2beta2.ResourceMetricSource
-
+      resource?: autoscaling.v2beta2.ResourceMetricSource;
     }
-
 
     /**
      * MetricTarget defines the target value, average value, or average utilization of a specific
@@ -7226,49 +6952,44 @@ export namespace autoscaling {
       /**
        * type represents whether the metric type is Utilization, Value, or AverageValue
        */
-      type: string
+      type: string;
 
       /**
        * averageUtilization is the target value of the average of the resource metric across all
        * relevant pods, represented as a percentage of the requested value of the resource for the
        * pods. Currently only valid for Resource metric source type
        */
-      averageUtilization?: number
+      averageUtilization?: number;
 
       /**
        * averageValue is the target value of the average of the metric across all relevant pods (as
        * a quantity)
        */
-      averageValue?: string
+      averageValue?: string;
 
       /**
        * value is the target value of the metric (as a quantity).
        */
-      value?: string
-
+      value?: string;
     }
-
 
     /**
      * ObjectMetricSource indicates how to scale on a metric describing a kubernetes object (for
      * example, hits-per-second on an Ingress object).
      */
     export interface ObjectMetricSource {
-      
-      describedObject: autoscaling.v2beta2.CrossVersionObjectReference
+      describedObject: autoscaling.v2beta2.CrossVersionObjectReference;
 
       /**
        * metric identifies the target metric by name and selector
        */
-      metric: autoscaling.v2beta2.MetricIdentifier
+      metric: autoscaling.v2beta2.MetricIdentifier;
 
       /**
        * target specifies the target value for the given metric
        */
-      target: autoscaling.v2beta2.MetricTarget
-
+      target: autoscaling.v2beta2.MetricTarget;
     }
-
 
     /**
      * PodsMetricSource indicates how to scale on a metric describing each pod in the current scale
@@ -7279,15 +7000,13 @@ export namespace autoscaling {
       /**
        * metric identifies the target metric by name and selector
        */
-      metric: autoscaling.v2beta2.MetricIdentifier
+      metric: autoscaling.v2beta2.MetricIdentifier;
 
       /**
        * target specifies the target value for the given metric
        */
-      target: autoscaling.v2beta2.MetricTarget
-
+      target: autoscaling.v2beta2.MetricTarget;
     }
-
 
     /**
      * ResourceMetricSource indicates how to scale on a resource metric known to Kubernetes, as
@@ -7301,18 +7020,14 @@ export namespace autoscaling {
       /**
        * name is the name of the resource in question.
        */
-      name: string
+      name: string;
 
       /**
        * target specifies the target value for the given metric
        */
-      target: autoscaling.v2beta2.MetricTarget
-
+      target: autoscaling.v2beta2.MetricTarget;
     }
-
-
   }
-
 }
 
 export namespace batch {
@@ -7327,7 +7042,7 @@ export namespace batch {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "batch/v1"
+      apiVersion?: "batch/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -7335,20 +7050,19 @@ export namespace batch {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "Job"
+      kind?: "Job";
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Specification of the desired behavior of a job. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
        */
-      spec?: batch.v1.JobSpec
-
+      spec?: batch.v1.JobSpec;
     }
 
     export function isJob(o: any): o is Job {
@@ -7362,30 +7076,28 @@ export namespace batch {
       /**
        * Type of job condition, Complete or Failed.
        */
-      type: string
+      type: string;
 
       /**
        * Last time the condition was checked.
        */
-      lastProbeTime?: string
+      lastProbeTime?: string;
 
       /**
        * Last time the condition transit from one status to another.
        */
-      lastTransitionTime?: string
+      lastTransitionTime?: string;
 
       /**
        * Human readable message indicating details about last transition.
        */
-      message?: string
+      message?: string;
 
       /**
        * (brief) reason for the condition's last transition.
        */
-      reason?: string
-
+      reason?: string;
     }
-
 
     /**
      * JobList is a collection of jobs.
@@ -7394,7 +7106,7 @@ export namespace batch {
       /**
        * items is the list of Jobs.
        */
-      items: batch.v1.Job[]
+      items: batch.v1.Job[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -7402,7 +7114,7 @@ export namespace batch {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "batch/v1"
+      apiVersion?: "batch/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -7410,14 +7122,13 @@ export namespace batch {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "JobList"
+      kind?: "JobList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isJobList(o: any): o is JobList {
@@ -7432,18 +7143,18 @@ export namespace batch {
        * Describes the pod that will be created when executing a job. More info:
        * https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/
        */
-      template: core.v1.PodTemplateSpec
+      template: core.v1.PodTemplateSpec;
 
       /**
        * Specifies the duration in seconds relative to the startTime that the job may be active
        * before the system tries to terminate it; value must be positive integer
        */
-      activeDeadlineSeconds?: number
+      activeDeadlineSeconds?: number;
 
       /**
        * Specifies the number of retries before marking this job failed. Defaults to 6
        */
-      backoffLimit?: number
+      backoffLimit?: number;
 
       /**
        * Specifies the desired number of successfully finished pods the job should be run with.
@@ -7452,7 +7163,7 @@ export namespace batch {
        * limited to 1 and the success of that pod signals the success of the job. More info:
        * https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/
        */
-      completions?: number
+      completions?: number;
 
       /**
        * manualSelector controls generation of pod labels and pod selectors. Leave `manualSelector`
@@ -7464,7 +7175,7 @@ export namespace batch {
        * More info:
        * https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#specifying-your-own-pod-selector
        */
-      manualSelector?: boolean
+      manualSelector?: boolean;
 
       /**
        * Specifies the maximum desired number of pods the job should run at any given time. The
@@ -7473,14 +7184,14 @@ export namespace batch {
        * do is less than max parallelism. More info:
        * https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/
        */
-      parallelism?: number
+      parallelism?: number;
 
       /**
        * A label query over pods that should match the pod count. Normally, the system sets this
        * field for you. More info:
        * https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors
        */
-      selector?: meta.v1.LabelSelector
+      selector?: meta.v1.LabelSelector;
 
       /**
        * ttlSecondsAfterFinished limits the lifetime of a Job that has finished execution (either
@@ -7491,13 +7202,9 @@ export namespace batch {
        * immediately after it finishes. This field is alpha-level and is only honored by servers
        * that enable the TTLAfterFinished feature.
        */
-      ttlSecondsAfterFinished?: number
-
+      ttlSecondsAfterFinished?: number;
     }
-
-
   }
-
   export namespace v1beta1 {
     /**
      * CronJob represents the configuration of a single cron job.
@@ -7509,7 +7216,7 @@ export namespace batch {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "batch/v1beta1"
+      apiVersion?: "batch/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -7517,20 +7224,19 @@ export namespace batch {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "CronJob"
+      kind?: "CronJob";
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Specification of the desired behavior of a cron job, including the schedule. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
        */
-      spec?: batch.v1beta1.CronJobSpec
-
+      spec?: batch.v1beta1.CronJobSpec;
     }
 
     export function isCronJob(o: any): o is CronJob {
@@ -7544,7 +7250,7 @@ export namespace batch {
       /**
        * items is the list of CronJobs.
        */
-      items: batch.v1beta1.CronJob[]
+      items: batch.v1beta1.CronJob[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -7552,7 +7258,7 @@ export namespace batch {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "batch/v1beta1"
+      apiVersion?: "batch/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -7560,14 +7266,13 @@ export namespace batch {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "CronJobList"
+      kind?: "CronJobList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isCronJobList(o: any): o is CronJobList {
@@ -7581,12 +7286,12 @@ export namespace batch {
       /**
        * Specifies the job that will be created when executing a CronJob.
        */
-      jobTemplate: batch.v1beta1.JobTemplateSpec
+      jobTemplate: batch.v1beta1.JobTemplateSpec;
 
       /**
        * The schedule in Cron format, see https://en.wikipedia.org/wiki/Cron.
        */
-      schedule: string
+      schedule: string;
 
       /**
        * Specifies how to treat concurrent executions of a Job. Valid values are: - "Allow"
@@ -7594,34 +7299,32 @@ export namespace batch {
        * skipping next run if previous run hasn't finished yet; - "Replace": cancels currently
        * running job and replaces it with a new one
        */
-      concurrencyPolicy?: string
+      concurrencyPolicy?: string;
 
       /**
        * The number of failed finished jobs to retain. This is a pointer to distinguish between
        * explicit zero and not specified. Defaults to 1.
        */
-      failedJobsHistoryLimit?: number
+      failedJobsHistoryLimit?: number;
 
       /**
        * Optional deadline in seconds for starting the job if it misses scheduled time for any
        * reason.  Missed jobs executions will be counted as failed ones.
        */
-      startingDeadlineSeconds?: number
+      startingDeadlineSeconds?: number;
 
       /**
        * The number of successful finished jobs to retain. This is a pointer to distinguish between
        * explicit zero and not specified. Defaults to 3.
        */
-      successfulJobsHistoryLimit?: number
+      successfulJobsHistoryLimit?: number;
 
       /**
        * This flag tells the controller to suspend subsequent executions, it does not apply to
        * already started executions.  Defaults to false.
        */
-      suspend?: boolean
-
+      suspend?: boolean;
     }
-
 
     /**
      * JobTemplateSpec describes the data a Job should have when created from a template
@@ -7631,19 +7334,15 @@ export namespace batch {
        * Standard object's metadata of the jobs created from this template. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Specification of the desired behavior of the job. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
        */
-      spec?: batch.v1.JobSpec
-
+      spec?: batch.v1.JobSpec;
     }
-
-
   }
-
   export namespace v2alpha1 {
     /**
      * CronJob represents the configuration of a single cron job.
@@ -7655,7 +7354,7 @@ export namespace batch {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "batch/v2alpha1"
+      apiVersion?: "batch/v2alpha1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -7663,20 +7362,19 @@ export namespace batch {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "CronJob"
+      kind?: "CronJob";
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Specification of the desired behavior of a cron job, including the schedule. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
        */
-      spec?: batch.v2alpha1.CronJobSpec
-
+      spec?: batch.v2alpha1.CronJobSpec;
     }
 
     export function isCronJob(o: any): o is CronJob {
@@ -7690,7 +7388,7 @@ export namespace batch {
       /**
        * items is the list of CronJobs.
        */
-      items: batch.v2alpha1.CronJob[]
+      items: batch.v2alpha1.CronJob[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -7698,7 +7396,7 @@ export namespace batch {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "batch/v2alpha1"
+      apiVersion?: "batch/v2alpha1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -7706,14 +7404,13 @@ export namespace batch {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "CronJobList"
+      kind?: "CronJobList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isCronJobList(o: any): o is CronJobList {
@@ -7727,12 +7424,12 @@ export namespace batch {
       /**
        * Specifies the job that will be created when executing a CronJob.
        */
-      jobTemplate: batch.v2alpha1.JobTemplateSpec
+      jobTemplate: batch.v2alpha1.JobTemplateSpec;
 
       /**
        * The schedule in Cron format, see https://en.wikipedia.org/wiki/Cron.
        */
-      schedule: string
+      schedule: string;
 
       /**
        * Specifies how to treat concurrent executions of a Job. Valid values are: - "Allow"
@@ -7740,34 +7437,32 @@ export namespace batch {
        * skipping next run if previous run hasn't finished yet; - "Replace": cancels currently
        * running job and replaces it with a new one
        */
-      concurrencyPolicy?: string
+      concurrencyPolicy?: string;
 
       /**
        * The number of failed finished jobs to retain. This is a pointer to distinguish between
        * explicit zero and not specified.
        */
-      failedJobsHistoryLimit?: number
+      failedJobsHistoryLimit?: number;
 
       /**
        * Optional deadline in seconds for starting the job if it misses scheduled time for any
        * reason.  Missed jobs executions will be counted as failed ones.
        */
-      startingDeadlineSeconds?: number
+      startingDeadlineSeconds?: number;
 
       /**
        * The number of successful finished jobs to retain. This is a pointer to distinguish between
        * explicit zero and not specified.
        */
-      successfulJobsHistoryLimit?: number
+      successfulJobsHistoryLimit?: number;
 
       /**
        * This flag tells the controller to suspend subsequent executions, it does not apply to
        * already started executions.  Defaults to false.
        */
-      suspend?: boolean
-
+      suspend?: boolean;
     }
-
 
     /**
      * JobTemplateSpec describes the data a Job should have when created from a template
@@ -7777,19 +7472,15 @@ export namespace batch {
        * Standard object's metadata of the jobs created from this template. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Specification of the desired behavior of the job. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
        */
-      spec?: batch.v1.JobSpec
-
+      spec?: batch.v1.JobSpec;
     }
-
-
   }
-
 }
 
 export namespace certificates {
@@ -7804,7 +7495,7 @@ export namespace certificates {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "certificates.k8s.io/v1beta1"
+      apiVersion?: "certificates.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -7812,55 +7503,55 @@ export namespace certificates {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "CertificateSigningRequest"
+      kind?: "CertificateSigningRequest";
 
-      
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * The certificate request itself and any additional information.
        */
-      spec?: certificates.v1beta1.CertificateSigningRequestSpec
-
+      spec?: certificates.v1beta1.CertificateSigningRequestSpec;
     }
 
-    export function isCertificateSigningRequest(o: any): o is CertificateSigningRequest {
-      return o.apiVersion == "certificates.k8s.io/v1beta1" && o.kind == "CertificateSigningRequest";
+    export function isCertificateSigningRequest(
+      o: any
+    ): o is CertificateSigningRequest {
+      return (
+        o.apiVersion == "certificates.k8s.io/v1beta1" &&
+        o.kind == "CertificateSigningRequest"
+      );
     }
 
     /**
-     * 
+     *
      */
     export interface CertificateSigningRequestCondition {
       /**
        * request approval state, currently Approved or Denied.
        */
-      type: string
+      type: string;
 
       /**
        * timestamp for the last update to this condition
        */
-      lastUpdateTime?: string
+      lastUpdateTime?: string;
 
       /**
        * human readable message with details about the request state
        */
-      message?: string
+      message?: string;
 
       /**
        * brief reason for the request state
        */
-      reason?: string
-
+      reason?: string;
     }
 
-
     /**
-     * 
+     *
      */
     export interface CertificateSigningRequestList {
-      
-      items: certificates.v1beta1.CertificateSigningRequest[]
+      items: certificates.v1beta1.CertificateSigningRequest[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -7868,7 +7559,7 @@ export namespace certificates {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "certificates.k8s.io/v1beta1"
+      apiVersion?: "certificates.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -7876,15 +7567,18 @@ export namespace certificates {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "CertificateSigningRequestList"
+      kind?: "CertificateSigningRequestList";
 
-      
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
-    export function isCertificateSigningRequestList(o: any): o is CertificateSigningRequestList {
-      return o.apiVersion == "certificates.k8s.io/v1beta1" && o.kind == "CertificateSigningRequestList";
+    export function isCertificateSigningRequestList(
+      o: any
+    ): o is CertificateSigningRequestList {
+      return (
+        o.apiVersion == "certificates.k8s.io/v1beta1" &&
+        o.kind == "CertificateSigningRequestList"
+      );
     }
 
     /**
@@ -7896,40 +7590,36 @@ export namespace certificates {
       /**
        * Base64-encoded PKCS#10 CSR data
        */
-      request: string
+      request: string;
 
       /**
        * Extra information about the requesting user. See user.Info interface for details.
        */
-      extra?: object
+      extra?: object;
 
       /**
        * Group information about the requesting user. See user.Info interface for details.
        */
-      groups?: string[]
+      groups?: string[];
 
       /**
        * UID information about the requesting user. See user.Info interface for details.
        */
-      uid?: string
+      uid?: string;
 
       /**
        * allowedUsages specifies a set of usage contexts the key will be valid for. See:
        * https://tools.ietf.org/html/rfc5280#section-4.2.1.3
        *      https://tools.ietf.org/html/rfc5280#section-4.2.1.12
        */
-      usages?: string[]
+      usages?: string[];
 
       /**
        * Information about the requesting user. See user.Info interface for details.
        */
-      username?: string
-
+      username?: string;
     }
-
-
   }
-
 }
 
 export namespace coordination {
@@ -7944,7 +7634,7 @@ export namespace coordination {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "coordination.k8s.io/v1"
+      apiVersion?: "coordination.k8s.io/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -7952,20 +7642,19 @@ export namespace coordination {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "Lease"
+      kind?: "Lease";
 
       /**
        * More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Specification of the Lease. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
        */
-      spec?: coordination.v1.LeaseSpec
-
+      spec?: coordination.v1.LeaseSpec;
     }
 
     export function isLease(o: any): o is Lease {
@@ -7979,7 +7668,7 @@ export namespace coordination {
       /**
        * Items is a list of schema objects.
        */
-      items: coordination.v1.Lease[]
+      items: coordination.v1.Lease[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -7987,7 +7676,7 @@ export namespace coordination {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "coordination.k8s.io/v1"
+      apiVersion?: "coordination.k8s.io/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -7995,14 +7684,13 @@ export namespace coordination {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "LeaseList"
+      kind?: "LeaseList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isLeaseList(o: any): o is LeaseList {
@@ -8016,34 +7704,30 @@ export namespace coordination {
       /**
        * acquireTime is a time when the current lease was acquired.
        */
-      acquireTime?: string
+      acquireTime?: string;
 
       /**
        * holderIdentity contains the identity of the holder of a current lease.
        */
-      holderIdentity?: string
+      holderIdentity?: string;
 
       /**
        * leaseDurationSeconds is a duration that candidates for a lease need to wait to force
        * acquire it. This is measure against time of last observed RenewTime.
        */
-      leaseDurationSeconds?: number
+      leaseDurationSeconds?: number;
 
       /**
        * leaseTransitions is the number of transitions of a lease between holders.
        */
-      leaseTransitions?: number
+      leaseTransitions?: number;
 
       /**
        * renewTime is a time when the current holder of a lease has last updated the lease.
        */
-      renewTime?: string
-
+      renewTime?: string;
     }
-
-
   }
-
   export namespace v1beta1 {
     /**
      * Lease defines a lease concept.
@@ -8055,7 +7739,7 @@ export namespace coordination {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "coordination.k8s.io/v1beta1"
+      apiVersion?: "coordination.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -8063,20 +7747,19 @@ export namespace coordination {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "Lease"
+      kind?: "Lease";
 
       /**
        * More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Specification of the Lease. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
        */
-      spec?: coordination.v1beta1.LeaseSpec
-
+      spec?: coordination.v1beta1.LeaseSpec;
     }
 
     export function isLease(o: any): o is Lease {
@@ -8090,7 +7773,7 @@ export namespace coordination {
       /**
        * Items is a list of schema objects.
        */
-      items: coordination.v1beta1.Lease[]
+      items: coordination.v1beta1.Lease[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -8098,7 +7781,7 @@ export namespace coordination {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "coordination.k8s.io/v1beta1"
+      apiVersion?: "coordination.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -8106,18 +7789,19 @@ export namespace coordination {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "LeaseList"
+      kind?: "LeaseList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isLeaseList(o: any): o is LeaseList {
-      return o.apiVersion == "coordination.k8s.io/v1beta1" && o.kind == "LeaseList";
+      return (
+        o.apiVersion == "coordination.k8s.io/v1beta1" && o.kind == "LeaseList"
+      );
     }
 
     /**
@@ -8127,41 +7811,37 @@ export namespace coordination {
       /**
        * acquireTime is a time when the current lease was acquired.
        */
-      acquireTime?: string
+      acquireTime?: string;
 
       /**
        * holderIdentity contains the identity of the holder of a current lease.
        */
-      holderIdentity?: string
+      holderIdentity?: string;
 
       /**
        * leaseDurationSeconds is a duration that candidates for a lease need to wait to force
        * acquire it. This is measure against time of last observed RenewTime.
        */
-      leaseDurationSeconds?: number
+      leaseDurationSeconds?: number;
 
       /**
        * leaseTransitions is the number of transitions of a lease between holders.
        */
-      leaseTransitions?: number
+      leaseTransitions?: number;
 
       /**
        * renewTime is a time when the current holder of a lease has last updated the lease.
        */
-      renewTime?: string
-
+      renewTime?: string;
     }
-
-
   }
-
 }
 
 export namespace core {
   export namespace v1 {
     /**
      * Represents a Persistent Disk resource in AWS.
-     * 
+     *
      * An AWS EBS disk must exist before mounting to a container. The disk must also be in the same
      * AWS zone as the kubelet. An AWS EBS disk can only be mounted as read/write once. AWS EBS
      * volumes support ownership management and SELinux relabeling.
@@ -8171,7 +7851,7 @@ export namespace core {
        * Unique ID of the persistent disk resource in AWS (Amazon EBS volume). More info:
        * https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
        */
-      volumeID: string
+      volumeID: string;
 
       /**
        * Filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type
@@ -8179,24 +7859,22 @@ export namespace core {
        * inferred to be "ext4" if unspecified. More info:
        * https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
        */
-      fsType?: string
+      fsType?: string;
 
       /**
        * The partition in the volume that you want to mount. If omitted, the default is to mount by
        * volume name. Examples: For volume /dev/sda1, you specify the partition as "1". Similarly,
        * the volume partition for /dev/sda is "0" (or you can leave the property empty).
        */
-      partition?: number
+      partition?: number;
 
       /**
        * Specify "true" to force and set the ReadOnly property in VolumeMounts to "true". If
        * omitted, the default is "false". More info:
        * https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
        */
-      readOnly?: boolean
-
+      readOnly?: boolean;
     }
-
 
     /**
      * Affinity is a group of affinity scheduling rules.
@@ -8205,22 +7883,20 @@ export namespace core {
       /**
        * Describes node affinity scheduling rules for the pod.
        */
-      nodeAffinity?: core.v1.NodeAffinity
+      nodeAffinity?: core.v1.NodeAffinity;
 
       /**
        * Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone,
        * etc. as some other pod(s)).
        */
-      podAffinity?: core.v1.PodAffinity
+      podAffinity?: core.v1.PodAffinity;
 
       /**
        * Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node,
        * zone, etc. as some other pod(s)).
        */
-      podAntiAffinity?: core.v1.PodAntiAffinity
-
+      podAntiAffinity?: core.v1.PodAntiAffinity;
     }
-
 
     /**
      * AttachedVolume describes a volume attached to a node
@@ -8229,15 +7905,13 @@ export namespace core {
       /**
        * DevicePath represents the device path where the volume should be available
        */
-      devicePath: string
+      devicePath: string;
 
       /**
        * Name of the attached volume
        */
-      name: string
-
+      name: string;
     }
-
 
     /**
      * AzureDisk represents an Azure Data Disk mount on the host and bind mount to the pod.
@@ -8246,39 +7920,37 @@ export namespace core {
       /**
        * The Name of the data disk in the blob storage
        */
-      diskName: string
+      diskName: string;
 
       /**
        * The URI the data disk in the blob storage
        */
-      diskURI: string
+      diskURI: string;
 
       /**
        * Host Caching mode: None, Read Only, Read Write.
        */
-      cachingMode?: string
+      cachingMode?: string;
 
       /**
        * Filesystem type to mount. Must be a filesystem type supported by the host operating system.
        * Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
        */
-      fsType?: string
+      fsType?: string;
 
       /**
        * Expected values Shared: multiple blob disks per storage account  Dedicated: single blob
        * disk per storage account  Managed: azure managed data disk (only in managed availability
        * set). defaults to shared
        */
-      kind?: string
+      kind?: "AzureDiskVolumeSource";
 
       /**
        * Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in
        * VolumeMounts.
        */
-      readOnly?: boolean
-
+      readOnly?: boolean;
     }
-
 
     /**
      * AzureFile represents an Azure File Service mount on the host and bind mount to the pod.
@@ -8287,27 +7959,25 @@ export namespace core {
       /**
        * the name of secret that contains Azure Storage Account Name and Key
        */
-      secretName: string
+      secretName: string;
 
       /**
        * Share Name
        */
-      shareName: string
+      shareName: string;
 
       /**
        * Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in
        * VolumeMounts.
        */
-      readOnly?: boolean
+      readOnly?: boolean;
 
       /**
        * the namespace of the secret that contains Azure Storage Account Name and Key default is the
        * same as the Pod
        */
-      secretNamespace?: string
-
+      secretNamespace?: string;
     }
-
 
     /**
      * AzureFile represents an Azure File Service mount on the host and bind mount to the pod.
@@ -8316,21 +7986,19 @@ export namespace core {
       /**
        * the name of secret that contains Azure Storage Account Name and Key
        */
-      secretName: string
+      secretName: string;
 
       /**
        * Share Name
        */
-      shareName: string
+      shareName: string;
 
       /**
        * Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in
        * VolumeMounts.
        */
-      readOnly?: boolean
-
+      readOnly?: boolean;
     }
-
 
     /**
      * Binding ties one object to another; for example, a pod is bound to a node by a scheduler.
@@ -8340,7 +8008,7 @@ export namespace core {
       /**
        * The target object that you want to bind to the standard object.
        */
-      target: core.v1.ObjectReference
+      target: core.v1.ObjectReference;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -8348,7 +8016,7 @@ export namespace core {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1"
+      apiVersion?: "v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -8356,14 +8024,13 @@ export namespace core {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "Binding"
+      kind?: "Binding";
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
-
+      metadata?: meta.v1.ObjectMeta;
     }
 
     export function isBinding(o: any): o is Binding {
@@ -8377,13 +8044,13 @@ export namespace core {
       /**
        * Driver is the name of the driver to use for this volume. Required.
        */
-      driver: string
+      driver: string;
 
       /**
        * VolumeHandle is the unique volume name returned by the CSI volume plugin’s CreateVolume
        * to refer to the volume on all subsequent calls. Required.
        */
-      volumeHandle: string
+      volumeHandle: string;
 
       /**
        * ControllerExpandSecretRef is a reference to the secret object containing sensitive
@@ -8392,7 +8059,7 @@ export namespace core {
        * optional, and may be empty if no secret is required. If the secret object contains more
        * than one secret, all secrets are passed.
        */
-      controllerExpandSecretRef?: core.v1.SecretReference
+      controllerExpandSecretRef?: core.v1.SecretReference;
 
       /**
        * ControllerPublishSecretRef is a reference to the secret object containing sensitive
@@ -8400,13 +8067,13 @@ export namespace core {
        * ControllerUnpublishVolume calls. This field is optional, and may be empty if no secret is
        * required. If the secret object contains more than one secret, all secrets are passed.
        */
-      controllerPublishSecretRef?: core.v1.SecretReference
+      controllerPublishSecretRef?: core.v1.SecretReference;
 
       /**
        * Filesystem type to mount. Must be a filesystem type supported by the host operating system.
        * Ex. "ext4", "xfs", "ntfs".
        */
-      fsType?: string
+      fsType?: string;
 
       /**
        * NodePublishSecretRef is a reference to the secret object containing sensitive information
@@ -8414,7 +8081,7 @@ export namespace core {
        * calls. This field is optional, and may be empty if no secret is required. If the secret
        * object contains more than one secret, all secrets are passed.
        */
-      nodePublishSecretRef?: core.v1.SecretReference
+      nodePublishSecretRef?: core.v1.SecretReference;
 
       /**
        * NodeStageSecretRef is a reference to the secret object containing sensitive information to
@@ -8422,21 +8089,19 @@ export namespace core {
        * NodeUnstageVolume calls. This field is optional, and may be empty if no secret is required.
        * If the secret object contains more than one secret, all secrets are passed.
        */
-      nodeStageSecretRef?: core.v1.SecretReference
+      nodeStageSecretRef?: core.v1.SecretReference;
 
       /**
        * Optional: The value to pass to ControllerPublishVolumeRequest. Defaults to false
        * (read/write).
        */
-      readOnly?: boolean
+      readOnly?: boolean;
 
       /**
        * Attributes of the volume to publish.
        */
-      volumeAttributes?: {[key: string]: string}
-
+      volumeAttributes?: { [key: string]: string };
     }
-
 
     /**
      * Represents a source location of a volume to mount, managed by an external CSI driver
@@ -8446,13 +8111,13 @@ export namespace core {
        * Driver is the name of the CSI driver that handles this volume. Consult with your admin for
        * the correct name as registered in the cluster.
        */
-      driver: string
+      driver: string;
 
       /**
        * Filesystem type to mount. Ex. "ext4", "xfs", "ntfs". If not provided, the empty value is
        * passed to the associated CSI driver which will determine the default filesystem to apply.
        */
-      fsType?: string
+      fsType?: string;
 
       /**
        * NodePublishSecretRef is a reference to the secret object containing sensitive information
@@ -8460,21 +8125,19 @@ export namespace core {
        * calls. This field is optional, and  may be empty if no secret is required. If the secret
        * object contains more than one secret, all secret references are passed.
        */
-      nodePublishSecretRef?: core.v1.LocalObjectReference
+      nodePublishSecretRef?: core.v1.LocalObjectReference;
 
       /**
        * Specifies a read-only configuration for the volume. Defaults to false (read/write).
        */
-      readOnly?: boolean
+      readOnly?: boolean;
 
       /**
        * VolumeAttributes stores driver-specific properties that are passed to the CSI driver.
        * Consult your driver's documentation for supported values.
        */
-      volumeAttributes?: {[key: string]: string}
-
+      volumeAttributes?: { [key: string]: string };
     }
-
 
     /**
      * Adds and removes POSIX capabilities from running containers.
@@ -8483,15 +8146,13 @@ export namespace core {
       /**
        * Added capabilities
        */
-      add?: string[]
+      add?: string[];
 
       /**
        * Removed capabilities
        */
-      drop?: string[]
-
+      drop?: string[];
     }
-
 
     /**
      * Represents a Ceph Filesystem mount that lasts the lifetime of a pod Cephfs volumes do not
@@ -8502,39 +8163,37 @@ export namespace core {
        * Required: Monitors is a collection of Ceph monitors More info:
        * https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it
        */
-      monitors: string[]
+      monitors: string[];
 
       /**
        * Optional: Used as the mounted root, rather than the full Ceph tree, default is /
        */
-      path?: string
+      path?: string;
 
       /**
        * Optional: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in
        * VolumeMounts. More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it
        */
-      readOnly?: boolean
+      readOnly?: boolean;
 
       /**
        * Optional: SecretFile is the path to key ring for User, default is /etc/ceph/user.secret
        * More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it
        */
-      secretFile?: string
+      secretFile?: string;
 
       /**
        * Optional: SecretRef is reference to the authentication secret for User, default is empty.
        * More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it
        */
-      secretRef?: core.v1.SecretReference
+      secretRef?: core.v1.SecretReference;
 
       /**
        * Optional: User is the rados user name, default is admin More info:
        * https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it
        */
-      user?: string
-
+      user?: string;
     }
-
 
     /**
      * Represents a Ceph Filesystem mount that lasts the lifetime of a pod Cephfs volumes do not
@@ -8545,39 +8204,37 @@ export namespace core {
        * Required: Monitors is a collection of Ceph monitors More info:
        * https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it
        */
-      monitors: string[]
+      monitors: string[];
 
       /**
        * Optional: Used as the mounted root, rather than the full Ceph tree, default is /
        */
-      path?: string
+      path?: string;
 
       /**
        * Optional: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in
        * VolumeMounts. More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it
        */
-      readOnly?: boolean
+      readOnly?: boolean;
 
       /**
        * Optional: SecretFile is the path to key ring for User, default is /etc/ceph/user.secret
        * More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it
        */
-      secretFile?: string
+      secretFile?: string;
 
       /**
        * Optional: SecretRef is reference to the authentication secret for User, default is empty.
        * More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it
        */
-      secretRef?: core.v1.LocalObjectReference
+      secretRef?: core.v1.LocalObjectReference;
 
       /**
        * Optional: User is the rados user name, default is admin More info:
        * https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it
        */
-      user?: string
-
+      user?: string;
     }
-
 
     /**
      * Represents a cinder volume resource in Openstack. A Cinder volume must exist before mounting
@@ -8589,28 +8246,26 @@ export namespace core {
        * volume id used to identify the volume in cinder. More info:
        * https://examples.k8s.io/mysql-cinder-pd/README.md
        */
-      volumeID: string
+      volumeID: string;
 
       /**
        * Filesystem type to mount. Must be a filesystem type supported by the host operating system.
        * Examples: "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified. More
        * info: https://examples.k8s.io/mysql-cinder-pd/README.md
        */
-      fsType?: string
+      fsType?: string;
 
       /**
        * Optional: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in
        * VolumeMounts. More info: https://examples.k8s.io/mysql-cinder-pd/README.md
        */
-      readOnly?: boolean
+      readOnly?: boolean;
 
       /**
        * Optional: points to a secret object containing parameters used to connect to OpenStack.
        */
-      secretRef?: core.v1.SecretReference
-
+      secretRef?: core.v1.SecretReference;
     }
-
 
     /**
      * Represents a cinder volume resource in Openstack. A Cinder volume must exist before mounting
@@ -8622,28 +8277,26 @@ export namespace core {
        * volume id used to identify the volume in cinder. More info:
        * https://examples.k8s.io/mysql-cinder-pd/README.md
        */
-      volumeID: string
+      volumeID: string;
 
       /**
        * Filesystem type to mount. Must be a filesystem type supported by the host operating system.
        * Examples: "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified. More
        * info: https://examples.k8s.io/mysql-cinder-pd/README.md
        */
-      fsType?: string
+      fsType?: string;
 
       /**
        * Optional: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in
        * VolumeMounts. More info: https://examples.k8s.io/mysql-cinder-pd/README.md
        */
-      readOnly?: boolean
+      readOnly?: boolean;
 
       /**
        * Optional: points to a secret object containing parameters used to connect to OpenStack.
        */
-      secretRef?: core.v1.LocalObjectReference
-
+      secretRef?: core.v1.LocalObjectReference;
     }
-
 
     /**
      * ClientIPConfig represents the configurations of Client IP based session affinity.
@@ -8654,10 +8307,8 @@ export namespace core {
        * be >0 && <=86400(for 1 day) if ServiceAffinity == "ClientIP". Default value is 10800(for 3
        * hours).
        */
-      timeoutSeconds?: number
-
+      timeoutSeconds?: number;
     }
-
 
     /**
      * Information about the condition of a component.
@@ -8666,20 +8317,18 @@ export namespace core {
       /**
        * Type of condition for a component. Valid value: "Healthy"
        */
-      type: string
+      type: string;
 
       /**
        * Condition error code for a component. For example, a health check error code.
        */
-      error?: string
+      error?: string;
 
       /**
        * Message about the condition for a component. For example, information about a health check.
        */
-      message?: string
-
+      message?: string;
     }
-
 
     /**
      * ConfigMap holds configuration data for pods to consume.
@@ -8691,7 +8340,7 @@ export namespace core {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1"
+      apiVersion?: "v1";
 
       /**
        * BinaryData contains the binary data. Each key must consist of alphanumeric characters, '-',
@@ -8699,7 +8348,7 @@ export namespace core {
        * stored in BinaryData must not overlap with the ones in the Data field, this is enforced
        * during validation process. Using this field will require 1.10+ apiserver and kubelet.
        */
-      binaryData?: object
+      binaryData?: object;
 
       /**
        * Data contains the configuration data. Each key must consist of alphanumeric characters,
@@ -8707,7 +8356,7 @@ export namespace core {
        * keys stored in Data must not overlap with the keys in the BinaryData field, this is
        * enforced during validation process.
        */
-      data?: {[key: string]: string}
+      data?: { [key: string]: string };
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -8715,14 +8364,13 @@ export namespace core {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ConfigMap"
+      kind?: "ConfigMap";
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
-
+      metadata?: meta.v1.ObjectMeta;
     }
 
     export function isConfigMap(o: any): o is ConfigMap {
@@ -8731,7 +8379,7 @@ export namespace core {
 
     /**
      * ConfigMapEnvSource selects a ConfigMap to populate the environment variables with.
-     * 
+     *
      * The contents of the target ConfigMap's Data field will represent the key-value pairs as
      * environment variables.
      */
@@ -8740,15 +8388,13 @@ export namespace core {
        * Name of the referent. More info:
        * https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
        */
-      name?: string
+      name?: string;
 
       /**
        * Specify whether the ConfigMap must be defined
        */
-      optional?: boolean
-
+      optional?: boolean;
     }
-
 
     /**
      * Selects a key from a ConfigMap.
@@ -8757,21 +8403,19 @@ export namespace core {
       /**
        * The key to select.
        */
-      key: string
+      key: string;
 
       /**
        * Name of the referent. More info:
        * https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
        */
-      name?: string
+      name?: string;
 
       /**
        * Specify whether the ConfigMap or its key must be defined
        */
-      optional?: boolean
-
+      optional?: boolean;
     }
-
 
     /**
      * ConfigMapList is a resource containing a list of ConfigMap objects.
@@ -8780,7 +8424,7 @@ export namespace core {
       /**
        * Items is the list of ConfigMaps.
        */
-      items: core.v1.ConfigMap[]
+      items: core.v1.ConfigMap[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -8788,7 +8432,7 @@ export namespace core {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1"
+      apiVersion?: "v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -8796,14 +8440,13 @@ export namespace core {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ConfigMapList"
+      kind?: "ConfigMapList";
 
       /**
        * More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isConfigMapList(o: any): o is ConfigMapList {
@@ -8819,37 +8462,35 @@ export namespace core {
        * KubeletConfigKey declares which key of the referenced ConfigMap corresponds to the
        * KubeletConfiguration structure This field is required in all cases.
        */
-      kubeletConfigKey: string
+      kubeletConfigKey: string;
 
       /**
        * Name is the metadata.name of the referenced ConfigMap. This field is required in all cases.
        */
-      name: string
+      name: string;
 
       /**
        * Namespace is the metadata.namespace of the referenced ConfigMap. This field is required in
        * all cases.
        */
-      namespace: string
+      namespace: string;
 
       /**
        * ResourceVersion is the metadata.ResourceVersion of the referenced ConfigMap. This field is
        * forbidden in Node.Spec, and required in Node.Status.
        */
-      resourceVersion?: string
+      resourceVersion?: string;
 
       /**
        * UID is the metadata.UID of the referenced ConfigMap. This field is forbidden in Node.Spec,
        * and required in Node.Status.
        */
-      uid?: string
-
+      uid?: string;
     }
-
 
     /**
      * Adapts a ConfigMap into a projected volume.
-     * 
+     *
      * The contents of the target ConfigMap's Data field will be presented in a projected volume as
      * files using the keys in the Data field as the file names, unless the items element is
      * populated with specific mappings of keys to paths. Note that this is identical to a configmap
@@ -8864,25 +8505,23 @@ export namespace core {
        * volume setup will error unless it is marked optional. Paths must be relative and may not
        * contain the '..' path or start with '..'.
        */
-      items?: core.v1.KeyToPath[]
+      items?: core.v1.KeyToPath[];
 
       /**
        * Name of the referent. More info:
        * https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
        */
-      name?: string
+      name?: string;
 
       /**
        * Specify whether the ConfigMap or its keys must be defined
        */
-      optional?: boolean
-
+      optional?: boolean;
     }
-
 
     /**
      * Adapts a ConfigMap into a volume.
-     * 
+     *
      * The contents of the target ConfigMap's Data field will be presented in a volume as files
      * using the keys in the Data field as the file names, unless the items element is populated
      * with specific mappings of keys to paths. ConfigMap volumes support ownership management and
@@ -8895,7 +8534,7 @@ export namespace core {
        * be in conflict with other options that affect the file mode, like fsGroup, and the result
        * can be other mode bits set.
        */
-      defaultMode?: number
+      defaultMode?: number;
 
       /**
        * If unspecified, each key-value pair in the Data field of the referenced ConfigMap will be
@@ -8905,21 +8544,19 @@ export namespace core {
        * volume setup will error unless it is marked optional. Paths must be relative and may not
        * contain the '..' path or start with '..'.
        */
-      items?: core.v1.KeyToPath[]
+      items?: core.v1.KeyToPath[];
 
       /**
        * Name of the referent. More info:
        * https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
        */
-      name?: string
+      name?: string;
 
       /**
        * Specify whether the ConfigMap or its keys must be defined
        */
-      optional?: boolean
-
+      optional?: boolean;
     }
-
 
     /**
      * A single application container that you want to run within a pod.
@@ -8929,7 +8566,7 @@ export namespace core {
        * Name of the container specified as a DNS_LABEL. Each container in a pod must have a unique
        * name (DNS_LABEL). Cannot be updated.
        */
-      name: string
+      name: string;
 
       /**
        * Arguments to the entrypoint. The docker image's CMD is used if this is not provided.
@@ -8940,7 +8577,7 @@ export namespace core {
        * updated. More info:
        * https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
        */
-      args?: string[]
+      args?: string[];
 
       /**
        * Entrypoint array. Not executed within a shell. The docker image's ENTRYPOINT is used if
@@ -8951,12 +8588,12 @@ export namespace core {
        * not. Cannot be updated. More info:
        * https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
        */
-      command?: string[]
+      command?: string[];
 
       /**
        * List of environment variables to set in the container. Cannot be updated.
        */
-      env?: core.v1.EnvVar[]
+      env?: core.v1.EnvVar[];
 
       /**
        * List of sources to populate environment variables in the container. The keys defined within
@@ -8965,34 +8602,34 @@ export namespace core {
        * last source will take precedence. Values defined by an Env with a duplicate key will take
        * precedence. Cannot be updated.
        */
-      envFrom?: core.v1.EnvFromSource[]
+      envFrom?: core.v1.EnvFromSource[];
 
       /**
        * Docker image name. More info: https://kubernetes.io/docs/concepts/containers/images This
        * field is optional to allow higher level config management to default or override container
        * images in workload controllers like Deployments and StatefulSets.
        */
-      image?: string
+      image?: string;
 
       /**
        * Image pull policy. One of Always, Never, IfNotPresent. Defaults to Always if :latest tag is
        * specified, or IfNotPresent otherwise. Cannot be updated. More info:
        * https://kubernetes.io/docs/concepts/containers/images#updating-images
        */
-      imagePullPolicy?: string
+      imagePullPolicy?: string;
 
       /**
        * Actions that the management system should take in response to container lifecycle events.
        * Cannot be updated.
        */
-      lifecycle?: core.v1.Lifecycle
+      lifecycle?: core.v1.Lifecycle;
 
       /**
        * Periodic probe of container liveness. Container will be restarted if the probe fails.
        * Cannot be updated. More info:
        * https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
        */
-      livenessProbe?: core.v1.Probe
+      livenessProbe?: core.v1.Probe;
 
       /**
        * List of ports to expose from the container. Exposing a port here gives the system
@@ -9001,27 +8638,27 @@ export namespace core {
        * Any port which is listening on the default "0.0.0.0" address inside a container will be
        * accessible from the network. Cannot be updated.
        */
-      ports?: core.v1.ContainerPort[]
+      ports?: core.v1.ContainerPort[];
 
       /**
        * Periodic probe of container service readiness. Container will be removed from service
        * endpoints if the probe fails. Cannot be updated. More info:
        * https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
        */
-      readinessProbe?: core.v1.Probe
+      readinessProbe?: core.v1.Probe;
 
       /**
        * Compute Resources required by this container. Cannot be updated. More info:
        * https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
        */
-      resources?: core.v1.ResourceRequirements
+      resources?: core.v1.ResourceRequirements;
 
       /**
        * Security options the pod should run with. More info:
        * https://kubernetes.io/docs/concepts/policy/security-context/ More info:
        * https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
        */
-      securityContext?: core.v1.SecurityContext
+      securityContext?: core.v1.SecurityContext;
 
       /**
        * StartupProbe indicates that the Pod has successfully initialized. If specified, no other
@@ -9032,13 +8669,13 @@ export namespace core {
        * an alpha feature enabled by the StartupProbe feature flag. More info:
        * https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
        */
-      startupProbe?: core.v1.Probe
+      startupProbe?: core.v1.Probe;
 
       /**
        * Whether this container should allocate a buffer for stdin in the container runtime. If this
        * is not set, reads from stdin in the container will always result in EOF. Default is false.
        */
-      stdin?: boolean
+      stdin?: boolean;
 
       /**
        * Whether the container runtime should close the stdin channel after it has been opened by a
@@ -9049,7 +8686,7 @@ export namespace core {
        * restarted. If this flag is false, a container processes that reads from stdin will never
        * receive an EOF. Default is false
        */
-      stdinOnce?: boolean
+      stdinOnce?: boolean;
 
       /**
        * Optional: Path at which the file to which the container's termination message will be
@@ -9058,7 +8695,7 @@ export namespace core {
        * greater than 4096 bytes. The total message length across all containers will be limited to
        * 12kb. Defaults to /dev/termination-log. Cannot be updated.
        */
-      terminationMessagePath?: string
+      terminationMessagePath?: string;
 
       /**
        * Indicate how the termination message should be populated. File will use the contents of
@@ -9068,33 +8705,31 @@ export namespace core {
        * limited to 2048 bytes or 80 lines, whichever is smaller. Defaults to File. Cannot be
        * updated.
        */
-      terminationMessagePolicy?: string
+      terminationMessagePolicy?: string;
 
       /**
        * Whether this container should allocate a TTY for itself, also requires 'stdin' to be true.
        * Default is false.
        */
-      tty?: boolean
+      tty?: boolean;
 
       /**
        * volumeDevices is the list of block devices to be used by the container. This is a beta
        * feature.
        */
-      volumeDevices?: core.v1.VolumeDevice[]
+      volumeDevices?: core.v1.VolumeDevice[];
 
       /**
        * Pod volumes to mount into the container's filesystem. Cannot be updated.
        */
-      volumeMounts?: core.v1.VolumeMount[]
+      volumeMounts?: core.v1.VolumeMount[];
 
       /**
        * Container's working directory. If not specified, the container runtime's default will be
        * used, which might be configured in the container image. Cannot be updated.
        */
-      workingDir?: string
-
+      workingDir?: string;
     }
-
 
     /**
      * Describe a container image
@@ -9104,15 +8739,13 @@ export namespace core {
        * Names by which this image is known. e.g. ["k8s.gcr.io/hyperkube:v1.0.7",
        * "dockerhub.io/google_containers/hyperkube:v1.0.7"]
        */
-      names: string[]
+      names: string[];
 
       /**
        * The size of the image in bytes.
        */
-      sizeBytes?: number
-
+      sizeBytes?: number;
     }
-
 
     /**
      * ContainerPort represents a network port in a single container.
@@ -9122,33 +8755,31 @@ export namespace core {
        * Number of port to expose on the pod's IP address. This must be a valid port number, 0 < x <
        * 65536.
        */
-      containerPort: number
+      containerPort: number;
 
       /**
        * What host IP to bind the external port to.
        */
-      hostIP?: string
+      hostIP?: string;
 
       /**
        * Number of port to expose on the host. If specified, this must be a valid port number, 0 < x
        * < 65536. If HostNetwork is specified, this must match ContainerPort. Most containers do not
        * need this.
        */
-      hostPort?: number
+      hostPort?: number;
 
       /**
        * If specified, this must be an IANA_SVC_NAME and unique within the pod. Each named port in a
        * pod must have a unique name. Name for the port that can be referred to by services.
        */
-      name?: string
+      name?: string;
 
       /**
        * Protocol for port. Must be UDP, TCP, or SCTP. Defaults to "TCP".
        */
-      protocol?: string
-
+      protocol?: string;
     }
-
 
     /**
      * ContainerState holds a possible state of container. Only one of its members may be specified.
@@ -9158,20 +8789,18 @@ export namespace core {
       /**
        * Details about a running container
        */
-      running?: core.v1.ContainerStateRunning
+      running?: core.v1.ContainerStateRunning;
 
       /**
        * Details about a terminated container
        */
-      terminated?: core.v1.ContainerStateTerminated
+      terminated?: core.v1.ContainerStateTerminated;
 
       /**
        * Details about a waiting container
        */
-      waiting?: core.v1.ContainerStateWaiting
-
+      waiting?: core.v1.ContainerStateWaiting;
     }
-
 
     /**
      * ContainerStateRunning is a running state of a container.
@@ -9180,10 +8809,8 @@ export namespace core {
       /**
        * Time at which the container was last (re-)started
        */
-      startedAt?: string
-
+      startedAt?: string;
     }
-
 
     /**
      * ContainerStateTerminated is a terminated state of a container.
@@ -9192,40 +8819,38 @@ export namespace core {
       /**
        * Exit status from the last termination of the container
        */
-      exitCode: number
+      exitCode: number;
 
       /**
        * Container's ID in the format 'docker://<container_id>'
        */
-      containerID?: string
+      containerID?: string;
 
       /**
        * Time at which the container last terminated
        */
-      finishedAt?: string
+      finishedAt?: string;
 
       /**
        * Message regarding the last termination of the container
        */
-      message?: string
+      message?: string;
 
       /**
        * (brief) reason from the last termination of the container
        */
-      reason?: string
+      reason?: string;
 
       /**
        * Signal from the last termination of the container
        */
-      signal?: number
+      signal?: number;
 
       /**
        * Time at which previous execution of the container started
        */
-      startedAt?: string
-
+      startedAt?: string;
     }
-
 
     /**
      * ContainerStateWaiting is a waiting state of a container.
@@ -9234,15 +8859,13 @@ export namespace core {
       /**
        * Message regarding why the container is not yet running.
        */
-      message?: string
+      message?: string;
 
       /**
        * (brief) reason the container is not yet running.
        */
-      reason?: string
-
+      reason?: string;
     }
-
 
     /**
      * DaemonEndpoint contains information about a single Daemon endpoint.
@@ -9251,10 +8874,8 @@ export namespace core {
       /**
        * Port number of the given endpoint.
        */
-      Port: number
-
+      Port: number;
     }
-
 
     /**
      * Represents downward API info for projecting into a projected volume. Note that this is
@@ -9264,10 +8885,8 @@ export namespace core {
       /**
        * Items is a list of DownwardAPIVolume file
        */
-      items?: core.v1.DownwardAPIVolumeFile[]
-
+      items?: core.v1.DownwardAPIVolumeFile[];
     }
-
 
     /**
      * DownwardAPIVolumeFile represents information to create the file containing the pod field
@@ -9278,29 +8897,27 @@ export namespace core {
        * or contain the '..' path. Must be utf-8 encoded. The first item of the relative path must
        * not start with '..'
        */
-      path: string
+      path: string;
 
       /**
        * Required: Selects a field of the pod: only annotations, labels, name and namespace are
        * supported.
        */
-      fieldRef?: core.v1.ObjectFieldSelector
+      fieldRef?: core.v1.ObjectFieldSelector;
 
       /**
        * Optional: mode bits to use on this file, must be a value between 0 and 0777. If not
        * specified, the volume defaultMode will be used. This might be in conflict with other
        * options that affect the file mode, like fsGroup, and the result can be other mode bits set.
        */
-      mode?: number
+      mode?: number;
 
       /**
        * Selects a resource of the container: only resources limits and requests (limits.cpu,
        * limits.memory, requests.cpu and requests.memory) are currently supported.
        */
-      resourceFieldRef?: core.v1.ResourceFieldSelector
-
+      resourceFieldRef?: core.v1.ResourceFieldSelector;
     }
-
 
     /**
      * DownwardAPIVolumeSource represents a volume containing downward API info. Downward API
@@ -9313,15 +8930,13 @@ export namespace core {
        * be in conflict with other options that affect the file mode, like fsGroup, and the result
        * can be other mode bits set.
        */
-      defaultMode?: number
+      defaultMode?: number;
 
       /**
        * Items is a list of downward API volume file
        */
-      items?: core.v1.DownwardAPIVolumeFile[]
-
+      items?: core.v1.DownwardAPIVolumeFile[];
     }
-
 
     /**
      * Represents an empty directory for a pod. Empty directory volumes support ownership management
@@ -9333,7 +8948,7 @@ export namespace core {
        * use the node's default medium. Must be an empty string (default) or Memory. More info:
        * https://kubernetes.io/docs/concepts/storage/volumes#emptydir
        */
-      medium?: string
+      medium?: string;
 
       /**
        * Total amount of local storage required for this EmptyDir volume. The size limit is also
@@ -9342,10 +8957,8 @@ export namespace core {
        * containers in a pod. The default is nil which means that the limit is undefined. More info:
        * http://kubernetes.io/docs/user-guide/volumes#emptydir
        */
-      sizeLimit?: string
-
+      sizeLimit?: string;
     }
-
 
     /**
      * EndpointAddress is a tuple that describes single IP address.
@@ -9356,26 +8969,24 @@ export namespace core {
        * link-local multicast ((224.0.0.0/24). IPv6 is also accepted but not fully supported on all
        * platforms. Also, certain kubernetes components, like kube-proxy, are not IPv6 ready.
        */
-      ip: string
+      ip: string;
 
       /**
        * The Hostname of this endpoint
        */
-      hostname?: string
+      hostname?: string;
 
       /**
        * Optional: Node hosting this endpoint. This can be used to determine endpoints local to a
        * node.
        */
-      nodeName?: string
+      nodeName?: string;
 
       /**
        * Reference to object providing the endpoint.
        */
-      targetRef?: core.v1.ObjectReference
-
+      targetRef?: core.v1.ObjectReference;
     }
-
 
     /**
      * EndpointPort is a tuple that describes a single port.
@@ -9384,21 +8995,19 @@ export namespace core {
       /**
        * The port number of the endpoint.
        */
-      port: number
+      port: number;
 
       /**
        * The name of this port.  This must match the 'name' field in the corresponding ServicePort.
        * Must be a DNS_LABEL. Optional only if one port is defined.
        */
-      name?: string
+      name?: string;
 
       /**
        * The IP protocol for this port. Must be UDP, TCP, or SCTP. Default is TCP.
        */
-      protocol?: string
-
+      protocol?: string;
     }
-
 
     /**
      * EndpointSubset is a group of addresses with a common set of ports. The expanded set of
@@ -9416,22 +9025,20 @@ export namespace core {
        * IP addresses which offer the related ports that are marked as ready. These endpoints should
        * be considered safe for load balancers and clients to utilize.
        */
-      addresses?: core.v1.EndpointAddress[]
+      addresses?: core.v1.EndpointAddress[];
 
       /**
        * IP addresses which offer the related ports but are not currently marked as ready because
        * they have not yet finished starting, have recently failed a readiness check, or have
        * recently failed a liveness check.
        */
-      notReadyAddresses?: core.v1.EndpointAddress[]
+      notReadyAddresses?: core.v1.EndpointAddress[];
 
       /**
        * Port numbers available on the related IP addresses.
        */
-      ports?: core.v1.EndpointPort[]
-
+      ports?: core.v1.EndpointPort[];
     }
-
 
     /**
      * Endpoints is a collection of endpoints that implement the actual service. Example:
@@ -9454,7 +9061,7 @@ export namespace core {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1"
+      apiVersion?: "v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -9462,13 +9069,13 @@ export namespace core {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "Endpoints"
+      kind?: "Endpoints";
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * The set of all endpoints is the union of all subsets. Addresses are placed into subsets
@@ -9478,8 +9085,7 @@ export namespace core {
        * will appear in both Addresses and NotReadyAddresses in the same subset. Sets of addresses
        * and ports that comprise a service.
        */
-      subsets?: core.v1.EndpointSubset[]
-
+      subsets?: core.v1.EndpointSubset[];
     }
 
     export function isEndpoints(o: any): o is Endpoints {
@@ -9493,7 +9099,7 @@ export namespace core {
       /**
        * List of endpoints.
        */
-      items: core.v1.Endpoints[]
+      items: core.v1.Endpoints[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -9501,7 +9107,7 @@ export namespace core {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1"
+      apiVersion?: "v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -9509,14 +9115,13 @@ export namespace core {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "EndpointsList"
+      kind?: "EndpointsList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isEndpointsList(o: any): o is EndpointsList {
@@ -9530,20 +9135,18 @@ export namespace core {
       /**
        * The ConfigMap to select from
        */
-      configMapRef?: core.v1.ConfigMapEnvSource
+      configMapRef?: core.v1.ConfigMapEnvSource;
 
       /**
        * An optional identifier to prepend to each key in the ConfigMap. Must be a C_IDENTIFIER.
        */
-      prefix?: string
+      prefix?: string;
 
       /**
        * The Secret to select from
        */
-      secretRef?: core.v1.SecretEnvSource
-
+      secretRef?: core.v1.SecretEnvSource;
     }
-
 
     /**
      * EnvVar represents an environment variable present in a Container.
@@ -9552,7 +9155,7 @@ export namespace core {
       /**
        * Name of the environment variable. Must be a C_IDENTIFIER.
        */
-      name: string
+      name: string;
 
       /**
        * Variable references $(VAR_NAME) are expanded using the previous defined environment
@@ -9561,15 +9164,13 @@ export namespace core {
        * be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded,
        * regardless of whether the variable exists or not. Defaults to "".
        */
-      value?: string
+      value?: string;
 
       /**
        * Source for the environment variable's value. Cannot be used if value is not empty.
        */
-      valueFrom?: core.v1.EnvVarSource
-
+      valueFrom?: core.v1.EnvVarSource;
     }
-
 
     /**
      * EnvVarSource represents a source for the value of an EnvVar.
@@ -9578,29 +9179,27 @@ export namespace core {
       /**
        * Selects a key of a ConfigMap.
        */
-      configMapKeyRef?: core.v1.ConfigMapKeySelector
+      configMapKeyRef?: core.v1.ConfigMapKeySelector;
 
       /**
        * Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels,
        * metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP,
        * status.podIPs.
        */
-      fieldRef?: core.v1.ObjectFieldSelector
+      fieldRef?: core.v1.ObjectFieldSelector;
 
       /**
        * Selects a resource of the container: only resources limits and requests (limits.cpu,
        * limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and
        * requests.ephemeral-storage) are currently supported.
        */
-      resourceFieldRef?: core.v1.ResourceFieldSelector
+      resourceFieldRef?: core.v1.ResourceFieldSelector;
 
       /**
        * Selects a key of a secret in the pod's namespace
        */
-      secretKeyRef?: core.v1.SecretKeySelector
-
+      secretKeyRef?: core.v1.SecretKeySelector;
     }
-
 
     /**
      * An EphemeralContainer is a container that may be added temporarily to an existing pod for
@@ -9617,7 +9216,7 @@ export namespace core {
        * Name of the ephemeral container specified as a DNS_LABEL. This name must be unique among
        * all containers, init containers and ephemeral containers.
        */
-      name: string
+      name: string;
 
       /**
        * Arguments to the entrypoint. The docker image's CMD is used if this is not provided.
@@ -9628,7 +9227,7 @@ export namespace core {
        * updated. More info:
        * https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
        */
-      args?: string[]
+      args?: string[];
 
       /**
        * Entrypoint array. Not executed within a shell. The docker image's ENTRYPOINT is used if
@@ -9639,12 +9238,12 @@ export namespace core {
        * not. Cannot be updated. More info:
        * https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
        */
-      command?: string[]
+      command?: string[];
 
       /**
        * List of environment variables to set in the container. Cannot be updated.
        */
-      env?: core.v1.EnvVar[]
+      env?: core.v1.EnvVar[];
 
       /**
        * List of sources to populate environment variables in the container. The keys defined within
@@ -9653,61 +9252,61 @@ export namespace core {
        * last source will take precedence. Values defined by an Env with a duplicate key will take
        * precedence. Cannot be updated.
        */
-      envFrom?: core.v1.EnvFromSource[]
+      envFrom?: core.v1.EnvFromSource[];
 
       /**
        * Docker image name. More info: https://kubernetes.io/docs/concepts/containers/images
        */
-      image?: string
+      image?: string;
 
       /**
        * Image pull policy. One of Always, Never, IfNotPresent. Defaults to Always if :latest tag is
        * specified, or IfNotPresent otherwise. Cannot be updated. More info:
        * https://kubernetes.io/docs/concepts/containers/images#updating-images
        */
-      imagePullPolicy?: string
+      imagePullPolicy?: string;
 
       /**
        * Lifecycle is not allowed for ephemeral containers.
        */
-      lifecycle?: core.v1.Lifecycle
+      lifecycle?: core.v1.Lifecycle;
 
       /**
        * Probes are not allowed for ephemeral containers.
        */
-      livenessProbe?: core.v1.Probe
+      livenessProbe?: core.v1.Probe;
 
       /**
        * Ports are not allowed for ephemeral containers.
        */
-      ports?: core.v1.ContainerPort[]
+      ports?: core.v1.ContainerPort[];
 
       /**
        * Probes are not allowed for ephemeral containers.
        */
-      readinessProbe?: core.v1.Probe
+      readinessProbe?: core.v1.Probe;
 
       /**
        * Resources are not allowed for ephemeral containers. Ephemeral containers use spare
        * resources already allocated to the pod.
        */
-      resources?: core.v1.ResourceRequirements
+      resources?: core.v1.ResourceRequirements;
 
       /**
        * SecurityContext is not allowed for ephemeral containers.
        */
-      securityContext?: core.v1.SecurityContext
+      securityContext?: core.v1.SecurityContext;
 
       /**
        * Probes are not allowed for ephemeral containers.
        */
-      startupProbe?: core.v1.Probe
+      startupProbe?: core.v1.Probe;
 
       /**
        * Whether this container should allocate a buffer for stdin in the container runtime. If this
        * is not set, reads from stdin in the container will always result in EOF. Default is false.
        */
-      stdin?: boolean
+      stdin?: boolean;
 
       /**
        * Whether the container runtime should close the stdin channel after it has been opened by a
@@ -9718,7 +9317,7 @@ export namespace core {
        * restarted. If this flag is false, a container processes that reads from stdin will never
        * receive an EOF. Default is false
        */
-      stdinOnce?: boolean
+      stdinOnce?: boolean;
 
       /**
        * If set, the name of the container from PodSpec that this ephemeral container targets. The
@@ -9726,7 +9325,7 @@ export namespace core {
        * set then the ephemeral container is run in whatever namespaces are shared for the pod. Note
        * that the container runtime must support this feature.
        */
-      targetContainerName?: string
+      targetContainerName?: string;
 
       /**
        * Optional: Path at which the file to which the container's termination message will be
@@ -9735,7 +9334,7 @@ export namespace core {
        * greater than 4096 bytes. The total message length across all containers will be limited to
        * 12kb. Defaults to /dev/termination-log. Cannot be updated.
        */
-      terminationMessagePath?: string
+      terminationMessagePath?: string;
 
       /**
        * Indicate how the termination message should be populated. File will use the contents of
@@ -9745,33 +9344,31 @@ export namespace core {
        * limited to 2048 bytes or 80 lines, whichever is smaller. Defaults to File. Cannot be
        * updated.
        */
-      terminationMessagePolicy?: string
+      terminationMessagePolicy?: string;
 
       /**
        * Whether this container should allocate a TTY for itself, also requires 'stdin' to be true.
        * Default is false.
        */
-      tty?: boolean
+      tty?: boolean;
 
       /**
        * volumeDevices is the list of block devices to be used by the container. This is a beta
        * feature.
        */
-      volumeDevices?: core.v1.VolumeDevice[]
+      volumeDevices?: core.v1.VolumeDevice[];
 
       /**
        * Pod volumes to mount into the container's filesystem. Cannot be updated.
        */
-      volumeMounts?: core.v1.VolumeMount[]
+      volumeMounts?: core.v1.VolumeMount[];
 
       /**
        * Container's working directory. If not specified, the container runtime's default will be
        * used, which might be configured in the container image. Cannot be updated.
        */
-      workingDir?: string
-
+      workingDir?: string;
     }
-
 
     /**
      * Event is a report of an event somewhere in the cluster.
@@ -9780,18 +9377,18 @@ export namespace core {
       /**
        * The object that this event is about.
        */
-      involvedObject: core.v1.ObjectReference
+      involvedObject: core.v1.ObjectReference;
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata: meta.v1.ObjectMeta
+      metadata: meta.v1.ObjectMeta;
 
       /**
        * What action was taken/failed regarding to the Regarding object.
        */
-      action?: string
+      action?: string;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -9799,22 +9396,22 @@ export namespace core {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1"
+      apiVersion?: "v1";
 
       /**
        * The number of times this event has occurred.
        */
-      count?: number
+      count?: number;
 
       /**
        * Time when this Event was first observed.
        */
-      eventTime?: string
+      eventTime?: string;
 
       /**
        * The time at which the event was first recorded. (Time of server receipt is in TypeMeta.)
        */
-      firstTimestamp?: string
+      firstTimestamp?: string;
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -9822,54 +9419,53 @@ export namespace core {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "Event"
+      kind?: "Event";
 
       /**
        * The time at which the most recent occurrence of this event was recorded.
        */
-      lastTimestamp?: string
+      lastTimestamp?: string;
 
       /**
        * A human-readable description of the status of this operation.
        */
-      message?: string
+      message?: string;
 
       /**
        * This should be a short, machine understandable string that gives the reason for the
        * transition into the object's current status.
        */
-      reason?: string
+      reason?: string;
 
       /**
        * Optional secondary object for more complex actions.
        */
-      related?: core.v1.ObjectReference
+      related?: core.v1.ObjectReference;
 
       /**
        * Name of the controller that emitted this Event, e.g. `kubernetes.io/kubelet`.
        */
-      reportingComponent?: string
+      reportingComponent?: string;
 
       /**
        * ID of the controller instance, e.g. `kubelet-xyzf`.
        */
-      reportingInstance?: string
+      reportingInstance?: string;
 
       /**
        * Data about the Event series this event represents or nil if it's a singleton Event.
        */
-      series?: core.v1.EventSeries
+      series?: core.v1.EventSeries;
 
       /**
        * The component reporting this event. Should be a short machine understandable string.
        */
-      source?: core.v1.EventSource
+      source?: core.v1.EventSource;
 
       /**
        * Type of this event (Normal, Warning), new types could be added in the future
        */
-      type?: string
-
+      type?: string;
     }
 
     export function isEvent(o: any): o is Event {
@@ -9883,7 +9479,7 @@ export namespace core {
       /**
        * List of events
        */
-      items: core.v1.Event[]
+      items: core.v1.Event[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -9891,7 +9487,7 @@ export namespace core {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1"
+      apiVersion?: "v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -9899,14 +9495,13 @@ export namespace core {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "EventList"
+      kind?: "EventList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isEventList(o: any): o is EventList {
@@ -9921,20 +9516,18 @@ export namespace core {
       /**
        * Number of occurrences in this series up to the last heartbeat time
        */
-      count?: number
+      count?: number;
 
       /**
        * Time of the last occurrence observed
        */
-      lastObservedTime?: string
+      lastObservedTime?: string;
 
       /**
        * State of this Series: Ongoing or Finished Deprecated. Planned removal for 1.18
        */
-      state?: string
-
+      state?: string;
     }
-
 
     /**
      * EventSource contains information for an event.
@@ -9943,15 +9536,13 @@ export namespace core {
       /**
        * Component from which the event is generated.
        */
-      component?: string
+      component?: string;
 
       /**
        * Node name on which the event is generated.
        */
-      host?: string
-
+      host?: string;
     }
-
 
     /**
      * ExecAction describes a "run in container" action.
@@ -9964,10 +9555,8 @@ export namespace core {
        * shell, you need to explicitly call out to that shell. Exit status of 0 is treated as
        * live/healthy and non-zero is unhealthy.
        */
-      command?: string[]
-
+      command?: string[];
     }
-
 
     /**
      * Represents a Fibre Channel volume. Fibre Channel volumes can only be mounted as read/write
@@ -9978,32 +9567,30 @@ export namespace core {
        * Filesystem type to mount. Must be a filesystem type supported by the host operating system.
        * Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
        */
-      fsType?: string
+      fsType?: string;
 
       /**
        * Optional: FC target lun number
        */
-      lun?: number
+      lun?: number;
 
       /**
        * Optional: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in
        * VolumeMounts.
        */
-      readOnly?: boolean
+      readOnly?: boolean;
 
       /**
        * Optional: FC target worldwide names (WWNs)
        */
-      targetWWNs?: string[]
+      targetWWNs?: string[];
 
       /**
        * Optional: FC volume world wide identifiers (wwids) Either wwids or combination of
        * targetWWNs and lun must be set, but not both simultaneously.
        */
-      wwids?: string[]
-
+      wwids?: string[];
     }
-
 
     /**
      * FlexPersistentVolumeSource represents a generic persistent volume resource that is
@@ -10013,34 +9600,32 @@ export namespace core {
       /**
        * Driver is the name of the driver to use for this volume.
        */
-      driver: string
+      driver: string;
 
       /**
        * Filesystem type to mount. Must be a filesystem type supported by the host operating system.
        * Ex. "ext4", "xfs", "ntfs". The default filesystem depends on FlexVolume script.
        */
-      fsType?: string
+      fsType?: string;
 
       /**
        * Optional: Extra command options if any.
        */
-      options?: {[key: string]: string}
+      options?: { [key: string]: string };
 
       /**
        * Optional: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in
        * VolumeMounts.
        */
-      readOnly?: boolean
+      readOnly?: boolean;
 
       /**
        * Optional: SecretRef is reference to the secret object containing sensitive information to
        * pass to the plugin scripts. This may be empty if no secret object is specified. If the
        * secret object contains more than one secret, all secrets are passed to the plugin scripts.
        */
-      secretRef?: core.v1.SecretReference
-
+      secretRef?: core.v1.SecretReference;
     }
-
 
     /**
      * FlexVolume represents a generic volume resource that is provisioned/attached using an exec
@@ -10050,34 +9635,32 @@ export namespace core {
       /**
        * Driver is the name of the driver to use for this volume.
        */
-      driver: string
+      driver: string;
 
       /**
        * Filesystem type to mount. Must be a filesystem type supported by the host operating system.
        * Ex. "ext4", "xfs", "ntfs". The default filesystem depends on FlexVolume script.
        */
-      fsType?: string
+      fsType?: string;
 
       /**
        * Optional: Extra command options if any.
        */
-      options?: {[key: string]: string}
+      options?: { [key: string]: string };
 
       /**
        * Optional: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in
        * VolumeMounts.
        */
-      readOnly?: boolean
+      readOnly?: boolean;
 
       /**
        * Optional: SecretRef is reference to the secret object containing sensitive information to
        * pass to the plugin scripts. This may be empty if no secret object is specified. If the
        * secret object contains more than one secret, all secrets are passed to the plugin scripts.
        */
-      secretRef?: core.v1.LocalObjectReference
-
+      secretRef?: core.v1.LocalObjectReference;
     }
-
 
     /**
      * Represents a Flocker volume mounted by the Flocker agent. One and only one of datasetName and
@@ -10089,19 +9672,17 @@ export namespace core {
        * Name of the dataset stored as metadata -> name on the dataset for Flocker should be
        * considered as deprecated
        */
-      datasetName?: string
+      datasetName?: string;
 
       /**
        * UUID of the dataset. This is unique identifier of a Flocker dataset
        */
-      datasetUUID?: string
-
+      datasetUUID?: string;
     }
-
 
     /**
      * Represents a Persistent Disk resource in Google Compute Engine.
-     * 
+     *
      * A GCE PD must exist before mounting to a container. The disk must also be in the same GCE
      * project and zone as the kubelet. A GCE PD can only be mounted as read/write once or read-only
      * many times. GCE PDs support ownership management and SELinux relabeling.
@@ -10111,7 +9692,7 @@ export namespace core {
        * Unique name of the PD resource in GCE. Used to identify the disk in GCE. More info:
        * https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk
        */
-      pdName: string
+      pdName: string;
 
       /**
        * Filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type
@@ -10119,7 +9700,7 @@ export namespace core {
        * inferred to be "ext4" if unspecified. More info:
        * https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk
        */
-      fsType?: string
+      fsType?: string;
 
       /**
        * The partition in the volume that you want to mount. If omitted, the default is to mount by
@@ -10127,21 +9708,19 @@ export namespace core {
        * the volume partition for /dev/sda is "0" (or you can leave the property empty). More info:
        * https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk
        */
-      partition?: number
+      partition?: number;
 
       /**
        * ReadOnly here will force the ReadOnly setting in VolumeMounts. Defaults to false. More
        * info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk
        */
-      readOnly?: boolean
-
+      readOnly?: boolean;
     }
-
 
     /**
      * Represents a volume that is populated with the contents of a git repository. Git repo volumes
      * do not support ownership management. Git repo volumes support SELinux relabeling.
-     * 
+     *
      * DEPRECATED: GitRepo is deprecated. To provision a container with a git repo, mount an
      * EmptyDir into an InitContainer that clones the repo using git, then mount the EmptyDir into
      * the Pod's container.
@@ -10150,22 +9729,20 @@ export namespace core {
       /**
        * Repository URL
        */
-      repository: string
+      repository: string;
 
       /**
        * Target directory name. Must not contain or start with '..'.  If '.' is supplied, the volume
        * directory will be the git repository.  Otherwise, if specified, the volume will contain the
        * git repository in the subdirectory with the given name.
        */
-      directory?: string
+      directory?: string;
 
       /**
        * Commit hash for the specified revision.
        */
-      revision?: string
-
+      revision?: string;
     }
-
 
     /**
      * Represents a Glusterfs mount that lasts the lifetime of a pod. Glusterfs volumes do not
@@ -10176,30 +9753,28 @@ export namespace core {
        * EndpointsName is the endpoint name that details Glusterfs topology. More info:
        * https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod
        */
-      endpoints: string
+      endpoints: string;
 
       /**
        * Path is the Glusterfs volume path. More info:
        * https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod
        */
-      path: string
+      path: string;
 
       /**
        * EndpointsNamespace is the namespace that contains Glusterfs endpoint. If this field is
        * empty, the EndpointNamespace defaults to the same namespace as the bound PVC. More info:
        * https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod
        */
-      endpointsNamespace?: string
+      endpointsNamespace?: string;
 
       /**
        * ReadOnly here will force the Glusterfs volume to be mounted with read-only permissions.
        * Defaults to false. More info:
        * https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod
        */
-      readOnly?: boolean
-
+      readOnly?: boolean;
     }
-
 
     /**
      * Represents a Glusterfs mount that lasts the lifetime of a pod. Glusterfs volumes do not
@@ -10210,23 +9785,21 @@ export namespace core {
        * EndpointsName is the endpoint name that details Glusterfs topology. More info:
        * https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod
        */
-      endpoints: string
+      endpoints: string;
 
       /**
        * Path is the Glusterfs volume path. More info:
        * https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod
        */
-      path: string
+      path: string;
 
       /**
        * ReadOnly here will force the Glusterfs volume to be mounted with read-only permissions.
        * Defaults to false. More info:
        * https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod
        */
-      readOnly?: boolean
-
+      readOnly?: boolean;
     }
-
 
     /**
      * HTTPGetAction describes an action based on HTTP Get requests.
@@ -10236,31 +9809,29 @@ export namespace core {
        * Name or number of the port to access on the container. Number must be in the range 1 to
        * 65535. Name must be an IANA_SVC_NAME.
        */
-      port: number | string
+      port: number | string;
 
       /**
        * Host name to connect to, defaults to the pod IP. You probably want to set "Host" in
        * httpHeaders instead.
        */
-      host?: string
+      host?: string;
 
       /**
        * Custom headers to set in the request. HTTP allows repeated headers.
        */
-      httpHeaders?: core.v1.HTTPHeader[]
+      httpHeaders?: core.v1.HTTPHeader[];
 
       /**
        * Path to access on the HTTP server.
        */
-      path?: string
+      path?: string;
 
       /**
        * Scheme to use for connecting to the host. Defaults to HTTP.
        */
-      scheme?: string
-
+      scheme?: string;
     }
-
 
     /**
      * HTTPHeader describes a custom header to be used in HTTP probes
@@ -10269,15 +9840,13 @@ export namespace core {
       /**
        * The header field name
        */
-      name: string
+      name: string;
 
       /**
        * The header field value
        */
-      value: string
-
+      value: string;
     }
-
 
     /**
      * Handler defines a specific action that should be taken
@@ -10286,20 +9855,18 @@ export namespace core {
       /**
        * One and only one of the following should be specified. Exec specifies the action to take.
        */
-      exec?: core.v1.ExecAction
+      exec?: core.v1.ExecAction;
 
       /**
        * HTTPGet specifies the http request to perform.
        */
-      httpGet?: core.v1.HTTPGetAction
+      httpGet?: core.v1.HTTPGetAction;
 
       /**
        * TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported
        */
-      tcpSocket?: core.v1.TCPSocketAction
-
+      tcpSocket?: core.v1.TCPSocketAction;
     }
-
 
     /**
      * HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the
@@ -10309,15 +9876,13 @@ export namespace core {
       /**
        * Hostnames for the above IP address.
        */
-      hostnames?: string[]
+      hostnames?: string[];
 
       /**
        * IP address of the host file entry.
        */
-      ip?: string
-
+      ip?: string;
     }
-
 
     /**
      * Represents a host path mapped into a pod. Host path volumes do not support ownership
@@ -10328,16 +9893,14 @@ export namespace core {
        * Path of the directory on the host. If the path is a symlink, it will follow the link to the
        * real path. More info: https://kubernetes.io/docs/concepts/storage/volumes#hostpath
        */
-      path: string
+      path: string;
 
       /**
        * Type for HostPath Volume Defaults to "" More info:
        * https://kubernetes.io/docs/concepts/storage/volumes#hostpath
        */
-      type?: string
-
+      type?: string;
     }
-
 
     /**
      * ISCSIPersistentVolumeSource represents an ISCSI disk. ISCSI volumes can only be mounted as
@@ -10347,28 +9910,28 @@ export namespace core {
       /**
        * Target iSCSI Qualified Name.
        */
-      iqn: string
+      iqn: string;
 
       /**
        * iSCSI Target Lun number.
        */
-      lun: number
+      lun: number;
 
       /**
        * iSCSI Target Portal. The Portal is either an IP or ip_addr:port if the port is other than
        * default (typically TCP ports 860 and 3260).
        */
-      targetPortal: string
+      targetPortal: string;
 
       /**
        * whether support iSCSI Discovery CHAP authentication
        */
-      chapAuthDiscovery?: boolean
+      chapAuthDiscovery?: boolean;
 
       /**
        * whether support iSCSI Session CHAP authentication
        */
-      chapAuthSession?: boolean
+      chapAuthSession?: boolean;
 
       /**
        * Filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type
@@ -10376,38 +9939,36 @@ export namespace core {
        * inferred to be "ext4" if unspecified. More info:
        * https://kubernetes.io/docs/concepts/storage/volumes#iscsi
        */
-      fsType?: string
+      fsType?: string;
 
       /**
        * Custom iSCSI Initiator Name. If initiatorName is specified with iscsiInterface
        * simultaneously, new iSCSI interface <target portal>:<volume name> will be created for the
        * connection.
        */
-      initiatorName?: string
+      initiatorName?: string;
 
       /**
        * iSCSI Interface Name that uses an iSCSI transport. Defaults to 'default' (tcp).
        */
-      iscsiInterface?: string
+      iscsiInterface?: string;
 
       /**
        * iSCSI Target Portal List. The Portal is either an IP or ip_addr:port if the port is other
        * than default (typically TCP ports 860 and 3260).
        */
-      portals?: string[]
+      portals?: string[];
 
       /**
        * ReadOnly here will force the ReadOnly setting in VolumeMounts. Defaults to false.
        */
-      readOnly?: boolean
+      readOnly?: boolean;
 
       /**
        * CHAP Secret for iSCSI target and initiator authentication
        */
-      secretRef?: core.v1.SecretReference
-
+      secretRef?: core.v1.SecretReference;
     }
-
 
     /**
      * Represents an ISCSI disk. ISCSI volumes can only be mounted as read/write once. ISCSI volumes
@@ -10417,28 +9978,28 @@ export namespace core {
       /**
        * Target iSCSI Qualified Name.
        */
-      iqn: string
+      iqn: string;
 
       /**
        * iSCSI Target Lun number.
        */
-      lun: number
+      lun: number;
 
       /**
        * iSCSI Target Portal. The Portal is either an IP or ip_addr:port if the port is other than
        * default (typically TCP ports 860 and 3260).
        */
-      targetPortal: string
+      targetPortal: string;
 
       /**
        * whether support iSCSI Discovery CHAP authentication
        */
-      chapAuthDiscovery?: boolean
+      chapAuthDiscovery?: boolean;
 
       /**
        * whether support iSCSI Session CHAP authentication
        */
-      chapAuthSession?: boolean
+      chapAuthSession?: boolean;
 
       /**
        * Filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type
@@ -10446,38 +10007,36 @@ export namespace core {
        * inferred to be "ext4" if unspecified. More info:
        * https://kubernetes.io/docs/concepts/storage/volumes#iscsi
        */
-      fsType?: string
+      fsType?: string;
 
       /**
        * Custom iSCSI Initiator Name. If initiatorName is specified with iscsiInterface
        * simultaneously, new iSCSI interface <target portal>:<volume name> will be created for the
        * connection.
        */
-      initiatorName?: string
+      initiatorName?: string;
 
       /**
        * iSCSI Interface Name that uses an iSCSI transport. Defaults to 'default' (tcp).
        */
-      iscsiInterface?: string
+      iscsiInterface?: string;
 
       /**
        * iSCSI Target Portal List. The portal is either an IP or ip_addr:port if the port is other
        * than default (typically TCP ports 860 and 3260).
        */
-      portals?: string[]
+      portals?: string[];
 
       /**
        * ReadOnly here will force the ReadOnly setting in VolumeMounts. Defaults to false.
        */
-      readOnly?: boolean
+      readOnly?: boolean;
 
       /**
        * CHAP Secret for iSCSI target and initiator authentication
        */
-      secretRef?: core.v1.LocalObjectReference
-
+      secretRef?: core.v1.LocalObjectReference;
     }
-
 
     /**
      * Maps a string key to a path within a volume.
@@ -10486,23 +10045,21 @@ export namespace core {
       /**
        * The key to project.
        */
-      key: string
+      key: string;
 
       /**
        * The relative path of the file to map the key to. May not be an absolute path. May not
        * contain the path element '..'. May not start with the string '..'.
        */
-      path: string
+      path: string;
 
       /**
        * Optional: mode bits to use on this file, must be a value between 0 and 0777. If not
        * specified, the volume defaultMode will be used. This might be in conflict with other
        * options that affect the file mode, like fsGroup, and the result can be other mode bits set.
        */
-      mode?: number
-
+      mode?: number;
     }
-
 
     /**
      * Lifecycle describes actions that the management system should take in response to container
@@ -10517,7 +10074,7 @@ export namespace core {
        * the container blocks until the hook completes. More info:
        * https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
        */
-      postStart?: core.v1.Handler
+      postStart?: core.v1.Handler;
 
       /**
        * PreStop is called immediately before a container is terminated due to an API request or
@@ -10530,10 +10087,8 @@ export namespace core {
        * period is reached. More info:
        * https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks
        */
-      preStop?: core.v1.Handler
-
+      preStop?: core.v1.Handler;
     }
-
 
     /**
      * LimitRange sets resource usage limits for each kind of resource in a Namespace.
@@ -10545,7 +10100,7 @@ export namespace core {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1"
+      apiVersion?: "v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -10553,20 +10108,19 @@ export namespace core {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "LimitRange"
+      kind?: "LimitRange";
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Spec defines the limits enforced. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
        */
-      spec?: core.v1.LimitRangeSpec
-
+      spec?: core.v1.LimitRangeSpec;
     }
 
     export function isLimitRange(o: any): o is LimitRange {
@@ -10580,38 +10134,36 @@ export namespace core {
       /**
        * Default resource requirement limit value by resource name if resource limit is omitted.
        */
-      default?: object
+      default?: object;
 
       /**
        * DefaultRequest is the default resource requirement request value by resource name if
        * resource request is omitted.
        */
-      defaultRequest?: object
+      defaultRequest?: object;
 
       /**
        * Max usage constraints on this kind by resource name.
        */
-      max?: object
+      max?: object;
 
       /**
        * MaxLimitRequestRatio if specified, the named resource must have a request and limit that
        * are both non-zero where limit divided by request is less than or equal to the enumerated
        * value; this represents the max burst for the named resource.
        */
-      maxLimitRequestRatio?: object
+      maxLimitRequestRatio?: object;
 
       /**
        * Min usage constraints on this kind by resource name.
        */
-      min?: object
+      min?: object;
 
       /**
        * Type of resource that this limit applies to.
        */
-      type?: string
-
+      type?: string;
     }
-
 
     /**
      * LimitRangeList is a list of LimitRange items.
@@ -10621,7 +10173,7 @@ export namespace core {
        * Items is a list of LimitRange objects. More info:
        * https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
        */
-      items: core.v1.LimitRange[]
+      items: core.v1.LimitRange[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -10629,7 +10181,7 @@ export namespace core {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1"
+      apiVersion?: "v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -10637,14 +10189,13 @@ export namespace core {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "LimitRangeList"
+      kind?: "LimitRangeList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isLimitRangeList(o: any): o is LimitRangeList {
@@ -10658,10 +10209,8 @@ export namespace core {
       /**
        * Limits is the list of LimitRangeItem objects that are enforced.
        */
-      limits: core.v1.LimitRangeItem[]
-
+      limits: core.v1.LimitRangeItem[];
     }
-
 
     /**
      * LoadBalancerIngress represents the status of a load-balancer ingress point: traffic intended
@@ -10672,16 +10221,14 @@ export namespace core {
        * Hostname is set for load-balancer ingress points that are DNS based (typically AWS
        * load-balancers)
        */
-      hostname?: string
+      hostname?: string;
 
       /**
        * IP is set for load-balancer ingress points that are IP based (typically GCE or OpenStack
        * load-balancers)
        */
-      ip?: string
-
+      ip?: string;
     }
-
 
     /**
      * LocalObjectReference contains enough information to let you locate the referenced object
@@ -10692,10 +10239,8 @@ export namespace core {
        * Name of the referent. More info:
        * https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
        */
-      name?: string
-
+      name?: string;
     }
-
 
     /**
      * Local represents directly-attached storage with node affinity (Beta feature)
@@ -10705,17 +10250,15 @@ export namespace core {
        * The full path to the volume on the node. It can be either a directory or block device
        * (disk, partition, ...).
        */
-      path: string
+      path: string;
 
       /**
        * Filesystem type to mount. It applies only when the Path is a block device. Must be a
        * filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". The
        * default value is to auto-select a fileystem if unspecified.
        */
-      fsType?: string
-
+      fsType?: string;
     }
-
 
     /**
      * Represents an NFS mount that lasts the lifetime of a pod. NFS volumes do not support
@@ -10726,22 +10269,20 @@ export namespace core {
        * Path that is exported by the NFS server. More info:
        * https://kubernetes.io/docs/concepts/storage/volumes#nfs
        */
-      path: string
+      path: string;
 
       /**
        * Server is the hostname or IP address of the NFS server. More info:
        * https://kubernetes.io/docs/concepts/storage/volumes#nfs
        */
-      server: string
+      server: string;
 
       /**
        * ReadOnly here will force the NFS export to be mounted with read-only permissions. Defaults
        * to false. More info: https://kubernetes.io/docs/concepts/storage/volumes#nfs
        */
-      readOnly?: boolean
-
+      readOnly?: boolean;
     }
-
 
     /**
      * Namespace provides a scope for Names. Use of multiple namespaces is optional.
@@ -10753,7 +10294,7 @@ export namespace core {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1"
+      apiVersion?: "v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -10761,20 +10302,19 @@ export namespace core {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "Namespace"
+      kind?: "Namespace";
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Spec defines the behavior of the Namespace. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
        */
-      spec?: core.v1.NamespaceSpec
-
+      spec?: core.v1.NamespaceSpec;
     }
 
     export function isNamespace(o: any): o is Namespace {
@@ -10788,19 +10328,14 @@ export namespace core {
       /**
        * Type of namespace controller condition.
        */
-      type: string
+      type: string;
 
-      
-      lastTransitionTime?: string
+      lastTransitionTime?: string;
 
-      
-      message?: string
+      message?: string;
 
-      
-      reason?: string
-
+      reason?: string;
     }
-
 
     /**
      * NamespaceList is a list of Namespaces.
@@ -10810,7 +10345,7 @@ export namespace core {
        * Items is the list of Namespace objects in the list. More info:
        * https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
        */
-      items: core.v1.Namespace[]
+      items: core.v1.Namespace[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -10818,7 +10353,7 @@ export namespace core {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1"
+      apiVersion?: "v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -10826,14 +10361,13 @@ export namespace core {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "NamespaceList"
+      kind?: "NamespaceList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isNamespaceList(o: any): o is NamespaceList {
@@ -10848,10 +10382,8 @@ export namespace core {
        * Finalizers is an opaque list of values that must be empty to permanently remove object from
        * storage. More info: https://kubernetes.io/docs/tasks/administer-cluster/namespaces/
        */
-      finalizers?: string[]
-
+      finalizers?: string[];
     }
-
 
     /**
      * Node is a worker node in Kubernetes. Each node will have a unique identifier in the cache
@@ -10864,7 +10396,7 @@ export namespace core {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1"
+      apiVersion?: "v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -10872,20 +10404,19 @@ export namespace core {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "Node"
+      kind?: "Node";
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Spec defines the behavior of a node.
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
        */
-      spec?: core.v1.NodeSpec
-
+      spec?: core.v1.NodeSpec;
     }
 
     export function isNode(o: any): o is Node {
@@ -10899,15 +10430,13 @@ export namespace core {
       /**
        * The node address.
        */
-      address: string
+      address: string;
 
       /**
        * Node address type, one of Hostname, ExternalIP or InternalIP.
        */
-      type: string
-
+      type: string;
     }
-
 
     /**
      * Node affinity is a group of node affinity scheduling rules.
@@ -10922,7 +10451,7 @@ export namespace core {
        * the elements of this field and adding "weight" to the sum if the node matches the
        * corresponding matchExpressions; the node(s) with the highest sum are the most preferred.
        */
-      preferredDuringSchedulingIgnoredDuringExecution?: core.v1.PreferredSchedulingTerm[]
+      preferredDuringSchedulingIgnoredDuringExecution?: core.v1.PreferredSchedulingTerm[];
 
       /**
        * If the affinity requirements specified by this field are not met at scheduling time, the
@@ -10930,10 +10459,8 @@ export namespace core {
        * field cease to be met at some point during pod execution (e.g. due to an update), the
        * system may or may not try to eventually evict the pod from its node.
        */
-      requiredDuringSchedulingIgnoredDuringExecution?: core.v1.NodeSelector
-
+      requiredDuringSchedulingIgnoredDuringExecution?: core.v1.NodeSelector;
     }
-
 
     /**
      * NodeCondition contains condition information for a node.
@@ -10942,30 +10469,28 @@ export namespace core {
       /**
        * Type of node condition.
        */
-      type: string
+      type: string;
 
       /**
        * Last time we got an update on a given condition.
        */
-      lastHeartbeatTime?: string
+      lastHeartbeatTime?: string;
 
       /**
        * Last time the condition transit from one status to another.
        */
-      lastTransitionTime?: string
+      lastTransitionTime?: string;
 
       /**
        * Human readable message indicating details about last transition.
        */
-      message?: string
+      message?: string;
 
       /**
        * (brief) reason for the condition's last transition.
        */
-      reason?: string
-
+      reason?: string;
     }
-
 
     /**
      * NodeConfigSource specifies a source of node configuration. Exactly one subfield (excluding
@@ -10975,10 +10500,8 @@ export namespace core {
       /**
        * ConfigMap is a reference to a Node's ConfigMap
        */
-      configMap?: core.v1.ConfigMapNodeConfigSource
-
+      configMap?: core.v1.ConfigMapNodeConfigSource;
     }
-
 
     /**
      * NodeDaemonEndpoints lists ports opened by daemons running on the Node.
@@ -10987,10 +10510,8 @@ export namespace core {
       /**
        * Endpoint on which Kubelet is listening.
        */
-      kubeletEndpoint?: core.v1.DaemonEndpoint
-
+      kubeletEndpoint?: core.v1.DaemonEndpoint;
     }
-
 
     /**
      * NodeList is the whole list of all Nodes which have been registered with master.
@@ -10999,7 +10520,7 @@ export namespace core {
       /**
        * List of nodes
        */
-      items: core.v1.Node[]
+      items: core.v1.Node[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -11007,7 +10528,7 @@ export namespace core {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1"
+      apiVersion?: "v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -11015,14 +10536,13 @@ export namespace core {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "NodeList"
+      kind?: "NodeList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isNodeList(o: any): o is NodeList {
@@ -11038,10 +10558,8 @@ export namespace core {
       /**
        * Required. A list of node selector terms. The terms are ORed.
        */
-      nodeSelectorTerms: core.v1.NodeSelectorTerm[]
-
+      nodeSelectorTerms: core.v1.NodeSelectorTerm[];
     }
-
 
     /**
      * A node selector requirement is a selector that contains values, a key, and an operator that
@@ -11051,13 +10569,13 @@ export namespace core {
       /**
        * The label key that the selector applies to.
        */
-      key: string
+      key: string;
 
       /**
        * Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists,
        * DoesNotExist. Gt, and Lt.
        */
-      operator: string
+      operator: string;
 
       /**
        * An array of string values. If the operator is In or NotIn, the values array must be
@@ -11065,10 +10583,8 @@ export namespace core {
        * the operator is Gt or Lt, the values array must have a single element, which will be
        * interpreted as an integer. This array is replaced during a strategic merge patch.
        */
-      values?: string[]
-
+      values?: string[];
     }
-
 
     /**
      * A null or empty node selector term matches no objects. The requirements of them are ANDed.
@@ -11078,15 +10594,13 @@ export namespace core {
       /**
        * A list of node selector requirements by node's labels.
        */
-      matchExpressions?: core.v1.NodeSelectorRequirement[]
+      matchExpressions?: core.v1.NodeSelectorRequirement[];
 
       /**
        * A list of node selector requirements by node's fields.
        */
-      matchFields?: core.v1.NodeSelectorRequirement[]
-
+      matchFields?: core.v1.NodeSelectorRequirement[];
     }
-
 
     /**
      * NodeSpec describes the attributes that a node is created with.
@@ -11096,45 +10610,43 @@ export namespace core {
        * If specified, the source to get node configuration from The DynamicKubeletConfig feature
        * gate must be enabled for the Kubelet to use this field
        */
-      configSource?: core.v1.NodeConfigSource
+      configSource?: core.v1.NodeConfigSource;
 
       /**
        * Deprecated. Not all kubelets will set this field. Remove field after 1.13. see:
        * https://issues.k8s.io/61966
        */
-      externalID?: string
+      externalID?: string;
 
       /**
        * PodCIDR represents the pod IP range assigned to the node.
        */
-      podCIDR?: string
+      podCIDR?: string;
 
       /**
        * podCIDRs represents the IP ranges assigned to the node for usage by Pods on that node. If
        * this field is specified, the 0th entry must match the podCIDR field. It may contain at most
        * 1 value for each of IPv4 and IPv6.
        */
-      podCIDRs?: string[]
+      podCIDRs?: string[];
 
       /**
        * ID of the node assigned by the cloud provider in the format:
        * <ProviderName>://<ProviderSpecificNodeID>
        */
-      providerID?: string
+      providerID?: string;
 
       /**
        * If specified, the node's taints.
        */
-      taints?: core.v1.Taint[]
+      taints?: core.v1.Taint[];
 
       /**
        * Unschedulable controls node schedulability of new pods. By default, node is schedulable.
        * More info: https://kubernetes.io/docs/concepts/nodes/node/#manual-node-administration
        */
-      unschedulable?: boolean
-
+      unschedulable?: boolean;
     }
-
 
     /**
      * NodeSystemInfo is a set of ids/uuids to uniquely identify the node.
@@ -11143,60 +10655,58 @@ export namespace core {
       /**
        * The Architecture reported by the node
        */
-      architecture: string
+      architecture: string;
 
       /**
        * Boot ID reported by the node.
        */
-      bootID: string
+      bootID: string;
 
       /**
        * ContainerRuntime Version reported by the node through runtime remote API (e.g.
        * docker://1.5.0).
        */
-      containerRuntimeVersion: string
+      containerRuntimeVersion: string;
 
       /**
        * Kernel Version reported by the node from 'uname -r' (e.g. 3.16.0-0.bpo.4-amd64).
        */
-      kernelVersion: string
+      kernelVersion: string;
 
       /**
        * KubeProxy Version reported by the node.
        */
-      kubeProxyVersion: string
+      kubeProxyVersion: string;
 
       /**
        * Kubelet Version reported by the node.
        */
-      kubeletVersion: string
+      kubeletVersion: string;
 
       /**
        * MachineID reported by the node. For unique machine identification in the cluster this field
        * is preferred. Learn more from man(5) machine-id:
        * http://man7.org/linux/man-pages/man5/machine-id.5.html
        */
-      machineID: string
+      machineID: string;
 
       /**
        * The Operating System reported by the node
        */
-      operatingSystem: string
+      operatingSystem: string;
 
       /**
        * OS Image reported by the node from /etc/os-release (e.g. Debian GNU/Linux 7 (wheezy)).
        */
-      osImage: string
+      osImage: string;
 
       /**
        * SystemUUID reported by the node. For unique machine identification MachineID is preferred.
        * This field is specific to Red Hat hosts
        * https://access.redhat.com/documentation/en-US/Red_Hat_Subscription_Management/1/html/RHSM/getting-system-uuid.html
        */
-      systemUUID: string
-
+      systemUUID: string;
     }
-
 
     /**
      * ObjectFieldSelector selects an APIVersioned field of an object.
@@ -11205,13 +10715,12 @@ export namespace core {
       /**
        * Path of the field to select in the specified API version.
        */
-      fieldPath: string
+      fieldPath: string;
 
       /**
        * Version of the schema the FieldPath is written in terms of, defaults to "v1".
        */
-      apiVersion?: string
-
+      apiVersion?: "core/v1";
     }
 
     export function isObjectFieldSelector(o: any): o is ObjectFieldSelector {
@@ -11225,7 +10734,7 @@ export namespace core {
       /**
        * API version of the referent.
        */
-      apiVersion?: string
+      apiVersion?: "core/v1";
 
       /**
        * If referring to a piece of an object instead of an entire object, this string should
@@ -11236,38 +10745,37 @@ export namespace core {
        * "spec.containers[2]" (container with index 2 in this pod). This syntax is chosen only to
        * have some well-defined way of referencing a part of an object.
        */
-      fieldPath?: string
+      fieldPath?: string;
 
       /**
        * Kind of the referent. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: string
+      kind?: "ObjectReference";
 
       /**
        * Name of the referent. More info:
        * https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
        */
-      name?: string
+      name?: string;
 
       /**
        * Namespace of the referent. More info:
        * https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
        */
-      namespace?: string
+      namespace?: string;
 
       /**
        * Specific resourceVersion to which this reference is made, if any. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency
        */
-      resourceVersion?: string
+      resourceVersion?: string;
 
       /**
        * UID of the referent. More info:
        * https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids
        */
-      uid?: string
-
+      uid?: string;
     }
 
     export function isObjectReference(o: any): o is ObjectReference {
@@ -11285,7 +10793,7 @@ export namespace core {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1"
+      apiVersion?: "v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -11293,21 +10801,20 @@ export namespace core {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "PersistentVolume"
+      kind?: "PersistentVolume";
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Spec defines a specification of a persistent volume owned by the cluster. Provisioned by an
        * administrator. More info:
        * https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistent-volumes
        */
-      spec?: core.v1.PersistentVolumeSpec
-
+      spec?: core.v1.PersistentVolumeSpec;
     }
 
     export function isPersistentVolume(o: any): o is PersistentVolume {
@@ -11324,7 +10831,7 @@ export namespace core {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1"
+      apiVersion?: "v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -11332,23 +10839,24 @@ export namespace core {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "PersistentVolumeClaim"
+      kind?: "PersistentVolumeClaim";
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Spec defines the desired characteristics of a volume requested by a pod author. More info:
        * https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims
        */
-      spec?: core.v1.PersistentVolumeClaimSpec
-
+      spec?: core.v1.PersistentVolumeClaimSpec;
     }
 
-    export function isPersistentVolumeClaim(o: any): o is PersistentVolumeClaim {
+    export function isPersistentVolumeClaim(
+      o: any
+    ): o is PersistentVolumeClaim {
       return o.apiVersion == "v1" && o.kind == "PersistentVolumeClaim";
     }
 
@@ -11356,33 +10864,30 @@ export namespace core {
      * PersistentVolumeClaimCondition contails details about state of pvc
      */
     export interface PersistentVolumeClaimCondition {
-      
-      type: string
+      type: string;
 
       /**
        * Last time we probed the condition.
        */
-      lastProbeTime?: string
+      lastProbeTime?: string;
 
       /**
        * Last time the condition transitioned from one status to another.
        */
-      lastTransitionTime?: string
+      lastTransitionTime?: string;
 
       /**
        * Human-readable message indicating details about last transition.
        */
-      message?: string
+      message?: string;
 
       /**
        * Unique, this should be a short, machine understandable string that gives the reason for
        * condition's last transition. If it reports "ResizeStarted" that means the underlying
        * persistent volume is being resized.
        */
-      reason?: string
-
+      reason?: string;
     }
-
 
     /**
      * PersistentVolumeClaimList is a list of PersistentVolumeClaim items.
@@ -11392,7 +10897,7 @@ export namespace core {
        * A list of persistent volume claims. More info:
        * https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims
        */
-      items: core.v1.PersistentVolumeClaim[]
+      items: core.v1.PersistentVolumeClaim[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -11400,7 +10905,7 @@ export namespace core {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1"
+      apiVersion?: "v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -11408,17 +10913,18 @@ export namespace core {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "PersistentVolumeClaimList"
+      kind?: "PersistentVolumeClaimList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
-    export function isPersistentVolumeClaimList(o: any): o is PersistentVolumeClaimList {
+    export function isPersistentVolumeClaimList(
+      o: any
+    ): o is PersistentVolumeClaimList {
       return o.apiVersion == "v1" && o.kind == "PersistentVolumeClaimList";
     }
 
@@ -11431,7 +10937,7 @@ export namespace core {
        * AccessModes contains the desired access modes the volume should have. More info:
        * https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1
        */
-      accessModes?: string[]
+      accessModes?: string[];
 
       /**
        * This field requires the VolumeSnapshotDataSource alpha feature gate to be enabled and
@@ -11441,38 +10947,36 @@ export namespace core {
        * volume will not be created and the failure will be reported as an event. In the future, we
        * plan to support more data source types and the behavior of the provisioner may change.
        */
-      dataSource?: core.v1.TypedLocalObjectReference
+      dataSource?: core.v1.TypedLocalObjectReference;
 
       /**
        * Resources represents the minimum resources the volume should have. More info:
        * https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
        */
-      resources?: core.v1.ResourceRequirements
+      resources?: core.v1.ResourceRequirements;
 
       /**
        * A label query over volumes to consider for binding.
        */
-      selector?: meta.v1.LabelSelector
+      selector?: meta.v1.LabelSelector;
 
       /**
        * Name of the StorageClass required by the claim. More info:
        * https://kubernetes.io/docs/concepts/storage/persistent-volumes#class-1
        */
-      storageClassName?: string
+      storageClassName?: string;
 
       /**
        * volumeMode defines what type of volume is required by the claim. Value of Filesystem is
        * implied when not included in claim spec. This is a beta feature.
        */
-      volumeMode?: string
+      volumeMode?: string;
 
       /**
        * VolumeName is the binding reference to the PersistentVolume backing this claim.
        */
-      volumeName?: string
-
+      volumeName?: string;
     }
-
 
     /**
      * PersistentVolumeClaimVolumeSource references the user's PVC in the same namespace. This
@@ -11486,15 +10990,13 @@ export namespace core {
        * this volume. More info:
        * https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims
        */
-      claimName: string
+      claimName: string;
 
       /**
        * Will force the ReadOnly setting in VolumeMounts. Default false.
        */
-      readOnly?: boolean
-
+      readOnly?: boolean;
     }
-
 
     /**
      * PersistentVolumeList is a list of PersistentVolume items.
@@ -11504,7 +11006,7 @@ export namespace core {
        * List of persistent volumes. More info:
        * https://kubernetes.io/docs/concepts/storage/persistent-volumes
        */
-      items: core.v1.PersistentVolume[]
+      items: core.v1.PersistentVolume[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -11512,7 +11014,7 @@ export namespace core {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1"
+      apiVersion?: "v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -11520,14 +11022,13 @@ export namespace core {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "PersistentVolumeList"
+      kind?: "PersistentVolumeList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isPersistentVolumeList(o: any): o is PersistentVolumeList {
@@ -11542,41 +11043,41 @@ export namespace core {
        * AccessModes contains all ways the volume can be mounted. More info:
        * https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes
        */
-      accessModes?: string[]
+      accessModes?: string[];
 
       /**
        * AWSElasticBlockStore represents an AWS Disk resource that is attached to a kubelet's host
        * machine and then exposed to the pod. More info:
        * https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
        */
-      awsElasticBlockStore?: core.v1.AWSElasticBlockStoreVolumeSource
+      awsElasticBlockStore?: core.v1.AWSElasticBlockStoreVolumeSource;
 
       /**
        * AzureDisk represents an Azure Data Disk mount on the host and bind mount to the pod.
        */
-      azureDisk?: core.v1.AzureDiskVolumeSource
+      azureDisk?: core.v1.AzureDiskVolumeSource;
 
       /**
        * AzureFile represents an Azure File Service mount on the host and bind mount to the pod.
        */
-      azureFile?: core.v1.AzureFilePersistentVolumeSource
+      azureFile?: core.v1.AzureFilePersistentVolumeSource;
 
       /**
        * A description of the persistent volume's resources and capacity. More info:
        * https://kubernetes.io/docs/concepts/storage/persistent-volumes#capacity
        */
-      capacity?: object
+      capacity?: object;
 
       /**
        * CephFS represents a Ceph FS mount on the host that shares a pod's lifetime
        */
-      cephfs?: core.v1.CephFSPersistentVolumeSource
+      cephfs?: core.v1.CephFSPersistentVolumeSource;
 
       /**
        * Cinder represents a cinder volume attached and mounted on kubelets host machine. More info:
        * https://examples.k8s.io/mysql-cinder-pd/README.md
        */
-      cinder?: core.v1.CinderPersistentVolumeSource
+      cinder?: core.v1.CinderPersistentVolumeSource;
 
       /**
        * ClaimRef is part of a bi-directional binding between PersistentVolume and
@@ -11584,43 +11085,43 @@ export namespace core {
        * authoritative bind between PV and PVC. More info:
        * https://kubernetes.io/docs/concepts/storage/persistent-volumes#binding
        */
-      claimRef?: core.v1.ObjectReference
+      claimRef?: core.v1.ObjectReference;
 
       /**
        * CSI represents storage that is handled by an external CSI driver (Beta feature).
        */
-      csi?: core.v1.CSIPersistentVolumeSource
+      csi?: core.v1.CSIPersistentVolumeSource;
 
       /**
        * FC represents a Fibre Channel resource that is attached to a kubelet's host machine and
        * then exposed to the pod.
        */
-      fc?: core.v1.FCVolumeSource
+      fc?: core.v1.FCVolumeSource;
 
       /**
        * FlexVolume represents a generic volume resource that is provisioned/attached using an exec
        * based plugin.
        */
-      flexVolume?: core.v1.FlexPersistentVolumeSource
+      flexVolume?: core.v1.FlexPersistentVolumeSource;
 
       /**
        * Flocker represents a Flocker volume attached to a kubelet's host machine and exposed to the
        * pod for its usage. This depends on the Flocker control service being running
        */
-      flocker?: core.v1.FlockerVolumeSource
+      flocker?: core.v1.FlockerVolumeSource;
 
       /**
        * GCEPersistentDisk represents a GCE Disk resource that is attached to a kubelet's host
        * machine and then exposed to the pod. Provisioned by an admin. More info:
        * https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk
        */
-      gcePersistentDisk?: core.v1.GCEPersistentDiskVolumeSource
+      gcePersistentDisk?: core.v1.GCEPersistentDiskVolumeSource;
 
       /**
        * Glusterfs represents a Glusterfs volume that is attached to a host and exposed to the pod.
        * Provisioned by an admin. More info: https://examples.k8s.io/volumes/glusterfs/README.md
        */
-      glusterfs?: core.v1.GlusterfsPersistentVolumeSource
+      glusterfs?: core.v1.GlusterfsPersistentVolumeSource;
 
       /**
        * HostPath represents a directory on the host. Provisioned by a developer or tester. This is
@@ -11628,37 +11129,37 @@ export namespace core {
        * any way and WILL NOT WORK in a multi-node cluster. More info:
        * https://kubernetes.io/docs/concepts/storage/volumes#hostpath
        */
-      hostPath?: core.v1.HostPathVolumeSource
+      hostPath?: core.v1.HostPathVolumeSource;
 
       /**
        * ISCSI represents an ISCSI Disk resource that is attached to a kubelet's host machine and
        * then exposed to the pod. Provisioned by an admin.
        */
-      iscsi?: core.v1.ISCSIPersistentVolumeSource
+      iscsi?: core.v1.ISCSIPersistentVolumeSource;
 
       /**
        * Local represents directly-attached storage with node affinity
        */
-      local?: core.v1.LocalVolumeSource
+      local?: core.v1.LocalVolumeSource;
 
       /**
        * A list of mount options, e.g. ["ro", "soft"]. Not validated - mount will simply fail if one
        * is invalid. More info:
        * https://kubernetes.io/docs/concepts/storage/persistent-volumes/#mount-options
        */
-      mountOptions?: string[]
+      mountOptions?: string[];
 
       /**
        * NFS represents an NFS mount on the host. Provisioned by an admin. More info:
        * https://kubernetes.io/docs/concepts/storage/volumes#nfs
        */
-      nfs?: core.v1.NFSVolumeSource
+      nfs?: core.v1.NFSVolumeSource;
 
       /**
        * NodeAffinity defines constraints that limit what nodes this volume can be accessed from.
        * This field influences the scheduling of pods that use this volume.
        */
-      nodeAffinity?: core.v1.VolumeNodeAffinity
+      nodeAffinity?: core.v1.VolumeNodeAffinity;
 
       /**
        * What happens to a persistent volume when released from its claim. Valid options are Retain
@@ -11667,61 +11168,59 @@ export namespace core {
        * volume plugin underlying this PersistentVolume. More info:
        * https://kubernetes.io/docs/concepts/storage/persistent-volumes#reclaiming
        */
-      persistentVolumeReclaimPolicy?: string
+      persistentVolumeReclaimPolicy?: string;
 
       /**
        * PhotonPersistentDisk represents a PhotonController persistent disk attached and mounted on
        * kubelets host machine
        */
-      photonPersistentDisk?: core.v1.PhotonPersistentDiskVolumeSource
+      photonPersistentDisk?: core.v1.PhotonPersistentDiskVolumeSource;
 
       /**
        * PortworxVolume represents a portworx volume attached and mounted on kubelets host machine
        */
-      portworxVolume?: core.v1.PortworxVolumeSource
+      portworxVolume?: core.v1.PortworxVolumeSource;
 
       /**
        * Quobyte represents a Quobyte mount on the host that shares a pod's lifetime
        */
-      quobyte?: core.v1.QuobyteVolumeSource
+      quobyte?: core.v1.QuobyteVolumeSource;
 
       /**
        * RBD represents a Rados Block Device mount on the host that shares a pod's lifetime. More
        * info: https://examples.k8s.io/volumes/rbd/README.md
        */
-      rbd?: core.v1.RBDPersistentVolumeSource
+      rbd?: core.v1.RBDPersistentVolumeSource;
 
       /**
        * ScaleIO represents a ScaleIO persistent volume attached and mounted on Kubernetes nodes.
        */
-      scaleIO?: core.v1.ScaleIOPersistentVolumeSource
+      scaleIO?: core.v1.ScaleIOPersistentVolumeSource;
 
       /**
        * Name of StorageClass to which this persistent volume belongs. Empty value means that this
        * volume does not belong to any StorageClass.
        */
-      storageClassName?: string
+      storageClassName?: string;
 
       /**
        * StorageOS represents a StorageOS volume that is attached to the kubelet's host machine and
        * mounted into the pod More info: https://examples.k8s.io/volumes/storageos/README.md
        */
-      storageos?: core.v1.StorageOSPersistentVolumeSource
+      storageos?: core.v1.StorageOSPersistentVolumeSource;
 
       /**
        * volumeMode defines if a volume is intended to be used with a formatted filesystem or to
        * remain in raw block state. Value of Filesystem is implied when not included in spec. This
        * is a beta feature.
        */
-      volumeMode?: string
+      volumeMode?: string;
 
       /**
        * VsphereVolume represents a vSphere volume attached and mounted on kubelets host machine
        */
-      vsphereVolume?: core.v1.VsphereVirtualDiskVolumeSource
-
+      vsphereVolume?: core.v1.VsphereVirtualDiskVolumeSource;
     }
-
 
     /**
      * Represents a Photon Controller persistent disk resource.
@@ -11730,16 +11229,14 @@ export namespace core {
       /**
        * ID that identifies Photon Controller persistent disk
        */
-      pdID: string
+      pdID: string;
 
       /**
        * Filesystem type to mount. Must be a filesystem type supported by the host operating system.
        * Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
        */
-      fsType?: string
-
+      fsType?: string;
     }
-
 
     /**
      * Pod is a collection of containers that can run on a host. This resource is created by clients
@@ -11752,7 +11249,7 @@ export namespace core {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1"
+      apiVersion?: "v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -11760,20 +11257,19 @@ export namespace core {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "Pod"
+      kind?: "Pod";
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Specification of the desired behavior of the pod. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
        */
-      spec?: core.v1.PodSpec
-
+      spec?: core.v1.PodSpec;
     }
 
     export function isPod(o: any): o is Pod {
@@ -11794,7 +11290,7 @@ export namespace core {
        * matches the corresponding podAffinityTerm; the node(s) with the highest sum are the most
        * preferred.
        */
-      preferredDuringSchedulingIgnoredDuringExecution?: core.v1.WeightedPodAffinityTerm[]
+      preferredDuringSchedulingIgnoredDuringExecution?: core.v1.WeightedPodAffinityTerm[];
 
       /**
        * If the affinity requirements specified by this field are not met at scheduling time, the
@@ -11804,10 +11300,8 @@ export namespace core {
        * multiple elements, the lists of nodes corresponding to each podAffinityTerm are
        * intersected, i.e. all terms must be satisfied.
        */
-      requiredDuringSchedulingIgnoredDuringExecution?: core.v1.PodAffinityTerm[]
-
+      requiredDuringSchedulingIgnoredDuringExecution?: core.v1.PodAffinityTerm[];
     }
-
 
     /**
      * Defines a set of pods (namely those matching the labelSelector relative to the given
@@ -11822,21 +11316,19 @@ export namespace core {
        * running on a node whose value of the label with key topologyKey matches that of any node on
        * which any of the selected pods is running. Empty topologyKey is not allowed.
        */
-      topologyKey: string
+      topologyKey: string;
 
       /**
        * A label query over a set of resources, in this case pods.
        */
-      labelSelector?: meta.v1.LabelSelector
+      labelSelector?: meta.v1.LabelSelector;
 
       /**
        * namespaces specifies which namespaces the labelSelector applies to (matches against); null
        * or empty list means "this pod's namespace"
        */
-      namespaces?: string[]
-
+      namespaces?: string[];
     }
-
 
     /**
      * Pod anti affinity is a group of inter pod anti affinity scheduling rules.
@@ -11852,7 +11344,7 @@ export namespace core {
        * pods which matches the corresponding podAffinityTerm; the node(s) with the highest sum are
        * the most preferred.
        */
-      preferredDuringSchedulingIgnoredDuringExecution?: core.v1.WeightedPodAffinityTerm[]
+      preferredDuringSchedulingIgnoredDuringExecution?: core.v1.WeightedPodAffinityTerm[];
 
       /**
        * If the anti-affinity requirements specified by this field are not met at scheduling time,
@@ -11862,10 +11354,8 @@ export namespace core {
        * there are multiple elements, the lists of nodes corresponding to each podAffinityTerm are
        * intersected, i.e. all terms must be satisfied.
        */
-      requiredDuringSchedulingIgnoredDuringExecution?: core.v1.PodAffinityTerm[]
-
+      requiredDuringSchedulingIgnoredDuringExecution?: core.v1.PodAffinityTerm[];
     }
-
 
     /**
      * PodCondition contains details for the current condition of this pod.
@@ -11875,30 +11365,28 @@ export namespace core {
        * Type is the type of the condition. More info:
        * https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions
        */
-      type: string
+      type: string;
 
       /**
        * Last time we probed the condition.
        */
-      lastProbeTime?: string
+      lastProbeTime?: string;
 
       /**
        * Last time the condition transitioned from one status to another.
        */
-      lastTransitionTime?: string
+      lastTransitionTime?: string;
 
       /**
        * Human-readable message indicating details about last transition.
        */
-      message?: string
+      message?: string;
 
       /**
        * Unique, one-word, CamelCase reason for the condition's last transition.
        */
-      reason?: string
-
+      reason?: string;
     }
-
 
     /**
      * PodDNSConfig defines the DNS parameters of a pod in addition to those generated from
@@ -11909,23 +11397,21 @@ export namespace core {
        * A list of DNS name server IP addresses. This will be appended to the base nameservers
        * generated from DNSPolicy. Duplicated nameservers will be removed.
        */
-      nameservers?: string[]
+      nameservers?: string[];
 
       /**
        * A list of DNS resolver options. This will be merged with the base options generated from
        * DNSPolicy. Duplicated entries will be removed. Resolution options given in Options will
        * override those that appear in the base DNSPolicy.
        */
-      options?: core.v1.PodDNSConfigOption[]
+      options?: core.v1.PodDNSConfigOption[];
 
       /**
        * A list of DNS search domains for host-name lookup. This will be appended to the base search
        * paths generated from DNSPolicy. Duplicated search paths will be removed.
        */
-      searches?: string[]
-
+      searches?: string[];
     }
-
 
     /**
      * PodDNSConfigOption defines DNS resolver options of a pod.
@@ -11934,13 +11420,10 @@ export namespace core {
       /**
        * Required.
        */
-      name?: string
+      name?: string;
 
-      
-      value?: string
-
+      value?: string;
     }
-
 
     /**
      * IP address information for entries in the (plural) PodIPs field. Each entry includes:
@@ -11950,10 +11433,8 @@ export namespace core {
       /**
        * ip is an IP address (IPv4 or IPv6) assigned to the pod
        */
-      ip?: string
-
+      ip?: string;
     }
-
 
     /**
      * PodList is a list of Pods.
@@ -11963,7 +11444,7 @@ export namespace core {
        * List of pods. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md
        */
-      items: core.v1.Pod[]
+      items: core.v1.Pod[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -11971,7 +11452,7 @@ export namespace core {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1"
+      apiVersion?: "v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -11979,14 +11460,13 @@ export namespace core {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "PodList"
+      kind?: "PodList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isPodList(o: any): o is PodList {
@@ -12000,10 +11480,8 @@ export namespace core {
       /**
        * ConditionType refers to a condition in the pod's condition list with matching type.
        */
-      conditionType: string
-
+      conditionType: string;
     }
-
 
     /**
      * PodSecurityContext holds pod-level security attributes and common container settings. Some
@@ -12014,20 +11492,20 @@ export namespace core {
       /**
        * A special supplemental group that applies to all containers in a pod. Some volume types
        * allow the Kubelet to change the ownership of that volume to be owned by the pod:
-       * 
+       *
        * 1. The owning GID will be the FSGroup 2. The setgid bit is set (new files created in the
        * volume will be owned by FSGroup) 3. The permission bits are OR'd with rw-rw----
-       * 
+       *
        * If unset, the Kubelet will not modify the ownership and permissions of any volume.
        */
-      fsGroup?: number
+      fsGroup?: number;
 
       /**
        * The GID to run the entrypoint of the container process. Uses runtime default if unset. May
        * also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the
        * value specified in SecurityContext takes precedence for that container.
        */
-      runAsGroup?: number
+      runAsGroup?: number;
 
       /**
        * Indicates that the container must run as a non-root user. If true, the Kubelet will
@@ -12036,7 +11514,7 @@ export namespace core {
        * May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext,
        * the value specified in SecurityContext takes precedence.
        */
-      runAsNonRoot?: boolean
+      runAsNonRoot?: boolean;
 
       /**
        * The UID to run the entrypoint of the container process. Defaults to user specified in image
@@ -12044,7 +11522,7 @@ export namespace core {
        * SecurityContext and PodSecurityContext, the value specified in SecurityContext takes
        * precedence for that container.
        */
-      runAsUser?: number
+      runAsUser?: number;
 
       /**
        * The SELinux context to be applied to all containers. If unspecified, the container runtime
@@ -12052,29 +11530,27 @@ export namespace core {
        * SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value
        * specified in SecurityContext takes precedence for that container.
        */
-      seLinuxOptions?: core.v1.SELinuxOptions
+      seLinuxOptions?: core.v1.SELinuxOptions;
 
       /**
        * A list of groups applied to the first process run in each container, in addition to the
        * container's primary GID.  If unspecified, no groups will be added to any container.
        */
-      supplementalGroups?: number[]
+      supplementalGroups?: number[];
 
       /**
        * Sysctls hold a list of namespaced sysctls used for the pod. Pods with unsupported sysctls
        * (by the container runtime) might fail to launch.
        */
-      sysctls?: core.v1.Sysctl[]
+      sysctls?: core.v1.Sysctl[];
 
       /**
        * The Windows specific settings applied to all containers. If unspecified, the options within
        * a container's SecurityContext will be used. If set in both SecurityContext and
        * PodSecurityContext, the value specified in SecurityContext takes precedence.
        */
-      windowsOptions?: core.v1.WindowsSecurityContextOptions
-
+      windowsOptions?: core.v1.WindowsSecurityContextOptions;
     }
-
 
     /**
      * PodSpec is a description of a pod.
@@ -12084,31 +11560,31 @@ export namespace core {
        * List of containers belonging to the pod. Containers cannot currently be added or removed.
        * There must be at least one container in a Pod. Cannot be updated.
        */
-      containers: core.v1.Container[]
+      containers: core.v1.Container[];
 
       /**
        * Optional duration in seconds the pod may be active on the node relative to StartTime before
        * the system will actively try to mark it failed and kill associated containers. Value must
        * be a positive integer.
        */
-      activeDeadlineSeconds?: number
+      activeDeadlineSeconds?: number;
 
       /**
        * If specified, the pod's scheduling constraints
        */
-      affinity?: core.v1.Affinity
+      affinity?: core.v1.Affinity;
 
       /**
        * AutomountServiceAccountToken indicates whether a service account token should be
        * automatically mounted.
        */
-      automountServiceAccountToken?: boolean
+      automountServiceAccountToken?: boolean;
 
       /**
        * Specifies the DNS parameters of a pod. Parameters specified here will be merged to the
        * generated DNS configuration based on DNSPolicy.
        */
-      dnsConfig?: core.v1.PodDNSConfig
+      dnsConfig?: core.v1.PodDNSConfig;
 
       /**
        * Set DNS policy for the pod. Defaults to "ClusterFirst". Valid values are
@@ -12117,14 +11593,14 @@ export namespace core {
        * along with hostNetwork, you have to specify DNS policy explicitly to
        * 'ClusterFirstWithHostNet'.
        */
-      dnsPolicy?: string
+      dnsPolicy?: string;
 
       /**
        * EnableServiceLinks indicates whether information about services should be injected into
        * pod's environment variables, matching the syntax of Docker links. Optional: Defaults to
        * true.
        */
-      enableServiceLinks?: boolean
+      enableServiceLinks?: boolean;
 
       /**
        * List of ephemeral containers run in this pod. Ephemeral containers may be run in an
@@ -12134,35 +11610,35 @@ export namespace core {
        * subresource. This field is alpha-level and is only honored by servers that enable the
        * EphemeralContainers feature.
        */
-      ephemeralContainers?: core.v1.EphemeralContainer[]
+      ephemeralContainers?: core.v1.EphemeralContainer[];
 
       /**
        * HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts
        * file if specified. This is only valid for non-hostNetwork pods.
        */
-      hostAliases?: core.v1.HostAlias[]
+      hostAliases?: core.v1.HostAlias[];
 
       /**
        * Use the host's ipc namespace. Optional: Default to false.
        */
-      hostIPC?: boolean
+      hostIPC?: boolean;
 
       /**
        * Host networking requested for this pod. Use the host's network namespace. If this option is
        * set, the ports that will be used must be specified. Default to false.
        */
-      hostNetwork?: boolean
+      hostNetwork?: boolean;
 
       /**
        * Use the host's pid namespace. Optional: Default to false.
        */
-      hostPID?: boolean
+      hostPID?: boolean;
 
       /**
        * Specifies the hostname of the Pod If not specified, the pod's hostname will be set to a
        * system-defined value.
        */
-      hostname?: string
+      hostname?: string;
 
       /**
        * ImagePullSecrets is an optional list of references to secrets in the same namespace to use
@@ -12171,7 +11647,7 @@ export namespace core {
        * docker, only DockerConfig type secrets are honored. More info:
        * https://kubernetes.io/docs/concepts/containers/images#specifying-imagepullsecrets-on-a-pod
        */
-      imagePullSecrets?: core.v1.LocalObjectReference[]
+      imagePullSecrets?: core.v1.LocalObjectReference[];
 
       /**
        * List of initialization containers belonging to the pod. Init containers are executed in
@@ -12185,21 +11661,21 @@ export namespace core {
        * similar fashion. Init containers cannot currently be added or removed. Cannot be updated.
        * More info: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
        */
-      initContainers?: core.v1.Container[]
+      initContainers?: core.v1.Container[];
 
       /**
        * NodeName is a request to schedule this pod onto a specific node. If it is non-empty, the
        * scheduler simply schedules this pod onto that node, assuming that it fits resource
        * requirements.
        */
-      nodeName?: string
+      nodeName?: string;
 
       /**
        * NodeSelector is a selector which must be true for the pod to fit on a node. Selector which
        * must match a node's labels for the pod to be scheduled on that node. More info:
        * https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
        */
-      nodeSelector?: {[key: string]: string}
+      nodeSelector?: { [key: string]: string };
 
       /**
        * Overhead represents the resource overhead associated with running a pod for a given
@@ -12213,14 +11689,14 @@ export namespace core {
        * alpha-level as of Kubernetes v1.16, and is only honored by servers that enable the
        * PodOverhead feature.
        */
-      overhead?: object
+      overhead?: object;
 
       /**
        * PreemptionPolicy is the Policy for preempting pods with lower priority. One of Never,
        * PreemptLowerPriority. Defaults to PreemptLowerPriority if unset. This field is alpha-level
        * and is only honored by servers that enable the NonPreemptingPriority feature.
        */
-      preemptionPolicy?: string
+      preemptionPolicy?: string;
 
       /**
        * The priority value. Various system components use this field to find the priority of the
@@ -12228,7 +11704,7 @@ export namespace core {
        * field. The admission controller populates this field from PriorityClassName. The higher the
        * value, the higher the priority.
        */
-      priority?: number
+      priority?: number;
 
       /**
        * If specified, indicates the pod's priority. "system-node-critical" and
@@ -12237,7 +11713,7 @@ export namespace core {
        * PriorityClass object with that name. If not specified, the pod priority will be default or
        * zero if there is no default.
        */
-      priorityClassName?: string
+      priorityClassName?: string;
 
       /**
        * If specified, all readiness gates will be evaluated for pod readiness. A pod is ready when
@@ -12245,14 +11721,14 @@ export namespace core {
        * status equal to "True" More info:
        * https://git.k8s.io/enhancements/keps/sig-network/0007-pod-ready%2B%2B.md
        */
-      readinessGates?: core.v1.PodReadinessGate[]
+      readinessGates?: core.v1.PodReadinessGate[];
 
       /**
        * Restart policy for all containers within the pod. One of Always, OnFailure, Never. Default
        * to Always. More info:
        * https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
        */
-      restartPolicy?: string
+      restartPolicy?: string;
 
       /**
        * RuntimeClassName refers to a RuntimeClass object in the node.k8s.io group, which should be
@@ -12262,31 +11738,31 @@ export namespace core {
        * https://git.k8s.io/enhancements/keps/sig-node/runtime-class.md This is a beta feature as of
        * Kubernetes v1.14.
        */
-      runtimeClassName?: string
+      runtimeClassName?: string;
 
       /**
        * If specified, the pod will be dispatched by specified scheduler. If not specified, the pod
        * will be dispatched by default scheduler.
        */
-      schedulerName?: string
+      schedulerName?: string;
 
       /**
        * SecurityContext holds pod-level security attributes and common container settings.
        * Optional: Defaults to empty.  See type description for default values of each field.
        */
-      securityContext?: core.v1.PodSecurityContext
+      securityContext?: core.v1.PodSecurityContext;
 
       /**
        * DeprecatedServiceAccount is a depreciated alias for ServiceAccountName. Deprecated: Use
        * serviceAccountName instead.
        */
-      serviceAccount?: string
+      serviceAccount?: string;
 
       /**
        * ServiceAccountName is the name of the ServiceAccount to use to run this pod. More info:
        * https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
        */
-      serviceAccountName?: string
+      serviceAccountName?: string;
 
       /**
        * Share a single process namespace between all of the containers in a pod. When this is set
@@ -12294,14 +11770,14 @@ export namespace core {
        * and the first process in each container will not be assigned PID 1. HostPID and
        * ShareProcessNamespace cannot both be set. Optional: Default to false.
        */
-      shareProcessNamespace?: boolean
+      shareProcessNamespace?: boolean;
 
       /**
        * If specified, the fully qualified Pod hostname will be "<hostname>.<subdomain>.<pod
        * namespace>.svc.<cluster domain>". If not specified, the pod will not have a domainname at
        * all.
        */
-      subdomain?: string
+      subdomain?: string;
 
       /**
        * Optional duration in seconds the pod needs to terminate gracefully. May be decreased in
@@ -12312,12 +11788,12 @@ export namespace core {
        * Set this value longer than the expected cleanup time for your process. Defaults to 30
        * seconds.
        */
-      terminationGracePeriodSeconds?: number
+      terminationGracePeriodSeconds?: number;
 
       /**
        * If specified, the pod's tolerations.
        */
-      tolerations?: core.v1.Toleration[]
+      tolerations?: core.v1.Toleration[];
 
       /**
        * TopologySpreadConstraints describes how a group of pods ought to spread across topology
@@ -12325,16 +11801,14 @@ export namespace core {
        * is alpha-level and is only honored by clusters that enables the EvenPodsSpread feature. All
        * topologySpreadConstraints are ANDed.
        */
-      topologySpreadConstraints?: core.v1.TopologySpreadConstraint[]
+      topologySpreadConstraints?: core.v1.TopologySpreadConstraint[];
 
       /**
        * List of volumes that can be mounted by containers belonging to the pod. More info:
        * https://kubernetes.io/docs/concepts/storage/volumes
        */
-      volumes?: core.v1.Volume[]
-
+      volumes?: core.v1.Volume[];
     }
-
 
     /**
      * PodTemplate describes a template for creating copies of a predefined pod.
@@ -12346,7 +11820,7 @@ export namespace core {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1"
+      apiVersion?: "v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -12354,20 +11828,19 @@ export namespace core {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "PodTemplate"
+      kind?: "PodTemplate";
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Template defines the pods that will be created from this pod template.
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
        */
-      template?: core.v1.PodTemplateSpec
-
+      template?: core.v1.PodTemplateSpec;
     }
 
     export function isPodTemplate(o: any): o is PodTemplate {
@@ -12381,7 +11854,7 @@ export namespace core {
       /**
        * List of pod templates
        */
-      items: core.v1.PodTemplate[]
+      items: core.v1.PodTemplate[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -12389,7 +11862,7 @@ export namespace core {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1"
+      apiVersion?: "v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -12397,14 +11870,13 @@ export namespace core {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "PodTemplateList"
+      kind?: "PodTemplateList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isPodTemplateList(o: any): o is PodTemplateList {
@@ -12419,16 +11891,14 @@ export namespace core {
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Specification of the desired behavior of the pod. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
        */
-      spec?: core.v1.PodSpec
-
+      spec?: core.v1.PodSpec;
     }
-
 
     /**
      * PortworxVolumeSource represents a Portworx volume resource.
@@ -12437,22 +11907,20 @@ export namespace core {
       /**
        * VolumeID uniquely identifies a Portworx volume
        */
-      volumeID: string
+      volumeID: string;
 
       /**
        * FSType represents the filesystem type to mount Must be a filesystem type supported by the
        * host operating system. Ex. "ext4", "xfs". Implicitly inferred to be "ext4" if unspecified.
        */
-      fsType?: string
+      fsType?: string;
 
       /**
        * Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in
        * VolumeMounts.
        */
-      readOnly?: boolean
-
+      readOnly?: boolean;
     }
-
 
     /**
      * An empty preferred scheduling term matches all objects with implicit weight 0 (i.e. it's a
@@ -12462,15 +11930,13 @@ export namespace core {
       /**
        * A node selector term, associated with the corresponding weight.
        */
-      preference: core.v1.NodeSelectorTerm
+      preference: core.v1.NodeSelectorTerm;
 
       /**
        * Weight associated with matching the corresponding nodeSelectorTerm, in the range 1-100.
        */
-      weight: number
-
+      weight: number;
     }
-
 
     /**
      * Probe describes a health check to be performed against a container to determine whether it is
@@ -12480,51 +11946,49 @@ export namespace core {
       /**
        * One and only one of the following should be specified. Exec specifies the action to take.
        */
-      exec?: core.v1.ExecAction
+      exec?: core.v1.ExecAction;
 
       /**
        * Minimum consecutive failures for the probe to be considered failed after having succeeded.
        * Defaults to 3. Minimum value is 1.
        */
-      failureThreshold?: number
+      failureThreshold?: number;
 
       /**
        * HTTPGet specifies the http request to perform.
        */
-      httpGet?: core.v1.HTTPGetAction
+      httpGet?: core.v1.HTTPGetAction;
 
       /**
        * Number of seconds after the container has started before liveness probes are initiated.
        * More info:
        * https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
        */
-      initialDelaySeconds?: number
+      initialDelaySeconds?: number;
 
       /**
        * How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.
        */
-      periodSeconds?: number
+      periodSeconds?: number;
 
       /**
        * Minimum consecutive successes for the probe to be considered successful after having
        * failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
        */
-      successThreshold?: number
+      successThreshold?: number;
 
       /**
        * TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported
        */
-      tcpSocket?: core.v1.TCPSocketAction
+      tcpSocket?: core.v1.TCPSocketAction;
 
       /**
        * Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is
        * 1. More info:
        * https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
        */
-      timeoutSeconds?: number
-
+      timeoutSeconds?: number;
     }
-
 
     /**
      * Represents a projected volume source
@@ -12533,7 +11997,7 @@ export namespace core {
       /**
        * list of volume projections
        */
-      sources: core.v1.VolumeProjection[]
+      sources: core.v1.VolumeProjection[];
 
       /**
        * Mode bits to use on created files by default. Must be a value between 0 and 0777.
@@ -12541,10 +12005,8 @@ export namespace core {
        * with other options that affect the file mode, like fsGroup, and the result can be other
        * mode bits set.
        */
-      defaultMode?: number
-
+      defaultMode?: number;
     }
-
 
     /**
      * Represents a Quobyte mount that lasts the lifetime of a pod. Quobyte volumes do not support
@@ -12556,37 +12018,35 @@ export namespace core {
        * host:port pair (multiple entries are separated with commas) which acts as the central
        * registry for volumes
        */
-      registry: string
+      registry: string;
 
       /**
        * Volume is a string that references an already created Quobyte volume by name.
        */
-      volume: string
+      volume: string;
 
       /**
        * Group to map volume access to Default is no group
        */
-      group?: string
+      group?: string;
 
       /**
        * ReadOnly here will force the Quobyte volume to be mounted with read-only permissions.
        * Defaults to false.
        */
-      readOnly?: boolean
+      readOnly?: boolean;
 
       /**
        * Tenant owning the given Quobyte volume in the Backend Used with dynamically provisioned
        * Quobyte volumes, value is set by the plugin
        */
-      tenant?: string
+      tenant?: string;
 
       /**
        * User to map volume access to Defaults to serivceaccount user
        */
-      user?: string
-
+      user?: string;
     }
-
 
     /**
      * Represents a Rados Block Device mount that lasts the lifetime of a pod. RBD volumes support
@@ -12597,13 +12057,13 @@ export namespace core {
        * The rados image name. More info:
        * https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
        */
-      image: string
+      image: string;
 
       /**
        * A collection of Ceph monitors. More info:
        * https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
        */
-      monitors: string[]
+      monitors: string[];
 
       /**
        * Filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type
@@ -12611,40 +12071,38 @@ export namespace core {
        * inferred to be "ext4" if unspecified. More info:
        * https://kubernetes.io/docs/concepts/storage/volumes#rbd
        */
-      fsType?: string
+      fsType?: string;
 
       /**
        * Keyring is the path to key ring for RBDUser. Default is /etc/ceph/keyring. More info:
        * https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
        */
-      keyring?: string
+      keyring?: string;
 
       /**
        * The rados pool name. Default is rbd. More info:
        * https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
        */
-      pool?: string
+      pool?: string;
 
       /**
        * ReadOnly here will force the ReadOnly setting in VolumeMounts. Defaults to false. More
        * info: https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
        */
-      readOnly?: boolean
+      readOnly?: boolean;
 
       /**
        * SecretRef is name of the authentication secret for RBDUser. If provided overrides keyring.
        * Default is nil. More info: https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
        */
-      secretRef?: core.v1.SecretReference
+      secretRef?: core.v1.SecretReference;
 
       /**
        * The rados user name. Default is admin. More info:
        * https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
        */
-      user?: string
-
+      user?: string;
     }
-
 
     /**
      * Represents a Rados Block Device mount that lasts the lifetime of a pod. RBD volumes support
@@ -12655,13 +12113,13 @@ export namespace core {
        * The rados image name. More info:
        * https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
        */
-      image: string
+      image: string;
 
       /**
        * A collection of Ceph monitors. More info:
        * https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
        */
-      monitors: string[]
+      monitors: string[];
 
       /**
        * Filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type
@@ -12669,40 +12127,38 @@ export namespace core {
        * inferred to be "ext4" if unspecified. More info:
        * https://kubernetes.io/docs/concepts/storage/volumes#rbd
        */
-      fsType?: string
+      fsType?: string;
 
       /**
        * Keyring is the path to key ring for RBDUser. Default is /etc/ceph/keyring. More info:
        * https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
        */
-      keyring?: string
+      keyring?: string;
 
       /**
        * The rados pool name. Default is rbd. More info:
        * https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
        */
-      pool?: string
+      pool?: string;
 
       /**
        * ReadOnly here will force the ReadOnly setting in VolumeMounts. Defaults to false. More
        * info: https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
        */
-      readOnly?: boolean
+      readOnly?: boolean;
 
       /**
        * SecretRef is name of the authentication secret for RBDUser. If provided overrides keyring.
        * Default is nil. More info: https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
        */
-      secretRef?: core.v1.LocalObjectReference
+      secretRef?: core.v1.LocalObjectReference;
 
       /**
        * The rados user name. Default is admin. More info:
        * https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it
        */
-      user?: string
-
+      user?: string;
     }
-
 
     /**
      * ReplicationController represents the configuration of a replication controller.
@@ -12714,7 +12170,7 @@ export namespace core {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1"
+      apiVersion?: "v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -12722,25 +12178,26 @@ export namespace core {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ReplicationController"
+      kind?: "ReplicationController";
 
       /**
        * If the Labels of a ReplicationController are empty, they are defaulted to be the same as
        * the Pod(s) that the replication controller manages. Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Spec defines the specification of the desired behavior of the replication controller. More
        * info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
        */
-      spec?: core.v1.ReplicationControllerSpec
-
+      spec?: core.v1.ReplicationControllerSpec;
     }
 
-    export function isReplicationController(o: any): o is ReplicationController {
+    export function isReplicationController(
+      o: any
+    ): o is ReplicationController {
       return o.apiVersion == "v1" && o.kind == "ReplicationController";
     }
 
@@ -12752,25 +12209,23 @@ export namespace core {
       /**
        * Type of replication controller condition.
        */
-      type: string
+      type: string;
 
       /**
        * The last time the condition transitioned from one status to another.
        */
-      lastTransitionTime?: string
+      lastTransitionTime?: string;
 
       /**
        * A human readable message indicating details about the transition.
        */
-      message?: string
+      message?: string;
 
       /**
        * The reason for the condition's last transition.
        */
-      reason?: string
-
+      reason?: string;
     }
-
 
     /**
      * ReplicationControllerList is a collection of replication controllers.
@@ -12780,7 +12235,7 @@ export namespace core {
        * List of replication controllers. More info:
        * https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller
        */
-      items: core.v1.ReplicationController[]
+      items: core.v1.ReplicationController[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -12788,7 +12243,7 @@ export namespace core {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1"
+      apiVersion?: "v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -12796,17 +12251,18 @@ export namespace core {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ReplicationControllerList"
+      kind?: "ReplicationControllerList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
-    export function isReplicationControllerList(o: any): o is ReplicationControllerList {
+    export function isReplicationControllerList(
+      o: any
+    ): o is ReplicationControllerList {
       return o.apiVersion == "v1" && o.kind == "ReplicationControllerList";
     }
 
@@ -12819,14 +12275,14 @@ export namespace core {
        * container crashing, for it to be considered available. Defaults to 0 (pod will be
        * considered available as soon as it is ready)
        */
-      minReadySeconds?: number
+      minReadySeconds?: number;
 
       /**
        * Replicas is the number of desired replicas. This is a pointer to distinguish between
        * explicit zero and unspecified. Defaults to 1. More info:
        * https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#what-is-a-replicationcontroller
        */
-      replicas?: number
+      replicas?: number;
 
       /**
        * Selector is a label query over pods that should match the Replicas count. If Selector is
@@ -12835,17 +12291,15 @@ export namespace core {
        * defaulted to labels on Pod template. More info:
        * https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors
        */
-      selector?: {[key: string]: string}
+      selector?: { [key: string]: string };
 
       /**
        * Template is the object that describes the pod that will be created if insufficient replicas
        * are detected. This takes precedence over a TemplateRef. More info:
        * https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template
        */
-      template?: core.v1.PodTemplateSpec
-
+      template?: core.v1.PodTemplateSpec;
     }
-
 
     /**
      * ResourceFieldSelector represents container resources (cpu, memory) and their output format
@@ -12854,20 +12308,18 @@ export namespace core {
       /**
        * Required: resource to select
        */
-      resource: string
+      resource: string;
 
       /**
        * Container name: required for volumes, optional for env vars
        */
-      containerName?: string
+      containerName?: string;
 
       /**
        * Specifies the output format of the exposed resources, defaults to "1"
        */
-      divisor?: string
-
+      divisor?: string;
     }
-
 
     /**
      * ResourceQuota sets aggregate quota restrictions enforced per namespace
@@ -12879,7 +12331,7 @@ export namespace core {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1"
+      apiVersion?: "v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -12887,20 +12339,19 @@ export namespace core {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ResourceQuota"
+      kind?: "ResourceQuota";
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Spec defines the desired quota.
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
        */
-      spec?: core.v1.ResourceQuotaSpec
-
+      spec?: core.v1.ResourceQuotaSpec;
     }
 
     export function isResourceQuota(o: any): o is ResourceQuota {
@@ -12915,7 +12366,7 @@ export namespace core {
        * Items is a list of ResourceQuota objects. More info:
        * https://kubernetes.io/docs/concepts/policy/resource-quotas/
        */
-      items: core.v1.ResourceQuota[]
+      items: core.v1.ResourceQuota[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -12923,7 +12374,7 @@ export namespace core {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1"
+      apiVersion?: "v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -12931,14 +12382,13 @@ export namespace core {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ResourceQuotaList"
+      kind?: "ResourceQuotaList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isResourceQuotaList(o: any): o is ResourceQuotaList {
@@ -12953,7 +12403,7 @@ export namespace core {
        * hard is the set of desired hard limits for each named resource. More info:
        * https://kubernetes.io/docs/concepts/policy/resource-quotas/
        */
-      hard?: object
+      hard?: object;
 
       /**
        * scopeSelector is also a collection of filters like scopes that must match each object
@@ -12961,16 +12411,14 @@ export namespace core {
        * values. For a resource to match, both scopes AND scopeSelector (if specified in spec), must
        * be matched.
        */
-      scopeSelector?: core.v1.ScopeSelector
+      scopeSelector?: core.v1.ScopeSelector;
 
       /**
        * A collection of filters that must match each object tracked by a quota. If not specified,
        * the quota matches all objects.
        */
-      scopes?: string[]
-
+      scopes?: string[];
     }
-
 
     /**
      * ResourceRequirements describes the compute resource requirements.
@@ -12980,7 +12428,7 @@ export namespace core {
        * Limits describes the maximum amount of compute resources allowed. More info:
        * https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
        */
-      limits?: object
+      limits?: object;
 
       /**
        * Requests describes the minimum amount of compute resources required. If Requests is omitted
@@ -12988,10 +12436,8 @@ export namespace core {
        * implementation-defined value. More info:
        * https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
        */
-      requests?: object
-
+      requests?: object;
     }
-
 
     /**
      * SELinuxOptions are the labels to be applied to the container
@@ -13000,25 +12446,23 @@ export namespace core {
       /**
        * Level is SELinux level label that applies to the container.
        */
-      level?: string
+      level?: string;
 
       /**
        * Role is a SELinux role label that applies to the container.
        */
-      role?: string
+      role?: string;
 
       /**
        * Type is a SELinux type label that applies to the container.
        */
-      type?: string
+      type?: string;
 
       /**
        * User is a SELinux user label that applies to the container.
        */
-      user?: string
-
+      user?: string;
     }
-
 
     /**
      * ScaleIOPersistentVolumeSource represents a persistent ScaleIO volume
@@ -13027,60 +12471,58 @@ export namespace core {
       /**
        * The host address of the ScaleIO API Gateway.
        */
-      gateway: string
+      gateway: string;
 
       /**
        * SecretRef references to the secret for ScaleIO user and other sensitive information. If
        * this is not provided, Login operation will fail.
        */
-      secretRef: core.v1.SecretReference
+      secretRef: core.v1.SecretReference;
 
       /**
        * The name of the storage system as configured in ScaleIO.
        */
-      system: string
+      system: string;
 
       /**
        * Filesystem type to mount. Must be a filesystem type supported by the host operating system.
        * Ex. "ext4", "xfs", "ntfs". Default is "xfs"
        */
-      fsType?: string
+      fsType?: string;
 
       /**
        * The name of the ScaleIO Protection Domain for the configured storage.
        */
-      protectionDomain?: string
+      protectionDomain?: string;
 
       /**
        * Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in
        * VolumeMounts.
        */
-      readOnly?: boolean
+      readOnly?: boolean;
 
       /**
        * Flag to enable/disable SSL communication with Gateway, default false
        */
-      sslEnabled?: boolean
+      sslEnabled?: boolean;
 
       /**
        * Indicates whether the storage for a volume should be ThickProvisioned or ThinProvisioned.
        * Default is ThinProvisioned.
        */
-      storageMode?: string
+      storageMode?: string;
 
       /**
        * The ScaleIO Storage Pool associated with the protection domain.
        */
-      storagePool?: string
+      storagePool?: string;
 
       /**
        * The name of a volume already created in the ScaleIO system that is associated with this
        * volume source.
        */
-      volumeName?: string
-
+      volumeName?: string;
     }
-
 
     /**
      * ScaleIOVolumeSource represents a persistent ScaleIO volume
@@ -13089,60 +12531,58 @@ export namespace core {
       /**
        * The host address of the ScaleIO API Gateway.
        */
-      gateway: string
+      gateway: string;
 
       /**
        * SecretRef references to the secret for ScaleIO user and other sensitive information. If
        * this is not provided, Login operation will fail.
        */
-      secretRef: core.v1.LocalObjectReference
+      secretRef: core.v1.LocalObjectReference;
 
       /**
        * The name of the storage system as configured in ScaleIO.
        */
-      system: string
+      system: string;
 
       /**
        * Filesystem type to mount. Must be a filesystem type supported by the host operating system.
        * Ex. "ext4", "xfs", "ntfs". Default is "xfs".
        */
-      fsType?: string
+      fsType?: string;
 
       /**
        * The name of the ScaleIO Protection Domain for the configured storage.
        */
-      protectionDomain?: string
+      protectionDomain?: string;
 
       /**
        * Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in
        * VolumeMounts.
        */
-      readOnly?: boolean
+      readOnly?: boolean;
 
       /**
        * Flag to enable/disable SSL communication with Gateway, default false
        */
-      sslEnabled?: boolean
+      sslEnabled?: boolean;
 
       /**
        * Indicates whether the storage for a volume should be ThickProvisioned or ThinProvisioned.
        * Default is ThinProvisioned.
        */
-      storageMode?: string
+      storageMode?: string;
 
       /**
        * The ScaleIO Storage Pool associated with the protection domain.
        */
-      storagePool?: string
+      storagePool?: string;
 
       /**
        * The name of a volume already created in the ScaleIO system that is associated with this
        * volume source.
        */
-      volumeName?: string
-
+      volumeName?: string;
     }
-
 
     /**
      * A scope selector represents the AND of the selectors represented by the scoped-resource
@@ -13152,10 +12592,8 @@ export namespace core {
       /**
        * A list of scope selector requirements by scope of the resources.
        */
-      matchExpressions?: core.v1.ScopedResourceSelectorRequirement[]
-
+      matchExpressions?: core.v1.ScopedResourceSelectorRequirement[];
     }
-
 
     /**
      * A scoped-resource selector requirement is a selector that contains values, a scope name, and
@@ -13166,22 +12604,20 @@ export namespace core {
        * Represents a scope's relationship to a set of values. Valid operators are In, NotIn,
        * Exists, DoesNotExist.
        */
-      operator: string
+      operator: string;
 
       /**
        * The name of the scope that the selector applies to.
        */
-      scopeName: string
+      scopeName: string;
 
       /**
        * An array of string values. If the operator is In or NotIn, the values array must be
        * non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This
        * array is replaced during a strategic merge patch.
        */
-      values?: string[]
-
+      values?: string[];
     }
-
 
     /**
      * Secret holds secret data of a certain type. The total bytes of the values in the Data field
@@ -13194,7 +12630,7 @@ export namespace core {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1"
+      apiVersion?: "v1";
 
       /**
        * Data contains the secret data. Each key must consist of alphanumeric characters, '-', '_'
@@ -13202,7 +12638,7 @@ export namespace core {
        * arbitrary (possibly non-string) data value here. Described in
        * https://tools.ietf.org/html/rfc4648#section-4
        */
-      data?: object
+      data?: object;
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -13210,26 +12646,25 @@ export namespace core {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "Secret"
+      kind?: "Secret";
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * stringData allows specifying non-binary secret data in string form. It is provided as a
        * write-only convenience method. All keys and values are merged into the data field on write,
        * overwriting any existing values. It is never output when reading from the API.
        */
-      stringData?: {[key: string]: string}
+      stringData?: { [key: string]: string };
 
       /**
        * Used to facilitate programmatic handling of secret data.
        */
-      type?: string
-
+      type?: string;
     }
 
     export function isSecret(o: any): o is Secret {
@@ -13238,7 +12673,7 @@ export namespace core {
 
     /**
      * SecretEnvSource selects a Secret to populate the environment variables with.
-     * 
+     *
      * The contents of the target Secret's Data field will represent the key-value pairs as
      * environment variables.
      */
@@ -13247,15 +12682,13 @@ export namespace core {
        * Name of the referent. More info:
        * https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
        */
-      name?: string
+      name?: string;
 
       /**
        * Specify whether the Secret must be defined
        */
-      optional?: boolean
-
+      optional?: boolean;
     }
-
 
     /**
      * SecretKeySelector selects a key of a Secret.
@@ -13264,21 +12697,19 @@ export namespace core {
       /**
        * The key of the secret to select from.  Must be a valid secret key.
        */
-      key: string
+      key: string;
 
       /**
        * Name of the referent. More info:
        * https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
        */
-      name?: string
+      name?: string;
 
       /**
        * Specify whether the Secret or its key must be defined
        */
-      optional?: boolean
-
+      optional?: boolean;
     }
-
 
     /**
      * SecretList is a list of Secret.
@@ -13288,7 +12719,7 @@ export namespace core {
        * Items is a list of secret objects. More info:
        * https://kubernetes.io/docs/concepts/configuration/secret
        */
-      items: core.v1.Secret[]
+      items: core.v1.Secret[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -13296,7 +12727,7 @@ export namespace core {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1"
+      apiVersion?: "v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -13304,14 +12735,13 @@ export namespace core {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "SecretList"
+      kind?: "SecretList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isSecretList(o: any): o is SecretList {
@@ -13320,7 +12750,7 @@ export namespace core {
 
     /**
      * Adapts a secret into a projected volume.
-     * 
+     *
      * The contents of the target Secret's Data field will be presented in a projected volume as
      * files using the keys in the Data field as the file names. Note that this is identical to a
      * secret volume source without the default mode.
@@ -13334,21 +12764,19 @@ export namespace core {
        * setup will error unless it is marked optional. Paths must be relative and may not contain
        * the '..' path or start with '..'.
        */
-      items?: core.v1.KeyToPath[]
+      items?: core.v1.KeyToPath[];
 
       /**
        * Name of the referent. More info:
        * https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
        */
-      name?: string
+      name?: string;
 
       /**
        * Specify whether the Secret or its key must be defined
        */
-      optional?: boolean
-
+      optional?: boolean;
     }
-
 
     /**
      * SecretReference represents a Secret Reference. It has enough information to retrieve secret
@@ -13358,19 +12786,17 @@ export namespace core {
       /**
        * Name is unique within a namespace to reference a secret resource.
        */
-      name?: string
+      name?: string;
 
       /**
        * Namespace defines the space within which the secret name must be unique.
        */
-      namespace?: string
-
+      namespace?: string;
     }
-
 
     /**
      * Adapts a Secret into a volume.
-     * 
+     *
      * The contents of the target Secret's Data field will be presented in a volume as files using
      * the keys in the Data field as the file names. Secret volumes support ownership management and
      * SELinux relabeling.
@@ -13382,7 +12808,7 @@ export namespace core {
        * be in conflict with other options that affect the file mode, like fsGroup, and the result
        * can be other mode bits set.
        */
-      defaultMode?: number
+      defaultMode?: number;
 
       /**
        * If unspecified, each key-value pair in the Data field of the referenced Secret will be
@@ -13392,21 +12818,19 @@ export namespace core {
        * setup will error unless it is marked optional. Paths must be relative and may not contain
        * the '..' path or start with '..'.
        */
-      items?: core.v1.KeyToPath[]
+      items?: core.v1.KeyToPath[];
 
       /**
        * Specify whether the Secret or its keys must be defined
        */
-      optional?: boolean
+      optional?: boolean;
 
       /**
        * Name of the secret in the pod's namespace to use. More info:
        * https://kubernetes.io/docs/concepts/storage/volumes#secret
        */
-      secretName?: string
-
+      secretName?: string;
     }
-
 
     /**
      * SecurityContext holds security configuration that will be applied to a container. Some fields
@@ -13420,38 +12844,38 @@ export namespace core {
        * container process. AllowPrivilegeEscalation is true always when the container is: 1) run as
        * Privileged 2) has CAP_SYS_ADMIN
        */
-      allowPrivilegeEscalation?: boolean
+      allowPrivilegeEscalation?: boolean;
 
       /**
        * The capabilities to add/drop when running containers. Defaults to the default set of
        * capabilities granted by the container runtime.
        */
-      capabilities?: core.v1.Capabilities
+      capabilities?: core.v1.Capabilities;
 
       /**
        * Run container in privileged mode. Processes in privileged containers are essentially
        * equivalent to root on the host. Defaults to false.
        */
-      privileged?: boolean
+      privileged?: boolean;
 
       /**
        * procMount denotes the type of proc mount to use for the containers. The default is
        * DefaultProcMount which uses the container runtime defaults for readonly paths and masked
        * paths. This requires the ProcMountType feature flag to be enabled.
        */
-      procMount?: string
+      procMount?: string;
 
       /**
        * Whether this container has a read-only root filesystem. Default is false.
        */
-      readOnlyRootFilesystem?: boolean
+      readOnlyRootFilesystem?: boolean;
 
       /**
        * The GID to run the entrypoint of the container process. Uses runtime default if unset. May
        * also be set in PodSecurityContext.  If set in both SecurityContext and PodSecurityContext,
        * the value specified in SecurityContext takes precedence.
        */
-      runAsGroup?: number
+      runAsGroup?: number;
 
       /**
        * Indicates that the container must run as a non-root user. If true, the Kubelet will
@@ -13460,7 +12884,7 @@ export namespace core {
        * May also be set in PodSecurityContext.  If set in both SecurityContext and
        * PodSecurityContext, the value specified in SecurityContext takes precedence.
        */
-      runAsNonRoot?: boolean
+      runAsNonRoot?: boolean;
 
       /**
        * The UID to run the entrypoint of the container process. Defaults to user specified in image
@@ -13468,7 +12892,7 @@ export namespace core {
        * SecurityContext and PodSecurityContext, the value specified in SecurityContext takes
        * precedence.
        */
-      runAsUser?: number
+      runAsUser?: number;
 
       /**
        * The SELinux context to be applied to the container. If unspecified, the container runtime
@@ -13476,17 +12900,15 @@ export namespace core {
        * PodSecurityContext.  If set in both SecurityContext and PodSecurityContext, the value
        * specified in SecurityContext takes precedence.
        */
-      seLinuxOptions?: core.v1.SELinuxOptions
+      seLinuxOptions?: core.v1.SELinuxOptions;
 
       /**
        * The Windows specific settings applied to all containers. If unspecified, the options from
        * the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext,
        * the value specified in SecurityContext takes precedence.
        */
-      windowsOptions?: core.v1.WindowsSecurityContextOptions
-
+      windowsOptions?: core.v1.WindowsSecurityContextOptions;
     }
-
 
     /**
      * Service is a named abstraction of software service (for example, mysql) consisting of local
@@ -13500,7 +12922,7 @@ export namespace core {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1"
+      apiVersion?: "v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -13508,20 +12930,19 @@ export namespace core {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "Service"
+      kind?: "Service";
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Spec defines the behavior of a service.
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
        */
-      spec?: core.v1.ServiceSpec
-
+      spec?: core.v1.ServiceSpec;
     }
 
     export function isService(o: any): o is Service {
@@ -13540,13 +12961,13 @@ export namespace core {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1"
+      apiVersion?: "v1";
 
       /**
        * AutomountServiceAccountToken indicates whether pods running as this service account should
        * have an API token automatically mounted. Can be overridden at the pod level.
        */
-      automountServiceAccountToken?: boolean
+      automountServiceAccountToken?: boolean;
 
       /**
        * ImagePullSecrets is a list of references to secrets in the same namespace to use for
@@ -13555,7 +12976,7 @@ export namespace core {
        * only accessed by the kubelet. More info:
        * https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod
        */
-      imagePullSecrets?: core.v1.LocalObjectReference[]
+      imagePullSecrets?: core.v1.LocalObjectReference[];
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -13563,20 +12984,19 @@ export namespace core {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ServiceAccount"
+      kind?: "ServiceAccount";
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Secrets is the list of secrets allowed to be used by pods running using this
        * ServiceAccount. More info: https://kubernetes.io/docs/concepts/configuration/secret
        */
-      secrets?: core.v1.ObjectReference[]
-
+      secrets?: core.v1.ObjectReference[];
     }
 
     export function isServiceAccount(o: any): o is ServiceAccount {
@@ -13591,7 +13011,7 @@ export namespace core {
        * List of ServiceAccounts. More info:
        * https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
        */
-      items: core.v1.ServiceAccount[]
+      items: core.v1.ServiceAccount[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -13599,7 +13019,7 @@ export namespace core {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1"
+      apiVersion?: "v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -13607,14 +13027,13 @@ export namespace core {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ServiceAccountList"
+      kind?: "ServiceAccountList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isServiceAccountList(o: any): o is ServiceAccountList {
@@ -13630,14 +13049,14 @@ export namespace core {
       /**
        * Path is the path relative to the mount point of the file to project the token into.
        */
-      path: string
+      path: string;
 
       /**
        * Audience is the intended audience of the token. A recipient of a token must identify itself
        * with an identifier specified in the audience of the token, and otherwise should reject the
        * token. The audience defaults to the identifier of the apiserver.
        */
-      audience?: string
+      audience?: string;
 
       /**
        * ExpirationSeconds is the requested duration of validity of the service account token. As
@@ -13646,10 +13065,8 @@ export namespace core {
        * older than 80 percent of its time to live or if the token is older than 24 hours.Defaults
        * to 1 hour and must be at least 10 minutes.
        */
-      expirationSeconds?: number
-
+      expirationSeconds?: number;
     }
-
 
     /**
      * ServiceList holds a list of services.
@@ -13658,7 +13075,7 @@ export namespace core {
       /**
        * List of services
        */
-      items: core.v1.Service[]
+      items: core.v1.Service[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -13666,7 +13083,7 @@ export namespace core {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1"
+      apiVersion?: "v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -13674,14 +13091,13 @@ export namespace core {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ServiceList"
+      kind?: "ServiceList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isServiceList(o: any): o is ServiceList {
@@ -13695,7 +13111,7 @@ export namespace core {
       /**
        * The port that will be exposed by this service.
        */
-      port: number
+      port: number;
 
       /**
        * The name of this port within the service. This must be a DNS_LABEL. All ports within a
@@ -13703,7 +13119,7 @@ export namespace core {
        * match the 'name' field in the EndpointPort. Optional if only one ServicePort is defined on
        * this service.
        */
-      name?: string
+      name?: string;
 
       /**
        * The port on each node on which this service is exposed when type=NodePort or LoadBalancer.
@@ -13712,12 +13128,12 @@ export namespace core {
        * ServiceType of this Service requires one. More info:
        * https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
        */
-      nodePort?: number
+      nodePort?: number;
 
       /**
        * The IP protocol for this port. Supports "TCP", "UDP", and "SCTP". Default is TCP.
        */
-      protocol?: string
+      protocol?: string;
 
       /**
        * Number or name of the port to access on the pods targeted by the service. Number must be in
@@ -13727,10 +13143,8 @@ export namespace core {
        * clusterIP=None, and should be omitted or set equal to the 'port' field. More info:
        * https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service
        */
-      targetPort?: number | string
-
+      targetPort?: number | string;
     }
-
 
     /**
      * ServiceSpec describes the attributes that a user creates on a service.
@@ -13745,7 +13159,7 @@ export namespace core {
        * ClusterIP, NodePort, and LoadBalancer. Ignored if type is ExternalName. More info:
        * https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
        */
-      clusterIP?: string
+      clusterIP?: string;
 
       /**
        * externalIPs is a list of IP addresses for which nodes in the cluster will also accept
@@ -13753,14 +13167,14 @@ export namespace core {
        * responsible for ensuring that traffic arrives at a node with this IP.  A common example is
        * external load-balancers that are not part of the Kubernetes system.
        */
-      externalIPs?: string[]
+      externalIPs?: string[];
 
       /**
        * externalName is the external reference that kubedns or equivalent will return as a CNAME
        * record for this service. No proxying will be involved. Must be a valid RFC-1123 hostname
        * (https://tools.ietf.org/html/rfc1123) and requires Type to be ExternalName.
        */
-      externalName?: string
+      externalName?: string;
 
       /**
        * externalTrafficPolicy denotes if this Service desires to route external traffic to
@@ -13769,7 +13183,7 @@ export namespace core {
        * traffic spreading. "Cluster" obscures the client source IP and may cause a second hop to
        * another node, but should have good overall load-spreading.
        */
-      externalTrafficPolicy?: string
+      externalTrafficPolicy?: string;
 
       /**
        * healthCheckNodePort specifies the healthcheck nodePort for the service. If not specified,
@@ -13777,7 +13191,7 @@ export namespace core {
        * use user-specified nodePort value if specified by the client. Only effects when Type is set
        * to LoadBalancer and ExternalTrafficPolicy is set to Local.
        */
-      healthCheckNodePort?: number
+      healthCheckNodePort?: number;
 
       /**
        * ipFamily specifies whether this Service has a preference for a particular IP family (e.g.
@@ -13790,7 +13204,7 @@ export namespace core {
        * in the cluster (e.g. IPv6 in IPv4 only cluster) is an error condition and will fail during
        * clusterIP assignment.
        */
-      ipFamily?: string
+      ipFamily?: string;
 
       /**
        * Only applies to Service Type: LoadBalancer LoadBalancer will get created with the IP
@@ -13798,7 +13212,7 @@ export namespace core {
        * supports specifying the loadBalancerIP when a load balancer is created. This field will be
        * ignored if the cloud-provider does not support the feature.
        */
-      loadBalancerIP?: string
+      loadBalancerIP?: string;
 
       /**
        * If specified and supported by the platform, this will restrict traffic through the
@@ -13806,13 +13220,13 @@ export namespace core {
        * will be ignored if the cloud-provider does not support the feature." More info:
        * https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/
        */
-      loadBalancerSourceRanges?: string[]
+      loadBalancerSourceRanges?: string[];
 
       /**
        * The list of ports that are exposed by this service. More info:
        * https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
        */
-      ports?: core.v1.ServicePort[]
+      ports?: core.v1.ServicePort[];
 
       /**
        * publishNotReadyAddresses, when set to true, indicates that DNS implementations must publish
@@ -13821,7 +13235,7 @@ export namespace core {
        * Headless Service to propagate SRV records for its Pods without respect to their readiness
        * for purpose of peer discovery.
        */
-      publishNotReadyAddresses?: boolean
+      publishNotReadyAddresses?: boolean;
 
       /**
        * Route service traffic to pods with label keys and values matching this selector. If empty
@@ -13830,19 +13244,19 @@ export namespace core {
        * LoadBalancer. Ignored if type is ExternalName. More info:
        * https://kubernetes.io/docs/concepts/services-networking/service/
        */
-      selector?: {[key: string]: string}
+      selector?: { [key: string]: string };
 
       /**
        * Supports "ClientIP" and "None". Used to maintain session affinity. Enable client IP based
        * session affinity. Must be ClientIP or None. Defaults to None. More info:
        * https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
        */
-      sessionAffinity?: string
+      sessionAffinity?: string;
 
       /**
        * sessionAffinityConfig contains the configurations of session affinity.
        */
-      sessionAffinityConfig?: core.v1.SessionAffinityConfig
+      sessionAffinityConfig?: core.v1.SessionAffinityConfig;
 
       /**
        * topologyKeys is a preference-order list of topology keys which implementations of services
@@ -13855,7 +13269,7 @@ export namespace core {
        * value, if used, only makes sense as the last value in the list. If this is not specified or
        * empty, no topology constraints will be applied.
        */
-      topologyKeys?: string[]
+      topologyKeys?: string[];
 
       /**
        * type determines how the Service is exposed. Defaults to ClusterIP. Valid options are
@@ -13869,10 +13283,8 @@ export namespace core {
        * the current cloud) which routes to the clusterIP. More info:
        * https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
        */
-      type?: string
-
+      type?: string;
     }
-
 
     /**
      * SessionAffinityConfig represents the configurations of session affinity.
@@ -13881,10 +13293,8 @@ export namespace core {
       /**
        * clientIP contains the configurations of Client IP based session affinity.
        */
-      clientIP?: core.v1.ClientIPConfig
-
+      clientIP?: core.v1.ClientIPConfig;
     }
-
 
     /**
      * Represents a StorageOS persistent volume resource.
@@ -13894,25 +13304,25 @@ export namespace core {
        * Filesystem type to mount. Must be a filesystem type supported by the host operating system.
        * Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
        */
-      fsType?: string
+      fsType?: string;
 
       /**
        * Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in
        * VolumeMounts.
        */
-      readOnly?: boolean
+      readOnly?: boolean;
 
       /**
        * SecretRef specifies the secret to use for obtaining the StorageOS API credentials.  If not
        * specified, default values will be attempted.
        */
-      secretRef?: core.v1.ObjectReference
+      secretRef?: core.v1.ObjectReference;
 
       /**
        * VolumeName is the human-readable name of the StorageOS volume.  Volume names are only
        * unique within a namespace.
        */
-      volumeName?: string
+      volumeName?: string;
 
       /**
        * VolumeNamespace specifies the scope of the volume within StorageOS.  If no namespace is
@@ -13921,10 +13331,8 @@ export namespace core {
        * override the default behaviour. Set to "default" if you are not using namespaces within
        * StorageOS. Namespaces that do not pre-exist within StorageOS will be created.
        */
-      volumeNamespace?: string
-
+      volumeNamespace?: string;
     }
-
 
     /**
      * Represents a StorageOS persistent volume resource.
@@ -13934,25 +13342,25 @@ export namespace core {
        * Filesystem type to mount. Must be a filesystem type supported by the host operating system.
        * Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
        */
-      fsType?: string
+      fsType?: string;
 
       /**
        * Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in
        * VolumeMounts.
        */
-      readOnly?: boolean
+      readOnly?: boolean;
 
       /**
        * SecretRef specifies the secret to use for obtaining the StorageOS API credentials.  If not
        * specified, default values will be attempted.
        */
-      secretRef?: core.v1.LocalObjectReference
+      secretRef?: core.v1.LocalObjectReference;
 
       /**
        * VolumeName is the human-readable name of the StorageOS volume.  Volume names are only
        * unique within a namespace.
        */
-      volumeName?: string
+      volumeName?: string;
 
       /**
        * VolumeNamespace specifies the scope of the volume within StorageOS.  If no namespace is
@@ -13961,10 +13369,8 @@ export namespace core {
        * override the default behaviour. Set to "default" if you are not using namespaces within
        * StorageOS. Namespaces that do not pre-exist within StorageOS will be created.
        */
-      volumeNamespace?: string
-
+      volumeNamespace?: string;
     }
-
 
     /**
      * Sysctl defines a kernel parameter to be set
@@ -13973,15 +13379,13 @@ export namespace core {
       /**
        * Name of a property to set
        */
-      name: string
+      name: string;
 
       /**
        * Value of a property to set
        */
-      value: string
-
+      value: string;
     }
-
 
     /**
      * TCPSocketAction describes an action based on opening a socket
@@ -13991,15 +13395,13 @@ export namespace core {
        * Number or name of the port to access on the container. Number must be in the range 1 to
        * 65535. Name must be an IANA_SVC_NAME.
        */
-      port: number | string
+      port: number | string;
 
       /**
        * Optional: Host name to connect to, defaults to the pod IP.
        */
-      host?: string
-
+      host?: string;
     }
-
 
     /**
      * The node this Taint is attached to has the "effect" on any pod that does not tolerate the
@@ -14010,26 +13412,24 @@ export namespace core {
        * Required. The effect of the taint on pods that do not tolerate the taint. Valid effects are
        * NoSchedule, PreferNoSchedule and NoExecute.
        */
-      effect: string
+      effect: string;
 
       /**
        * Required. The taint key to be applied to a node.
        */
-      key: string
+      key: string;
 
       /**
        * TimeAdded represents the time at which the taint was added. It is only written for
        * NoExecute taints.
        */
-      timeAdded?: string
+      timeAdded?: string;
 
       /**
        * Required. The taint value corresponding to the taint key.
        */
-      value?: string
-
+      value?: string;
     }
-
 
     /**
      * The pod this Toleration is attached to tolerates any taint that matches the triple
@@ -14040,21 +13440,21 @@ export namespace core {
        * Effect indicates the taint effect to match. Empty means match all taint effects. When
        * specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
        */
-      effect?: string
+      effect?: string;
 
       /**
        * Key is the taint key that the toleration applies to. Empty means match all taint keys. If
        * the key is empty, operator must be Exists; this combination means to match all values and
        * all keys.
        */
-      key?: string
+      key?: string;
 
       /**
        * Operator represents a key's relationship to the value. Valid operators are Exists and
        * Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can
        * tolerate all taints of a particular category.
        */
-      operator?: string
+      operator?: string;
 
       /**
        * TolerationSeconds represents the period of time the toleration (which must be of effect
@@ -14062,16 +13462,14 @@ export namespace core {
        * which means tolerate the taint forever (do not evict). Zero and negative values will be
        * treated as 0 (evict immediately) by the system.
        */
-      tolerationSeconds?: number
+      tolerationSeconds?: number;
 
       /**
        * Value is the taint value the toleration matches to. If the operator is Exists, the value
        * should be empty, otherwise just a regular string.
        */
-      value?: string
-
+      value?: string;
     }
-
 
     /**
      * A topology selector requirement is a selector that matches given label. This is an alpha
@@ -14081,16 +13479,14 @@ export namespace core {
       /**
        * The label key that the selector applies to.
        */
-      key: string
+      key: string;
 
       /**
        * An array of string values. One value must match the label to be selected. Each entry in
        * Values is ORed.
        */
-      values: string[]
-
+      values: string[];
     }
-
 
     /**
      * A topology selector term represents the result of label queries. A null or empty topology
@@ -14101,10 +13497,8 @@ export namespace core {
       /**
        * A list of topology selector requirements by labels.
        */
-      matchLabelExpressions?: core.v1.TopologySelectorLabelRequirement[]
-
+      matchLabelExpressions?: core.v1.TopologySelectorLabelRequirement[];
     }
-
 
     /**
      * TopologySpreadConstraint specifies how to spread matching pods among the given topology.
@@ -14120,14 +13514,14 @@ export namespace core {
        * if MaxSkew is 2, incoming pod can be scheduled onto any zone. It's a required field.
        * Default value is 1 and 0 is not allowed.
        */
-      maxSkew: number
+      maxSkew: number;
 
       /**
        * TopologyKey is the key of node labels. Nodes that have a label with this key and identical
        * values are considered to be in the same topology. We consider each <key, value> as a
        * "bucket", and try to put balanced number of pods into each bucket. It's a required field.
        */
-      topologyKey: string
+      topologyKey: string;
 
       /**
        * WhenUnsatisfiable indicates how to deal with a pod if it doesn't satisfy the spread
@@ -14140,16 +13534,14 @@ export namespace core {
        * ActualSkew(2-1) on zone2(zone3) satisfies MaxSkew(1). In other words, the cluster can still
        * be imbalanced, but scheduler won't make it *more* imbalanced. It's a required field.
        */
-      whenUnsatisfiable: string
+      whenUnsatisfiable: string;
 
       /**
        * LabelSelector is used to find matching pods. Pods that match this label selector are
        * counted to determine the number of pods in their corresponding topology domain.
        */
-      labelSelector?: meta.v1.LabelSelector
-
+      labelSelector?: meta.v1.LabelSelector;
     }
-
 
     /**
      * TypedLocalObjectReference contains enough information to let you locate the typed referenced
@@ -14159,22 +13551,20 @@ export namespace core {
       /**
        * Kind is the type of resource being referenced
        */
-      kind: string
+      kind: "TypedLocalObjectReference";
 
       /**
        * Name is the name of resource being referenced
        */
-      name: string
+      name: string;
 
       /**
        * APIGroup is the group for the resource being referenced. If APIGroup is not specified, the
        * specified Kind must be in the core API group. For any other third-party types, APIGroup is
        * required.
        */
-      apiGroup?: string
-
+      apiGroup?: string;
     }
-
 
     /**
      * Volume represents a named volume in a pod that may be accessed by any container in the pod.
@@ -14184,82 +13574,82 @@ export namespace core {
        * Volume's name. Must be a DNS_LABEL and unique within the pod. More info:
        * https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
        */
-      name: string
+      name: string;
 
       /**
        * AWSElasticBlockStore represents an AWS Disk resource that is attached to a kubelet's host
        * machine and then exposed to the pod. More info:
        * https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
        */
-      awsElasticBlockStore?: core.v1.AWSElasticBlockStoreVolumeSource
+      awsElasticBlockStore?: core.v1.AWSElasticBlockStoreVolumeSource;
 
       /**
        * AzureDisk represents an Azure Data Disk mount on the host and bind mount to the pod.
        */
-      azureDisk?: core.v1.AzureDiskVolumeSource
+      azureDisk?: core.v1.AzureDiskVolumeSource;
 
       /**
        * AzureFile represents an Azure File Service mount on the host and bind mount to the pod.
        */
-      azureFile?: core.v1.AzureFileVolumeSource
+      azureFile?: core.v1.AzureFileVolumeSource;
 
       /**
        * CephFS represents a Ceph FS mount on the host that shares a pod's lifetime
        */
-      cephfs?: core.v1.CephFSVolumeSource
+      cephfs?: core.v1.CephFSVolumeSource;
 
       /**
        * Cinder represents a cinder volume attached and mounted on kubelets host machine. More info:
        * https://examples.k8s.io/mysql-cinder-pd/README.md
        */
-      cinder?: core.v1.CinderVolumeSource
+      cinder?: core.v1.CinderVolumeSource;
 
       /**
        * ConfigMap represents a configMap that should populate this volume
        */
-      configMap?: core.v1.ConfigMapVolumeSource
+      configMap?: core.v1.ConfigMapVolumeSource;
 
       /**
        * CSI (Container Storage Interface) represents storage that is handled by an external CSI
        * driver (Alpha feature).
        */
-      csi?: core.v1.CSIVolumeSource
+      csi?: core.v1.CSIVolumeSource;
 
       /**
        * DownwardAPI represents downward API about the pod that should populate this volume
        */
-      downwardAPI?: core.v1.DownwardAPIVolumeSource
+      downwardAPI?: core.v1.DownwardAPIVolumeSource;
 
       /**
        * EmptyDir represents a temporary directory that shares a pod's lifetime. More info:
        * https://kubernetes.io/docs/concepts/storage/volumes#emptydir
        */
-      emptyDir?: core.v1.EmptyDirVolumeSource
+      emptyDir?: core.v1.EmptyDirVolumeSource;
 
       /**
        * FC represents a Fibre Channel resource that is attached to a kubelet's host machine and
        * then exposed to the pod.
        */
-      fc?: core.v1.FCVolumeSource
+      fc?: core.v1.FCVolumeSource;
 
       /**
        * FlexVolume represents a generic volume resource that is provisioned/attached using an exec
        * based plugin.
        */
-      flexVolume?: core.v1.FlexVolumeSource
+      flexVolume?: core.v1.FlexVolumeSource;
 
       /**
        * Flocker represents a Flocker volume attached to a kubelet's host machine. This depends on
        * the Flocker control service being running
        */
-      flocker?: core.v1.FlockerVolumeSource
+      flocker?: core.v1.FlockerVolumeSource;
 
       /**
        * GCEPersistentDisk represents a GCE Disk resource that is attached to a kubelet's host
        * machine and then exposed to the pod. More info:
        * https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk
        */
-      gcePersistentDisk?: core.v1.GCEPersistentDiskVolumeSource
+      gcePersistentDisk?: core.v1.GCEPersistentDiskVolumeSource;
 
       /**
        * GitRepo represents a git repository at a particular revision. DEPRECATED: GitRepo is
@@ -14267,13 +13657,13 @@ export namespace core {
        * InitContainer that clones the repo using git, then mount the EmptyDir into the Pod's
        * container.
        */
-      gitRepo?: core.v1.GitRepoVolumeSource
+      gitRepo?: core.v1.GitRepoVolumeSource;
 
       /**
        * Glusterfs represents a Glusterfs mount on the host that shares a pod's lifetime. More info:
        * https://examples.k8s.io/volumes/glusterfs/README.md
        */
-      glusterfs?: core.v1.GlusterfsVolumeSource
+      glusterfs?: core.v1.GlusterfsVolumeSource;
 
       /**
        * HostPath represents a pre-existing file or directory on the host machine that is directly
@@ -14281,77 +13671,75 @@ export namespace core {
        * things that are allowed to see the host machine. Most containers will NOT need this. More
        * info: https://kubernetes.io/docs/concepts/storage/volumes#hostpath
        */
-      hostPath?: core.v1.HostPathVolumeSource
+      hostPath?: core.v1.HostPathVolumeSource;
 
       /**
        * ISCSI represents an ISCSI Disk resource that is attached to a kubelet's host machine and
        * then exposed to the pod. More info: https://examples.k8s.io/volumes/iscsi/README.md
        */
-      iscsi?: core.v1.ISCSIVolumeSource
+      iscsi?: core.v1.ISCSIVolumeSource;
 
       /**
        * NFS represents an NFS mount on the host that shares a pod's lifetime More info:
        * https://kubernetes.io/docs/concepts/storage/volumes#nfs
        */
-      nfs?: core.v1.NFSVolumeSource
+      nfs?: core.v1.NFSVolumeSource;
 
       /**
        * PersistentVolumeClaimVolumeSource represents a reference to a PersistentVolumeClaim in the
        * same namespace. More info:
        * https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims
        */
-      persistentVolumeClaim?: core.v1.PersistentVolumeClaimVolumeSource
+      persistentVolumeClaim?: core.v1.PersistentVolumeClaimVolumeSource;
 
       /**
        * PhotonPersistentDisk represents a PhotonController persistent disk attached and mounted on
        * kubelets host machine
        */
-      photonPersistentDisk?: core.v1.PhotonPersistentDiskVolumeSource
+      photonPersistentDisk?: core.v1.PhotonPersistentDiskVolumeSource;
 
       /**
        * PortworxVolume represents a portworx volume attached and mounted on kubelets host machine
        */
-      portworxVolume?: core.v1.PortworxVolumeSource
+      portworxVolume?: core.v1.PortworxVolumeSource;
 
       /**
        * Items for all in one resources secrets, configmaps, and downward API
        */
-      projected?: core.v1.ProjectedVolumeSource
+      projected?: core.v1.ProjectedVolumeSource;
 
       /**
        * Quobyte represents a Quobyte mount on the host that shares a pod's lifetime
        */
-      quobyte?: core.v1.QuobyteVolumeSource
+      quobyte?: core.v1.QuobyteVolumeSource;
 
       /**
        * RBD represents a Rados Block Device mount on the host that shares a pod's lifetime. More
        * info: https://examples.k8s.io/volumes/rbd/README.md
        */
-      rbd?: core.v1.RBDVolumeSource
+      rbd?: core.v1.RBDVolumeSource;
 
       /**
        * ScaleIO represents a ScaleIO persistent volume attached and mounted on Kubernetes nodes.
        */
-      scaleIO?: core.v1.ScaleIOVolumeSource
+      scaleIO?: core.v1.ScaleIOVolumeSource;
 
       /**
        * Secret represents a secret that should populate this volume. More info:
        * https://kubernetes.io/docs/concepts/storage/volumes#secret
        */
-      secret?: core.v1.SecretVolumeSource
+      secret?: core.v1.SecretVolumeSource;
 
       /**
        * StorageOS represents a StorageOS volume attached and mounted on Kubernetes nodes.
        */
-      storageos?: core.v1.StorageOSVolumeSource
+      storageos?: core.v1.StorageOSVolumeSource;
 
       /**
        * VsphereVolume represents a vSphere volume attached and mounted on kubelets host machine
        */
-      vsphereVolume?: core.v1.VsphereVirtualDiskVolumeSource
-
+      vsphereVolume?: core.v1.VsphereVirtualDiskVolumeSource;
     }
-
 
     /**
      * volumeDevice describes a mapping of a raw block device within a container.
@@ -14360,15 +13748,13 @@ export namespace core {
       /**
        * devicePath is the path inside of the container that the device will be mapped to.
        */
-      devicePath: string
+      devicePath: string;
 
       /**
        * name must match the name of a persistentVolumeClaim in the pod
        */
-      name: string
-
+      name: string;
     }
-
 
     /**
      * VolumeMount describes a mounting of a Volume within a container.
@@ -14377,29 +13763,29 @@ export namespace core {
       /**
        * Path within the container at which the volume should be mounted.  Must not contain ':'.
        */
-      mountPath: string
+      mountPath: string;
 
       /**
        * This must match the Name of a Volume.
        */
-      name: string
+      name: string;
 
       /**
        * mountPropagation determines how mounts are propagated from the host to container and the
        * other way around. When not set, MountPropagationNone is used. This field is beta in 1.10.
        */
-      mountPropagation?: string
+      mountPropagation?: string;
 
       /**
        * Mounted read-only if true, read-write otherwise (false or unspecified). Defaults to false.
        */
-      readOnly?: boolean
+      readOnly?: boolean;
 
       /**
        * Path within the volume from which the container's volume should be mounted. Defaults to ""
        * (volume's root).
        */
-      subPath?: string
+      subPath?: string;
 
       /**
        * Expanded path within the volume from which the container's volume should be mounted.
@@ -14407,10 +13793,8 @@ export namespace core {
        * using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath
        * are mutually exclusive.
        */
-      subPathExpr?: string
-
+      subPathExpr?: string;
     }
-
 
     /**
      * VolumeNodeAffinity defines constraints that limit what nodes this volume can be accessed
@@ -14420,10 +13804,8 @@ export namespace core {
       /**
        * Required specifies hard node constraints that must be met.
        */
-      required?: core.v1.NodeSelector
-
+      required?: core.v1.NodeSelector;
     }
-
 
     /**
      * Projection that may be projected along with other supported volume types
@@ -14432,25 +13814,23 @@ export namespace core {
       /**
        * information about the configMap data to project
        */
-      configMap?: core.v1.ConfigMapProjection
+      configMap?: core.v1.ConfigMapProjection;
 
       /**
        * information about the downwardAPI data to project
        */
-      downwardAPI?: core.v1.DownwardAPIProjection
+      downwardAPI?: core.v1.DownwardAPIProjection;
 
       /**
        * information about the secret data to project
        */
-      secret?: core.v1.SecretProjection
+      secret?: core.v1.SecretProjection;
 
       /**
        * information about the serviceAccountToken data to project
        */
-      serviceAccountToken?: core.v1.ServiceAccountTokenProjection
-
+      serviceAccountToken?: core.v1.ServiceAccountTokenProjection;
     }
-
 
     /**
      * Represents a vSphere volume resource.
@@ -14459,26 +13839,24 @@ export namespace core {
       /**
        * Path that identifies vSphere volume vmdk
        */
-      volumePath: string
+      volumePath: string;
 
       /**
        * Filesystem type to mount. Must be a filesystem type supported by the host operating system.
        * Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
        */
-      fsType?: string
+      fsType?: string;
 
       /**
        * Storage Policy Based Management (SPBM) profile ID associated with the StoragePolicyName.
        */
-      storagePolicyID?: string
+      storagePolicyID?: string;
 
       /**
        * Storage Policy Based Management (SPBM) profile name.
        */
-      storagePolicyName?: string
-
+      storagePolicyName?: string;
     }
-
 
     /**
      * The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find
@@ -14488,15 +13866,13 @@ export namespace core {
       /**
        * Required. A pod affinity term, associated with the corresponding weight.
        */
-      podAffinityTerm: core.v1.PodAffinityTerm
+      podAffinityTerm: core.v1.PodAffinityTerm;
 
       /**
        * weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
        */
-      weight: number
-
+      weight: number;
     }
-
 
     /**
      * WindowsSecurityContextOptions contain Windows-specific options and credentials.
@@ -14508,13 +13884,13 @@ export namespace core {
        * credential spec named by the GMSACredentialSpecName field. This field is alpha-level and is
        * only honored by servers that enable the WindowsGMSA feature flag.
        */
-      gmsaCredentialSpec?: string
+      gmsaCredentialSpec?: string;
 
       /**
        * GMSACredentialSpecName is the name of the GMSA credential spec to use. This field is
        * alpha-level and is only honored by servers that enable the WindowsGMSA feature flag.
        */
-      gmsaCredentialSpecName?: string
+      gmsaCredentialSpecName?: string;
 
       /**
        * The UserName in Windows to run the entrypoint of the container process. Defaults to the
@@ -14523,13 +13899,9 @@ export namespace core {
        * takes precedence. This field is beta-level and may be disabled with the
        * WindowsRunAsUserName feature flag.
        */
-      runAsUserName?: string
-
+      runAsUserName?: string;
     }
-
-
   }
-
 }
 
 export namespace discovery {
@@ -14544,12 +13916,12 @@ export namespace discovery {
        * addresses in the context of their own capabilities. This must contain at least one address
        * but no more than 100.
        */
-      addresses: string[]
+      addresses: string[];
 
       /**
        * conditions contains information about the current status of the endpoint.
        */
-      conditions?: discovery.v1beta1.EndpointConditions
+      conditions?: discovery.v1beta1.EndpointConditions;
 
       /**
        * hostname of this endpoint. This field may be used by consumers of endpoints to distinguish
@@ -14557,12 +13929,12 @@ export namespace discovery {
        * hostname should be considered fungible (e.g. multiple A values in DNS). Must pass DNS Label
        * (RFC 1123) validation.
        */
-      hostname?: string
+      hostname?: string;
 
       /**
        * targetRef is a reference to a Kubernetes object that represents this endpoint.
        */
-      targetRef?: core.v1.ObjectReference
+      targetRef?: core.v1.ObjectReference;
 
       /**
        * topology contains arbitrary topology information associated with the endpoint. These
@@ -14577,10 +13949,8 @@ export namespace discovery {
        * * topology.kubernetes.io/region: the value indicates the region where the
        *   endpoint is located. This should match the corresponding node label.
        */
-      topology?: {[key: string]: string}
-
+      topology?: { [key: string]: string };
     }
-
 
     /**
      * EndpointConditions represents the current condition of an endpoint.
@@ -14591,10 +13961,8 @@ export namespace discovery {
        * system is managing the endpoint. A nil value indicates an unknown state. In most cases
        * consumers should interpret this unknown state as ready.
        */
-      ready?: boolean
-
+      ready?: boolean;
     }
-
 
     /**
      * EndpointPort represents a Port used by an EndpointSlice
@@ -14606,7 +13974,7 @@ export namespace discovery {
        * http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed
        * names. Default is empty string.
        */
-      appProtocol?: string
+      appProtocol?: string;
 
       /**
        * The name of this port. All ports in an EndpointSlice must have a unique name. If the
@@ -14616,21 +13984,19 @@ export namespace discovery {
        * characters or '-'. * must start and end with an alphanumeric character. Default is empty
        * string.
        */
-      name?: string
+      name?: string;
 
       /**
        * The port number of the endpoint. If this is not specified, ports are not restricted and
        * must be interpreted in the context of the specific consumer.
        */
-      port?: number
+      port?: number;
 
       /**
        * The IP protocol for this port. Must be UDP, TCP, or SCTP. Default is TCP.
        */
-      protocol?: string
-
+      protocol?: string;
     }
-
 
     /**
      * EndpointSlice represents a subset of the endpoints that implement a service. For a given
@@ -14644,13 +14010,13 @@ export namespace discovery {
        * address types are currently supported: * IPv4: Represents an IPv4 Address. * IPv6:
        * Represents an IPv6 Address. * FQDN: Represents a Fully Qualified Domain Name.
        */
-      addressType: string
+      addressType: string;
 
       /**
        * endpoints is a list of unique endpoints in this slice. Each slice may include a maximum of
        * 1000 endpoints.
        */
-      endpoints: discovery.v1beta1.Endpoint[]
+      endpoints: discovery.v1beta1.Endpoint[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -14658,7 +14024,7 @@ export namespace discovery {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "discovery.k8s.io/v1beta1"
+      apiVersion?: "discovery.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -14666,12 +14032,12 @@ export namespace discovery {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "EndpointSlice"
+      kind?: "EndpointSlice";
 
       /**
        * Standard object's metadata.
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * ports specifies the list of network ports exposed by each endpoint in this slice. Each port
@@ -14679,12 +14045,13 @@ export namespace discovery {
        * When a port is defined with a nil port value, it indicates "all ports". Each slice may
        * include a maximum of 100 ports.
        */
-      ports?: discovery.v1beta1.EndpointPort[]
-
+      ports?: discovery.v1beta1.EndpointPort[];
     }
 
     export function isEndpointSlice(o: any): o is EndpointSlice {
-      return o.apiVersion == "discovery.k8s.io/v1beta1" && o.kind == "EndpointSlice";
+      return (
+        o.apiVersion == "discovery.k8s.io/v1beta1" && o.kind == "EndpointSlice"
+      );
     }
 
     /**
@@ -14694,7 +14061,7 @@ export namespace discovery {
       /**
        * List of endpoint slices
        */
-      items: discovery.v1beta1.EndpointSlice[]
+      items: discovery.v1beta1.EndpointSlice[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -14702,7 +14069,7 @@ export namespace discovery {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "discovery.k8s.io/v1beta1"
+      apiVersion?: "discovery.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -14710,21 +14077,21 @@ export namespace discovery {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "EndpointSliceList"
+      kind?: "EndpointSliceList";
 
       /**
        * Standard list metadata.
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isEndpointSliceList(o: any): o is EndpointSliceList {
-      return o.apiVersion == "discovery.k8s.io/v1beta1" && o.kind == "EndpointSliceList";
+      return (
+        o.apiVersion == "discovery.k8s.io/v1beta1" &&
+        o.kind == "EndpointSliceList"
+      );
     }
-
   }
-
 }
 
 export namespace events {
@@ -14737,12 +14104,12 @@ export namespace events {
       /**
        * Required. Time when this Event was first observed.
        */
-      eventTime: string
+      eventTime: string;
 
       /**
        * What action was taken/failed regarding to the regarding object.
        */
-      action?: string
+      action?: string;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -14750,27 +14117,27 @@ export namespace events {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "events.k8s.io/v1beta1"
+      apiVersion?: "events.k8s.io/v1beta1";
 
       /**
        * Deprecated field assuring backward compatibility with core.v1 Event type
        */
-      deprecatedCount?: number
+      deprecatedCount?: number;
 
       /**
        * Deprecated field assuring backward compatibility with core.v1 Event type
        */
-      deprecatedFirstTimestamp?: string
+      deprecatedFirstTimestamp?: string;
 
       /**
        * Deprecated field assuring backward compatibility with core.v1 Event type
        */
-      deprecatedLastTimestamp?: string
+      deprecatedLastTimestamp?: string;
 
       /**
        * Deprecated field assuring backward compatibility with core.v1 Event type
        */
-      deprecatedSource?: core.v1.EventSource
+      deprecatedSource?: core.v1.EventSource;
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -14778,55 +14145,53 @@ export namespace events {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "Event"
+      kind?: "Event";
 
-      
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Optional. A human-readable description of the status of this operation. Maximal length of
        * the note is 1kB, but libraries should be prepared to handle values up to 64kB.
        */
-      note?: string
+      note?: string;
 
       /**
        * Why the action was taken.
        */
-      reason?: string
+      reason?: string;
 
       /**
        * The object this Event is about. In most cases it's an Object reporting controller
        * implements. E.g. ReplicaSetController implements ReplicaSets and this event is emitted
        * because it acts on some changes in a ReplicaSet object.
        */
-      regarding?: core.v1.ObjectReference
+      regarding?: core.v1.ObjectReference;
 
       /**
        * Optional secondary object for more complex actions. E.g. when regarding object triggers a
        * creation or deletion of related object.
        */
-      related?: core.v1.ObjectReference
+      related?: core.v1.ObjectReference;
 
       /**
        * Name of the controller that emitted this Event, e.g. `kubernetes.io/kubelet`.
        */
-      reportingController?: string
+      reportingController?: string;
 
       /**
        * ID of the controller instance, e.g. `kubelet-xyzf`.
        */
-      reportingInstance?: string
+      reportingInstance?: string;
 
       /**
        * Data about the Event series this event represents or nil if it's a singleton Event.
        */
-      series?: events.v1beta1.EventSeries
+      series?: events.v1beta1.EventSeries;
 
       /**
        * Type of this event (Normal, Warning), new types could be added in the future.
        */
-      type?: string
-
+      type?: string;
     }
 
     export function isEvent(o: any): o is Event {
@@ -14840,7 +14205,7 @@ export namespace events {
       /**
        * Items is a list of schema objects.
        */
-      items: events.v1beta1.Event[]
+      items: events.v1beta1.Event[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -14848,7 +14213,7 @@ export namespace events {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "events.k8s.io/v1beta1"
+      apiVersion?: "events.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -14856,14 +14221,13 @@ export namespace events {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "EventList"
+      kind?: "EventList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isEventList(o: any): o is EventList {
@@ -14878,24 +14242,20 @@ export namespace events {
       /**
        * Number of occurrences in this series up to the last heartbeat time
        */
-      count: number
+      count: number;
 
       /**
        * Time when last Event from the series was seen before last heartbeat.
        */
-      lastObservedTime: string
+      lastObservedTime: string;
 
       /**
        * Information whether this series is ongoing or finished. Deprecated. Planned removal for
        * 1.18
        */
-      state: string
-
+      state: string;
     }
-
-
   }
-
 }
 
 export namespace extensions {
@@ -14907,10 +14267,8 @@ export namespace extensions {
       /**
        * Name is the registered name of the CSI driver
        */
-      name: string
-
+      name: string;
     }
-
 
     /**
      * AllowedFlexVolume represents a single Flexvolume that is allowed to be used. Deprecated: use
@@ -14920,10 +14278,8 @@ export namespace extensions {
       /**
        * driver is the name of the Flexvolume driver.
        */
-      driver: string
-
+      driver: string;
     }
-
 
     /**
      * AllowedHostPath defines the host volume conditions that will be enabled by a policy for pods
@@ -14934,24 +14290,22 @@ export namespace extensions {
       /**
        * pathPrefix is the path prefix that the host volume must match. It does not support `*`.
        * Trailing slashes are trimmed when validating the path prefix with a host path.
-       * 
+       *
        * Examples: `/foo` would allow `/foo`, `/foo/` and `/foo/bar` `/foo` would not allow `/food`
        * or `/etc/foo`
        */
-      pathPrefix?: string
+      pathPrefix?: string;
 
       /**
        * when set to true, will allow host volumes matching the pathPrefix only if all volume mounts
        * are readOnly.
        */
-      readOnly?: boolean
-
+      readOnly?: boolean;
     }
-
 
     /**
      * DaemonSet represents the configuration of a daemon set.
-     * 
+     *
      * @deprecated extensions/v1beta1/DaemonSet is deprecated by apps/v1/DaemonSet and not supported
      * by Kubernetes v1.16+ clusters.
      */
@@ -14962,7 +14316,7 @@ export namespace extensions {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "extensions/v1beta1"
+      apiVersion?: "extensions/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -14970,20 +14324,19 @@ export namespace extensions {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "DaemonSet"
+      kind?: "DaemonSet";
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * The desired behavior of this daemon set. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
        */
-      spec?: extensions.v1beta1.DaemonSetSpec
-
+      spec?: extensions.v1beta1.DaemonSetSpec;
     }
 
     export function isDaemonSet(o: any): o is DaemonSet {
@@ -14997,25 +14350,23 @@ export namespace extensions {
       /**
        * Type of DaemonSet condition.
        */
-      type: string
+      type: string;
 
       /**
        * Last time the condition transitioned from one status to another.
        */
-      lastTransitionTime?: string
+      lastTransitionTime?: string;
 
       /**
        * A human readable message indicating details about the transition.
        */
-      message?: string
+      message?: string;
 
       /**
        * The reason for the condition's last transition.
        */
-      reason?: string
-
+      reason?: string;
     }
-
 
     /**
      * DaemonSetList is a collection of daemon sets.
@@ -15024,7 +14375,7 @@ export namespace extensions {
       /**
        * A list of daemon sets.
        */
-      items: extensions.v1beta1.DaemonSet[]
+      items: extensions.v1beta1.DaemonSet[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -15032,7 +14383,7 @@ export namespace extensions {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "extensions/v1beta1"
+      apiVersion?: "extensions/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -15040,14 +14391,13 @@ export namespace extensions {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "DaemonSetList"
+      kind?: "DaemonSetList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isDaemonSetList(o: any): o is DaemonSetList {
@@ -15064,62 +14414,58 @@ export namespace extensions {
        * node if no node selector is specified). More info:
        * https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template
        */
-      template: core.v1.PodTemplateSpec
+      template: core.v1.PodTemplateSpec;
 
       /**
        * The minimum number of seconds for which a newly created DaemonSet pod should be ready
        * without any of its container crashing, for it to be considered available. Defaults to 0
        * (pod will be considered available as soon as it is ready).
        */
-      minReadySeconds?: number
+      minReadySeconds?: number;
 
       /**
        * The number of old history to retain to allow rollback. This is a pointer to distinguish
        * between explicit zero and not specified. Defaults to 10.
        */
-      revisionHistoryLimit?: number
+      revisionHistoryLimit?: number;
 
       /**
        * A label query over pods that are managed by the daemon set. Must match in order to be
        * controlled. If empty, defaulted to labels on Pod template. More info:
        * https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors
        */
-      selector?: meta.v1.LabelSelector
+      selector?: meta.v1.LabelSelector;
 
       /**
        * DEPRECATED. A sequence number representing a specific generation of the template. Populated
        * by the system. It can be set only during the creation.
        */
-      templateGeneration?: number
+      templateGeneration?: number;
 
       /**
        * An update strategy to replace existing DaemonSet pods with new pods.
        */
-      updateStrategy?: extensions.v1beta1.DaemonSetUpdateStrategy
-
+      updateStrategy?: extensions.v1beta1.DaemonSetUpdateStrategy;
     }
 
-
     /**
-     * 
+     *
      */
     export interface DaemonSetUpdateStrategy {
       /**
        * Rolling update config params. Present only if type = "RollingUpdate".
        */
-      rollingUpdate?: extensions.v1beta1.RollingUpdateDaemonSet
+      rollingUpdate?: extensions.v1beta1.RollingUpdateDaemonSet;
 
       /**
        * Type of daemon set update. Can be "RollingUpdate" or "OnDelete". Default is OnDelete.
        */
-      type?: string
-
+      type?: string;
     }
-
 
     /**
      * Deployment enables declarative updates for Pods and ReplicaSets.
-     * 
+     *
      * @deprecated extensions/v1beta1/Deployment is deprecated by apps/v1/Deployment and not
      * supported by Kubernetes v1.16+ clusters.
      */
@@ -15130,7 +14476,7 @@ export namespace extensions {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "extensions/v1beta1"
+      apiVersion?: "extensions/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -15138,18 +14484,17 @@ export namespace extensions {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "Deployment"
+      kind?: "Deployment";
 
       /**
        * Standard object metadata.
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Specification of the desired behavior of the Deployment.
        */
-      spec?: extensions.v1beta1.DeploymentSpec
-
+      spec?: extensions.v1beta1.DeploymentSpec;
     }
 
     export function isDeployment(o: any): o is Deployment {
@@ -15163,30 +14508,28 @@ export namespace extensions {
       /**
        * Type of deployment condition.
        */
-      type: string
+      type: string;
 
       /**
        * Last time the condition transitioned from one status to another.
        */
-      lastTransitionTime?: string
+      lastTransitionTime?: string;
 
       /**
        * The last time this condition was updated.
        */
-      lastUpdateTime?: string
+      lastUpdateTime?: string;
 
       /**
        * A human readable message indicating details about the transition.
        */
-      message?: string
+      message?: string;
 
       /**
        * The reason for the condition's last transition.
        */
-      reason?: string
-
+      reason?: string;
     }
-
 
     /**
      * DeploymentList is a list of Deployments.
@@ -15195,7 +14538,7 @@ export namespace extensions {
       /**
        * Items is the list of Deployments.
        */
-      items: extensions.v1beta1.Deployment[]
+      items: extensions.v1beta1.Deployment[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -15203,7 +14546,7 @@ export namespace extensions {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "extensions/v1beta1"
+      apiVersion?: "extensions/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -15211,13 +14554,12 @@ export namespace extensions {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "DeploymentList"
+      kind?: "DeploymentList";
 
       /**
        * Standard list metadata.
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isDeploymentList(o: any): o is DeploymentList {
@@ -15231,12 +14573,12 @@ export namespace extensions {
       /**
        * Required: This must match the Name of a deployment.
        */
-      name: string
+      name: string;
 
       /**
        * The config of this deployment rollback.
        */
-      rollbackTo: extensions.v1beta1.RollbackConfig
+      rollbackTo: extensions.v1beta1.RollbackConfig;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -15244,7 +14586,7 @@ export namespace extensions {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: string
+      apiVersion?: "extensions/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -15252,17 +14594,18 @@ export namespace extensions {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: string
+      kind?: "DeploymentRollback";
 
       /**
        * The annotations to be updated to a deployment
        */
-      updatedAnnotations?: {[key: string]: string}
-
+      updatedAnnotations?: { [key: string]: string };
     }
 
     export function isDeploymentRollback(o: any): o is DeploymentRollback {
-      return o.apiVersion == "extensions/v1beta1" && o.kind == "DeploymentRollback";
+      return (
+        o.apiVersion == "extensions/v1beta1" && o.kind == "DeploymentRollback"
+      );
     }
 
     /**
@@ -15272,20 +14615,20 @@ export namespace extensions {
       /**
        * Template describes the pods that will be created.
        */
-      template: core.v1.PodTemplateSpec
+      template: core.v1.PodTemplateSpec;
 
       /**
        * Minimum number of seconds for which a newly created pod should be ready without any of its
        * container crashing, for it to be considered available. Defaults to 0 (pod will be
        * considered available as soon as it is ready)
        */
-      minReadySeconds?: number
+      minReadySeconds?: number;
 
       /**
        * Indicates that the deployment is paused and will not be processed by the deployment
        * controller.
        */
-      paused?: boolean
+      paused?: boolean;
 
       /**
        * The maximum time in seconds for a deployment to make progress before it is considered to be
@@ -15294,40 +14637,38 @@ export namespace extensions {
        * Note that progress will not be estimated during the time a deployment is paused. This is
        * set to the max value of int32 (i.e. 2147483647) by default, which means "no deadline".
        */
-      progressDeadlineSeconds?: number
+      progressDeadlineSeconds?: number;
 
       /**
        * Number of desired pods. This is a pointer to distinguish between explicit zero and not
        * specified. Defaults to 1.
        */
-      replicas?: number
+      replicas?: number;
 
       /**
        * The number of old ReplicaSets to retain to allow rollback. This is a pointer to distinguish
        * between explicit zero and not specified. This is set to the max value of int32 (i.e.
        * 2147483647) by default, which means "retaining all old RelicaSets".
        */
-      revisionHistoryLimit?: number
+      revisionHistoryLimit?: number;
 
       /**
        * DEPRECATED. The config this deployment is rolling back to. Will be cleared after rollback
        * is done.
        */
-      rollbackTo?: extensions.v1beta1.RollbackConfig
+      rollbackTo?: extensions.v1beta1.RollbackConfig;
 
       /**
        * Label selector for pods. Existing ReplicaSets whose pods are selected by this will be the
        * ones affected by this deployment.
        */
-      selector?: meta.v1.LabelSelector
+      selector?: meta.v1.LabelSelector;
 
       /**
        * The deployment strategy to use to replace existing pods with new ones.
        */
-      strategy?: extensions.v1beta1.DeploymentStrategy
-
+      strategy?: extensions.v1beta1.DeploymentStrategy;
     }
-
 
     /**
      * DeploymentStrategy describes how to replace existing pods with new ones.
@@ -15336,15 +14677,13 @@ export namespace extensions {
       /**
        * Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate.
        */
-      rollingUpdate?: extensions.v1beta1.RollingUpdateDeployment
+      rollingUpdate?: extensions.v1beta1.RollingUpdateDeployment;
 
       /**
        * Type of deployment. Can be "Recreate" or "RollingUpdate". Default is RollingUpdate.
        */
-      type?: string
-
+      type?: string;
     }
-
 
     /**
      * FSGroupStrategyOptions defines the strategy type and options used to create the strategy.
@@ -15355,15 +14694,13 @@ export namespace extensions {
        * ranges are the allowed ranges of fs groups.  If you would like to force a single fs group
        * then supply a single range with the same start and end. Required for MustRunAs.
        */
-      ranges?: extensions.v1beta1.IDRange[]
+      ranges?: extensions.v1beta1.IDRange[];
 
       /**
        * rule is the strategy that will dictate what FSGroup is used in the SecurityContext.
        */
-      rule?: string
-
+      rule?: string;
     }
-
 
     /**
      * HTTPIngressPath associates a path regex with a backend. Incoming urls matching the path are
@@ -15373,7 +14710,7 @@ export namespace extensions {
       /**
        * Backend defines the referenced service endpoint to which the traffic will be forwarded to.
        */
-      backend: extensions.v1beta1.IngressBackend
+      backend: extensions.v1beta1.IngressBackend;
 
       /**
        * Path is an extended POSIX regex as defined by IEEE Std 1003.1, (i.e this follows the
@@ -15382,10 +14719,8 @@ export namespace extensions {
        * as defined by RFC 3986. Paths must begin with a '/'. If unspecified, the path defaults to a
        * catch all sending traffic to the backend.
        */
-      path?: string
-
+      path?: string;
     }
-
 
     /**
      * HTTPIngressRuleValue is a list of http selectors pointing to backends. In the example:
@@ -15397,10 +14732,8 @@ export namespace extensions {
       /**
        * A collection of paths that map requests to backends.
        */
-      paths: extensions.v1beta1.HTTPIngressPath[]
-
+      paths: extensions.v1beta1.HTTPIngressPath[];
     }
-
 
     /**
      * HostPortRange defines a range of host ports that will be enabled by a policy for pods to use.
@@ -15411,15 +14744,13 @@ export namespace extensions {
       /**
        * max is the end of the range, inclusive.
        */
-      max: number
+      max: number;
 
       /**
        * min is the start of the range, inclusive.
        */
-      min: number
-
+      min: number;
     }
-
 
     /**
      * IDRange provides a min/max of an allowed range of IDs. Deprecated: use IDRange from policy
@@ -15429,15 +14760,13 @@ export namespace extensions {
       /**
        * max is the end of the range, inclusive.
        */
-      max: number
+      max: number;
 
       /**
        * min is the start of the range, inclusive.
        */
-      min: number
-
+      min: number;
     }
-
 
     /**
      * DEPRECATED 1.9 - This group version of IPBlock is deprecated by networking/v1/IPBlock.
@@ -15449,22 +14778,20 @@ export namespace extensions {
       /**
        * CIDR is a string representing the IP Block Valid examples are "192.168.1.1/24"
        */
-      cidr: string
+      cidr: string;
 
       /**
        * Except is a slice of CIDRs that should not be included within an IP Block Valid examples
        * are "192.168.1.1/24" Except values will be rejected if they are outside the CIDR range
        */
-      except?: string[]
-
+      except?: string[];
     }
-
 
     /**
      * Ingress is a collection of rules that allow inbound connections to reach the endpoints
      * defined by a backend. An Ingress can be configured to give services externally-reachable
-     * urls, load balance traffic, terminate SSL, offer name based virtual hosting etc. 
-     * 
+     * urls, load balance traffic, terminate SSL, offer name based virtual hosting etc.
+     *
      * @deprecated extensions/v1beta1/Ingress is deprecated by networking/v1beta1/Ingress and not
      * supported by Kubernetes v1.20+ clusters.
      */
@@ -15475,7 +14802,7 @@ export namespace extensions {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "extensions/v1beta1"
+      apiVersion?: "extensions/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -15483,20 +14810,19 @@ export namespace extensions {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "Ingress"
+      kind?: "Ingress";
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Spec is the desired state of the Ingress. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
        */
-      spec?: extensions.v1beta1.IngressSpec
-
+      spec?: extensions.v1beta1.IngressSpec;
     }
 
     export function isIngress(o: any): o is Ingress {
@@ -15510,15 +14836,13 @@ export namespace extensions {
       /**
        * Specifies the name of the referenced service.
        */
-      serviceName: string
+      serviceName: string;
 
       /**
        * Specifies the port of the referenced service.
        */
-      servicePort: number | string
-
+      servicePort: number | string;
     }
-
 
     /**
      * IngressList is a collection of Ingress.
@@ -15527,7 +14851,7 @@ export namespace extensions {
       /**
        * Items is the list of Ingress.
        */
-      items: extensions.v1beta1.Ingress[]
+      items: extensions.v1beta1.Ingress[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -15535,7 +14859,7 @@ export namespace extensions {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "extensions/v1beta1"
+      apiVersion?: "extensions/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -15543,14 +14867,13 @@ export namespace extensions {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "IngressList"
+      kind?: "IngressList";
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isIngressList(o: any): o is IngressList {
@@ -15575,13 +14898,10 @@ export namespace extensions {
        * the IngressRuleValue. If the host is unspecified, the Ingress routes all traffic based on
        * the specified IngressRuleValue.
        */
-      host?: string
+      host?: string;
 
-      
-      http?: extensions.v1beta1.HTTPIngressRuleValue
-
+      http?: extensions.v1beta1.HTTPIngressRuleValue;
     }
-
 
     /**
      * IngressSpec describes the Ingress the user wishes to exist.
@@ -15592,13 +14912,13 @@ export namespace extensions {
        * 'backend' or 'rules' must be specified. This field is optional to allow the loadbalancer
        * controller or defaulting logic to specify a global default.
        */
-      backend?: extensions.v1beta1.IngressBackend
+      backend?: extensions.v1beta1.IngressBackend;
 
       /**
        * A list of host rules used to configure the Ingress. If unspecified, or no rule matches, all
        * traffic is sent to the default backend.
        */
-      rules?: extensions.v1beta1.IngressRule[]
+      rules?: extensions.v1beta1.IngressRule[];
 
       /**
        * TLS configuration. Currently the Ingress only supports a single TLS port, 443. If multiple
@@ -15606,10 +14926,8 @@ export namespace extensions {
        * according to the hostname specified through the SNI TLS extension, if the ingress
        * controller fulfilling the ingress supports SNI.
        */
-      tls?: extensions.v1beta1.IngressTLS[]
-
+      tls?: extensions.v1beta1.IngressTLS[];
     }
-
 
     /**
      * IngressTLS describes the transport layer security associated with an Ingress.
@@ -15620,7 +14938,7 @@ export namespace extensions {
        * match the name/s used in the tlsSecret. Defaults to the wildcard host setting for the
        * loadbalancer controller fulfilling this Ingress, if left unspecified.
        */
-      hosts?: string[]
+      hosts?: string[];
 
       /**
        * SecretName is the name of the secret used to terminate SSL traffic on 443. Field is left
@@ -15628,10 +14946,8 @@ export namespace extensions {
        * conflicts with the "Host" header field used by an IngressRule, the SNI host is used for
        * termination and value of the Host header is used for routing.
        */
-      secretName?: string
-
+      secretName?: string;
     }
-
 
     /**
      * DEPRECATED 1.9 - This group version of NetworkPolicy is deprecated by
@@ -15645,7 +14961,7 @@ export namespace extensions {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "extensions/v1beta1"
+      apiVersion?: "extensions/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -15653,19 +14969,18 @@ export namespace extensions {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "NetworkPolicy"
+      kind?: "NetworkPolicy";
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Specification of the desired behavior for this NetworkPolicy.
        */
-      spec?: extensions.v1beta1.NetworkPolicySpec
-
+      spec?: extensions.v1beta1.NetworkPolicySpec;
     }
 
     export function isNetworkPolicy(o: any): o is NetworkPolicy {
@@ -15685,7 +15000,7 @@ export namespace extensions {
        * restricted by port). If this field is present and contains at least one item, then this
        * rule allows traffic only if the traffic matches at least one port in the list.
        */
-      ports?: extensions.v1beta1.NetworkPolicyPort[]
+      ports?: extensions.v1beta1.NetworkPolicyPort[];
 
       /**
        * List of destinations for outgoing traffic of pods selected for this rule. Items in this
@@ -15694,10 +15009,8 @@ export namespace extensions {
        * present and contains at least one item, this rule allows traffic only if the traffic
        * matches at least one item in the to list.
        */
-      to?: extensions.v1beta1.NetworkPolicyPeer[]
-
+      to?: extensions.v1beta1.NetworkPolicyPeer[];
     }
-
 
     /**
      * DEPRECATED 1.9 - This group version of NetworkPolicyIngressRule is deprecated by
@@ -15712,7 +15025,7 @@ export namespace extensions {
        * and contains at least one item, this rule allows traffic only if the traffic matches at
        * least one item in the from list.
        */
-      from?: extensions.v1beta1.NetworkPolicyPeer[]
+      from?: extensions.v1beta1.NetworkPolicyPeer[];
 
       /**
        * List of ports which should be made accessible on the pods selected for this rule. Each item
@@ -15721,10 +15034,8 @@ export namespace extensions {
        * at least one item, then this rule allows traffic only if the traffic matches at least one
        * port in the list.
        */
-      ports?: extensions.v1beta1.NetworkPolicyPort[]
-
+      ports?: extensions.v1beta1.NetworkPolicyPort[];
     }
-
 
     /**
      * DEPRECATED 1.9 - This group version of NetworkPolicyList is deprecated by
@@ -15734,7 +15045,7 @@ export namespace extensions {
       /**
        * Items is a list of schema objects.
        */
-      items: extensions.v1beta1.NetworkPolicy[]
+      items: extensions.v1beta1.NetworkPolicy[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -15742,7 +15053,7 @@ export namespace extensions {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "extensions/v1beta1"
+      apiVersion?: "extensions/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -15750,18 +15061,19 @@ export namespace extensions {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "NetworkPolicyList"
+      kind?: "NetworkPolicyList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isNetworkPolicyList(o: any): o is NetworkPolicyList {
-      return o.apiVersion == "extensions/v1beta1" && o.kind == "NetworkPolicyList";
+      return (
+        o.apiVersion == "extensions/v1beta1" && o.kind == "NetworkPolicyList"
+      );
     }
 
     /**
@@ -15773,30 +15085,28 @@ export namespace extensions {
        * IPBlock defines policy on a particular IPBlock. If this field is set then neither of the
        * other fields can be.
        */
-      ipBlock?: extensions.v1beta1.IPBlock
+      ipBlock?: extensions.v1beta1.IPBlock;
 
       /**
        * Selects Namespaces using cluster-scoped labels. This field follows standard label selector
        * semantics; if present but empty, it selects all namespaces.
-       * 
+       *
        * If PodSelector is also set, then the NetworkPolicyPeer as a whole selects the Pods matching
        * PodSelector in the Namespaces selected by NamespaceSelector. Otherwise it selects all Pods
        * in the Namespaces selected by NamespaceSelector.
        */
-      namespaceSelector?: meta.v1.LabelSelector
+      namespaceSelector?: meta.v1.LabelSelector;
 
       /**
        * This is a label selector which selects Pods. This field follows standard label selector
        * semantics; if present but empty, it selects all pods.
-       * 
+       *
        * If NamespaceSelector is also set, then the NetworkPolicyPeer as a whole selects the Pods
        * matching PodSelector in the Namespaces selected by NamespaceSelector. Otherwise it selects
        * the Pods matching PodSelector in the policy's own Namespace.
        */
-      podSelector?: meta.v1.LabelSelector
-
+      podSelector?: meta.v1.LabelSelector;
     }
-
 
     /**
      * DEPRECATED 1.9 - This group version of NetworkPolicyPort is deprecated by
@@ -15808,16 +15118,14 @@ export namespace extensions {
        * on a pod.  If this field is not provided, this matches all port names and numbers. If
        * present, only traffic on the specified protocol AND port will be matched.
        */
-      port?: number | string
+      port?: number | string;
 
       /**
        * Optional.  The protocol (TCP, UDP, or SCTP) which traffic must match. If not specified,
        * this field defaults to TCP.
        */
-      protocol?: string
-
+      protocol?: string;
     }
-
 
     /**
      * DEPRECATED 1.9 - This group version of NetworkPolicySpec is deprecated by
@@ -15831,7 +15139,7 @@ export namespace extensions {
        * is NOT optional and follows standard label selector semantics. An empty podSelector matches
        * all pods in this namespace.
        */
-      podSelector: meta.v1.LabelSelector
+      podSelector: meta.v1.LabelSelector;
 
       /**
        * List of egress rules to be applied to the selected pods. Outgoing traffic is allowed if
@@ -15841,7 +15149,7 @@ export namespace extensions {
        * NetworkPolicy limits all outgoing traffic (and serves solely to ensure that the pods it
        * selects are isolated by default). This field is beta-level in 1.8
        */
-      egress?: extensions.v1beta1.NetworkPolicyEgressRule[]
+      egress?: extensions.v1beta1.NetworkPolicyEgressRule[];
 
       /**
        * List of ingress rules to be applied to the selected pods. Traffic is allowed to a pod if
@@ -15851,7 +15159,7 @@ export namespace extensions {
        * does not allow any traffic (and serves solely to ensure that the pods it selects are
        * isolated by default).
        */
-      ingress?: extensions.v1beta1.NetworkPolicyIngressRule[]
+      ingress?: extensions.v1beta1.NetworkPolicyIngressRule[];
 
       /**
        * List of rule types that the NetworkPolicy relates to. Valid options are "Ingress",
@@ -15864,10 +15172,8 @@ export namespace extensions {
        * (since such a policy would not include an Egress section and would otherwise default to
        * just [ "Ingress" ]). This field is beta-level in 1.8
        */
-      policyTypes?: string[]
-
+      policyTypes?: string[];
     }
-
 
     /**
      * PodSecurityPolicy governs the ability to make requests that affect the Security Context that
@@ -15881,7 +15187,7 @@ export namespace extensions {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "extensions/v1beta1"
+      apiVersion?: "extensions/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -15889,23 +15195,24 @@ export namespace extensions {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "PodSecurityPolicy"
+      kind?: "PodSecurityPolicy";
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * spec defines the policy enforced.
        */
-      spec?: extensions.v1beta1.PodSecurityPolicySpec
-
+      spec?: extensions.v1beta1.PodSecurityPolicySpec;
     }
 
     export function isPodSecurityPolicy(o: any): o is PodSecurityPolicy {
-      return o.apiVersion == "extensions/v1beta1" && o.kind == "PodSecurityPolicy";
+      return (
+        o.apiVersion == "extensions/v1beta1" && o.kind == "PodSecurityPolicy"
+      );
     }
 
     /**
@@ -15916,7 +15223,7 @@ export namespace extensions {
       /**
        * items is a list of schema objects.
        */
-      items: extensions.v1beta1.PodSecurityPolicy[]
+      items: extensions.v1beta1.PodSecurityPolicy[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -15924,7 +15231,7 @@ export namespace extensions {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "extensions/v1beta1"
+      apiVersion?: "extensions/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -15932,18 +15239,22 @@ export namespace extensions {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "PodSecurityPolicyList"
+      kind?: "PodSecurityPolicyList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
-    export function isPodSecurityPolicyList(o: any): o is PodSecurityPolicyList {
-      return o.apiVersion == "extensions/v1beta1" && o.kind == "PodSecurityPolicyList";
+    export function isPodSecurityPolicyList(
+      o: any
+    ): o is PodSecurityPolicyList {
+      return (
+        o.apiVersion == "extensions/v1beta1" &&
+        o.kind == "PodSecurityPolicyList"
+      );
     }
 
     /**
@@ -15954,74 +15265,74 @@ export namespace extensions {
       /**
        * fsGroup is the strategy that will dictate what fs group is used by the SecurityContext.
        */
-      fsGroup: extensions.v1beta1.FSGroupStrategyOptions
+      fsGroup: extensions.v1beta1.FSGroupStrategyOptions;
 
       /**
        * runAsUser is the strategy that will dictate the allowable RunAsUser values that may be set.
        */
-      runAsUser: extensions.v1beta1.RunAsUserStrategyOptions
+      runAsUser: extensions.v1beta1.RunAsUserStrategyOptions;
 
       /**
        * seLinux is the strategy that will dictate the allowable labels that may be set.
        */
-      seLinux: extensions.v1beta1.SELinuxStrategyOptions
+      seLinux: extensions.v1beta1.SELinuxStrategyOptions;
 
       /**
        * supplementalGroups is the strategy that will dictate what supplemental groups are used by
        * the SecurityContext.
        */
-      supplementalGroups: extensions.v1beta1.SupplementalGroupsStrategyOptions
+      supplementalGroups: extensions.v1beta1.SupplementalGroupsStrategyOptions;
 
       /**
        * allowPrivilegeEscalation determines if a pod can request to allow privilege escalation. If
        * unspecified, defaults to true.
        */
-      allowPrivilegeEscalation?: boolean
+      allowPrivilegeEscalation?: boolean;
 
       /**
        * AllowedCSIDrivers is a whitelist of inline CSI drivers that must be explicitly set to be
        * embedded within a pod spec. An empty value indicates that any CSI driver can be used for
        * inline ephemeral volumes.
        */
-      allowedCSIDrivers?: extensions.v1beta1.AllowedCSIDriver[]
+      allowedCSIDrivers?: extensions.v1beta1.AllowedCSIDriver[];
 
       /**
        * allowedCapabilities is a list of capabilities that can be requested to add to the
        * container. Capabilities in this field may be added at the pod author's discretion. You must
        * not list a capability in both allowedCapabilities and requiredDropCapabilities.
        */
-      allowedCapabilities?: string[]
+      allowedCapabilities?: string[];
 
       /**
        * allowedFlexVolumes is a whitelist of allowed Flexvolumes.  Empty or nil indicates that all
        * Flexvolumes may be used.  This parameter is effective only when the usage of the
        * Flexvolumes is allowed in the "volumes" field.
        */
-      allowedFlexVolumes?: extensions.v1beta1.AllowedFlexVolume[]
+      allowedFlexVolumes?: extensions.v1beta1.AllowedFlexVolume[];
 
       /**
        * allowedHostPaths is a white list of allowed host paths. Empty indicates that all host paths
        * may be used.
        */
-      allowedHostPaths?: extensions.v1beta1.AllowedHostPath[]
+      allowedHostPaths?: extensions.v1beta1.AllowedHostPath[];
 
       /**
        * AllowedProcMountTypes is a whitelist of allowed ProcMountTypes. Empty or nil indicates that
        * only the DefaultProcMountType may be used. This requires the ProcMountType feature flag to
        * be enabled.
        */
-      allowedProcMountTypes?: string[]
+      allowedProcMountTypes?: string[];
 
       /**
        * allowedUnsafeSysctls is a list of explicitly allowed unsafe sysctls, defaults to none. Each
        * entry is either a plain sysctl name or ends in "*" in which case it is considered as a
        * prefix of allowed sysctls. Single * means all unsafe sysctls are allowed. Kubelet has to
        * whitelist all allowed unsafe sysctls explicitly to avoid rejection.
-       * 
+       *
        * Examples: e.g. "foo/*" allows "foo/bar", "foo/baz", etc. e.g. "foo.*" allows "foo.bar",
        * "foo.baz", etc.
        */
-      allowedUnsafeSysctls?: string[]
+      allowedUnsafeSysctls?: string[];
 
       /**
        * defaultAddCapabilities is the default set of capabilities that will be added to the
@@ -16029,48 +15340,48 @@ export namespace extensions {
        * capability in both defaultAddCapabilities and requiredDropCapabilities. Capabilities added
        * here are implicitly allowed, and need not be included in the allowedCapabilities list.
        */
-      defaultAddCapabilities?: string[]
+      defaultAddCapabilities?: string[];
 
       /**
        * defaultAllowPrivilegeEscalation controls the default setting for whether a process can gain
        * more privileges than its parent process.
        */
-      defaultAllowPrivilegeEscalation?: boolean
+      defaultAllowPrivilegeEscalation?: boolean;
 
       /**
        * forbiddenSysctls is a list of explicitly forbidden sysctls, defaults to none. Each entry is
        * either a plain sysctl name or ends in "*" in which case it is considered as a prefix of
        * forbidden sysctls. Single * means all sysctls are forbidden.
-       * 
+       *
        * Examples: e.g. "foo/*" forbids "foo/bar", "foo/baz", etc. e.g. "foo.*" forbids "foo.bar",
        * "foo.baz", etc.
        */
-      forbiddenSysctls?: string[]
+      forbiddenSysctls?: string[];
 
       /**
        * hostIPC determines if the policy allows the use of HostIPC in the pod spec.
        */
-      hostIPC?: boolean
+      hostIPC?: boolean;
 
       /**
        * hostNetwork determines if the policy allows the use of HostNetwork in the pod spec.
        */
-      hostNetwork?: boolean
+      hostNetwork?: boolean;
 
       /**
        * hostPID determines if the policy allows the use of HostPID in the pod spec.
        */
-      hostPID?: boolean
+      hostPID?: boolean;
 
       /**
        * hostPorts determines which host port ranges are allowed to be exposed.
        */
-      hostPorts?: extensions.v1beta1.HostPortRange[]
+      hostPorts?: extensions.v1beta1.HostPortRange[];
 
       /**
        * privileged determines if a pod can request to be run as privileged.
        */
-      privileged?: boolean
+      privileged?: boolean;
 
       /**
        * readOnlyRootFilesystem when set to true will force containers to run with a read only root
@@ -16078,40 +15389,38 @@ export namespace extensions {
        * system the PSP should deny the pod. If set to false the container may run with a read only
        * root file system if it wishes but it will not be forced to.
        */
-      readOnlyRootFilesystem?: boolean
+      readOnlyRootFilesystem?: boolean;
 
       /**
        * requiredDropCapabilities are the capabilities that will be dropped from the container.
        * These are required to be dropped and cannot be added.
        */
-      requiredDropCapabilities?: string[]
+      requiredDropCapabilities?: string[];
 
       /**
        * RunAsGroup is the strategy that will dictate the allowable RunAsGroup values that may be
        * set. If this field is omitted, the pod's RunAsGroup can take any value. This field requires
        * the RunAsGroup feature gate to be enabled.
        */
-      runAsGroup?: extensions.v1beta1.RunAsGroupStrategyOptions
+      runAsGroup?: extensions.v1beta1.RunAsGroupStrategyOptions;
 
       /**
        * runtimeClass is the strategy that will dictate the allowable RuntimeClasses for a pod. If
        * this field is omitted, the pod's runtimeClassName field is unrestricted. Enforcement of
        * this field depends on the RuntimeClass feature gate being enabled.
        */
-      runtimeClass?: extensions.v1beta1.RuntimeClassStrategyOptions
+      runtimeClass?: extensions.v1beta1.RuntimeClassStrategyOptions;
 
       /**
        * volumes is a white list of allowed volume plugins. Empty indicates that no volumes may be
        * used. To allow all volumes you may use '*'.
        */
-      volumes?: string[]
-
+      volumes?: string[];
     }
-
 
     /**
      * ReplicaSet ensures that a specified number of pod replicas are running at any given time.
-     * 
+     *
      * @deprecated extensions/v1beta1/ReplicaSet is deprecated by apps/v1/ReplicaSet and not
      * supported by Kubernetes v1.16+ clusters.
      */
@@ -16122,7 +15431,7 @@ export namespace extensions {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "extensions/v1beta1"
+      apiVersion?: "extensions/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -16130,21 +15439,20 @@ export namespace extensions {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ReplicaSet"
+      kind?: "ReplicaSet";
 
       /**
        * If the Labels of a ReplicaSet are empty, they are defaulted to be the same as the Pod(s)
        * that the ReplicaSet manages. Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Spec defines the specification of the desired behavior of the ReplicaSet. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
        */
-      spec?: extensions.v1beta1.ReplicaSetSpec
-
+      spec?: extensions.v1beta1.ReplicaSetSpec;
     }
 
     export function isReplicaSet(o: any): o is ReplicaSet {
@@ -16158,25 +15466,23 @@ export namespace extensions {
       /**
        * Type of replica set condition.
        */
-      type: string
+      type: string;
 
       /**
        * The last time the condition transitioned from one status to another.
        */
-      lastTransitionTime?: string
+      lastTransitionTime?: string;
 
       /**
        * A human readable message indicating details about the transition.
        */
-      message?: string
+      message?: string;
 
       /**
        * The reason for the condition's last transition.
        */
-      reason?: string
-
+      reason?: string;
     }
-
 
     /**
      * ReplicaSetList is a collection of ReplicaSets.
@@ -16186,7 +15492,7 @@ export namespace extensions {
        * List of ReplicaSets. More info:
        * https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller
        */
-      items: extensions.v1beta1.ReplicaSet[]
+      items: extensions.v1beta1.ReplicaSet[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -16194,7 +15500,7 @@ export namespace extensions {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "extensions/v1beta1"
+      apiVersion?: "extensions/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -16202,14 +15508,13 @@ export namespace extensions {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ReplicaSetList"
+      kind?: "ReplicaSetList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isReplicaSetList(o: any): o is ReplicaSetList {
@@ -16225,14 +15530,14 @@ export namespace extensions {
        * container crashing, for it to be considered available. Defaults to 0 (pod will be
        * considered available as soon as it is ready)
        */
-      minReadySeconds?: number
+      minReadySeconds?: number;
 
       /**
        * Replicas is the number of desired replicas. This is a pointer to distinguish between
        * explicit zero and unspecified. Defaults to 1. More info:
        * https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/#what-is-a-replicationcontroller
        */
-      replicas?: number
+      replicas?: number;
 
       /**
        * Selector is a label query over pods that should match the replica count. If the selector is
@@ -16240,17 +15545,15 @@ export namespace extensions {
        * that must match in order to be controlled by this replica set. More info:
        * https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors
        */
-      selector?: meta.v1.LabelSelector
+      selector?: meta.v1.LabelSelector;
 
       /**
        * Template is the object that describes the pod that will be created if insufficient replicas
        * are detected. More info:
        * https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template
        */
-      template?: core.v1.PodTemplateSpec
-
+      template?: core.v1.PodTemplateSpec;
     }
-
 
     /**
      * DEPRECATED.
@@ -16259,10 +15562,8 @@ export namespace extensions {
       /**
        * The revision to rollback to. If set to 0, rollback to the last revision.
        */
-      revision?: number
-
+      revision?: number;
     }
-
 
     /**
      * Spec to control the desired behavior of daemon set rolling update.
@@ -16280,10 +15581,8 @@ export namespace extensions {
        * DaemonSet pods, thus ensuring that at least 70% of original number of DaemonSet pods are
        * available at all times during the update.
        */
-      maxUnavailable?: number | string
-
+      maxUnavailable?: number | string;
     }
-
 
     /**
      * Spec to control the desired behavior of rolling update.
@@ -16299,7 +15598,7 @@ export namespace extensions {
        * scaled up further, ensuring that total number of pods running at any time during the update
        * is at most 130% of desired pods.
        */
-      maxSurge?: number | string
+      maxSurge?: number | string;
 
       /**
        * The maximum number of pods that can be unavailable during the update. Value can be an
@@ -16311,10 +15610,8 @@ export namespace extensions {
        * ensuring that the total number of pods available at all times during the update is at least
        * 70% of desired pods.
        */
-      maxUnavailable?: number | string
-
+      maxUnavailable?: number | string;
     }
-
 
     /**
      * RunAsGroupStrategyOptions defines the strategy type and any options used to create the
@@ -16324,16 +15621,14 @@ export namespace extensions {
       /**
        * rule is the strategy that will dictate the allowable RunAsGroup values that may be set.
        */
-      rule: string
+      rule: string;
 
       /**
        * ranges are the allowed ranges of gids that may be used. If you would like to force a single
        * gid then supply a single range with the same start and end. Required for MustRunAs.
        */
-      ranges?: extensions.v1beta1.IDRange[]
-
+      ranges?: extensions.v1beta1.IDRange[];
     }
-
 
     /**
      * RunAsUserStrategyOptions defines the strategy type and any options used to create the
@@ -16343,16 +15638,14 @@ export namespace extensions {
       /**
        * rule is the strategy that will dictate the allowable RunAsUser values that may be set.
        */
-      rule: string
+      rule: string;
 
       /**
        * ranges are the allowed ranges of uids that may be used. If you would like to force a single
        * uid then supply a single range with the same start and end. Required for MustRunAs.
        */
-      ranges?: extensions.v1beta1.IDRange[]
-
+      ranges?: extensions.v1beta1.IDRange[];
     }
-
 
     /**
      * RuntimeClassStrategyOptions define the strategy that will dictate the allowable
@@ -16364,16 +15657,14 @@ export namespace extensions {
        * pod. A value of "*" means that any RuntimeClass name is allowed, and must be the only item
        * in the list. An empty list requires the RuntimeClassName field to be unset.
        */
-      allowedRuntimeClassNames: string[]
+      allowedRuntimeClassNames: string[];
 
       /**
        * defaultRuntimeClassName is the default RuntimeClassName to set on the pod. The default MUST
        * be allowed by the allowedRuntimeClassNames list. A value of nil does not mutate the Pod.
        */
-      defaultRuntimeClassName?: string
-
+      defaultRuntimeClassName?: string;
     }
-
 
     /**
      * SELinuxStrategyOptions defines the strategy type and any options used to create the strategy.
@@ -16383,16 +15674,14 @@ export namespace extensions {
       /**
        * rule is the strategy that will dictate the allowable labels that may be set.
        */
-      rule: string
+      rule: string;
 
       /**
        * seLinuxOptions required to run as; required for MustRunAs More info:
        * https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
        */
-      seLinuxOptions?: core.v1.SELinuxOptions
-
+      seLinuxOptions?: core.v1.SELinuxOptions;
     }
-
 
     /**
      * represents a scaling request for a resource.
@@ -16404,7 +15693,7 @@ export namespace extensions {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: string
+      apiVersion?: "extensions/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -16412,20 +15701,19 @@ export namespace extensions {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: string
+      kind?: "Scale";
 
       /**
        * Standard object metadata; More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata.
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * defines the behavior of the scale. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status.
        */
-      spec?: extensions.v1beta1.ScaleSpec
-
+      spec?: extensions.v1beta1.ScaleSpec;
     }
 
     export function isScale(o: any): o is Scale {
@@ -16439,10 +15727,8 @@ export namespace extensions {
       /**
        * desired number of instances for the scaled object.
        */
-      replicas?: number
-
+      replicas?: number;
     }
-
 
     /**
      * SupplementalGroupsStrategyOptions defines the strategy type and options used to create the
@@ -16454,19 +15740,15 @@ export namespace extensions {
        * supplemental group then supply a single range with the same start and end. Required for
        * MustRunAs.
        */
-      ranges?: extensions.v1beta1.IDRange[]
+      ranges?: extensions.v1beta1.IDRange[];
 
       /**
        * rule is the strategy that will dictate what supplemental groups is used in the
        * SecurityContext.
        */
-      rule?: string
-
+      rule?: string;
     }
-
-
   }
-
 }
 
 export namespace flowcontrol {
@@ -16479,10 +15761,8 @@ export namespace flowcontrol {
        * `type` is the type of flow distinguisher method The supported types are "ByUser" and
        * "ByNamespace". Required.
        */
-      type: string
-
+      type: string;
     }
-
 
     /**
      * FlowSchema defines the schema of a group of flows. Note that a flow is made up of a set of
@@ -16496,7 +15776,7 @@ export namespace flowcontrol {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "flowcontrol.apiserver.k8s.io/v1alpha1"
+      apiVersion?: "flowcontrol.apiserver.k8s.io/v1alpha1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -16504,24 +15784,26 @@ export namespace flowcontrol {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "FlowSchema"
+      kind?: "FlowSchema";
 
       /**
        * `metadata` is the standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * `spec` is the specification of the desired behavior of a FlowSchema. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
        */
-      spec?: flowcontrol.v1alpha1.FlowSchemaSpec
-
+      spec?: flowcontrol.v1alpha1.FlowSchemaSpec;
     }
 
     export function isFlowSchema(o: any): o is FlowSchema {
-      return o.apiVersion == "flowcontrol.apiserver.k8s.io/v1alpha1" && o.kind == "FlowSchema";
+      return (
+        o.apiVersion == "flowcontrol.apiserver.k8s.io/v1alpha1" &&
+        o.kind == "FlowSchema"
+      );
     }
 
     /**
@@ -16532,25 +15814,23 @@ export namespace flowcontrol {
        * `lastTransitionTime` is the last time the condition transitioned from one status to
        * another.
        */
-      lastTransitionTime?: string
+      lastTransitionTime?: string;
 
       /**
        * `message` is a human-readable message indicating details about last transition.
        */
-      message?: string
+      message?: string;
 
       /**
        * `reason` is a unique, one-word, CamelCase reason for the condition's last transition.
        */
-      reason?: string
+      reason?: string;
 
       /**
        * `type` is the type of the condition. Required.
        */
-      type?: string
-
+      type?: string;
     }
-
 
     /**
      * FlowSchemaList is a list of FlowSchema objects.
@@ -16559,7 +15839,7 @@ export namespace flowcontrol {
       /**
        * `items` is a list of FlowSchemas.
        */
-      items: flowcontrol.v1alpha1.FlowSchema[]
+      items: flowcontrol.v1alpha1.FlowSchema[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -16567,7 +15847,7 @@ export namespace flowcontrol {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "flowcontrol.apiserver.k8s.io/v1alpha1"
+      apiVersion?: "flowcontrol.apiserver.k8s.io/v1alpha1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -16575,18 +15855,20 @@ export namespace flowcontrol {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "FlowSchemaList"
+      kind?: "FlowSchemaList";
 
       /**
        * `metadata` is the standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isFlowSchemaList(o: any): o is FlowSchemaList {
-      return o.apiVersion == "flowcontrol.apiserver.k8s.io/v1alpha1" && o.kind == "FlowSchemaList";
+      return (
+        o.apiVersion == "flowcontrol.apiserver.k8s.io/v1alpha1" &&
+        o.kind == "FlowSchemaList"
+      );
     }
 
     /**
@@ -16598,14 +15880,14 @@ export namespace flowcontrol {
        * If the reference cannot be resolved, the FlowSchema will be ignored and marked as invalid
        * in its status. Required.
        */
-      priorityLevelConfiguration: flowcontrol.v1alpha1.PriorityLevelConfigurationReference
+      priorityLevelConfiguration: flowcontrol.v1alpha1.PriorityLevelConfigurationReference;
 
       /**
        * `distinguisherMethod` defines how to compute the flow distinguisher for requests that match
        * this schema. `nil` specifies that the distinguisher is disabled and thus will always be the
        * empty string.
        */
-      distinguisherMethod?: flowcontrol.v1alpha1.FlowDistinguisherMethod
+      distinguisherMethod?: flowcontrol.v1alpha1.FlowDistinguisherMethod;
 
       /**
        * `matchingPrecedence` is used to choose among the FlowSchemas that match a given request.
@@ -16613,17 +15895,15 @@ export namespace flowcontrol {
        * logically highest) MatchingPrecedence.  Each MatchingPrecedence value must be non-negative.
        * Note that if the precedence is not specified or zero, it will be set to 1000 as default.
        */
-      matchingPrecedence?: number
+      matchingPrecedence?: number;
 
       /**
        * `rules` describes which requests will match this flow schema. This FlowSchema matches a
        * request if and only if at least one member of rules matches the request. if it is an empty
        * slice, there will be no requests matching the FlowSchema.
        */
-      rules?: flowcontrol.v1alpha1.PolicyRulesWithSubjects[]
-
+      rules?: flowcontrol.v1alpha1.PolicyRulesWithSubjects[];
     }
-
 
     /**
      * GroupSubject holds detailed information for group-kind subject.
@@ -16634,10 +15914,8 @@ export namespace flowcontrol {
        * https://github.com/kubernetes/apiserver/blob/master/pkg/authentication/user/user.go for
        * some well-known group names. Required.
        */
-      name: string
-
+      name: string;
     }
-
 
     /**
      * LimitResponse defines how to handle requests that can not be executed right now.
@@ -16648,16 +15926,14 @@ export namespace flowcontrol {
        * arrival are held in a queue until they can be executed or a queuing limit is reached.
        * "Reject" means that requests that can not be executed upon arrival are rejected. Required.
        */
-      type: string
+      type: string;
 
       /**
        * `queuing` holds the configuration parameters for queuing. This field may be non-empty only
        * if `type` is `"Queue"`.
        */
-      queuing?: flowcontrol.v1alpha1.QueuingConfiguration
-
+      queuing?: flowcontrol.v1alpha1.QueuingConfiguration;
     }
-
 
     /**
      * LimitedPriorityLevelConfiguration specifies how to handle requests that are subject to
@@ -16673,21 +15949,19 @@ export namespace flowcontrol {
        * concurrency-controlled priority levels in proportion to their assured concurrency shares.
        * This produces the assured concurrency value (ACV) --- the number of requests that may be
        * executing at a time --- for each such priority level:
-       * 
+       *
        *             ACV(l) = ceil( SCL * ACS(l) / ( sum[priority levels k] ACS(k) ) )
-       * 
+       *
        * bigger numbers of ACS mean more reserved concurrent requests (at the expense of every other
        * PL). This field has a default value of 30.
        */
-      assuredConcurrencyShares?: number
+      assuredConcurrencyShares?: number;
 
       /**
        * `limitResponse` indicates what to do with requests that can not be executed right now
        */
-      limitResponse?: flowcontrol.v1alpha1.LimitResponse
-
+      limitResponse?: flowcontrol.v1alpha1.LimitResponse;
     }
-
 
     /**
      * NonResourcePolicyRule is a predicate that matches non-resource requests according to their
@@ -16706,16 +15980,14 @@ export namespace flowcontrol {
        *   - "/healthz/*" matches all per-component health checks.
        * "*" matches all non-resource urls. if it is present, it must be the only entry. Required.
        */
-      nonResourceURLs: string[]
+      nonResourceURLs: string[];
 
       /**
        * `verbs` is a list of matching verbs and may not be empty. "*" matches all verbs. If it is
        * present, it must be the only entry. Required.
        */
-      verbs: string[]
-
+      verbs: string[];
     }
-
 
     /**
      * PolicyRulesWithSubjects prescribes a test that applies to a request to an apiserver. The test
@@ -16731,23 +16003,21 @@ export namespace flowcontrol {
        * system:authenticated and system:unauthenticated user groups matches every request.
        * Required.
        */
-      subjects: flowcontrol.v1alpha1.Subject[]
+      subjects: flowcontrol.v1alpha1.Subject[];
 
       /**
        * `nonResourceRules` is a list of NonResourcePolicyRules that identify matching requests
        * according to their verb and the target non-resource URL.
        */
-      nonResourceRules?: flowcontrol.v1alpha1.NonResourcePolicyRule[]
+      nonResourceRules?: flowcontrol.v1alpha1.NonResourcePolicyRule[];
 
       /**
        * `resourceRules` is a slice of ResourcePolicyRules that identify matching requests according
        * to their verb and the target resource. At least one of `resourceRules` and
        * `nonResourceRules` has to be non-empty.
        */
-      resourceRules?: flowcontrol.v1alpha1.ResourcePolicyRule[]
-
+      resourceRules?: flowcontrol.v1alpha1.ResourcePolicyRule[];
     }
-
 
     /**
      * PriorityLevelConfiguration represents the configuration of a priority level.
@@ -16759,7 +16029,7 @@ export namespace flowcontrol {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "flowcontrol.apiserver.k8s.io/v1alpha1"
+      apiVersion?: "flowcontrol.apiserver.k8s.io/v1alpha1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -16767,24 +16037,28 @@ export namespace flowcontrol {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "PriorityLevelConfiguration"
+      kind?: "PriorityLevelConfiguration";
 
       /**
        * `metadata` is the standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * `spec` is the specification of the desired behavior of a "request-priority". More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
        */
-      spec?: flowcontrol.v1alpha1.PriorityLevelConfigurationSpec
-
+      spec?: flowcontrol.v1alpha1.PriorityLevelConfigurationSpec;
     }
 
-    export function isPriorityLevelConfiguration(o: any): o is PriorityLevelConfiguration {
-      return o.apiVersion == "flowcontrol.apiserver.k8s.io/v1alpha1" && o.kind == "PriorityLevelConfiguration";
+    export function isPriorityLevelConfiguration(
+      o: any
+    ): o is PriorityLevelConfiguration {
+      return (
+        o.apiVersion == "flowcontrol.apiserver.k8s.io/v1alpha1" &&
+        o.kind == "PriorityLevelConfiguration"
+      );
     }
 
     /**
@@ -16795,25 +16069,23 @@ export namespace flowcontrol {
        * `lastTransitionTime` is the last time the condition transitioned from one status to
        * another.
        */
-      lastTransitionTime?: string
+      lastTransitionTime?: string;
 
       /**
        * `message` is a human-readable message indicating details about last transition.
        */
-      message?: string
+      message?: string;
 
       /**
        * `reason` is a unique, one-word, CamelCase reason for the condition's last transition.
        */
-      reason?: string
+      reason?: string;
 
       /**
        * `type` is the type of the condition. Required.
        */
-      type?: string
-
+      type?: string;
     }
-
 
     /**
      * PriorityLevelConfigurationList is a list of PriorityLevelConfiguration objects.
@@ -16822,7 +16094,7 @@ export namespace flowcontrol {
       /**
        * `items` is a list of request-priorities.
        */
-      items: flowcontrol.v1alpha1.PriorityLevelConfiguration[]
+      items: flowcontrol.v1alpha1.PriorityLevelConfiguration[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -16830,7 +16102,7 @@ export namespace flowcontrol {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "flowcontrol.apiserver.k8s.io/v1alpha1"
+      apiVersion?: "flowcontrol.apiserver.k8s.io/v1alpha1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -16838,18 +16110,22 @@ export namespace flowcontrol {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "PriorityLevelConfigurationList"
+      kind?: "PriorityLevelConfigurationList";
 
       /**
        * `metadata` is the standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
-    export function isPriorityLevelConfigurationList(o: any): o is PriorityLevelConfigurationList {
-      return o.apiVersion == "flowcontrol.apiserver.k8s.io/v1alpha1" && o.kind == "PriorityLevelConfigurationList";
+    export function isPriorityLevelConfigurationList(
+      o: any
+    ): o is PriorityLevelConfigurationList {
+      return (
+        o.apiVersion == "flowcontrol.apiserver.k8s.io/v1alpha1" &&
+        o.kind == "PriorityLevelConfigurationList"
+      );
     }
 
     /**
@@ -16860,10 +16136,8 @@ export namespace flowcontrol {
       /**
        * `name` is the name of the priority level configuration being referenced Required.
        */
-      name: string
-
+      name: string;
     }
-
 
     /**
      * PriorityLevelConfigurationSpec specifies the configuration of a priority level.
@@ -16877,16 +16151,14 @@ export namespace flowcontrol {
        * _are_ subject to limits and (b) some of the server's limited capacity is made available
        * exclusively to this priority level. Required.
        */
-      type: string
+      type: string;
 
       /**
        * `limited` specifies how requests are handled for a Limited priority level. This field must
        * be non-empty if and only if `type` is `"Limited"`.
        */
-      limited?: flowcontrol.v1alpha1.LimitedPriorityLevelConfiguration
-
+      limited?: flowcontrol.v1alpha1.LimitedPriorityLevelConfiguration;
     }
-
 
     /**
      * QueuingConfiguration holds the configuration parameters for queuing
@@ -16902,14 +16174,14 @@ export namespace flowcontrol {
        * documentation for more extensive guidance on setting this field.  This field has a default
        * value of 8.
        */
-      handSize?: number
+      handSize?: number;
 
       /**
        * `queueLengthLimit` is the maximum number of requests allowed to be waiting in a given queue
        * of this priority level at a time; excess requests are rejected.  This value must be
        * positive.  If not specified, it will be defaulted to 50.
        */
-      queueLengthLimit?: number
+      queueLengthLimit?: number;
 
       /**
        * `queues` is the number of queues for this priority level. The queues exist independently at
@@ -16917,10 +16189,8 @@ export namespace flowcontrol {
        * shufflesharding and thus makes the distinguisher method of associated flow schemas
        * irrelevant.  This field has a default value of 64.
        */
-      queues?: number
-
+      queues?: number;
     }
-
 
     /**
      * ResourcePolicyRule is a predicate that matches some resource requests, testing the request's
@@ -16934,20 +16204,20 @@ export namespace flowcontrol {
        * `apiGroups` is a list of matching API groups and may not be empty. "*" matches all API
        * groups and, if present, must be the only entry. Required.
        */
-      apiGroups: string[]
+      apiGroups: string[];
 
       /**
        * `resources` is a list of matching resources (i.e., lowercase and plural) with, if desired,
        * subresource.  For example, [ "services", "nodes/status" ].  This list may not be empty. "*"
        * matches all resources and, if present, must be the only entry. Required.
        */
-      resources: string[]
+      resources: string[];
 
       /**
        * `verbs` is a list of matching verbs and may not be empty. "*" matches all verbs and, if
        * present, must be the only entry. Required.
        */
-      verbs: string[]
+      verbs: string[];
 
       /**
        * `clusterScope` indicates whether to match requests that do not specify a namespace (which
@@ -16955,7 +16225,7 @@ export namespace flowcontrol {
        * namespaces). If this field is omitted or false then the `namespaces` field must contain a
        * non-empty list.
        */
-      clusterScope?: boolean
+      clusterScope?: boolean;
 
       /**
        * `namespaces` is a list of target namespaces that restricts matches.  A request that
@@ -16964,10 +16234,8 @@ export namespace flowcontrol {
        * does not match a request that _does not specify_ a namespace (see the `clusterScope` field
        * for that). This list may be empty, but only if `clusterScope` is true.
        */
-      namespaces?: string[]
-
+      namespaces?: string[];
     }
-
 
     /**
      * ServiceAccountSubject holds detailed information for service-account-kind subject.
@@ -16977,15 +16245,13 @@ export namespace flowcontrol {
        * `name` is the name of matching ServiceAccount objects, or "*" to match regardless of name.
        * Required.
        */
-      name: string
+      name: string;
 
       /**
        * `namespace` is the namespace of matching ServiceAccount objects. Required.
        */
-      namespace: string
-
+      namespace: string;
     }
-
 
     /**
      * Subject matches the originator of a request, as identified by the request authentication
@@ -16995,19 +16261,14 @@ export namespace flowcontrol {
       /**
        * Required
        */
-      kind: string
+      kind: "Subject";
 
-      
-      group?: flowcontrol.v1alpha1.GroupSubject
+      group?: flowcontrol.v1alpha1.GroupSubject;
 
-      
-      serviceAccount?: flowcontrol.v1alpha1.ServiceAccountSubject
+      serviceAccount?: flowcontrol.v1alpha1.ServiceAccountSubject;
 
-      
-      user?: flowcontrol.v1alpha1.UserSubject
-
+      user?: flowcontrol.v1alpha1.UserSubject;
     }
-
 
     /**
      * UserSubject holds detailed information for user-kind subject.
@@ -17016,13 +16277,9 @@ export namespace flowcontrol {
       /**
        * `name` is the username that matches, or "*" to match all usernames. Required.
        */
-      name: string
-
+      name: string;
     }
-
-
   }
-
 }
 
 export namespace meta {
@@ -17034,12 +16291,12 @@ export namespace meta {
       /**
        * name is the name of the group.
        */
-      name: string
+      name: string;
 
       /**
        * versions are the versions supported in this group.
        */
-      versions: meta.v1.GroupVersionForDiscovery[]
+      versions: meta.v1.GroupVersionForDiscovery[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -17047,7 +16304,7 @@ export namespace meta {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: string
+      apiVersion?: "v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -17055,13 +16312,13 @@ export namespace meta {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: string
+      kind?: "APIGroup";
 
       /**
        * preferredVersion is the version preferred by the API server, which probably is the storage
        * version.
        */
-      preferredVersion?: meta.v1.GroupVersionForDiscovery
+      preferredVersion?: meta.v1.GroupVersionForDiscovery;
 
       /**
        * a map of client CIDR to server address that is serving this group. This is to help clients
@@ -17072,8 +16329,7 @@ export namespace meta {
        * client reaches the server using an internal IP. Server looks at X-Forwarded-For header or
        * X-Real-Ip header or request.RemoteAddr (in that order) to get the client IP.
        */
-      serverAddressByClientCIDRs?: meta.v1.ServerAddressByClientCIDR[]
-
+      serverAddressByClientCIDRs?: meta.v1.ServerAddressByClientCIDR[];
     }
 
     export function isAPIGroup(o: any): o is APIGroup {
@@ -17087,7 +16343,7 @@ export namespace meta {
       /**
        * groups is a list of APIGroup.
        */
-      groups: meta.v1.APIGroup[]
+      groups: meta.v1.APIGroup[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -17095,7 +16351,7 @@ export namespace meta {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: string
+      apiVersion?: "v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -17103,8 +16359,7 @@ export namespace meta {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: string
-
+      kind?: "APIGroupList";
     }
 
     export function isAPIGroupList(o: any): o is APIGroupList {
@@ -17118,46 +16373,46 @@ export namespace meta {
       /**
        * kind is the kind for the resource (e.g. 'Foo' is the kind for a resource 'foo')
        */
-      kind: string
+      kind: "APIResource";
 
       /**
        * name is the plural name of the resource.
        */
-      name: string
+      name: string;
 
       /**
        * namespaced indicates if a resource is namespaced or not.
        */
-      namespaced: boolean
+      namespaced: boolean;
 
       /**
        * singularName is the singular name of the resource.  This allows clients to handle plural
        * and singular opaquely. The singularName is more correct for reporting status on a single
        * item and both singular and plural are allowed from the kubectl CLI interface.
        */
-      singularName: string
+      singularName: string;
 
       /**
        * verbs is a list of supported kube verbs (this includes get, list, watch, create, update,
        * patch, delete, deletecollection, and proxy)
        */
-      verbs: string[]
+      verbs: string[];
 
       /**
        * categories is a list of the grouped resources this resource belongs to (e.g. 'all')
        */
-      categories?: string[]
+      categories?: string[];
 
       /**
        * group is the preferred group of the resource.  Empty implies the group of the containing
        * resource list. For subresources, this may have a different value, for example: Scale".
        */
-      group?: string
+      group?: string;
 
       /**
        * shortNames is a list of suggested short names of the resource.
        */
-      shortNames?: string[]
+      shortNames?: string[];
 
       /**
        * The hash value of the storage version, the version this resource is converted to when
@@ -17166,17 +16421,15 @@ export namespace meta {
        * the future. The field is populated by the apiserver only if the StorageVersionHash feature
        * gate is enabled. This field will remain optional even if it graduates.
        */
-      storageVersionHash?: string
+      storageVersionHash?: string;
 
       /**
        * version is the preferred version of the resource.  Empty implies the version of the
        * containing resource list For subresources, this may have a different value, for example: v1
        * (while inside a v1beta1 version of the core resource's group)".
        */
-      version?: string
-
+      version?: string;
     }
-
 
     /**
      * APIResourceList is a list of APIResource, it is used to expose the name of the resources
@@ -17186,12 +16439,12 @@ export namespace meta {
       /**
        * groupVersion is the group and version this APIResourceList is for.
        */
-      groupVersion: string
+      groupVersion: string;
 
       /**
        * resources contains the name of the resources and if they are namespaced.
        */
-      resources: meta.v1.APIResource[]
+      resources: meta.v1.APIResource[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -17199,7 +16452,7 @@ export namespace meta {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: string
+      apiVersion?: "v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -17207,8 +16460,7 @@ export namespace meta {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: string
-
+      kind?: "APIResourceList";
     }
 
     export function isAPIResourceList(o: any): o is APIResourceList {
@@ -17229,12 +16481,12 @@ export namespace meta {
        * client reaches the server using an internal IP. Server looks at X-Forwarded-For header or
        * X-Real-Ip header or request.RemoteAddr (in that order) to get the client IP.
        */
-      serverAddressByClientCIDRs: meta.v1.ServerAddressByClientCIDR[]
+      serverAddressByClientCIDRs: meta.v1.ServerAddressByClientCIDR[];
 
       /**
        * versions are the api versions that are available.
        */
-      versions: string[]
+      versions: string[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -17242,7 +16494,7 @@ export namespace meta {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: string
+      apiVersion?: "v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -17250,8 +16502,7 @@ export namespace meta {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: string
-
+      kind?: "APIVersions";
     }
 
     export function isAPIVersions(o: any): o is APIVersions {
@@ -17268,14 +16519,14 @@ export namespace meta {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: string
+      apiVersion?: "v1";
 
       /**
        * When present, indicates that modifications should not be persisted. An invalid or
        * unrecognized dryRun directive will result in an error response and no further processing of
        * the request. Valid values are: - All: all dry run stages will be processed
        */
-      dryRun?: string[]
+      dryRun?: string[];
 
       /**
        * The duration in seconds before the object should be deleted. Value must be non-negative
@@ -17283,7 +16534,7 @@ export namespace meta {
        * grace period for the specified type will be used. Defaults to a per object value if not
        * specified. zero means delete immediately.
        */
-      gracePeriodSeconds?: number
+      gracePeriodSeconds?: number;
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -17291,7 +16542,7 @@ export namespace meta {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: string
+      kind?: "DeleteOptions";
 
       /**
        * Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should
@@ -17299,13 +16550,13 @@ export namespace meta {
        * to/removed from the object's finalizers list. Either this field or PropagationPolicy may be
        * set, but not both.
        */
-      orphanDependents?: boolean
+      orphanDependents?: boolean;
 
       /**
        * Must be fulfilled before a deletion is carried out. If not possible, a 409 Conflict status
        * will be returned.
        */
-      preconditions?: meta.v1.Preconditions
+      preconditions?: meta.v1.Preconditions;
 
       /**
        * Whether and how garbage collection will be performed. Either this field or OrphanDependents
@@ -17315,8 +16566,7 @@ export namespace meta {
        * dependents in the background; 'Foreground' - a cascading policy that deletes all dependents
        * in the foreground.
        */
-      propagationPolicy?: string
-
+      propagationPolicy?: string;
     }
 
     export function isDeleteOptions(o: any): o is DeleteOptions {
@@ -17331,16 +16581,14 @@ export namespace meta {
       /**
        * groupVersion specifies the API group and version in the form "group/version"
        */
-      groupVersion: string
+      groupVersion: string;
 
       /**
        * version specifies the version in the form of "version". This is to save the clients the
        * trouble of splitting the GroupVersion.
        */
-      version: string
-
+      version: string;
     }
-
 
     /**
      * A label selector is a label query over a set of resources. The result of matchLabels and
@@ -17351,17 +16599,15 @@ export namespace meta {
       /**
        * matchExpressions is a list of label selector requirements. The requirements are ANDed.
        */
-      matchExpressions?: meta.v1.LabelSelectorRequirement[]
+      matchExpressions?: meta.v1.LabelSelectorRequirement[];
 
       /**
        * matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is
        * equivalent to an element of matchExpressions, whose key field is "key", the operator is
        * "In", and the values array contains only "value". The requirements are ANDed.
        */
-      matchLabels?: {[key: string]: string}
-
+      matchLabels?: { [key: string]: string };
     }
-
 
     /**
      * A label selector requirement is a selector that contains values, a key, and an operator that
@@ -17371,23 +16617,21 @@ export namespace meta {
       /**
        * key is the label key that the selector applies to.
        */
-      key: string
+      key: string;
 
       /**
        * operator represents a key's relationship to a set of values. Valid operators are In, NotIn,
        * Exists and DoesNotExist.
        */
-      operator: string
+      operator: string;
 
       /**
        * values is an array of string values. If the operator is In or NotIn, the values array must
        * be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty.
        * This array is replaced during a strategic merge patch.
        */
-      values?: string[]
-
+      values?: string[];
     }
-
 
     /**
      * ListMeta describes metadata that synthetic resources must have, including lists and various
@@ -17403,7 +16647,7 @@ export namespace meta {
        * using this continue value will be identical to the value in the first response, unless you
        * have received this token from an error message.
        */
-      continue?: string
+      continue?: string;
 
       /**
        * remainingItemCount is the number of subsequent items in the list which are not included in
@@ -17415,7 +16659,7 @@ export namespace meta {
        * intended use of the remainingItemCount is *estimating* the size of a collection. Clients
        * should not rely on the remainingItemCount to be set or to be exact.
        */
-      remainingItemCount?: number
+      remainingItemCount?: number;
 
       /**
        * String that identifies the server's internal version of this object that can be used by
@@ -17423,18 +16667,16 @@ export namespace meta {
        * and passed unmodified back to the server. Populated by the system. Read-only. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency
        */
-      resourceVersion?: string
+      resourceVersion?: string;
 
       /**
        * selfLink is a URL representing this object. Populated by the system. Read-only.
-       * 
+       *
        * DEPRECATED Kubernetes will stop propagating this field in 1.20 release and the field is
        * planned to be removed in 1.21 release.
        */
-      selfLink?: string
-
+      selfLink?: string;
     }
-
 
     /**
      * ManagedFieldsEntry is a workflow-id, a FieldSet and the group version of the resource that
@@ -17446,36 +16688,35 @@ export namespace meta {
        * is "group/version" just like the top-level APIVersion field. It is necessary to track the
        * version of a field set because it cannot be automatically converted.
        */
-      apiVersion?: string
+      apiVersion?: "meta/v1";
 
       /**
        * FieldsType is the discriminator for the different fields format and version. There is
        * currently only one possible value: "FieldsV1"
        */
-      fieldsType?: string
+      fieldsType?: string;
 
       /**
        * FieldsV1 holds the first JSON version format as described in the "FieldsV1" type.
        */
-      fieldsV1?: meta.v1.FieldsV1
+      fieldsV1?: object;
 
       /**
        * Manager is an identifier of the workflow managing these fields.
        */
-      manager?: string
+      manager?: string;
 
       /**
        * Operation is the type of operation which lead to this ManagedFieldsEntry being created. The
        * only valid values for this field are 'Apply' and 'Update'.
        */
-      operation?: string
+      operation?: string;
 
       /**
        * Time is timestamp of when these fields were set. It should always be empty if Operation is
        * 'Apply'
        */
-      time?: string
-
+      time?: string;
     }
 
     export function isManagedFieldsEntry(o: any): o is ManagedFieldsEntry {
@@ -17493,31 +16734,31 @@ export namespace meta {
        * be preserved when modifying objects. More info:
        * http://kubernetes.io/docs/user-guide/annotations
        */
-      annotations?: {[key: string]: string}
+      annotations?: { [key: string]: string };
 
       /**
        * The name of the cluster which the object belongs to. This is used to distinguish resources
        * with same name and namespace in different clusters. This field is not set anywhere right
        * now and apiserver is going to ignore it if set in create or update request.
        */
-      clusterName?: string
+      clusterName?: string;
 
       /**
        * CreationTimestamp is a timestamp representing the server time when this object was created.
        * It is not guaranteed to be set in happens-before order across separate operations. Clients
        * may not set this value. It is represented in RFC3339 form and is in UTC.
-       * 
+       *
        * Populated by the system. Read-only. Null for lists. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      creationTimestamp?: string
+      creationTimestamp?: string;
 
       /**
        * Number of seconds allowed for this object to gracefully terminate before it will be removed
        * from the system. Only set when deletionTimestamp is also set. May only be shortened.
        * Read-only.
        */
-      deletionGracePeriodSeconds?: number
+      deletionGracePeriodSeconds?: number;
 
       /**
        * DeletionTimestamp is RFC 3339 date and time at which this resource will be deleted. This
@@ -17534,11 +16775,11 @@ export namespace meta {
        * object may still exist after this timestamp, until an administrator or automated process
        * can determine the resource is fully terminated. If not set, graceful deletion of the object
        * has not been requested.
-       * 
+       *
        * Populated by the system when a graceful deletion is requested. Read-only. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      deletionTimestamp?: string
+      deletionTimestamp?: string;
 
       /**
        * Must be empty before the object is deleted from the registry. Each entry is an identifier
@@ -17553,7 +16794,7 @@ export namespace meta {
        * ordering finalizers are free to order amongst themselves and are not vulnerable to ordering
        * changes in the list.
        */
-      finalizers?: string[]
+      finalizers?: string[];
 
       /**
        * GenerateName is an optional prefix, used by the server, to generate a unique name ONLY IF
@@ -17561,29 +16802,29 @@ export namespace meta {
        * client will be different than the name passed. This value will also be combined with a
        * unique suffix. The provided value has the same validation rules as the Name field, and may
        * be truncated by the length of the suffix required to make the value unique on the server.
-       * 
+       *
        * If this field is specified and the generated name exists, the server will NOT return a 409
        * - instead, it will either return 201 Created or 500 with Reason ServerTimeout indicating a
        * unique name could not be found in the time allotted, and the client should retry
        * (optionally after the time indicated in the Retry-After header).
-       * 
+       *
        * Applied only if Name is not specified. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#idempotency
        */
-      generateName?: string
+      generateName?: string;
 
       /**
        * A sequence number representing a specific generation of the desired state. Populated by the
        * system. Read-only.
        */
-      generation?: number
+      generation?: number;
 
       /**
        * Map of string keys and values that can be used to organize and categorize (scope and
        * select) objects. May match selectors of replication controllers and services. More info:
        * http://kubernetes.io/docs/user-guide/labels
        */
-      labels?: {[key: string]: string}
+      labels?: { [key: string]: string };
 
       /**
        * ManagedFields maps workflow-id and version to the set of fields that are managed by that
@@ -17592,7 +16833,7 @@ export namespace meta {
        * the name of a specific apply path like "ci-cd". The set of fields is always in the version
        * that the workflow used when modifying the object.
        */
-      managedFields?: meta.v1.ManagedFieldsEntry[]
+      managedFields?: meta.v1.ManagedFieldsEntry[];
 
       /**
        * Name must be unique within a namespace. Is required when creating resources, although some
@@ -17601,18 +16842,18 @@ export namespace meta {
        * definition. Cannot be updated. More info:
        * http://kubernetes.io/docs/user-guide/identifiers#names
        */
-      name?: string
+      name?: string;
 
       /**
        * Namespace defines the space within each name must be unique. An empty namespace is
        * equivalent to the "default" namespace, but "default" is the canonical representation. Not
        * all objects are required to be scoped to a namespace - the value of this field for those
        * objects will be empty.
-       * 
+       *
        * Must be a DNS_LABEL. Cannot be updated. More info:
        * http://kubernetes.io/docs/user-guide/namespaces
        */
-      namespace?: string
+      namespace?: string | core.v1.Namespace;
 
       /**
        * List of objects depended by this object. If ALL objects in the list have been deleted, this
@@ -17620,7 +16861,7 @@ export namespace meta {
        * in this list will point to this controller, with the controller field set to true. There
        * cannot be more than one managing controller.
        */
-      ownerReferences?: meta.v1.OwnerReference[]
+      ownerReferences?: meta.v1.OwnerReference[];
 
       /**
        * An opaque value that represents the internal version of this object that can be used by
@@ -17628,32 +16869,30 @@ export namespace meta {
        * change detection, and the watch operation on a resource or set of resources. Clients must
        * treat these values as opaque and passed unmodified back to the server. They may only be
        * valid for a particular resource or set of resources.
-       * 
+       *
        * Populated by the system. Read-only. Value must be treated as opaque by clients and . More
        * info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency
        */
-      resourceVersion?: string
+      resourceVersion?: string;
 
       /**
        * SelfLink is a URL representing this object. Populated by the system. Read-only.
-       * 
+       *
        * DEPRECATED Kubernetes will stop propagating this field in 1.20 release and the field is
        * planned to be removed in 1.21 release.
        */
-      selfLink?: string
+      selfLink?: string;
 
       /**
        * UID is the unique in time and space value for this object. It is typically generated by the
        * server on successful creation of a resource and is not allowed to change on PUT operations.
-       * 
+       *
        * Populated by the system. Read-only. More info:
        * http://kubernetes.io/docs/user-guide/identifiers#uids
        */
-      uid?: string
-
+      uid?: string;
     }
-
 
     /**
      * OwnerReference contains enough information to let you identify an owning object. An owning
@@ -17664,23 +16903,23 @@ export namespace meta {
       /**
        * API version of the referent.
        */
-      apiVersion: string
+      apiVersion: "meta/v1";
 
       /**
        * Kind of the referent. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind: string
+      kind: "OwnerReference";
 
       /**
        * Name of the referent. More info: http://kubernetes.io/docs/user-guide/identifiers#names
        */
-      name: string
+      name: string;
 
       /**
        * UID of the referent. More info: http://kubernetes.io/docs/user-guide/identifiers#uids
        */
-      uid: string
+      uid: string;
 
       /**
        * If true, AND if the owner has the "foregroundDeletion" finalizer, then the owner cannot be
@@ -17688,13 +16927,12 @@ export namespace meta {
        * this field, a user needs "delete" permission of the owner, otherwise 422 (Unprocessable
        * Entity) will be returned.
        */
-      blockOwnerDeletion?: boolean
+      blockOwnerDeletion?: boolean;
 
       /**
        * If true, this reference points to the managing controller.
        */
-      controller?: boolean
-
+      controller?: boolean;
     }
 
     export function isOwnerReference(o: any): o is OwnerReference {
@@ -17708,15 +16946,13 @@ export namespace meta {
       /**
        * Specifies the target ResourceVersion
        */
-      resourceVersion?: string
+      resourceVersion?: string;
 
       /**
        * Specifies the target UID.
        */
-      uid?: string
-
+      uid?: string;
     }
-
 
     /**
      * ServerAddressByClientCIDR helps the client to determine the server address that they should
@@ -17727,16 +16963,14 @@ export namespace meta {
        * The CIDR with which clients can match their IP to figure out the server address that they
        * should use.
        */
-      clientCIDR: string
+      clientCIDR: string;
 
       /**
        * Address of this server, suitable for a client that matches the above CIDR. This can be a
        * hostname, hostname:port, IP or IP:port.
        */
-      serverAddress: string
-
+      serverAddress: string;
     }
-
 
     /**
      * Status is a return value for calls that don't return other objects.
@@ -17748,19 +16982,19 @@ export namespace meta {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1"
+      apiVersion?: "v1";
 
       /**
        * Suggested HTTP return code for this status, 0 if not set.
        */
-      code?: number
+      code?: number;
 
       /**
        * Extended data associated with the reason.  Each reason may define its own extended details.
        * This field is optional and the data returned is not guaranteed to conform to any schema
        * except that defined by the reason type.
        */
-      details?: meta.v1.StatusDetails
+      details?: meta.v1.StatusDetails;
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -17768,26 +17002,25 @@ export namespace meta {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "Status"
+      kind?: "Status";
 
       /**
        * A human-readable description of the status of this operation.
        */
-      message?: string
+      message?: string;
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      metadata?: meta.v1.ListMeta
+      metadata?: meta.v1.ListMeta;
 
       /**
        * A machine-readable description of why this operation is in the "Failure" status. If this
        * value is empty there is no information available. A Reason clarifies an HTTP status code
        * but does not override it.
        */
-      reason?: string
-
+      reason?: string;
     }
 
     export function isStatus(o: any): o is Status {
@@ -17804,27 +17037,25 @@ export namespace meta {
        * May include dot and postfix notation for nested attributes. Arrays are zero-indexed.
        * Fields may appear more than once in an array of causes due to fields having multiple
        * errors. Optional.
-       * 
+       *
        * Examples:
        *   "name" - the field "name" on the current resource
        *   "items[0].name" - the field "name" on the first array entry in "items"
        */
-      field?: string
+      field?: string;
 
       /**
        * A human-readable description of the cause of the error.  This field may be presented as-is
        * to a reader.
        */
-      message?: string
+      message?: string;
 
       /**
        * A machine-readable description of the cause of the error. If this value is empty there is
        * no information available.
        */
-      reason?: string
-
+      reason?: string;
     }
-
 
     /**
      * StatusDetails is a set of additional properties that MAY be set by the server to provide
@@ -17837,41 +17068,39 @@ export namespace meta {
        * The Causes array includes more details associated with the StatusReason failure. Not all
        * StatusReasons may provide detailed causes.
        */
-      causes?: meta.v1.StatusCause[]
+      causes?: meta.v1.StatusCause[];
 
       /**
        * The group attribute of the resource associated with the status StatusReason.
        */
-      group?: string
+      group?: string;
 
       /**
        * The kind attribute of the resource associated with the status StatusReason. On some
        * operations may differ from the requested resource Kind. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: string
+      kind?: "StatusDetails";
 
       /**
        * The name attribute of the resource associated with the status StatusReason (when there is a
        * single name which can be described).
        */
-      name?: string
+      name?: string;
 
       /**
        * If specified, the time in seconds before the operation should be retried. Some errors may
        * indicate the client must take an alternate action - for those errors this field may
        * indicate how long to wait before taking the alternate action.
        */
-      retryAfterSeconds?: number
+      retryAfterSeconds?: number;
 
       /**
        * UID of the resource. (when there is a single resource which can be described). More info:
        * http://kubernetes.io/docs/user-guide/identifiers#uids
        */
-      uid?: string
-
+      uid?: string;
     }
-
 
     /**
      * Event represents a single event to a watched resource.
@@ -17884,16 +17113,11 @@ export namespace meta {
        *  * If Type is Error: *Status is recommended; other types may make sense
        *    depending on context.
        */
-      object: pkg.runtime.RawExtension
+      object: object;
 
-      
-      type: string
-
+      type: string;
     }
-
-
   }
-
 }
 
 export namespace networking {
@@ -17907,16 +17131,14 @@ export namespace networking {
       /**
        * CIDR is a string representing the IP Block Valid examples are "192.168.1.1/24"
        */
-      cidr: string
+      cidr: string;
 
       /**
        * Except is a slice of CIDRs that should not be included within an IP Block Valid examples
        * are "192.168.1.1/24" Except values will be rejected if they are outside the CIDR range
        */
-      except?: string[]
-
+      except?: string[];
     }
-
 
     /**
      * NetworkPolicy describes what network traffic is allowed for a set of Pods
@@ -17928,7 +17150,7 @@ export namespace networking {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "networking.k8s.io/v1"
+      apiVersion?: "networking.k8s.io/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -17936,23 +17158,24 @@ export namespace networking {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "NetworkPolicy"
+      kind?: "NetworkPolicy";
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Specification of the desired behavior for this NetworkPolicy.
        */
-      spec?: networking.v1.NetworkPolicySpec
-
+      spec?: networking.v1.NetworkPolicySpec;
     }
 
     export function isNetworkPolicy(o: any): o is NetworkPolicy {
-      return o.apiVersion == "networking.k8s.io/v1" && o.kind == "NetworkPolicy";
+      return (
+        o.apiVersion == "networking.k8s.io/v1" && o.kind == "NetworkPolicy"
+      );
     }
 
     /**
@@ -17967,7 +17190,7 @@ export namespace networking {
        * restricted by port). If this field is present and contains at least one item, then this
        * rule allows traffic only if the traffic matches at least one port in the list.
        */
-      ports?: networking.v1.NetworkPolicyPort[]
+      ports?: networking.v1.NetworkPolicyPort[];
 
       /**
        * List of destinations for outgoing traffic of pods selected for this rule. Items in this
@@ -17976,10 +17199,8 @@ export namespace networking {
        * present and contains at least one item, this rule allows traffic only if the traffic
        * matches at least one item in the to list.
        */
-      to?: networking.v1.NetworkPolicyPeer[]
-
+      to?: networking.v1.NetworkPolicyPeer[];
     }
-
 
     /**
      * NetworkPolicyIngressRule describes a particular set of traffic that is allowed to the pods
@@ -17993,7 +17214,7 @@ export namespace networking {
        * and contains at least one item, this rule allows traffic only if the traffic matches at
        * least one item in the from list.
        */
-      from?: networking.v1.NetworkPolicyPeer[]
+      from?: networking.v1.NetworkPolicyPeer[];
 
       /**
        * List of ports which should be made accessible on the pods selected for this rule. Each item
@@ -18002,10 +17223,8 @@ export namespace networking {
        * at least one item, then this rule allows traffic only if the traffic matches at least one
        * port in the list.
        */
-      ports?: networking.v1.NetworkPolicyPort[]
-
+      ports?: networking.v1.NetworkPolicyPort[];
     }
-
 
     /**
      * NetworkPolicyList is a list of NetworkPolicy objects.
@@ -18014,7 +17233,7 @@ export namespace networking {
       /**
        * Items is a list of schema objects.
        */
-      items: networking.v1.NetworkPolicy[]
+      items: networking.v1.NetworkPolicy[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -18022,7 +17241,7 @@ export namespace networking {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "networking.k8s.io/v1"
+      apiVersion?: "networking.k8s.io/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -18030,18 +17249,19 @@ export namespace networking {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "NetworkPolicyList"
+      kind?: "NetworkPolicyList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isNetworkPolicyList(o: any): o is NetworkPolicyList {
-      return o.apiVersion == "networking.k8s.io/v1" && o.kind == "NetworkPolicyList";
+      return (
+        o.apiVersion == "networking.k8s.io/v1" && o.kind == "NetworkPolicyList"
+      );
     }
 
     /**
@@ -18053,30 +17273,28 @@ export namespace networking {
        * IPBlock defines policy on a particular IPBlock. If this field is set then neither of the
        * other fields can be.
        */
-      ipBlock?: networking.v1.IPBlock
+      ipBlock?: networking.v1.IPBlock;
 
       /**
        * Selects Namespaces using cluster-scoped labels. This field follows standard label selector
        * semantics; if present but empty, it selects all namespaces.
-       * 
+       *
        * If PodSelector is also set, then the NetworkPolicyPeer as a whole selects the Pods matching
        * PodSelector in the Namespaces selected by NamespaceSelector. Otherwise it selects all Pods
        * in the Namespaces selected by NamespaceSelector.
        */
-      namespaceSelector?: meta.v1.LabelSelector
+      namespaceSelector?: meta.v1.LabelSelector;
 
       /**
        * This is a label selector which selects Pods. This field follows standard label selector
        * semantics; if present but empty, it selects all pods.
-       * 
+       *
        * If NamespaceSelector is also set, then the NetworkPolicyPeer as a whole selects the Pods
        * matching PodSelector in the Namespaces selected by NamespaceSelector. Otherwise it selects
        * the Pods matching PodSelector in the policy's own Namespace.
        */
-      podSelector?: meta.v1.LabelSelector
-
+      podSelector?: meta.v1.LabelSelector;
     }
-
 
     /**
      * NetworkPolicyPort describes a port to allow traffic on
@@ -18086,16 +17304,14 @@ export namespace networking {
        * The port on the given protocol. This can either be a numerical or named port on a pod. If
        * this field is not provided, this matches all port names and numbers.
        */
-      port?: number | string
+      port?: number | string;
 
       /**
        * The protocol (TCP, UDP, or SCTP) which traffic must match. If not specified, this field
        * defaults to TCP.
        */
-      protocol?: string
-
+      protocol?: string;
     }
-
 
     /**
      * NetworkPolicySpec provides the specification of a NetworkPolicy
@@ -18108,7 +17324,7 @@ export namespace networking {
        * is NOT optional and follows standard label selector semantics. An empty podSelector matches
        * all pods in this namespace.
        */
-      podSelector: meta.v1.LabelSelector
+      podSelector: meta.v1.LabelSelector;
 
       /**
        * List of egress rules to be applied to the selected pods. Outgoing traffic is allowed if
@@ -18118,7 +17334,7 @@ export namespace networking {
        * NetworkPolicy limits all outgoing traffic (and serves solely to ensure that the pods it
        * selects are isolated by default). This field is beta-level in 1.8
        */
-      egress?: networking.v1.NetworkPolicyEgressRule[]
+      egress?: networking.v1.NetworkPolicyEgressRule[];
 
       /**
        * List of ingress rules to be applied to the selected pods. Traffic is allowed to a pod if
@@ -18128,7 +17344,7 @@ export namespace networking {
        * the pod. If this field is empty then this NetworkPolicy does not allow any traffic (and
        * serves solely to ensure that the pods it selects are isolated by default)
        */
-      ingress?: networking.v1.NetworkPolicyIngressRule[]
+      ingress?: networking.v1.NetworkPolicyIngressRule[];
 
       /**
        * List of rule types that the NetworkPolicy relates to. Valid options are "Ingress",
@@ -18141,13 +17357,9 @@ export namespace networking {
        * (since such a policy would not include an Egress section and would otherwise default to
        * just [ "Ingress" ]). This field is beta-level in 1.8
        */
-      policyTypes?: string[]
-
+      policyTypes?: string[];
     }
-
-
   }
-
   export namespace v1beta1 {
     /**
      * HTTPIngressPath associates a path regex with a backend. Incoming urls matching the path are
@@ -18157,7 +17369,7 @@ export namespace networking {
       /**
        * Backend defines the referenced service endpoint to which the traffic will be forwarded to.
        */
-      backend: networking.v1beta1.IngressBackend
+      backend: networking.v1beta1.IngressBackend;
 
       /**
        * Path is an extended POSIX regex as defined by IEEE Std 1003.1, (i.e this follows the
@@ -18166,10 +17378,8 @@ export namespace networking {
        * as defined by RFC 3986. Paths must begin with a '/'. If unspecified, the path defaults to a
        * catch all sending traffic to the backend.
        */
-      path?: string
-
+      path?: string;
     }
-
 
     /**
      * HTTPIngressRuleValue is a list of http selectors pointing to backends. In the example:
@@ -18181,10 +17391,8 @@ export namespace networking {
       /**
        * A collection of paths that map requests to backends.
        */
-      paths: networking.v1beta1.HTTPIngressPath[]
-
+      paths: networking.v1beta1.HTTPIngressPath[];
     }
-
 
     /**
      * Ingress is a collection of rules that allow inbound connections to reach the endpoints
@@ -18198,7 +17406,7 @@ export namespace networking {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "networking.k8s.io/v1beta1"
+      apiVersion?: "networking.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -18206,20 +17414,19 @@ export namespace networking {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "Ingress"
+      kind?: "Ingress";
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Spec is the desired state of the Ingress. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
        */
-      spec?: networking.v1beta1.IngressSpec
-
+      spec?: networking.v1beta1.IngressSpec;
     }
 
     export function isIngress(o: any): o is Ingress {
@@ -18233,15 +17440,13 @@ export namespace networking {
       /**
        * Specifies the name of the referenced service.
        */
-      serviceName: string
+      serviceName: string;
 
       /**
        * Specifies the port of the referenced service.
        */
-      servicePort: number | string
-
+      servicePort: number | string;
     }
-
 
     /**
      * IngressList is a collection of Ingress.
@@ -18250,7 +17455,7 @@ export namespace networking {
       /**
        * Items is the list of Ingress.
        */
-      items: networking.v1beta1.Ingress[]
+      items: networking.v1beta1.Ingress[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -18258,7 +17463,7 @@ export namespace networking {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "networking.k8s.io/v1beta1"
+      apiVersion?: "networking.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -18266,18 +17471,19 @@ export namespace networking {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "IngressList"
+      kind?: "IngressList";
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isIngressList(o: any): o is IngressList {
-      return o.apiVersion == "networking.k8s.io/v1beta1" && o.kind == "IngressList";
+      return (
+        o.apiVersion == "networking.k8s.io/v1beta1" && o.kind == "IngressList"
+      );
     }
 
     /**
@@ -18298,13 +17504,10 @@ export namespace networking {
        * the IngressRuleValue. If the host is unspecified, the Ingress routes all traffic based on
        * the specified IngressRuleValue.
        */
-      host?: string
+      host?: string;
 
-      
-      http?: networking.v1beta1.HTTPIngressRuleValue
-
+      http?: networking.v1beta1.HTTPIngressRuleValue;
     }
-
 
     /**
      * IngressSpec describes the Ingress the user wishes to exist.
@@ -18315,13 +17518,13 @@ export namespace networking {
        * 'backend' or 'rules' must be specified. This field is optional to allow the loadbalancer
        * controller or defaulting logic to specify a global default.
        */
-      backend?: networking.v1beta1.IngressBackend
+      backend?: networking.v1beta1.IngressBackend;
 
       /**
        * A list of host rules used to configure the Ingress. If unspecified, or no rule matches, all
        * traffic is sent to the default backend.
        */
-      rules?: networking.v1beta1.IngressRule[]
+      rules?: networking.v1beta1.IngressRule[];
 
       /**
        * TLS configuration. Currently the Ingress only supports a single TLS port, 443. If multiple
@@ -18329,10 +17532,8 @@ export namespace networking {
        * according to the hostname specified through the SNI TLS extension, if the ingress
        * controller fulfilling the ingress supports SNI.
        */
-      tls?: networking.v1beta1.IngressTLS[]
-
+      tls?: networking.v1beta1.IngressTLS[];
     }
-
 
     /**
      * IngressTLS describes the transport layer security associated with an Ingress.
@@ -18343,7 +17544,7 @@ export namespace networking {
        * match the name/s used in the tlsSecret. Defaults to the wildcard host setting for the
        * loadbalancer controller fulfilling this Ingress, if left unspecified.
        */
-      hosts?: string[]
+      hosts?: string[];
 
       /**
        * SecretName is the name of the secret used to terminate SSL traffic on 443. Field is left
@@ -18351,13 +17552,9 @@ export namespace networking {
        * conflicts with the "Host" header field used by an IngressRule, the SNI host is used for
        * termination and value of the Host header is used for routing.
        */
-      secretName?: string
-
+      secretName?: string;
     }
-
-
   }
-
 }
 
 export namespace node {
@@ -18369,10 +17566,8 @@ export namespace node {
       /**
        * PodFixed represents the fixed resource overhead associated with running a pod.
        */
-      podFixed?: object
-
+      podFixed?: object;
     }
-
 
     /**
      * RuntimeClass defines a class of container runtime supported in the cluster. The RuntimeClass
@@ -18387,7 +17582,7 @@ export namespace node {
        * Specification of the RuntimeClass More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
        */
-      spec: node.v1alpha1.RuntimeClassSpec
+      spec: node.v1alpha1.RuntimeClassSpec;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -18395,7 +17590,7 @@ export namespace node {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "node.k8s.io/v1alpha1"
+      apiVersion?: "node.k8s.io/v1alpha1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -18403,14 +17598,13 @@ export namespace node {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "RuntimeClass"
+      kind?: "RuntimeClass";
 
       /**
        * More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
-
+      metadata?: meta.v1.ObjectMeta;
     }
 
     export function isRuntimeClass(o: any): o is RuntimeClass {
@@ -18424,7 +17618,7 @@ export namespace node {
       /**
        * Items is a list of schema objects.
        */
-      items: node.v1alpha1.RuntimeClass[]
+      items: node.v1alpha1.RuntimeClass[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -18432,7 +17626,7 @@ export namespace node {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "node.k8s.io/v1alpha1"
+      apiVersion?: "node.k8s.io/v1alpha1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -18440,18 +17634,19 @@ export namespace node {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "RuntimeClassList"
+      kind?: "RuntimeClassList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isRuntimeClassList(o: any): o is RuntimeClassList {
-      return o.apiVersion == "node.k8s.io/v1alpha1" && o.kind == "RuntimeClassList";
+      return (
+        o.apiVersion == "node.k8s.io/v1alpha1" && o.kind == "RuntimeClassList"
+      );
     }
 
     /**
@@ -18470,7 +17665,7 @@ export namespace node {
        * to run the containers in a pod. The RuntimeHandler must conform to the DNS Label (RFC 1123)
        * requirements and is immutable.
        */
-      runtimeHandler: string
+      runtimeHandler: string;
 
       /**
        * Overhead represents the resource overhead associated with running a pod for a given
@@ -18479,17 +17674,15 @@ export namespace node {
        * alpha-level as of Kubernetes v1.15, and is only honored by servers that enable the
        * PodOverhead feature.
        */
-      overhead?: node.v1alpha1.Overhead
+      overhead?: node.v1alpha1.Overhead;
 
       /**
        * Scheduling holds the scheduling constraints to ensure that pods running with this
        * RuntimeClass are scheduled to nodes that support it. If scheduling is nil, this
        * RuntimeClass is assumed to be supported by all nodes.
        */
-      scheduling?: node.v1alpha1.Scheduling
-
+      scheduling?: node.v1alpha1.Scheduling;
     }
-
 
     /**
      * Scheduling specifies the scheduling constraints for nodes supporting a RuntimeClass.
@@ -18501,20 +17694,16 @@ export namespace node {
        * RuntimeClass nodeSelector is merged with a pod's existing nodeSelector. Any conflicts will
        * cause the pod to be rejected in admission.
        */
-      nodeSelector?: {[key: string]: string}
+      nodeSelector?: { [key: string]: string };
 
       /**
        * tolerations are appended (excluding duplicates) to pods running with this RuntimeClass
        * during admission, effectively unioning the set of nodes tolerated by the pod and the
        * RuntimeClass.
        */
-      tolerations?: core.v1.Toleration[]
-
+      tolerations?: core.v1.Toleration[];
     }
-
-
   }
-
   export namespace v1beta1 {
     /**
      * Overhead structure represents the resource overhead associated with running a pod.
@@ -18523,10 +17712,8 @@ export namespace node {
       /**
        * PodFixed represents the fixed resource overhead associated with running a pod.
        */
-      podFixed?: object
-
+      podFixed?: object;
     }
-
 
     /**
      * RuntimeClass defines a class of container runtime supported in the cluster. The RuntimeClass
@@ -18546,7 +17733,7 @@ export namespace node {
        * containers in a pod. The Handler must conform to the DNS Label (RFC 1123) requirements, and
        * is immutable.
        */
-      handler: string
+      handler: string;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -18554,7 +17741,7 @@ export namespace node {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "node.k8s.io/v1beta1"
+      apiVersion?: "node.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -18562,13 +17749,13 @@ export namespace node {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "RuntimeClass"
+      kind?: "RuntimeClass";
 
       /**
        * More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Overhead represents the resource overhead associated with running a pod for a given
@@ -18577,15 +17764,14 @@ export namespace node {
        * alpha-level as of Kubernetes v1.15, and is only honored by servers that enable the
        * PodOverhead feature.
        */
-      overhead?: node.v1beta1.Overhead
+      overhead?: node.v1beta1.Overhead;
 
       /**
        * Scheduling holds the scheduling constraints to ensure that pods running with this
        * RuntimeClass are scheduled to nodes that support it. If scheduling is nil, this
        * RuntimeClass is assumed to be supported by all nodes.
        */
-      scheduling?: node.v1beta1.Scheduling
-
+      scheduling?: node.v1beta1.Scheduling;
     }
 
     export function isRuntimeClass(o: any): o is RuntimeClass {
@@ -18599,7 +17785,7 @@ export namespace node {
       /**
        * Items is a list of schema objects.
        */
-      items: node.v1beta1.RuntimeClass[]
+      items: node.v1beta1.RuntimeClass[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -18607,7 +17793,7 @@ export namespace node {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "node.k8s.io/v1beta1"
+      apiVersion?: "node.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -18615,18 +17801,19 @@ export namespace node {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "RuntimeClassList"
+      kind?: "RuntimeClassList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isRuntimeClassList(o: any): o is RuntimeClassList {
-      return o.apiVersion == "node.k8s.io/v1beta1" && o.kind == "RuntimeClassList";
+      return (
+        o.apiVersion == "node.k8s.io/v1beta1" && o.kind == "RuntimeClassList"
+      );
     }
 
     /**
@@ -18639,20 +17826,16 @@ export namespace node {
        * RuntimeClass nodeSelector is merged with a pod's existing nodeSelector. Any conflicts will
        * cause the pod to be rejected in admission.
        */
-      nodeSelector?: {[key: string]: string}
+      nodeSelector?: { [key: string]: string };
 
       /**
        * tolerations are appended (excluding duplicates) to pods running with this RuntimeClass
        * during admission, effectively unioning the set of nodes tolerated by the pod and the
        * RuntimeClass.
        */
-      tolerations?: core.v1.Toleration[]
-
+      tolerations?: core.v1.Toleration[];
     }
-
-
   }
-
 }
 
 export namespace pkg {
@@ -18661,38 +17844,25 @@ export namespace pkg {
      * Info contains versioning information. how we'll want to distribute that information.
      */
     export interface Info {
-      
-      buildDate: string
+      buildDate: string;
 
-      
-      compiler: string
+      compiler: string;
 
-      
-      gitCommit: string
+      gitCommit: string;
 
-      
-      gitTreeState: string
+      gitTreeState: string;
 
-      
-      gitVersion: string
+      gitVersion: string;
 
-      
-      goVersion: string
+      goVersion: string;
 
-      
-      major: string
+      major: string;
 
-      
-      minor: string
+      minor: string;
 
-      
-      platform: string
-
+      platform: string;
     }
-
-
   }
-
 }
 
 export namespace policy {
@@ -18704,10 +17874,8 @@ export namespace policy {
       /**
        * Name is the registered name of the CSI driver
        */
-      name: string
-
+      name: string;
     }
-
 
     /**
      * AllowedFlexVolume represents a single Flexvolume that is allowed to be used.
@@ -18716,10 +17884,8 @@ export namespace policy {
       /**
        * driver is the name of the Flexvolume driver.
        */
-      driver: string
-
+      driver: string;
     }
-
 
     /**
      * AllowedHostPath defines the host volume conditions that will be enabled by a policy for pods
@@ -18729,20 +17895,18 @@ export namespace policy {
       /**
        * pathPrefix is the path prefix that the host volume must match. It does not support `*`.
        * Trailing slashes are trimmed when validating the path prefix with a host path.
-       * 
+       *
        * Examples: `/foo` would allow `/foo`, `/foo/` and `/foo/bar` `/foo` would not allow `/food`
        * or `/etc/foo`
        */
-      pathPrefix?: string
+      pathPrefix?: string;
 
       /**
        * when set to true, will allow host volumes matching the pathPrefix only if all volume mounts
        * are readOnly.
        */
-      readOnly?: boolean
-
+      readOnly?: boolean;
     }
-
 
     /**
      * Eviction evicts a pod from its node subject to certain policies and safety constraints. This
@@ -18756,12 +17920,12 @@ export namespace policy {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: string
+      apiVersion?: "policy/v1beta1";
 
       /**
        * DeleteOptions may be provided
        */
-      deleteOptions?: meta.v1.DeleteOptions
+      deleteOptions?: meta.v1.DeleteOptions;
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -18769,13 +17933,12 @@ export namespace policy {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: string
+      kind?: "Eviction";
 
       /**
        * ObjectMeta describes the pod that is being evicted.
        */
-      metadata?: meta.v1.ObjectMeta
-
+      metadata?: meta.v1.ObjectMeta;
     }
 
     export function isEviction(o: any): o is Eviction {
@@ -18790,15 +17953,13 @@ export namespace policy {
        * ranges are the allowed ranges of fs groups.  If you would like to force a single fs group
        * then supply a single range with the same start and end. Required for MustRunAs.
        */
-      ranges?: policy.v1beta1.IDRange[]
+      ranges?: policy.v1beta1.IDRange[];
 
       /**
        * rule is the strategy that will dictate what FSGroup is used in the SecurityContext.
        */
-      rule?: string
-
+      rule?: string;
     }
-
 
     /**
      * HostPortRange defines a range of host ports that will be enabled by a policy for pods to use.
@@ -18808,15 +17969,13 @@ export namespace policy {
       /**
        * max is the end of the range, inclusive.
        */
-      max: number
+      max: number;
 
       /**
        * min is the start of the range, inclusive.
        */
-      min: number
-
+      min: number;
     }
-
 
     /**
      * IDRange provides a min/max of an allowed range of IDs.
@@ -18825,15 +17984,13 @@ export namespace policy {
       /**
        * max is the end of the range, inclusive.
        */
-      max: number
+      max: number;
 
       /**
        * min is the start of the range, inclusive.
        */
-      min: number
-
+      min: number;
     }
-
 
     /**
      * PodDisruptionBudget is an object to define the max disruption that can be caused to a
@@ -18846,7 +18003,7 @@ export namespace policy {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "policy/v1beta1"
+      apiVersion?: "policy/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -18854,28 +18011,27 @@ export namespace policy {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "PodDisruptionBudget"
+      kind?: "PodDisruptionBudget";
 
-      
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Specification of the desired behavior of the PodDisruptionBudget.
        */
-      spec?: policy.v1beta1.PodDisruptionBudgetSpec
-
+      spec?: policy.v1beta1.PodDisruptionBudgetSpec;
     }
 
     export function isPodDisruptionBudget(o: any): o is PodDisruptionBudget {
-      return o.apiVersion == "policy/v1beta1" && o.kind == "PodDisruptionBudget";
+      return (
+        o.apiVersion == "policy/v1beta1" && o.kind == "PodDisruptionBudget"
+      );
     }
 
     /**
      * PodDisruptionBudgetList is a collection of PodDisruptionBudgets.
      */
     export interface PodDisruptionBudgetList {
-      
-      items: policy.v1beta1.PodDisruptionBudget[]
+      items: policy.v1beta1.PodDisruptionBudget[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -18883,7 +18039,7 @@ export namespace policy {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "policy/v1beta1"
+      apiVersion?: "policy/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -18891,15 +18047,17 @@ export namespace policy {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "PodDisruptionBudgetList"
+      kind?: "PodDisruptionBudgetList";
 
-      
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
-    export function isPodDisruptionBudgetList(o: any): o is PodDisruptionBudgetList {
-      return o.apiVersion == "policy/v1beta1" && o.kind == "PodDisruptionBudgetList";
+    export function isPodDisruptionBudgetList(
+      o: any
+    ): o is PodDisruptionBudgetList {
+      return (
+        o.apiVersion == "policy/v1beta1" && o.kind == "PodDisruptionBudgetList"
+      );
     }
 
     /**
@@ -18912,22 +18070,20 @@ export namespace policy {
        * can prevent all voluntary evictions by specifying 0. This is a mutually exclusive setting
        * with "minAvailable".
        */
-      maxUnavailable?: number | string
+      maxUnavailable?: number | string;
 
       /**
        * An eviction is allowed if at least "minAvailable" pods selected by "selector" will still be
        * available after the eviction, i.e. even in the absence of the evicted pod.  So for example
        * you can prevent all voluntary evictions by specifying "100%".
        */
-      minAvailable?: number | string
+      minAvailable?: number | string;
 
       /**
        * Label query over pods whose evictions are managed by the disruption budget.
        */
-      selector?: meta.v1.LabelSelector
-
+      selector?: meta.v1.LabelSelector;
     }
-
 
     /**
      * PodSecurityPolicy governs the ability to make requests that affect the Security Context that
@@ -18940,7 +18096,7 @@ export namespace policy {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "policy/v1beta1"
+      apiVersion?: "policy/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -18948,19 +18104,18 @@ export namespace policy {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "PodSecurityPolicy"
+      kind?: "PodSecurityPolicy";
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * spec defines the policy enforced.
        */
-      spec?: policy.v1beta1.PodSecurityPolicySpec
-
+      spec?: policy.v1beta1.PodSecurityPolicySpec;
     }
 
     export function isPodSecurityPolicy(o: any): o is PodSecurityPolicy {
@@ -18974,7 +18129,7 @@ export namespace policy {
       /**
        * items is a list of schema objects.
        */
-      items: policy.v1beta1.PodSecurityPolicy[]
+      items: policy.v1beta1.PodSecurityPolicy[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -18982,7 +18137,7 @@ export namespace policy {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "policy/v1beta1"
+      apiVersion?: "policy/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -18990,18 +18145,21 @@ export namespace policy {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "PodSecurityPolicyList"
+      kind?: "PodSecurityPolicyList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
-    export function isPodSecurityPolicyList(o: any): o is PodSecurityPolicyList {
-      return o.apiVersion == "policy/v1beta1" && o.kind == "PodSecurityPolicyList";
+    export function isPodSecurityPolicyList(
+      o: any
+    ): o is PodSecurityPolicyList {
+      return (
+        o.apiVersion == "policy/v1beta1" && o.kind == "PodSecurityPolicyList"
+      );
     }
 
     /**
@@ -19011,29 +18169,29 @@ export namespace policy {
       /**
        * fsGroup is the strategy that will dictate what fs group is used by the SecurityContext.
        */
-      fsGroup: policy.v1beta1.FSGroupStrategyOptions
+      fsGroup: policy.v1beta1.FSGroupStrategyOptions;
 
       /**
        * runAsUser is the strategy that will dictate the allowable RunAsUser values that may be set.
        */
-      runAsUser: policy.v1beta1.RunAsUserStrategyOptions
+      runAsUser: policy.v1beta1.RunAsUserStrategyOptions;
 
       /**
        * seLinux is the strategy that will dictate the allowable labels that may be set.
        */
-      seLinux: policy.v1beta1.SELinuxStrategyOptions
+      seLinux: policy.v1beta1.SELinuxStrategyOptions;
 
       /**
        * supplementalGroups is the strategy that will dictate what supplemental groups are used by
        * the SecurityContext.
        */
-      supplementalGroups: policy.v1beta1.SupplementalGroupsStrategyOptions
+      supplementalGroups: policy.v1beta1.SupplementalGroupsStrategyOptions;
 
       /**
        * allowPrivilegeEscalation determines if a pod can request to allow privilege escalation. If
        * unspecified, defaults to true.
        */
-      allowPrivilegeEscalation?: boolean
+      allowPrivilegeEscalation?: boolean;
 
       /**
        * AllowedCSIDrivers is a whitelist of inline CSI drivers that must be explicitly set to be
@@ -19041,45 +18199,45 @@ export namespace policy {
        * inline ephemeral volumes. This is an alpha field, and is only honored if the API server
        * enables the CSIInlineVolume feature gate.
        */
-      allowedCSIDrivers?: policy.v1beta1.AllowedCSIDriver[]
+      allowedCSIDrivers?: policy.v1beta1.AllowedCSIDriver[];
 
       /**
        * allowedCapabilities is a list of capabilities that can be requested to add to the
        * container. Capabilities in this field may be added at the pod author's discretion. You must
        * not list a capability in both allowedCapabilities and requiredDropCapabilities.
        */
-      allowedCapabilities?: string[]
+      allowedCapabilities?: string[];
 
       /**
        * allowedFlexVolumes is a whitelist of allowed Flexvolumes.  Empty or nil indicates that all
        * Flexvolumes may be used.  This parameter is effective only when the usage of the
        * Flexvolumes is allowed in the "volumes" field.
        */
-      allowedFlexVolumes?: policy.v1beta1.AllowedFlexVolume[]
+      allowedFlexVolumes?: policy.v1beta1.AllowedFlexVolume[];
 
       /**
        * allowedHostPaths is a white list of allowed host paths. Empty indicates that all host paths
        * may be used.
        */
-      allowedHostPaths?: policy.v1beta1.AllowedHostPath[]
+      allowedHostPaths?: policy.v1beta1.AllowedHostPath[];
 
       /**
        * AllowedProcMountTypes is a whitelist of allowed ProcMountTypes. Empty or nil indicates that
        * only the DefaultProcMountType may be used. This requires the ProcMountType feature flag to
        * be enabled.
        */
-      allowedProcMountTypes?: string[]
+      allowedProcMountTypes?: string[];
 
       /**
        * allowedUnsafeSysctls is a list of explicitly allowed unsafe sysctls, defaults to none. Each
        * entry is either a plain sysctl name or ends in "*" in which case it is considered as a
        * prefix of allowed sysctls. Single * means all unsafe sysctls are allowed. Kubelet has to
        * whitelist all allowed unsafe sysctls explicitly to avoid rejection.
-       * 
+       *
        * Examples: e.g. "foo/*" allows "foo/bar", "foo/baz", etc. e.g. "foo.*" allows "foo.bar",
        * "foo.baz", etc.
        */
-      allowedUnsafeSysctls?: string[]
+      allowedUnsafeSysctls?: string[];
 
       /**
        * defaultAddCapabilities is the default set of capabilities that will be added to the
@@ -19087,48 +18245,48 @@ export namespace policy {
        * capability in both defaultAddCapabilities and requiredDropCapabilities. Capabilities added
        * here are implicitly allowed, and need not be included in the allowedCapabilities list.
        */
-      defaultAddCapabilities?: string[]
+      defaultAddCapabilities?: string[];
 
       /**
        * defaultAllowPrivilegeEscalation controls the default setting for whether a process can gain
        * more privileges than its parent process.
        */
-      defaultAllowPrivilegeEscalation?: boolean
+      defaultAllowPrivilegeEscalation?: boolean;
 
       /**
        * forbiddenSysctls is a list of explicitly forbidden sysctls, defaults to none. Each entry is
        * either a plain sysctl name or ends in "*" in which case it is considered as a prefix of
        * forbidden sysctls. Single * means all sysctls are forbidden.
-       * 
+       *
        * Examples: e.g. "foo/*" forbids "foo/bar", "foo/baz", etc. e.g. "foo.*" forbids "foo.bar",
        * "foo.baz", etc.
        */
-      forbiddenSysctls?: string[]
+      forbiddenSysctls?: string[];
 
       /**
        * hostIPC determines if the policy allows the use of HostIPC in the pod spec.
        */
-      hostIPC?: boolean
+      hostIPC?: boolean;
 
       /**
        * hostNetwork determines if the policy allows the use of HostNetwork in the pod spec.
        */
-      hostNetwork?: boolean
+      hostNetwork?: boolean;
 
       /**
        * hostPID determines if the policy allows the use of HostPID in the pod spec.
        */
-      hostPID?: boolean
+      hostPID?: boolean;
 
       /**
        * hostPorts determines which host port ranges are allowed to be exposed.
        */
-      hostPorts?: policy.v1beta1.HostPortRange[]
+      hostPorts?: policy.v1beta1.HostPortRange[];
 
       /**
        * privileged determines if a pod can request to be run as privileged.
        */
-      privileged?: boolean
+      privileged?: boolean;
 
       /**
        * readOnlyRootFilesystem when set to true will force containers to run with a read only root
@@ -19136,36 +18294,34 @@ export namespace policy {
        * system the PSP should deny the pod. If set to false the container may run with a read only
        * root file system if it wishes but it will not be forced to.
        */
-      readOnlyRootFilesystem?: boolean
+      readOnlyRootFilesystem?: boolean;
 
       /**
        * requiredDropCapabilities are the capabilities that will be dropped from the container.
        * These are required to be dropped and cannot be added.
        */
-      requiredDropCapabilities?: string[]
+      requiredDropCapabilities?: string[];
 
       /**
        * RunAsGroup is the strategy that will dictate the allowable RunAsGroup values that may be
        * set. If this field is omitted, the pod's RunAsGroup can take any value. This field requires
        * the RunAsGroup feature gate to be enabled.
        */
-      runAsGroup?: policy.v1beta1.RunAsGroupStrategyOptions
+      runAsGroup?: policy.v1beta1.RunAsGroupStrategyOptions;
 
       /**
        * runtimeClass is the strategy that will dictate the allowable RuntimeClasses for a pod. If
        * this field is omitted, the pod's runtimeClassName field is unrestricted. Enforcement of
        * this field depends on the RuntimeClass feature gate being enabled.
        */
-      runtimeClass?: policy.v1beta1.RuntimeClassStrategyOptions
+      runtimeClass?: policy.v1beta1.RuntimeClassStrategyOptions;
 
       /**
        * volumes is a white list of allowed volume plugins. Empty indicates that no volumes may be
        * used. To allow all volumes you may use '*'.
        */
-      volumes?: string[]
-
+      volumes?: string[];
     }
-
 
     /**
      * RunAsGroupStrategyOptions defines the strategy type and any options used to create the
@@ -19175,16 +18331,14 @@ export namespace policy {
       /**
        * rule is the strategy that will dictate the allowable RunAsGroup values that may be set.
        */
-      rule: string
+      rule: string;
 
       /**
        * ranges are the allowed ranges of gids that may be used. If you would like to force a single
        * gid then supply a single range with the same start and end. Required for MustRunAs.
        */
-      ranges?: policy.v1beta1.IDRange[]
-
+      ranges?: policy.v1beta1.IDRange[];
     }
-
 
     /**
      * RunAsUserStrategyOptions defines the strategy type and any options used to create the
@@ -19194,16 +18348,14 @@ export namespace policy {
       /**
        * rule is the strategy that will dictate the allowable RunAsUser values that may be set.
        */
-      rule: string
+      rule: string;
 
       /**
        * ranges are the allowed ranges of uids that may be used. If you would like to force a single
        * uid then supply a single range with the same start and end. Required for MustRunAs.
        */
-      ranges?: policy.v1beta1.IDRange[]
-
+      ranges?: policy.v1beta1.IDRange[];
     }
-
 
     /**
      * RuntimeClassStrategyOptions define the strategy that will dictate the allowable
@@ -19215,16 +18367,14 @@ export namespace policy {
        * pod. A value of "*" means that any RuntimeClass name is allowed, and must be the only item
        * in the list. An empty list requires the RuntimeClassName field to be unset.
        */
-      allowedRuntimeClassNames: string[]
+      allowedRuntimeClassNames: string[];
 
       /**
        * defaultRuntimeClassName is the default RuntimeClassName to set on the pod. The default MUST
        * be allowed by the allowedRuntimeClassNames list. A value of nil does not mutate the Pod.
        */
-      defaultRuntimeClassName?: string
-
+      defaultRuntimeClassName?: string;
     }
-
 
     /**
      * SELinuxStrategyOptions defines the strategy type and any options used to create the strategy.
@@ -19233,16 +18383,14 @@ export namespace policy {
       /**
        * rule is the strategy that will dictate the allowable labels that may be set.
        */
-      rule: string
+      rule: string;
 
       /**
        * seLinuxOptions required to run as; required for MustRunAs More info:
        * https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
        */
-      seLinuxOptions?: core.v1.SELinuxOptions
-
+      seLinuxOptions?: core.v1.SELinuxOptions;
     }
-
 
     /**
      * SupplementalGroupsStrategyOptions defines the strategy type and options used to create the
@@ -19254,19 +18402,15 @@ export namespace policy {
        * supplemental group then supply a single range with the same start and end. Required for
        * MustRunAs.
        */
-      ranges?: policy.v1beta1.IDRange[]
+      ranges?: policy.v1beta1.IDRange[];
 
       /**
        * rule is the strategy that will dictate what supplemental groups is used in the
        * SecurityContext.
        */
-      rule?: string
-
+      rule?: string;
     }
-
-
   }
-
 }
 
 export namespace rbac {
@@ -19280,10 +18424,8 @@ export namespace rbac {
        * create the rules. If any of the selectors match, then the ClusterRole's permissions will be
        * added
        */
-      clusterRoleSelectors?: meta.v1.LabelSelector[]
-
+      clusterRoleSelectors?: meta.v1.LabelSelector[];
     }
-
 
     /**
      * ClusterRole is a cluster level, logical grouping of PolicyRules that can be referenced as a
@@ -19295,7 +18437,7 @@ export namespace rbac {
        * ClusterRole. If AggregationRule is set, then the Rules are controller managed and direct
        * changes to Rules will be stomped by the controller.
        */
-      aggregationRule?: rbac.v1.AggregationRule
+      aggregationRule?: rbac.v1.AggregationRule;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -19303,7 +18445,7 @@ export namespace rbac {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "rbac.authorization.k8s.io/v1"
+      apiVersion?: "rbac.authorization.k8s.io/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -19311,22 +18453,24 @@ export namespace rbac {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ClusterRole"
+      kind?: "ClusterRole";
 
       /**
        * Standard object's metadata.
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Rules holds all the PolicyRules for this ClusterRole
        */
-      rules?: rbac.v1.PolicyRule[]
-
+      rules?: rbac.v1.PolicyRule[];
     }
 
     export function isClusterRole(o: any): o is ClusterRole {
-      return o.apiVersion == "rbac.authorization.k8s.io/v1" && o.kind == "ClusterRole";
+      return (
+        o.apiVersion == "rbac.authorization.k8s.io/v1" &&
+        o.kind == "ClusterRole"
+      );
     }
 
     /**
@@ -19338,7 +18482,7 @@ export namespace rbac {
        * RoleRef can only reference a ClusterRole in the global namespace. If the RoleRef cannot be
        * resolved, the Authorizer must return an error.
        */
-      roleRef: rbac.v1.RoleRef
+      roleRef: rbac.v1.RoleRef;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -19346,7 +18490,7 @@ export namespace rbac {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "rbac.authorization.k8s.io/v1"
+      apiVersion?: "rbac.authorization.k8s.io/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -19354,22 +18498,24 @@ export namespace rbac {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ClusterRoleBinding"
+      kind?: "ClusterRoleBinding";
 
       /**
        * Standard object's metadata.
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Subjects holds references to the objects the role applies to.
        */
-      subjects?: rbac.v1.Subject[]
-
+      subjects?: rbac.v1.Subject[];
     }
 
     export function isClusterRoleBinding(o: any): o is ClusterRoleBinding {
-      return o.apiVersion == "rbac.authorization.k8s.io/v1" && o.kind == "ClusterRoleBinding";
+      return (
+        o.apiVersion == "rbac.authorization.k8s.io/v1" &&
+        o.kind == "ClusterRoleBinding"
+      );
     }
 
     /**
@@ -19379,7 +18525,7 @@ export namespace rbac {
       /**
        * Items is a list of ClusterRoleBindings
        */
-      items: rbac.v1.ClusterRoleBinding[]
+      items: rbac.v1.ClusterRoleBinding[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -19387,7 +18533,7 @@ export namespace rbac {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "rbac.authorization.k8s.io/v1"
+      apiVersion?: "rbac.authorization.k8s.io/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -19395,17 +18541,21 @@ export namespace rbac {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ClusterRoleBindingList"
+      kind?: "ClusterRoleBindingList";
 
       /**
        * Standard object's metadata.
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
-    export function isClusterRoleBindingList(o: any): o is ClusterRoleBindingList {
-      return o.apiVersion == "rbac.authorization.k8s.io/v1" && o.kind == "ClusterRoleBindingList";
+    export function isClusterRoleBindingList(
+      o: any
+    ): o is ClusterRoleBindingList {
+      return (
+        o.apiVersion == "rbac.authorization.k8s.io/v1" &&
+        o.kind == "ClusterRoleBindingList"
+      );
     }
 
     /**
@@ -19415,7 +18565,7 @@ export namespace rbac {
       /**
        * Items is a list of ClusterRoles
        */
-      items: rbac.v1.ClusterRole[]
+      items: rbac.v1.ClusterRole[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -19423,7 +18573,7 @@ export namespace rbac {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "rbac.authorization.k8s.io/v1"
+      apiVersion?: "rbac.authorization.k8s.io/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -19431,17 +18581,19 @@ export namespace rbac {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ClusterRoleList"
+      kind?: "ClusterRoleList";
 
       /**
        * Standard object's metadata.
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isClusterRoleList(o: any): o is ClusterRoleList {
-      return o.apiVersion == "rbac.authorization.k8s.io/v1" && o.kind == "ClusterRoleList";
+      return (
+        o.apiVersion == "rbac.authorization.k8s.io/v1" &&
+        o.kind == "ClusterRoleList"
+      );
     }
 
     /**
@@ -19453,14 +18605,14 @@ export namespace rbac {
        * Verbs is a list of Verbs that apply to ALL the ResourceKinds and AttributeRestrictions
        * contained in this rule.  VerbAll represents all kinds.
        */
-      verbs: string[]
+      verbs: string[];
 
       /**
        * APIGroups is the name of the APIGroup that contains the resources.  If multiple API groups
        * are specified, any action requested against one of the enumerated resources in any API
        * group will be allowed.
        */
-      apiGroups?: string[]
+      apiGroups?: string[];
 
       /**
        * NonResourceURLs is a set of partial urls that a user should have access to.  *s are
@@ -19469,22 +18621,20 @@ export namespace rbac {
        * ClusterRoleBinding. Rules can either apply to API resources (such as "pods" or "secrets")
        * or non-resource URL paths (such as "/api"),  but not both.
        */
-      nonResourceURLs?: string[]
+      nonResourceURLs?: string[];
 
       /**
        * ResourceNames is an optional white list of names that the rule applies to.  An empty set
        * means that everything is allowed.
        */
-      resourceNames?: string[]
+      resourceNames?: string[];
 
       /**
        * Resources is a list of resources this rule applies to.  ResourceAll represents all
        * resources.
        */
-      resources?: string[]
-
+      resources?: string[];
     }
-
 
     /**
      * Role is a namespaced, logical grouping of PolicyRules that can be referenced as a unit by a
@@ -19497,7 +18647,7 @@ export namespace rbac {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "rbac.authorization.k8s.io/v1"
+      apiVersion?: "rbac.authorization.k8s.io/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -19505,18 +18655,17 @@ export namespace rbac {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "Role"
+      kind?: "Role";
 
       /**
        * Standard object's metadata.
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Rules holds all the PolicyRules for this Role
        */
-      rules?: rbac.v1.PolicyRule[]
-
+      rules?: rbac.v1.PolicyRule[];
     }
 
     export function isRole(o: any): o is Role {
@@ -19534,7 +18683,7 @@ export namespace rbac {
        * RoleRef can reference a Role in the current namespace or a ClusterRole in the global
        * namespace. If the RoleRef cannot be resolved, the Authorizer must return an error.
        */
-      roleRef: rbac.v1.RoleRef
+      roleRef: rbac.v1.RoleRef;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -19542,7 +18691,7 @@ export namespace rbac {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "rbac.authorization.k8s.io/v1"
+      apiVersion?: "rbac.authorization.k8s.io/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -19550,22 +18699,24 @@ export namespace rbac {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "RoleBinding"
+      kind?: "RoleBinding";
 
       /**
        * Standard object's metadata.
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Subjects holds references to the objects the role applies to.
        */
-      subjects?: rbac.v1.Subject[]
-
+      subjects?: rbac.v1.Subject[];
     }
 
     export function isRoleBinding(o: any): o is RoleBinding {
-      return o.apiVersion == "rbac.authorization.k8s.io/v1" && o.kind == "RoleBinding";
+      return (
+        o.apiVersion == "rbac.authorization.k8s.io/v1" &&
+        o.kind == "RoleBinding"
+      );
     }
 
     /**
@@ -19575,7 +18726,7 @@ export namespace rbac {
       /**
        * Items is a list of RoleBindings
        */
-      items: rbac.v1.RoleBinding[]
+      items: rbac.v1.RoleBinding[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -19583,7 +18734,7 @@ export namespace rbac {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "rbac.authorization.k8s.io/v1"
+      apiVersion?: "rbac.authorization.k8s.io/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -19591,17 +18742,19 @@ export namespace rbac {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "RoleBindingList"
+      kind?: "RoleBindingList";
 
       /**
        * Standard object's metadata.
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isRoleBindingList(o: any): o is RoleBindingList {
-      return o.apiVersion == "rbac.authorization.k8s.io/v1" && o.kind == "RoleBindingList";
+      return (
+        o.apiVersion == "rbac.authorization.k8s.io/v1" &&
+        o.kind == "RoleBindingList"
+      );
     }
 
     /**
@@ -19611,7 +18764,7 @@ export namespace rbac {
       /**
        * Items is a list of Roles
        */
-      items: rbac.v1.Role[]
+      items: rbac.v1.Role[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -19619,7 +18772,7 @@ export namespace rbac {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "rbac.authorization.k8s.io/v1"
+      apiVersion?: "rbac.authorization.k8s.io/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -19627,17 +18780,18 @@ export namespace rbac {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "RoleList"
+      kind?: "RoleList";
 
       /**
        * Standard object's metadata.
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isRoleList(o: any): o is RoleList {
-      return o.apiVersion == "rbac.authorization.k8s.io/v1" && o.kind == "RoleList";
+      return (
+        o.apiVersion == "rbac.authorization.k8s.io/v1" && o.kind == "RoleList"
+      );
     }
 
     /**
@@ -19647,20 +18801,18 @@ export namespace rbac {
       /**
        * APIGroup is the group for the resource being referenced
        */
-      apiGroup: string
+      apiGroup: string;
 
       /**
        * Kind is the type of resource being referenced
        */
-      kind: string
+      kind: "RoleRef";
 
       /**
        * Name is the name of resource being referenced
        */
-      name: string
-
+      name: string;
     }
-
 
     /**
      * Subject contains a reference to the object or user identities a role binding applies to.
@@ -19673,30 +18825,26 @@ export namespace rbac {
        * "ServiceAccount". If the Authorizer does not recognized the kind value, the Authorizer
        * should report an error.
        */
-      kind: string
+      kind: "Subject";
 
       /**
        * Name of the object being referenced.
        */
-      name: string
+      name: string;
 
       /**
        * APIGroup holds the API group of the referenced subject. Defaults to "" for ServiceAccount
        * subjects. Defaults to "rbac.authorization.k8s.io" for User and Group subjects.
        */
-      apiGroup?: string
+      apiGroup?: string;
 
       /**
        * Namespace of the referenced object.  If the object kind is non-namespace, such as "User" or
        * "Group", and this value is not empty the Authorizer should report an error.
        */
-      namespace?: string
-
+      namespace?: string;
     }
-
-
   }
-
   export namespace v1alpha1 {
     /**
      * AggregationRule describes how to locate ClusterRoles to aggregate into the ClusterRole
@@ -19707,10 +18855,8 @@ export namespace rbac {
        * create the rules. If any of the selectors match, then the ClusterRole's permissions will be
        * added
        */
-      clusterRoleSelectors?: meta.v1.LabelSelector[]
-
+      clusterRoleSelectors?: meta.v1.LabelSelector[];
     }
-
 
     /**
      * ClusterRole is a cluster level, logical grouping of PolicyRules that can be referenced as a
@@ -19723,7 +18869,7 @@ export namespace rbac {
        * ClusterRole. If AggregationRule is set, then the Rules are controller managed and direct
        * changes to Rules will be stomped by the controller.
        */
-      aggregationRule?: rbac.v1alpha1.AggregationRule
+      aggregationRule?: rbac.v1alpha1.AggregationRule;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -19731,7 +18877,7 @@ export namespace rbac {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "rbac.authorization.k8s.io/v1alpha1"
+      apiVersion?: "rbac.authorization.k8s.io/v1alpha1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -19739,22 +18885,24 @@ export namespace rbac {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ClusterRole"
+      kind?: "ClusterRole";
 
       /**
        * Standard object's metadata.
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Rules holds all the PolicyRules for this ClusterRole
        */
-      rules?: rbac.v1alpha1.PolicyRule[]
-
+      rules?: rbac.v1alpha1.PolicyRule[];
     }
 
     export function isClusterRole(o: any): o is ClusterRole {
-      return o.apiVersion == "rbac.authorization.k8s.io/v1alpha1" && o.kind == "ClusterRole";
+      return (
+        o.apiVersion == "rbac.authorization.k8s.io/v1alpha1" &&
+        o.kind == "ClusterRole"
+      );
     }
 
     /**
@@ -19768,7 +18916,7 @@ export namespace rbac {
        * RoleRef can only reference a ClusterRole in the global namespace. If the RoleRef cannot be
        * resolved, the Authorizer must return an error.
        */
-      roleRef: rbac.v1alpha1.RoleRef
+      roleRef: rbac.v1alpha1.RoleRef;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -19776,7 +18924,7 @@ export namespace rbac {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "rbac.authorization.k8s.io/v1alpha1"
+      apiVersion?: "rbac.authorization.k8s.io/v1alpha1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -19784,22 +18932,24 @@ export namespace rbac {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ClusterRoleBinding"
+      kind?: "ClusterRoleBinding";
 
       /**
        * Standard object's metadata.
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Subjects holds references to the objects the role applies to.
        */
-      subjects?: rbac.v1alpha1.Subject[]
-
+      subjects?: rbac.v1alpha1.Subject[];
     }
 
     export function isClusterRoleBinding(o: any): o is ClusterRoleBinding {
-      return o.apiVersion == "rbac.authorization.k8s.io/v1alpha1" && o.kind == "ClusterRoleBinding";
+      return (
+        o.apiVersion == "rbac.authorization.k8s.io/v1alpha1" &&
+        o.kind == "ClusterRoleBinding"
+      );
     }
 
     /**
@@ -19810,7 +18960,7 @@ export namespace rbac {
       /**
        * Items is a list of ClusterRoleBindings
        */
-      items: rbac.v1alpha1.ClusterRoleBinding[]
+      items: rbac.v1alpha1.ClusterRoleBinding[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -19818,7 +18968,7 @@ export namespace rbac {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "rbac.authorization.k8s.io/v1alpha1"
+      apiVersion?: "rbac.authorization.k8s.io/v1alpha1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -19826,17 +18976,21 @@ export namespace rbac {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ClusterRoleBindingList"
+      kind?: "ClusterRoleBindingList";
 
       /**
        * Standard object's metadata.
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
-    export function isClusterRoleBindingList(o: any): o is ClusterRoleBindingList {
-      return o.apiVersion == "rbac.authorization.k8s.io/v1alpha1" && o.kind == "ClusterRoleBindingList";
+    export function isClusterRoleBindingList(
+      o: any
+    ): o is ClusterRoleBindingList {
+      return (
+        o.apiVersion == "rbac.authorization.k8s.io/v1alpha1" &&
+        o.kind == "ClusterRoleBindingList"
+      );
     }
 
     /**
@@ -19847,7 +19001,7 @@ export namespace rbac {
       /**
        * Items is a list of ClusterRoles
        */
-      items: rbac.v1alpha1.ClusterRole[]
+      items: rbac.v1alpha1.ClusterRole[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -19855,7 +19009,7 @@ export namespace rbac {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "rbac.authorization.k8s.io/v1alpha1"
+      apiVersion?: "rbac.authorization.k8s.io/v1alpha1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -19863,17 +19017,19 @@ export namespace rbac {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ClusterRoleList"
+      kind?: "ClusterRoleList";
 
       /**
        * Standard object's metadata.
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isClusterRoleList(o: any): o is ClusterRoleList {
-      return o.apiVersion == "rbac.authorization.k8s.io/v1alpha1" && o.kind == "ClusterRoleList";
+      return (
+        o.apiVersion == "rbac.authorization.k8s.io/v1alpha1" &&
+        o.kind == "ClusterRoleList"
+      );
     }
 
     /**
@@ -19885,14 +19041,14 @@ export namespace rbac {
        * Verbs is a list of Verbs that apply to ALL the ResourceKinds and AttributeRestrictions
        * contained in this rule.  VerbAll represents all kinds.
        */
-      verbs: string[]
+      verbs: string[];
 
       /**
        * APIGroups is the name of the APIGroup that contains the resources.  If multiple API groups
        * are specified, any action requested against one of the enumerated resources in any API
        * group will be allowed.
        */
-      apiGroups?: string[]
+      apiGroups?: string[];
 
       /**
        * NonResourceURLs is a set of partial urls that a user should have access to.  *s are
@@ -19902,22 +19058,20 @@ export namespace rbac {
        * ClusterRoles referenced from a ClusterRoleBinding. Rules can either apply to API resources
        * (such as "pods" or "secrets") or non-resource URL paths (such as "/api"),  but not both.
        */
-      nonResourceURLs?: string[]
+      nonResourceURLs?: string[];
 
       /**
        * ResourceNames is an optional white list of names that the rule applies to.  An empty set
        * means that everything is allowed.
        */
-      resourceNames?: string[]
+      resourceNames?: string[];
 
       /**
        * Resources is a list of resources this rule applies to.  ResourceAll represents all
        * resources.
        */
-      resources?: string[]
-
+      resources?: string[];
     }
-
 
     /**
      * Role is a namespaced, logical grouping of PolicyRules that can be referenced as a unit by a
@@ -19931,7 +19085,7 @@ export namespace rbac {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "rbac.authorization.k8s.io/v1alpha1"
+      apiVersion?: "rbac.authorization.k8s.io/v1alpha1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -19939,22 +19093,23 @@ export namespace rbac {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "Role"
+      kind?: "Role";
 
       /**
        * Standard object's metadata.
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Rules holds all the PolicyRules for this Role
        */
-      rules?: rbac.v1alpha1.PolicyRule[]
-
+      rules?: rbac.v1alpha1.PolicyRule[];
     }
 
     export function isRole(o: any): o is Role {
-      return o.apiVersion == "rbac.authorization.k8s.io/v1alpha1" && o.kind == "Role";
+      return (
+        o.apiVersion == "rbac.authorization.k8s.io/v1alpha1" && o.kind == "Role"
+      );
     }
 
     /**
@@ -19969,7 +19124,7 @@ export namespace rbac {
        * RoleRef can reference a Role in the current namespace or a ClusterRole in the global
        * namespace. If the RoleRef cannot be resolved, the Authorizer must return an error.
        */
-      roleRef: rbac.v1alpha1.RoleRef
+      roleRef: rbac.v1alpha1.RoleRef;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -19977,7 +19132,7 @@ export namespace rbac {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "rbac.authorization.k8s.io/v1alpha1"
+      apiVersion?: "rbac.authorization.k8s.io/v1alpha1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -19985,22 +19140,24 @@ export namespace rbac {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "RoleBinding"
+      kind?: "RoleBinding";
 
       /**
        * Standard object's metadata.
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Subjects holds references to the objects the role applies to.
        */
-      subjects?: rbac.v1alpha1.Subject[]
-
+      subjects?: rbac.v1alpha1.Subject[];
     }
 
     export function isRoleBinding(o: any): o is RoleBinding {
-      return o.apiVersion == "rbac.authorization.k8s.io/v1alpha1" && o.kind == "RoleBinding";
+      return (
+        o.apiVersion == "rbac.authorization.k8s.io/v1alpha1" &&
+        o.kind == "RoleBinding"
+      );
     }
 
     /**
@@ -20011,7 +19168,7 @@ export namespace rbac {
       /**
        * Items is a list of RoleBindings
        */
-      items: rbac.v1alpha1.RoleBinding[]
+      items: rbac.v1alpha1.RoleBinding[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -20019,7 +19176,7 @@ export namespace rbac {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "rbac.authorization.k8s.io/v1alpha1"
+      apiVersion?: "rbac.authorization.k8s.io/v1alpha1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -20027,17 +19184,19 @@ export namespace rbac {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "RoleBindingList"
+      kind?: "RoleBindingList";
 
       /**
        * Standard object's metadata.
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isRoleBindingList(o: any): o is RoleBindingList {
-      return o.apiVersion == "rbac.authorization.k8s.io/v1alpha1" && o.kind == "RoleBindingList";
+      return (
+        o.apiVersion == "rbac.authorization.k8s.io/v1alpha1" &&
+        o.kind == "RoleBindingList"
+      );
     }
 
     /**
@@ -20048,7 +19207,7 @@ export namespace rbac {
       /**
        * Items is a list of Roles
        */
-      items: rbac.v1alpha1.Role[]
+      items: rbac.v1alpha1.Role[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -20056,7 +19215,7 @@ export namespace rbac {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "rbac.authorization.k8s.io/v1alpha1"
+      apiVersion?: "rbac.authorization.k8s.io/v1alpha1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -20064,17 +19223,19 @@ export namespace rbac {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "RoleList"
+      kind?: "RoleList";
 
       /**
        * Standard object's metadata.
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isRoleList(o: any): o is RoleList {
-      return o.apiVersion == "rbac.authorization.k8s.io/v1alpha1" && o.kind == "RoleList";
+      return (
+        o.apiVersion == "rbac.authorization.k8s.io/v1alpha1" &&
+        o.kind == "RoleList"
+      );
     }
 
     /**
@@ -20084,20 +19245,18 @@ export namespace rbac {
       /**
        * APIGroup is the group for the resource being referenced
        */
-      apiGroup: string
+      apiGroup: string;
 
       /**
        * Kind is the type of resource being referenced
        */
-      kind: string
+      kind: "RoleRef";
 
       /**
        * Name is the name of resource being referenced
        */
-      name: string
-
+      name: string;
     }
-
 
     /**
      * Subject contains a reference to the object or user identities a role binding applies to.
@@ -20110,34 +19269,31 @@ export namespace rbac {
        * "ServiceAccount". If the Authorizer does not recognized the kind value, the Authorizer
        * should report an error.
        */
-      kind: string
+      kind: "Subject";
 
       /**
        * Name of the object being referenced.
        */
-      name: string
+      name: string;
 
       /**
        * APIVersion holds the API group and version of the referenced subject. Defaults to "v1" for
        * ServiceAccount subjects. Defaults to "rbac.authorization.k8s.io/v1alpha1" for User and
        * Group subjects.
        */
-      apiVersion?: string
+      apiVersion?: "rbac/v1alpha1";
 
       /**
        * Namespace of the referenced object.  If the object kind is non-namespace, such as "User" or
        * "Group", and this value is not empty the Authorizer should report an error.
        */
-      namespace?: string
-
+      namespace?: string;
     }
 
     export function isSubject(o: any): o is Subject {
       return o.apiVersion == "rbac/v1alpha1" && o.kind == "Subject";
     }
-
   }
-
   export namespace v1beta1 {
     /**
      * AggregationRule describes how to locate ClusterRoles to aggregate into the ClusterRole
@@ -20148,10 +19304,8 @@ export namespace rbac {
        * create the rules. If any of the selectors match, then the ClusterRole's permissions will be
        * added
        */
-      clusterRoleSelectors?: meta.v1.LabelSelector[]
-
+      clusterRoleSelectors?: meta.v1.LabelSelector[];
     }
-
 
     /**
      * ClusterRole is a cluster level, logical grouping of PolicyRules that can be referenced as a
@@ -20164,7 +19318,7 @@ export namespace rbac {
        * ClusterRole. If AggregationRule is set, then the Rules are controller managed and direct
        * changes to Rules will be stomped by the controller.
        */
-      aggregationRule?: rbac.v1beta1.AggregationRule
+      aggregationRule?: rbac.v1beta1.AggregationRule;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -20172,7 +19326,7 @@ export namespace rbac {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "rbac.authorization.k8s.io/v1beta1"
+      apiVersion?: "rbac.authorization.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -20180,22 +19334,24 @@ export namespace rbac {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ClusterRole"
+      kind?: "ClusterRole";
 
       /**
        * Standard object's metadata.
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Rules holds all the PolicyRules for this ClusterRole
        */
-      rules?: rbac.v1beta1.PolicyRule[]
-
+      rules?: rbac.v1beta1.PolicyRule[];
     }
 
     export function isClusterRole(o: any): o is ClusterRole {
-      return o.apiVersion == "rbac.authorization.k8s.io/v1beta1" && o.kind == "ClusterRole";
+      return (
+        o.apiVersion == "rbac.authorization.k8s.io/v1beta1" &&
+        o.kind == "ClusterRole"
+      );
     }
 
     /**
@@ -20209,7 +19365,7 @@ export namespace rbac {
        * RoleRef can only reference a ClusterRole in the global namespace. If the RoleRef cannot be
        * resolved, the Authorizer must return an error.
        */
-      roleRef: rbac.v1beta1.RoleRef
+      roleRef: rbac.v1beta1.RoleRef;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -20217,7 +19373,7 @@ export namespace rbac {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "rbac.authorization.k8s.io/v1beta1"
+      apiVersion?: "rbac.authorization.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -20225,22 +19381,24 @@ export namespace rbac {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ClusterRoleBinding"
+      kind?: "ClusterRoleBinding";
 
       /**
        * Standard object's metadata.
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Subjects holds references to the objects the role applies to.
        */
-      subjects?: rbac.v1beta1.Subject[]
-
+      subjects?: rbac.v1beta1.Subject[];
     }
 
     export function isClusterRoleBinding(o: any): o is ClusterRoleBinding {
-      return o.apiVersion == "rbac.authorization.k8s.io/v1beta1" && o.kind == "ClusterRoleBinding";
+      return (
+        o.apiVersion == "rbac.authorization.k8s.io/v1beta1" &&
+        o.kind == "ClusterRoleBinding"
+      );
     }
 
     /**
@@ -20252,7 +19410,7 @@ export namespace rbac {
       /**
        * Items is a list of ClusterRoleBindings
        */
-      items: rbac.v1beta1.ClusterRoleBinding[]
+      items: rbac.v1beta1.ClusterRoleBinding[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -20260,7 +19418,7 @@ export namespace rbac {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "rbac.authorization.k8s.io/v1beta1"
+      apiVersion?: "rbac.authorization.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -20268,17 +19426,21 @@ export namespace rbac {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ClusterRoleBindingList"
+      kind?: "ClusterRoleBindingList";
 
       /**
        * Standard object's metadata.
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
-    export function isClusterRoleBindingList(o: any): o is ClusterRoleBindingList {
-      return o.apiVersion == "rbac.authorization.k8s.io/v1beta1" && o.kind == "ClusterRoleBindingList";
+    export function isClusterRoleBindingList(
+      o: any
+    ): o is ClusterRoleBindingList {
+      return (
+        o.apiVersion == "rbac.authorization.k8s.io/v1beta1" &&
+        o.kind == "ClusterRoleBindingList"
+      );
     }
 
     /**
@@ -20289,7 +19451,7 @@ export namespace rbac {
       /**
        * Items is a list of ClusterRoles
        */
-      items: rbac.v1beta1.ClusterRole[]
+      items: rbac.v1beta1.ClusterRole[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -20297,7 +19459,7 @@ export namespace rbac {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "rbac.authorization.k8s.io/v1beta1"
+      apiVersion?: "rbac.authorization.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -20305,17 +19467,19 @@ export namespace rbac {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ClusterRoleList"
+      kind?: "ClusterRoleList";
 
       /**
        * Standard object's metadata.
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isClusterRoleList(o: any): o is ClusterRoleList {
-      return o.apiVersion == "rbac.authorization.k8s.io/v1beta1" && o.kind == "ClusterRoleList";
+      return (
+        o.apiVersion == "rbac.authorization.k8s.io/v1beta1" &&
+        o.kind == "ClusterRoleList"
+      );
     }
 
     /**
@@ -20327,14 +19491,14 @@ export namespace rbac {
        * Verbs is a list of Verbs that apply to ALL the ResourceKinds and AttributeRestrictions
        * contained in this rule.  VerbAll represents all kinds.
        */
-      verbs: string[]
+      verbs: string[];
 
       /**
        * APIGroups is the name of the APIGroup that contains the resources.  If multiple API groups
        * are specified, any action requested against one of the enumerated resources in any API
        * group will be allowed.
        */
-      apiGroups?: string[]
+      apiGroups?: string[];
 
       /**
        * NonResourceURLs is a set of partial urls that a user should have access to.  *s are
@@ -20343,23 +19507,21 @@ export namespace rbac {
        * ClusterRoleBinding. Rules can either apply to API resources (such as "pods" or "secrets")
        * or non-resource URL paths (such as "/api"),  but not both.
        */
-      nonResourceURLs?: string[]
+      nonResourceURLs?: string[];
 
       /**
        * ResourceNames is an optional white list of names that the rule applies to.  An empty set
        * means that everything is allowed.
        */
-      resourceNames?: string[]
+      resourceNames?: string[];
 
       /**
        * Resources is a list of resources this rule applies to.  '*' represents all resources in the
        * specified apiGroups. '*&#8205;/foo' represents the subresource 'foo' for all resources in
        * the specified apiGroups.
        */
-      resources?: string[]
-
+      resources?: string[];
     }
-
 
     /**
      * Role is a namespaced, logical grouping of PolicyRules that can be referenced as a unit by a
@@ -20373,7 +19535,7 @@ export namespace rbac {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "rbac.authorization.k8s.io/v1beta1"
+      apiVersion?: "rbac.authorization.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -20381,22 +19543,23 @@ export namespace rbac {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "Role"
+      kind?: "Role";
 
       /**
        * Standard object's metadata.
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Rules holds all the PolicyRules for this Role
        */
-      rules?: rbac.v1beta1.PolicyRule[]
-
+      rules?: rbac.v1beta1.PolicyRule[];
     }
 
     export function isRole(o: any): o is Role {
-      return o.apiVersion == "rbac.authorization.k8s.io/v1beta1" && o.kind == "Role";
+      return (
+        o.apiVersion == "rbac.authorization.k8s.io/v1beta1" && o.kind == "Role"
+      );
     }
 
     /**
@@ -20411,7 +19574,7 @@ export namespace rbac {
        * RoleRef can reference a Role in the current namespace or a ClusterRole in the global
        * namespace. If the RoleRef cannot be resolved, the Authorizer must return an error.
        */
-      roleRef: rbac.v1beta1.RoleRef
+      roleRef: rbac.v1beta1.RoleRef;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -20419,7 +19582,7 @@ export namespace rbac {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "rbac.authorization.k8s.io/v1beta1"
+      apiVersion?: "rbac.authorization.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -20427,22 +19590,24 @@ export namespace rbac {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "RoleBinding"
+      kind?: "RoleBinding";
 
       /**
        * Standard object's metadata.
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Subjects holds references to the objects the role applies to.
        */
-      subjects?: rbac.v1beta1.Subject[]
-
+      subjects?: rbac.v1beta1.Subject[];
     }
 
     export function isRoleBinding(o: any): o is RoleBinding {
-      return o.apiVersion == "rbac.authorization.k8s.io/v1beta1" && o.kind == "RoleBinding";
+      return (
+        o.apiVersion == "rbac.authorization.k8s.io/v1beta1" &&
+        o.kind == "RoleBinding"
+      );
     }
 
     /**
@@ -20453,7 +19618,7 @@ export namespace rbac {
       /**
        * Items is a list of RoleBindings
        */
-      items: rbac.v1beta1.RoleBinding[]
+      items: rbac.v1beta1.RoleBinding[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -20461,7 +19626,7 @@ export namespace rbac {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "rbac.authorization.k8s.io/v1beta1"
+      apiVersion?: "rbac.authorization.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -20469,17 +19634,19 @@ export namespace rbac {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "RoleBindingList"
+      kind?: "RoleBindingList";
 
       /**
        * Standard object's metadata.
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isRoleBindingList(o: any): o is RoleBindingList {
-      return o.apiVersion == "rbac.authorization.k8s.io/v1beta1" && o.kind == "RoleBindingList";
+      return (
+        o.apiVersion == "rbac.authorization.k8s.io/v1beta1" &&
+        o.kind == "RoleBindingList"
+      );
     }
 
     /**
@@ -20490,7 +19657,7 @@ export namespace rbac {
       /**
        * Items is a list of Roles
        */
-      items: rbac.v1beta1.Role[]
+      items: rbac.v1beta1.Role[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -20498,7 +19665,7 @@ export namespace rbac {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "rbac.authorization.k8s.io/v1beta1"
+      apiVersion?: "rbac.authorization.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -20506,17 +19673,19 @@ export namespace rbac {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "RoleList"
+      kind?: "RoleList";
 
       /**
        * Standard object's metadata.
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isRoleList(o: any): o is RoleList {
-      return o.apiVersion == "rbac.authorization.k8s.io/v1beta1" && o.kind == "RoleList";
+      return (
+        o.apiVersion == "rbac.authorization.k8s.io/v1beta1" &&
+        o.kind == "RoleList"
+      );
     }
 
     /**
@@ -20526,20 +19695,18 @@ export namespace rbac {
       /**
        * APIGroup is the group for the resource being referenced
        */
-      apiGroup: string
+      apiGroup: string;
 
       /**
        * Kind is the type of resource being referenced
        */
-      kind: string
+      kind: "RoleRef";
 
       /**
        * Name is the name of resource being referenced
        */
-      name: string
-
+      name: string;
     }
-
 
     /**
      * Subject contains a reference to the object or user identities a role binding applies to.
@@ -20552,30 +19719,26 @@ export namespace rbac {
        * "ServiceAccount". If the Authorizer does not recognized the kind value, the Authorizer
        * should report an error.
        */
-      kind: string
+      kind: "Subject";
 
       /**
        * Name of the object being referenced.
        */
-      name: string
+      name: string;
 
       /**
        * APIGroup holds the API group of the referenced subject. Defaults to "" for ServiceAccount
        * subjects. Defaults to "rbac.authorization.k8s.io" for User and Group subjects.
        */
-      apiGroup?: string
+      apiGroup?: string;
 
       /**
        * Namespace of the referenced object.  If the object kind is non-namespace, such as "User" or
        * "Group", and this value is not empty the Authorizer should report an error.
        */
-      namespace?: string
-
+      namespace?: string;
     }
-
-
   }
-
 }
 
 export namespace scheduling {
@@ -20589,7 +19752,7 @@ export namespace scheduling {
        * The value of this priority class. This is the actual priority that pods receive when they
        * have the name of this class in their pod spec.
        */
-      value: number
+      value: number;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -20597,13 +19760,13 @@ export namespace scheduling {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "scheduling.k8s.io/v1"
+      apiVersion?: "scheduling.k8s.io/v1";
 
       /**
        * description is an arbitrary string that usually provides guidelines on when this priority
        * class should be used.
        */
-      description?: string
+      description?: string;
 
       /**
        * globalDefault specifies whether this PriorityClass should be considered as the default
@@ -20612,7 +19775,7 @@ export namespace scheduling {
        * `globalDefault` field set to true, the smallest value of such global default
        * PriorityClasses will be used as the default priority.
        */
-      globalDefault?: boolean
+      globalDefault?: boolean;
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -20620,25 +19783,26 @@ export namespace scheduling {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "PriorityClass"
+      kind?: "PriorityClass";
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * PreemptionPolicy is the Policy for preempting pods with lower priority. One of Never,
        * PreemptLowerPriority. Defaults to PreemptLowerPriority if unset. This field is alpha-level
        * and is only honored by servers that enable the NonPreemptingPriority feature.
        */
-      preemptionPolicy?: string
-
+      preemptionPolicy?: string;
     }
 
     export function isPriorityClass(o: any): o is PriorityClass {
-      return o.apiVersion == "scheduling.k8s.io/v1" && o.kind == "PriorityClass";
+      return (
+        o.apiVersion == "scheduling.k8s.io/v1" && o.kind == "PriorityClass"
+      );
     }
 
     /**
@@ -20648,7 +19812,7 @@ export namespace scheduling {
       /**
        * items is the list of PriorityClasses
        */
-      items: scheduling.v1.PriorityClass[]
+      items: scheduling.v1.PriorityClass[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -20656,7 +19820,7 @@ export namespace scheduling {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "scheduling.k8s.io/v1"
+      apiVersion?: "scheduling.k8s.io/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -20664,22 +19828,21 @@ export namespace scheduling {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "PriorityClassList"
+      kind?: "PriorityClassList";
 
       /**
        * Standard list metadata More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isPriorityClassList(o: any): o is PriorityClassList {
-      return o.apiVersion == "scheduling.k8s.io/v1" && o.kind == "PriorityClassList";
+      return (
+        o.apiVersion == "scheduling.k8s.io/v1" && o.kind == "PriorityClassList"
+      );
     }
-
   }
-
   export namespace v1alpha1 {
     /**
      * DEPRECATED - This group version of PriorityClass is deprecated by
@@ -20691,7 +19854,7 @@ export namespace scheduling {
        * The value of this priority class. This is the actual priority that pods receive when they
        * have the name of this class in their pod spec.
        */
-      value: number
+      value: number;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -20699,13 +19862,13 @@ export namespace scheduling {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "scheduling.k8s.io/v1alpha1"
+      apiVersion?: "scheduling.k8s.io/v1alpha1";
 
       /**
        * description is an arbitrary string that usually provides guidelines on when this priority
        * class should be used.
        */
-      description?: string
+      description?: string;
 
       /**
        * globalDefault specifies whether this PriorityClass should be considered as the default
@@ -20714,7 +19877,7 @@ export namespace scheduling {
        * `globalDefault` field set to true, the smallest value of such global default
        * PriorityClasses will be used as the default priority.
        */
-      globalDefault?: boolean
+      globalDefault?: boolean;
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -20722,25 +19885,27 @@ export namespace scheduling {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "PriorityClass"
+      kind?: "PriorityClass";
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * PreemptionPolicy is the Policy for preempting pods with lower priority. One of Never,
        * PreemptLowerPriority. Defaults to PreemptLowerPriority if unset. This field is alpha-level
        * and is only honored by servers that enable the NonPreemptingPriority feature.
        */
-      preemptionPolicy?: string
-
+      preemptionPolicy?: string;
     }
 
     export function isPriorityClass(o: any): o is PriorityClass {
-      return o.apiVersion == "scheduling.k8s.io/v1alpha1" && o.kind == "PriorityClass";
+      return (
+        o.apiVersion == "scheduling.k8s.io/v1alpha1" &&
+        o.kind == "PriorityClass"
+      );
     }
 
     /**
@@ -20750,7 +19915,7 @@ export namespace scheduling {
       /**
        * items is the list of PriorityClasses
        */
-      items: scheduling.v1alpha1.PriorityClass[]
+      items: scheduling.v1alpha1.PriorityClass[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -20758,7 +19923,7 @@ export namespace scheduling {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "scheduling.k8s.io/v1alpha1"
+      apiVersion?: "scheduling.k8s.io/v1alpha1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -20766,22 +19931,22 @@ export namespace scheduling {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "PriorityClassList"
+      kind?: "PriorityClassList";
 
       /**
        * Standard list metadata More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isPriorityClassList(o: any): o is PriorityClassList {
-      return o.apiVersion == "scheduling.k8s.io/v1alpha1" && o.kind == "PriorityClassList";
+      return (
+        o.apiVersion == "scheduling.k8s.io/v1alpha1" &&
+        o.kind == "PriorityClassList"
+      );
     }
-
   }
-
   export namespace v1beta1 {
     /**
      * DEPRECATED - This group version of PriorityClass is deprecated by
@@ -20793,7 +19958,7 @@ export namespace scheduling {
        * The value of this priority class. This is the actual priority that pods receive when they
        * have the name of this class in their pod spec.
        */
-      value: number
+      value: number;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -20801,13 +19966,13 @@ export namespace scheduling {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "scheduling.k8s.io/v1beta1"
+      apiVersion?: "scheduling.k8s.io/v1beta1";
 
       /**
        * description is an arbitrary string that usually provides guidelines on when this priority
        * class should be used.
        */
-      description?: string
+      description?: string;
 
       /**
        * globalDefault specifies whether this PriorityClass should be considered as the default
@@ -20816,7 +19981,7 @@ export namespace scheduling {
        * `globalDefault` field set to true, the smallest value of such global default
        * PriorityClasses will be used as the default priority.
        */
-      globalDefault?: boolean
+      globalDefault?: boolean;
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -20824,25 +19989,26 @@ export namespace scheduling {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "PriorityClass"
+      kind?: "PriorityClass";
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * PreemptionPolicy is the Policy for preempting pods with lower priority. One of Never,
        * PreemptLowerPriority. Defaults to PreemptLowerPriority if unset. This field is alpha-level
        * and is only honored by servers that enable the NonPreemptingPriority feature.
        */
-      preemptionPolicy?: string
-
+      preemptionPolicy?: string;
     }
 
     export function isPriorityClass(o: any): o is PriorityClass {
-      return o.apiVersion == "scheduling.k8s.io/v1beta1" && o.kind == "PriorityClass";
+      return (
+        o.apiVersion == "scheduling.k8s.io/v1beta1" && o.kind == "PriorityClass"
+      );
     }
 
     /**
@@ -20852,7 +20018,7 @@ export namespace scheduling {
       /**
        * items is the list of PriorityClasses
        */
-      items: scheduling.v1beta1.PriorityClass[]
+      items: scheduling.v1beta1.PriorityClass[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -20860,7 +20026,7 @@ export namespace scheduling {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "scheduling.k8s.io/v1beta1"
+      apiVersion?: "scheduling.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -20868,22 +20034,22 @@ export namespace scheduling {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "PriorityClassList"
+      kind?: "PriorityClassList";
 
       /**
        * Standard list metadata More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isPriorityClassList(o: any): o is PriorityClassList {
-      return o.apiVersion == "scheduling.k8s.io/v1beta1" && o.kind == "PriorityClassList";
+      return (
+        o.apiVersion == "scheduling.k8s.io/v1beta1" &&
+        o.kind == "PriorityClassList"
+      );
     }
-
   }
-
 }
 
 export namespace settings {
@@ -20898,7 +20064,7 @@ export namespace settings {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "settings.k8s.io/v1alpha1"
+      apiVersion?: "settings.k8s.io/v1alpha1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -20906,18 +20072,17 @@ export namespace settings {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "PodPreset"
+      kind?: "PodPreset";
 
-      
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
-      
-      spec?: settings.v1alpha1.PodPresetSpec
-
+      spec?: settings.v1alpha1.PodPresetSpec;
     }
 
     export function isPodPreset(o: any): o is PodPreset {
-      return o.apiVersion == "settings.k8s.io/v1alpha1" && o.kind == "PodPreset";
+      return (
+        o.apiVersion == "settings.k8s.io/v1alpha1" && o.kind == "PodPreset"
+      );
     }
 
     /**
@@ -20927,7 +20092,7 @@ export namespace settings {
       /**
        * Items is a list of schema objects.
        */
-      items: settings.v1alpha1.PodPreset[]
+      items: settings.v1alpha1.PodPreset[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -20935,7 +20100,7 @@ export namespace settings {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "settings.k8s.io/v1alpha1"
+      apiVersion?: "settings.k8s.io/v1alpha1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -20943,18 +20108,19 @@ export namespace settings {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "PodPresetList"
+      kind?: "PodPresetList";
 
       /**
        * Standard list metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isPodPresetList(o: any): o is PodPresetList {
-      return o.apiVersion == "settings.k8s.io/v1alpha1" && o.kind == "PodPresetList";
+      return (
+        o.apiVersion == "settings.k8s.io/v1alpha1" && o.kind == "PodPresetList"
+      );
     }
 
     /**
@@ -20964,33 +20130,29 @@ export namespace settings {
       /**
        * Env defines the collection of EnvVar to inject into containers.
        */
-      env?: core.v1.EnvVar[]
+      env?: core.v1.EnvVar[];
 
       /**
        * EnvFrom defines the collection of EnvFromSource to inject into containers.
        */
-      envFrom?: core.v1.EnvFromSource[]
+      envFrom?: core.v1.EnvFromSource[];
 
       /**
        * Selector is a label query over a set of resources, in this case pods. Required.
        */
-      selector?: meta.v1.LabelSelector
+      selector?: meta.v1.LabelSelector;
 
       /**
        * VolumeMounts defines the collection of VolumeMount to inject into containers.
        */
-      volumeMounts?: core.v1.VolumeMount[]
+      volumeMounts?: core.v1.VolumeMount[];
 
       /**
        * Volumes defines the collection of Volume to inject into the pod.
        */
-      volumes?: core.v1.Volume[]
-
+      volumes?: core.v1.Volume[];
     }
-
-
   }
-
 }
 
 export namespace storage {
@@ -21008,7 +20170,7 @@ export namespace storage {
       /**
        * spec is the specification of CSINode
        */
-      spec: storage.v1.CSINodeSpec
+      spec: storage.v1.CSINodeSpec;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -21016,7 +20178,7 @@ export namespace storage {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "storage.k8s.io/v1"
+      apiVersion?: "storage.k8s.io/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -21024,13 +20186,12 @@ export namespace storage {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "CSINode"
+      kind?: "CSINode";
 
       /**
        * metadata.name must be the Kubernetes node name.
        */
-      metadata?: meta.v1.ObjectMeta
-
+      metadata?: meta.v1.ObjectMeta;
     }
 
     export function isCSINode(o: any): o is CSINode {
@@ -21045,7 +20206,7 @@ export namespace storage {
        * This is the name of the CSI driver that this object refers to. This MUST be the same name
        * returned by the CSI GetPluginName() call for that driver.
        */
-      name: string
+      name: string;
 
       /**
        * nodeID of the node from the driver point of view. This field enables Kubernetes to
@@ -21056,13 +20217,13 @@ export namespace storage {
        * the ID that the storage system will understand, e.g. "nodeA" instead of "node1". This field
        * is required.
        */
-      nodeID: string
+      nodeID: string;
 
       /**
        * allocatable represents the volume resources of a node that are available for scheduling.
        * This field is beta.
        */
-      allocatable?: storage.v1.VolumeNodeResources
+      allocatable?: storage.v1.VolumeNodeResources;
 
       /**
        * topologyKeys is the list of keys supported by the driver. When a driver is initialized on a
@@ -21074,10 +20235,8 @@ export namespace storage {
        * It is possible for different nodes to use different topology keys. This can be empty if
        * driver does not support topology.
        */
-      topologyKeys?: string[]
-
+      topologyKeys?: string[];
     }
-
 
     /**
      * CSINodeList is a collection of CSINode objects.
@@ -21086,7 +20245,7 @@ export namespace storage {
       /**
        * items is the list of CSINode
        */
-      items: storage.v1.CSINode[]
+      items: storage.v1.CSINode[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -21094,7 +20253,7 @@ export namespace storage {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "storage.k8s.io/v1"
+      apiVersion?: "storage.k8s.io/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -21102,14 +20261,13 @@ export namespace storage {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "CSINodeList"
+      kind?: "CSINodeList";
 
       /**
        * Standard list metadata More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isCSINodeList(o: any): o is CSINodeList {
@@ -21124,15 +20282,13 @@ export namespace storage {
        * drivers is a list of information of all CSI Drivers existing on a node. If all drivers in
        * the list are uninstalled, this can become empty.
        */
-      drivers: storage.v1.CSINodeDriver[]
-
+      drivers: storage.v1.CSINodeDriver[];
     }
-
 
     /**
      * StorageClass describes the parameters for a class of storage for which PersistentVolumes can
      * be dynamically provisioned.
-     * 
+     *
      * StorageClasses are non-namespaced; the name of the storage class according to etcd is in
      * ObjectMeta.Name.
      */
@@ -21140,12 +20296,12 @@ export namespace storage {
       /**
        * Provisioner indicates the type of the provisioner.
        */
-      provisioner: string
+      provisioner: string;
 
       /**
        * AllowVolumeExpansion shows whether the storage class allow volume expand
        */
-      allowVolumeExpansion?: boolean
+      allowVolumeExpansion?: boolean;
 
       /**
        * Restrict the node topologies where volumes can be dynamically provisioned. Each volume
@@ -21153,7 +20309,7 @@ export namespace storage {
        * list means there is no topology restriction. This field is only honored by servers that
        * enable the VolumeScheduling feature.
        */
-      allowedTopologies?: core.v1.TopologySelectorTerm[]
+      allowedTopologies?: core.v1.TopologySelectorTerm[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -21161,7 +20317,7 @@ export namespace storage {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "storage.k8s.io/v1"
+      apiVersion?: "storage.k8s.io/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -21169,40 +20325,39 @@ export namespace storage {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "StorageClass"
+      kind?: "StorageClass";
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Dynamically provisioned PersistentVolumes of this storage class are created with these
        * mountOptions, e.g. ["ro", "soft"]. Not validated - mount of the PVs will simply fail if one
        * is invalid.
        */
-      mountOptions?: string[]
+      mountOptions?: string[];
 
       /**
        * Parameters holds the parameters for the provisioner that should create volumes of this
        * storage class.
        */
-      parameters?: {[key: string]: string}
+      parameters?: { [key: string]: string };
 
       /**
        * Dynamically provisioned PersistentVolumes of this storage class are created with this
        * reclaimPolicy. Defaults to Delete.
        */
-      reclaimPolicy?: string
+      reclaimPolicy?: string;
 
       /**
        * VolumeBindingMode indicates how PersistentVolumeClaims should be provisioned and bound.
        * When unset, VolumeBindingImmediate is used. This field is only honored by servers that
        * enable the VolumeScheduling feature.
        */
-      volumeBindingMode?: string
-
+      volumeBindingMode?: string;
     }
 
     export function isStorageClass(o: any): o is StorageClass {
@@ -21216,7 +20371,7 @@ export namespace storage {
       /**
        * Items is the list of StorageClasses
        */
-      items: storage.v1.StorageClass[]
+      items: storage.v1.StorageClass[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -21224,7 +20379,7 @@ export namespace storage {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "storage.k8s.io/v1"
+      apiVersion?: "storage.k8s.io/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -21232,24 +20387,25 @@ export namespace storage {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "StorageClassList"
+      kind?: "StorageClassList";
 
       /**
        * Standard list metadata More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isStorageClassList(o: any): o is StorageClassList {
-      return o.apiVersion == "storage.k8s.io/v1" && o.kind == "StorageClassList";
+      return (
+        o.apiVersion == "storage.k8s.io/v1" && o.kind == "StorageClassList"
+      );
     }
 
     /**
      * VolumeAttachment captures the intent to attach or detach the specified volume to/from the
      * specified node.
-     * 
+     *
      * VolumeAttachment objects are non-namespaced.
      */
     export interface VolumeAttachment {
@@ -21257,7 +20413,7 @@ export namespace storage {
        * Specification of the desired attach/detach volume behavior. Populated by the Kubernetes
        * system.
        */
-      spec: storage.v1.VolumeAttachmentSpec
+      spec: storage.v1.VolumeAttachmentSpec;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -21265,7 +20421,7 @@ export namespace storage {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "storage.k8s.io/v1"
+      apiVersion?: "storage.k8s.io/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -21273,18 +20429,19 @@ export namespace storage {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "VolumeAttachment"
+      kind?: "VolumeAttachment";
 
       /**
        * Standard object metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
-
+      metadata?: meta.v1.ObjectMeta;
     }
 
     export function isVolumeAttachment(o: any): o is VolumeAttachment {
-      return o.apiVersion == "storage.k8s.io/v1" && o.kind == "VolumeAttachment";
+      return (
+        o.apiVersion == "storage.k8s.io/v1" && o.kind == "VolumeAttachment"
+      );
     }
 
     /**
@@ -21294,7 +20451,7 @@ export namespace storage {
       /**
        * Items is the list of VolumeAttachments
        */
-      items: storage.v1.VolumeAttachment[]
+      items: storage.v1.VolumeAttachment[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -21302,7 +20459,7 @@ export namespace storage {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "storage.k8s.io/v1"
+      apiVersion?: "storage.k8s.io/v1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -21310,18 +20467,19 @@ export namespace storage {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "VolumeAttachmentList"
+      kind?: "VolumeAttachmentList";
 
       /**
        * Standard list metadata More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isVolumeAttachmentList(o: any): o is VolumeAttachmentList {
-      return o.apiVersion == "storage.k8s.io/v1" && o.kind == "VolumeAttachmentList";
+      return (
+        o.apiVersion == "storage.k8s.io/v1" && o.kind == "VolumeAttachmentList"
+      );
     }
 
     /**
@@ -21337,15 +20495,13 @@ export namespace storage {
        * PersistentVolumeSpec. This field is alpha-level and is only honored by servers that enabled
        * the CSIMigration feature.
        */
-      inlineVolumeSpec?: core.v1.PersistentVolumeSpec
+      inlineVolumeSpec?: core.v1.PersistentVolumeSpec;
 
       /**
        * Name of the persistent volume to attach.
        */
-      persistentVolumeName?: string
-
+      persistentVolumeName?: string;
     }
-
 
     /**
      * VolumeAttachmentSpec is the specification of a VolumeAttachment request.
@@ -21355,20 +20511,18 @@ export namespace storage {
        * Attacher indicates the name of the volume driver that MUST handle this request. This is the
        * name returned by GetPluginName().
        */
-      attacher: string
+      attacher: string;
 
       /**
        * The node that the volume should be attached to.
        */
-      nodeName: string
+      nodeName: string;
 
       /**
        * Source represents the volume that should be attached.
        */
-      source: storage.v1.VolumeAttachmentSource
-
+      source: storage.v1.VolumeAttachmentSource;
     }
-
 
     /**
      * VolumeError captures an error encountered during a volume operation.
@@ -21378,15 +20532,13 @@ export namespace storage {
        * String detailing the error encountered during Attach or Detach operation. This string may
        * be logged, so it should not contain sensitive information.
        */
-      message?: string
+      message?: string;
 
       /**
        * Time the error was encountered.
        */
-      time?: string
-
+      time?: string;
     }
-
 
     /**
      * VolumeNodeResources is a set of resource limits for scheduling of volumes.
@@ -21399,18 +20551,14 @@ export namespace storage {
        * same node. If this field is not specified, then the supported number of volumes on this
        * node is unbounded.
        */
-      count?: number
-
+      count?: number;
     }
-
-
   }
-
   export namespace v1alpha1 {
     /**
      * VolumeAttachment captures the intent to attach or detach the specified volume to/from the
      * specified node.
-     * 
+     *
      * VolumeAttachment objects are non-namespaced.
      */
     export interface VolumeAttachment {
@@ -21418,7 +20566,7 @@ export namespace storage {
        * Specification of the desired attach/detach volume behavior. Populated by the Kubernetes
        * system.
        */
-      spec: storage.v1alpha1.VolumeAttachmentSpec
+      spec: storage.v1alpha1.VolumeAttachmentSpec;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -21426,7 +20574,7 @@ export namespace storage {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "storage.k8s.io/v1alpha1"
+      apiVersion?: "storage.k8s.io/v1alpha1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -21434,18 +20582,20 @@ export namespace storage {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "VolumeAttachment"
+      kind?: "VolumeAttachment";
 
       /**
        * Standard object metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
-
+      metadata?: meta.v1.ObjectMeta;
     }
 
     export function isVolumeAttachment(o: any): o is VolumeAttachment {
-      return o.apiVersion == "storage.k8s.io/v1alpha1" && o.kind == "VolumeAttachment";
+      return (
+        o.apiVersion == "storage.k8s.io/v1alpha1" &&
+        o.kind == "VolumeAttachment"
+      );
     }
 
     /**
@@ -21455,7 +20605,7 @@ export namespace storage {
       /**
        * Items is the list of VolumeAttachments
        */
-      items: storage.v1alpha1.VolumeAttachment[]
+      items: storage.v1alpha1.VolumeAttachment[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -21463,7 +20613,7 @@ export namespace storage {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "storage.k8s.io/v1alpha1"
+      apiVersion?: "storage.k8s.io/v1alpha1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -21471,18 +20621,20 @@ export namespace storage {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "VolumeAttachmentList"
+      kind?: "VolumeAttachmentList";
 
       /**
        * Standard list metadata More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isVolumeAttachmentList(o: any): o is VolumeAttachmentList {
-      return o.apiVersion == "storage.k8s.io/v1alpha1" && o.kind == "VolumeAttachmentList";
+      return (
+        o.apiVersion == "storage.k8s.io/v1alpha1" &&
+        o.kind == "VolumeAttachmentList"
+      );
     }
 
     /**
@@ -21498,15 +20650,13 @@ export namespace storage {
        * PersistentVolumeSpec. This field is alpha-level and is only honored by servers that enabled
        * the CSIMigration feature.
        */
-      inlineVolumeSpec?: core.v1.PersistentVolumeSpec
+      inlineVolumeSpec?: core.v1.PersistentVolumeSpec;
 
       /**
        * Name of the persistent volume to attach.
        */
-      persistentVolumeName?: string
-
+      persistentVolumeName?: string;
     }
-
 
     /**
      * VolumeAttachmentSpec is the specification of a VolumeAttachment request.
@@ -21516,20 +20666,18 @@ export namespace storage {
        * Attacher indicates the name of the volume driver that MUST handle this request. This is the
        * name returned by GetPluginName().
        */
-      attacher: string
+      attacher: string;
 
       /**
        * The node that the volume should be attached to.
        */
-      nodeName: string
+      nodeName: string;
 
       /**
        * Source represents the volume that should be attached.
        */
-      source: storage.v1alpha1.VolumeAttachmentSource
-
+      source: storage.v1alpha1.VolumeAttachmentSource;
     }
-
 
     /**
      * VolumeError captures an error encountered during a volume operation.
@@ -21539,18 +20687,14 @@ export namespace storage {
        * String detailing the error encountered during Attach or Detach operation. This string maybe
        * logged, so it should not contain sensitive information.
        */
-      message?: string
+      message?: string;
 
       /**
        * Time the error was encountered.
        */
-      time?: string
-
+      time?: string;
     }
-
-
   }
-
   export namespace v1beta1 {
     /**
      * CSIDriver captures information about a Container Storage Interface (CSI) volume driver
@@ -21565,7 +20709,7 @@ export namespace storage {
       /**
        * Specification of the CSI Driver.
        */
-      spec: storage.v1beta1.CSIDriverSpec
+      spec: storage.v1beta1.CSIDriverSpec;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -21573,7 +20717,7 @@ export namespace storage {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "storage.k8s.io/v1beta1"
+      apiVersion?: "storage.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -21581,7 +20725,7 @@ export namespace storage {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "CSIDriver"
+      kind?: "CSIDriver";
 
       /**
        * Standard object metadata. metadata.Name indicates the name of the CSI driver that this
@@ -21591,8 +20735,7 @@ export namespace storage {
        * More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
-
+      metadata?: meta.v1.ObjectMeta;
     }
 
     export function isCSIDriver(o: any): o is CSIDriver {
@@ -21606,7 +20749,7 @@ export namespace storage {
       /**
        * items is the list of CSIDriver
        */
-      items: storage.v1beta1.CSIDriver[]
+      items: storage.v1beta1.CSIDriver[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -21614,7 +20757,7 @@ export namespace storage {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "storage.k8s.io/v1beta1"
+      apiVersion?: "storage.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -21622,18 +20765,19 @@ export namespace storage {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "CSIDriverList"
+      kind?: "CSIDriverList";
 
       /**
        * Standard list metadata More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isCSIDriverList(o: any): o is CSIDriverList {
-      return o.apiVersion == "storage.k8s.io/v1beta1" && o.kind == "CSIDriverList";
+      return (
+        o.apiVersion == "storage.k8s.io/v1beta1" && o.kind == "CSIDriverList"
+      );
     }
 
     /**
@@ -21650,7 +20794,7 @@ export namespace storage {
        * enabled and the value is specified to false, the attach operation will be skipped.
        * Otherwise the attach operation will be called.
        */
-      attachRequired?: boolean
+      attachRequired?: boolean;
 
       /**
        * If set to true, podInfoOnMount indicates this CSI volume driver requires additional pod
@@ -21665,7 +20809,7 @@ export namespace storage {
        * string(pod.UID) "csi.storage.k8s.io/ephemeral": "true" iff the volume is an ephemeral
        * inline volume
        *                                 defined by a CSIVolumeSource, otherwise "false"
-       * 
+       *
        * "csi.storage.k8s.io/ephemeral" is a new feature in Kubernetes 1.16. It is only required for
        * drivers which support both the "Persistent" and "Ephemeral" VolumeLifecycleMode. Other
        * drivers can leave pod info disabled and/or ignore this field. As Kubernetes 1.15 doesn't
@@ -21673,7 +20817,7 @@ export namespace storage {
        * the deployment determines which mode that is, for example via a command line parameter of
        * the driver.
        */
-      podInfoOnMount?: boolean
+      podInfoOnMount?: boolean;
 
       /**
        * VolumeLifecycleModes defines what kind of volumes this CSI volume driver supports. The
@@ -21686,10 +20830,8 @@ export namespace storage {
        * https://kubernetes-csi.github.io/docs/ephemeral-local-volumes.html A driver can support one
        * or more of these modes and more modes may be added in the future.
        */
-      volumeLifecycleModes?: string[]
-
+      volumeLifecycleModes?: string[];
     }
-
 
     /**
      * CSINode holds information about all CSI drivers installed on a node. CSI drivers do not need
@@ -21699,14 +20841,14 @@ export namespace storage {
      * missing, it means either there are no CSI Drivers available on the node, or the Kubelet
      * version is low enough that it doesn't create this object. CSINode has an OwnerReference that
      * points to the corresponding node object.
-     * 
+     *
      * @deprecated storage/v1beta1/CSINode is deprecated by storage/v1beta1/CSINode.
      */
     export interface CSINode {
       /**
        * spec is the specification of CSINode
        */
-      spec: storage.v1beta1.CSINodeSpec
+      spec: storage.v1beta1.CSINodeSpec;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -21714,7 +20856,7 @@ export namespace storage {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "storage.k8s.io/v1beta1"
+      apiVersion?: "storage.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -21722,13 +20864,12 @@ export namespace storage {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "CSINode"
+      kind?: "CSINode";
 
       /**
        * metadata.name must be the Kubernetes node name.
        */
-      metadata?: meta.v1.ObjectMeta
-
+      metadata?: meta.v1.ObjectMeta;
     }
 
     export function isCSINode(o: any): o is CSINode {
@@ -21743,7 +20884,7 @@ export namespace storage {
        * This is the name of the CSI driver that this object refers to. This MUST be the same name
        * returned by the CSI GetPluginName() call for that driver.
        */
-      name: string
+      name: string;
 
       /**
        * nodeID of the node from the driver point of view. This field enables Kubernetes to
@@ -21754,12 +20895,12 @@ export namespace storage {
        * the ID that the storage system will understand, e.g. "nodeA" instead of "node1". This field
        * is required.
        */
-      nodeID: string
+      nodeID: string;
 
       /**
        * allocatable represents the volume resources of a node that are available for scheduling.
        */
-      allocatable?: storage.v1beta1.VolumeNodeResources
+      allocatable?: storage.v1beta1.VolumeNodeResources;
 
       /**
        * topologyKeys is the list of keys supported by the driver. When a driver is initialized on a
@@ -21771,10 +20912,8 @@ export namespace storage {
        * It is possible for different nodes to use different topology keys. This can be empty if
        * driver does not support topology.
        */
-      topologyKeys?: string[]
-
+      topologyKeys?: string[];
     }
-
 
     /**
      * CSINodeList is a collection of CSINode objects.
@@ -21783,7 +20922,7 @@ export namespace storage {
       /**
        * items is the list of CSINode
        */
-      items: storage.v1beta1.CSINode[]
+      items: storage.v1beta1.CSINode[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -21791,7 +20930,7 @@ export namespace storage {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "storage.k8s.io/v1beta1"
+      apiVersion?: "storage.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -21799,18 +20938,19 @@ export namespace storage {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "CSINodeList"
+      kind?: "CSINodeList";
 
       /**
        * Standard list metadata More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isCSINodeList(o: any): o is CSINodeList {
-      return o.apiVersion == "storage.k8s.io/v1beta1" && o.kind == "CSINodeList";
+      return (
+        o.apiVersion == "storage.k8s.io/v1beta1" && o.kind == "CSINodeList"
+      );
     }
 
     /**
@@ -21821,15 +20961,13 @@ export namespace storage {
        * drivers is a list of information of all CSI Drivers existing on a node. If all drivers in
        * the list are uninstalled, this can become empty.
        */
-      drivers: storage.v1beta1.CSINodeDriver[]
-
+      drivers: storage.v1beta1.CSINodeDriver[];
     }
-
 
     /**
      * StorageClass describes the parameters for a class of storage for which PersistentVolumes can
      * be dynamically provisioned.
-     * 
+     *
      * StorageClasses are non-namespaced; the name of the storage class according to etcd is in
      * ObjectMeta.Name.
      */
@@ -21837,12 +20975,12 @@ export namespace storage {
       /**
        * Provisioner indicates the type of the provisioner.
        */
-      provisioner: string
+      provisioner: string;
 
       /**
        * AllowVolumeExpansion shows whether the storage class allow volume expand
        */
-      allowVolumeExpansion?: boolean
+      allowVolumeExpansion?: boolean;
 
       /**
        * Restrict the node topologies where volumes can be dynamically provisioned. Each volume
@@ -21850,7 +20988,7 @@ export namespace storage {
        * list means there is no topology restriction. This field is only honored by servers that
        * enable the VolumeScheduling feature.
        */
-      allowedTopologies?: core.v1.TopologySelectorTerm[]
+      allowedTopologies?: core.v1.TopologySelectorTerm[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -21858,7 +20996,7 @@ export namespace storage {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "storage.k8s.io/v1beta1"
+      apiVersion?: "storage.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -21866,44 +21004,45 @@ export namespace storage {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "StorageClass"
+      kind?: "StorageClass";
 
       /**
        * Standard object's metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
+      metadata?: meta.v1.ObjectMeta;
 
       /**
        * Dynamically provisioned PersistentVolumes of this storage class are created with these
        * mountOptions, e.g. ["ro", "soft"]. Not validated - mount of the PVs will simply fail if one
        * is invalid.
        */
-      mountOptions?: string[]
+      mountOptions?: string[];
 
       /**
        * Parameters holds the parameters for the provisioner that should create volumes of this
        * storage class.
        */
-      parameters?: {[key: string]: string}
+      parameters?: { [key: string]: string };
 
       /**
        * Dynamically provisioned PersistentVolumes of this storage class are created with this
        * reclaimPolicy. Defaults to Delete.
        */
-      reclaimPolicy?: string
+      reclaimPolicy?: string;
 
       /**
        * VolumeBindingMode indicates how PersistentVolumeClaims should be provisioned and bound.
        * When unset, VolumeBindingImmediate is used. This field is only honored by servers that
        * enable the VolumeScheduling feature.
        */
-      volumeBindingMode?: string
-
+      volumeBindingMode?: string;
     }
 
     export function isStorageClass(o: any): o is StorageClass {
-      return o.apiVersion == "storage.k8s.io/v1beta1" && o.kind == "StorageClass";
+      return (
+        o.apiVersion == "storage.k8s.io/v1beta1" && o.kind == "StorageClass"
+      );
     }
 
     /**
@@ -21913,7 +21052,7 @@ export namespace storage {
       /**
        * Items is the list of StorageClasses
        */
-      items: storage.v1beta1.StorageClass[]
+      items: storage.v1beta1.StorageClass[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -21921,7 +21060,7 @@ export namespace storage {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "storage.k8s.io/v1beta1"
+      apiVersion?: "storage.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -21929,24 +21068,25 @@ export namespace storage {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "StorageClassList"
+      kind?: "StorageClassList";
 
       /**
        * Standard list metadata More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isStorageClassList(o: any): o is StorageClassList {
-      return o.apiVersion == "storage.k8s.io/v1beta1" && o.kind == "StorageClassList";
+      return (
+        o.apiVersion == "storage.k8s.io/v1beta1" && o.kind == "StorageClassList"
+      );
     }
 
     /**
      * VolumeAttachment captures the intent to attach or detach the specified volume to/from the
      * specified node.
-     * 
+     *
      * VolumeAttachment objects are non-namespaced.
      */
     export interface VolumeAttachment {
@@ -21954,7 +21094,7 @@ export namespace storage {
        * Specification of the desired attach/detach volume behavior. Populated by the Kubernetes
        * system.
        */
-      spec: storage.v1beta1.VolumeAttachmentSpec
+      spec: storage.v1beta1.VolumeAttachmentSpec;
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -21962,7 +21102,7 @@ export namespace storage {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "storage.k8s.io/v1beta1"
+      apiVersion?: "storage.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -21970,18 +21110,19 @@ export namespace storage {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "VolumeAttachment"
+      kind?: "VolumeAttachment";
 
       /**
        * Standard object metadata. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ObjectMeta
-
+      metadata?: meta.v1.ObjectMeta;
     }
 
     export function isVolumeAttachment(o: any): o is VolumeAttachment {
-      return o.apiVersion == "storage.k8s.io/v1beta1" && o.kind == "VolumeAttachment";
+      return (
+        o.apiVersion == "storage.k8s.io/v1beta1" && o.kind == "VolumeAttachment"
+      );
     }
 
     /**
@@ -21991,7 +21132,7 @@ export namespace storage {
       /**
        * Items is the list of VolumeAttachments
        */
-      items: storage.v1beta1.VolumeAttachment[]
+      items: storage.v1beta1.VolumeAttachment[];
 
       /**
        * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -21999,7 +21140,7 @@ export namespace storage {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "storage.k8s.io/v1beta1"
+      apiVersion?: "storage.k8s.io/v1beta1";
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -22007,18 +21148,20 @@ export namespace storage {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "VolumeAttachmentList"
+      kind?: "VolumeAttachmentList";
 
       /**
        * Standard list metadata More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
        */
-      metadata?: meta.v1.ListMeta
-
+      metadata?: meta.v1.ListMeta;
     }
 
     export function isVolumeAttachmentList(o: any): o is VolumeAttachmentList {
-      return o.apiVersion == "storage.k8s.io/v1beta1" && o.kind == "VolumeAttachmentList";
+      return (
+        o.apiVersion == "storage.k8s.io/v1beta1" &&
+        o.kind == "VolumeAttachmentList"
+      );
     }
 
     /**
@@ -22034,15 +21177,13 @@ export namespace storage {
        * PersistentVolumeSpec. This field is alpha-level and is only honored by servers that enabled
        * the CSIMigration feature.
        */
-      inlineVolumeSpec?: core.v1.PersistentVolumeSpec
+      inlineVolumeSpec?: core.v1.PersistentVolumeSpec;
 
       /**
        * Name of the persistent volume to attach.
        */
-      persistentVolumeName?: string
-
+      persistentVolumeName?: string;
     }
-
 
     /**
      * VolumeAttachmentSpec is the specification of a VolumeAttachment request.
@@ -22052,20 +21193,18 @@ export namespace storage {
        * Attacher indicates the name of the volume driver that MUST handle this request. This is the
        * name returned by GetPluginName().
        */
-      attacher: string
+      attacher: string;
 
       /**
        * The node that the volume should be attached to.
        */
-      nodeName: string
+      nodeName: string;
 
       /**
        * Source represents the volume that should be attached.
        */
-      source: storage.v1beta1.VolumeAttachmentSource
-
+      source: storage.v1beta1.VolumeAttachmentSource;
     }
-
 
     /**
      * VolumeError captures an error encountered during a volume operation.
@@ -22075,15 +21214,13 @@ export namespace storage {
        * String detailing the error encountered during Attach or Detach operation. This string may
        * be logged, so it should not contain sensitive information.
        */
-      message?: string
+      message?: string;
 
       /**
        * Time the error was encountered.
        */
-      time?: string
-
+      time?: string;
     }
-
 
     /**
      * VolumeNodeResources is a set of resource limits for scheduling of volumes.
@@ -22096,12 +21233,7 @@ export namespace storage {
        * same node. If this field is nil, then the supported number of volumes on this node is
        * unbounded.
        */
-      count?: number
-
+      count?: number;
     }
-
-
   }
-
 }
-

@@ -161,7 +161,8 @@ type KindConfig struct {
 	rawAPIVersion string
 	typeGuard     string
 
-	isNested bool
+	isNested         bool
+	descQuestionMark string
 }
 
 // Kind returns the name of the Kubernetes API kind (e.g., `Deployment` for
@@ -170,6 +171,9 @@ func (kc *KindConfig) Kind() string { return kc.kind }
 
 // DeprecationComment returns the deprecation comment for deprecated APIs, otherwise an empty string.
 func (kc *KindConfig) DeprecationComment() string { return kc.deprecationComment }
+
+// DescQuestionMark returns "?" if the desc property is not required, otherwise an empty string.
+func (kc *KindConfig) DescQuestionMark() string { return kc.descQuestionMark }
 
 // Comment returns the comments associated with some Kubernetes API kind.
 func (kc *KindConfig) Comment() string { return kc.comment }
@@ -218,28 +222,27 @@ func (kc *KindConfig) IsNested() bool { return kc.isNested }
 // Property represents a property we want to expose on a Kubernetes API kind (i.e., things that we
 // will want to `.` into, like `thing.apiVersion`, `thing.kind`, `thing.metadata`, etc.).
 type Property struct {
-	name           string
-	languageName   string
-	comment        string
-	inputsAPIType  string
-	outputsAPIType string
-	providerType   string
-	defaultValue   string
-	isLast         bool
+	name         string
+	comment      string
+	tsType       string
+	providerType string
+	defaultValue string
+	// is this required on the created class properties (!== required by the OpenAPI Schema)
+	apiRequired bool
+	isLast      bool
 }
 
 // Name returns the name of the property.
 func (p *Property) Name() string { return p.name }
 
+// Required returns the name of the property.
+func (p *Property) Required() bool { return p.apiRequired }
+
 // Comment returns the comments associated with some property.
 func (p *Property) Comment() string { return p.comment }
 
-/// start extra
-// InputsAPIType returns the type of the property for the inputs API.
-func (p *Property) InputsAPIType() string { return p.inputsAPIType }
-
-// OutputsAPIType returns the type of the property for the outputs API.
-func (p *Property) OutputsAPIType() string { return p.outputsAPIType }
+// Type returns the type of the property for the outputs API.
+func (p *Property) Type() string { return p.tsType }
 
 // ProviderType returns the type of the property for the provider API.
 func (p *Property) ProviderType() string { return p.providerType }
@@ -298,7 +301,7 @@ func extractDeprecationComment(comment interface{}, gvk schema.GroupVersionKind)
 	return commentstr, ""
 }
 
-func fmtComment(comment interface{}, prefix string, bareRender bool, opts groupOpts) string {
+func fmtComment(comment interface{}, prefix string, bareRender bool) string {
 	if comment == nil {
 		return ""
 	}
@@ -365,11 +368,12 @@ const (
 	v1CRSubresourceStatus               = apiextensionsV1 + ".CustomResourceSubresourceStatus"
 )
 
-func makeTypescriptType(prop map[string]interface{}, opts groupOpts) string {
+// func makeTypescriptType(prop map[string]interface{}, opts groupOpts) string {
+func makeTypescriptType(resourceType, propName string, prop map[string]interface{}) string {
 	if t, exists := prop["type"]; exists {
 		tstr := t.(string)
 		if tstr == "array" {
-			return fmt.Sprintf("%s[]", makeTypescriptType(prop["items"].(map[string]interface{}), opts))
+			return fmt.Sprintf("%s[]", makeTypescriptType(resourceType, propName, prop["items"].(map[string]interface{})))
 		} else if tstr == "integer" {
 			return "number"
 		} else if tstr == object {
@@ -381,10 +385,10 @@ func makeTypescriptType(prop map[string]interface{}, opts groupOpts) string {
 					return fmt.Sprintf("{[key: %s]: %s}", ktype, ktype)
 				}
 			}
-			// } else if tstr == "string" && resourceType == "io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta" && propName == "namespace" {
-			// 	// Special case: `.metadata.namespace` should either take a string or a namespace object
-			// 	// itself.
-			// 	return "string | Namespace"
+		} else if tstr == "string" && resourceType == "io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta" && propName == "namespace" {
+			// Special case: `.metadata.namespace` should either take a string or a namespace object
+			// itself.
+			return "string | core.v1.Namespace"
 		}
 		return tstr
 	}
@@ -425,17 +429,6 @@ func makeTypescriptType(prop map[string]interface{}, opts groupOpts) string {
 
 	gvk := gvkFromRef(ref)
 	return fmt.Sprintf("types.%s.%s.%s", gvk.Group, gvk.Version, gvk.Kind)
-}
-
-func makeTypes(resourceType, propName string, prop map[string]interface{}) (string, string, string) {
-	inputsAPIType := makeType(prop, typesOpts())
-	outputsAPIType := makeType(prop, typesOpts())
-	providerType := makeType(prop, apiOpts())
-	return inputsAPIType, outputsAPIType, providerType
-}
-
-func makeType(prop map[string]interface{}, opts groupOpts) string {
-	return makeTypescriptType(prop, opts)
 }
 
 func isDefTopLevel(d *definition) bool {
@@ -485,23 +478,7 @@ type definition struct {
 	data map[string]interface{}
 }
 
-type gentype int
-
-const (
-	api gentype = iota
-	types
-	// upstream has inputsAPI and outputsAPI
-)
-
-type groupOpts struct {
-	// upstream note: language language
-	generatorType gentype
-}
-
-func typesOpts() groupOpts { return groupOpts{generatorType: types} }
-func apiOpts() groupOpts   { return groupOpts{generatorType: api} }
-
-func createGroups(definitionsJSON map[string]interface{}, opts groupOpts) []*GroupConfig {
+func createGroups(definitionsJSON map[string]interface{}) []*GroupConfig {
 	// Map definition JSON object -> `definition` with metadata.
 	definitions := []*definition{}
 	linq.From(definitionsJSON).
@@ -582,9 +559,9 @@ func createGroups(definitionsJSON map[string]interface{}, opts groupOpts) []*Gro
 					prop := d.data["properties"].(map[string]interface{})[propName].(map[string]interface{})
 
 					var prefix string
-					var inputsAPIType, outputsAPIType, providerType string
+					var tsType string
 					prefix = "      "
-					inputsAPIType, outputsAPIType, providerType = makeTypes(d.name, propName, prop)
+					tsType = makeTypescriptType(d.name, propName, prop)
 
 					// `-` is invalid in TS variable names, so replace with `_`
 					propName = strings.ReplaceAll(propName, "-", "_")
@@ -594,31 +571,20 @@ func createGroups(definitionsJSON map[string]interface{}, opts groupOpts) []*Gro
 					switch propName {
 					case "apiVersion":
 						defaultValue = fmt.Sprintf(`"%s"`, defaultGroupVersion)
-						if isTopLevel {
-							inputsAPIType = fmt.Sprintf(`pulumi.Input<"%s">`, defaultGroupVersion)
-							outputsAPIType = fmt.Sprintf(`"%s"`, defaultGroupVersion)
-							providerType = fmt.Sprintf(`pulumi.Output<"%s">`, defaultGroupVersion)
-						}
+						tsType = defaultValue
 					case "kind":
 						defaultValue = fmt.Sprintf(`"%s"`, d.gvk.Kind)
-						if isTopLevel {
-							inputsAPIType = fmt.Sprintf(`pulumi.Input<"%s">`, d.gvk.Kind)
-							outputsAPIType = fmt.Sprintf(`"%s"`, d.gvk.Kind)
-							providerType = fmt.Sprintf(`pulumi.Output<"%s">`, d.gvk.Kind)
-						}
+						tsType = defaultValue
 					case "metadata":
 						defaultValue = "Object.assign({}, desc && desc.metadata || {}, { name })"
 					}
 
 					return &Property{
-						comment:        fmtComment(prop["description"], prefix, false, opts),
-						inputsAPIType:  inputsAPIType,
-						outputsAPIType: outputsAPIType,
-						providerType:   providerType,
-						name:           propName,
-						languageName:   propName,
-						defaultValue:   defaultValue,
-						isLast:         false,
+						comment:      fmtComment(prop["description"], prefix, false),
+						tsType:       tsType,
+						name:         propName,
+						defaultValue: defaultValue,
+						isLast:       false,
 					}
 				})
 
@@ -644,6 +610,10 @@ func createGroups(definitionsJSON map[string]interface{}, opts groupOpts) []*Gro
 				}).
 				ToSlice(&requiredProperties)
 
+			for _, prop := range requiredProperties {
+				prop.apiRequired = true
+			}
+
 			optionalProperties := []*Property{}
 			ps.
 				WhereT(func(p *Property) bool {
@@ -667,14 +637,33 @@ func createGroups(definitionsJSON map[string]interface{}, opts groupOpts) []*Gro
 			}
 
 			comment, deprecationComment := extractDeprecationComment(d.data["description"], d.gvk)
+			descQuestionMark := ""
+			if d.gvk.Kind == "Namespace" {
+				descQuestionMark = "?"
+			}
+
+			for i, property := range properties {
+				switch property.name {
+				case "spec":
+					fallthrough
+				case "metadata":
+					fallthrough
+				case "kind":
+					fallthrough
+				case "apiVersion":
+					properties[i].apiRequired = true
+				default:
+					properties[i].apiRequired = reqdProps.Has(property.name)
+				}
+			}
 
 			return linq.From([]*KindConfig{
 				{
 					kind: d.gvk.Kind,
 					// NOTE: This transformation assumes git users on Windows to set
 					// the "check in with UNIX line endings" setting.
-					deprecationComment: fmtComment(deprecationComment, "    ", true, opts),
-					comment:            fmtComment(comment, "    ", true, opts),
+					deprecationComment: fmtComment(deprecationComment, "    ", true),
+					comment:            fmtComment(comment, "    ", true),
 					properties:         properties,
 					requiredProperties: requiredProperties,
 					optionalProperties: optionalProperties,
@@ -684,6 +673,7 @@ func createGroups(definitionsJSON map[string]interface{}, opts groupOpts) []*Gro
 					rawAPIVersion:      defaultGroupVersion,
 					typeGuard:          typeGuard,
 					isNested:           !isTopLevel,
+					descQuestionMark:   descQuestionMark,
 				},
 			})
 		}).
