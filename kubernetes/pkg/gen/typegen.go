@@ -116,27 +116,6 @@ func (vc *VersionConfig) TopLevelKindsAndAliases() []*KindConfig {
 	return kindsAndAliases
 }
 
-// @deprecated
-// KindsAndAliases will produce a list of kinds, including aliases (e.g., both `apiregistration` and
-// `apiregistration.k8s.io`).
-// func (vc *VersionConfig) KindsAndAliases() []*KindConfig {
-// 	kindsAndAliases := []*KindConfig{}
-// 	for _, kind := range vc.kinds {
-// 		kindsAndAliases = append(kindsAndAliases, kind)
-// 		if strings.HasPrefix(kind.APIVersion(), apiRegistration) {
-// 			alias := KindConfig{}
-// 			err := copier.Copy(&alias, kind)
-// 			if err != nil {
-// 				panic(err)
-// 			}
-// 			rawAPIVersion := "apiregistration" + strings.TrimPrefix(kind.APIVersion(), apiRegistration)
-// 			alias.rawAPIVersion = rawAPIVersion
-// 			kindsAndAliases = append(kindsAndAliases, &alias)
-// 		}
-// 	}
-// 	return kindsAndAliases
-// }
-
 // ListTopLevelKindsAndAliases will return all known `Kind`s that are lists, or aliases of lists. These
 // `Kind`s are not instantiated by the API server, and we must "flatten" them client-side to get an
 // accurate view of what resource operations we need to perform.
@@ -159,29 +138,6 @@ func (vc *VersionConfig) ListTopLevelKindsAndAliases() []*KindConfig {
 	return listKinds
 }
 
-//@deprecated
-// ListKindsAndAliases will return all known `Kind`s that are lists, or aliases of lists. These
-// `Kind`s are not instantiated by the API server, and we must "flatten" them client-side to get an
-// accurate view of what resource operations we need to perform.
-// func (vc *VersionConfig) ListKindsAndAliases() []*KindConfig {
-// 	listKinds := []*KindConfig{}
-// 	for _, kind := range vc.KindsAndAliases() {
-// 		hasItems := false
-// 		for _, prop := range kind.properties {
-// 			if prop.name == "items" {
-// 				hasItems = true
-// 				break
-// 			}
-// 		}
-
-// 		if strings.HasSuffix(kind.Kind(), "List") && hasItems {
-// 			listKinds = append(listKinds, kind)
-// 		}
-// 	}
-
-// 	return listKinds
-// }
-
 // APIVersion returns the fully-qualified apiVersion (e.g., `storage.k8s.io/v1` for storage, etc.)
 func (vc *VersionConfig) APIVersion() string { return vc.apiVersion }
 
@@ -192,7 +148,7 @@ func (vc *VersionConfig) RawAPIVersion() string { return vc.rawAPIVersion }
 // `apps/v1beta1/Deployment`).
 type KindConfig struct {
 	kind               string
-	deprecationComment string // only upstream
+	deprecationComment string
 	comment            string
 	pulumiComment      string
 	properties         []*Property
@@ -262,10 +218,6 @@ func (kc *KindConfig) IsNested() bool { return kc.isNested }
 // Property represents a property we want to expose on a Kubernetes API kind (i.e., things that we
 // will want to `.` into, like `thing.apiVersion`, `thing.kind`, `thing.metadata`, etc.).
 type Property struct {
-	// name         string
-	// comment      string
-	// propType     string
-	// defaultValue string
 	name           string
 	languageName   string
 	comment        string
@@ -281,10 +233,6 @@ func (p *Property) Name() string { return p.name }
 
 // Comment returns the comments associated with some property.
 func (p *Property) Comment() string { return p.comment }
-
-//@deprecated
-// PropType returns the type of the property.
-// func (p *Property) PropType() string { return p.propType }
 
 /// start extra
 // InputsAPIType returns the type of the property for the inputs API.
@@ -325,7 +273,6 @@ func stripPrefix(name string) string {
 	return strings.TrimPrefix(name, prefix)
 }
 
-//@added
 // extractDeprecationComment returns the comment with deprecation comment removed and the extracted deprecation
 // comment, fixed-up for the specified language.
 func extractDeprecationComment(comment interface{}, gvk schema.GroupVersionKind) (string, string) {
@@ -396,9 +343,6 @@ func fmtComment(comment interface{}, prefix string, bareRender bool, opts groupO
 	return ""
 }
 
-//@missing large const block line 414-434 in upstream
-//@ makeTypeScriptType is very different
-
 func makeTypescriptType(prop map[string]interface{}, opts groupOpts) string {
 	if t, exists := prop["type"]; exists {
 		tstr := t.(string)
@@ -452,8 +396,7 @@ func makeTypescriptType(prop map[string]interface{}, opts groupOpts) string {
 	return fmt.Sprintf("%s.%s.%s", gvk.Group, gvk.Version, gvk.Kind)
 }
 
-//@missing from upstream makeTypes
-func makeTypes(resourceType, propName string, prop map[string]interface{}, language language) (string, string, string) {
+func makeTypes(resourceType, propName string, prop map[string]interface{}) (string, string, string) {
 	inputsAPIType := makeType(prop, shapesOpts())
 	outputsAPIType := makeType(prop, shapesOpts())
 	providerType := makeType(prop, apiOpts())
@@ -463,8 +406,6 @@ func makeTypes(resourceType, propName string, prop map[string]interface{}, langu
 func makeType(prop map[string]interface{}, opts groupOpts) string {
 	return makeTypescriptType(prop, opts)
 }
-
-//@from upstream
 
 func isDefTopLevel(d *definition) bool {
 	gvks, gvkExists :=
@@ -521,20 +462,11 @@ const (
 	// upstream has inputsAPI and outputsAPI
 )
 
-//@unused
-type language string
-
-const (
-	typescript = "typescript"
-)
-
 type groupOpts struct {
 	// upstream note: language language
 	generatorType gentype
 }
 
-//@disable upstream
-// func nodeJSOpts() groupOpts { return groupOpts{language: typescript} }
 func shapesOpts() groupOpts { return groupOpts{generatorType: shapes} }
 func apiOpts() groupOpts    { return groupOpts{generatorType: api} }
 
@@ -610,19 +542,18 @@ func createGroups(definitionsJSON map[string]interface{}, opts groupOpts) []*Gro
 				defaultGroupVersion = gv
 				fqGroupVersion = gv
 			}
-			//@note status filter added in jk
+			//note: status filter added in jk
 			ps := linq.From(d.data["properties"]).
 				WhereT(func(kv linq.KeyValue) bool { return kv.Key.(string) != "status" }).
 				OrderByT(func(kv linq.KeyValue) string { return kv.Key.(string) }).
 				SelectT(func(kv linq.KeyValue) *Property {
 					propName := kv.Key.(string)
 					prop := d.data["properties"].(map[string]interface{})[propName].(map[string]interface{})
-					//@ this is where things differ a lot
 
 					var prefix string
 					var inputsAPIType, outputsAPIType, providerType string
 					prefix = "      "
-					inputsAPIType, outputsAPIType, providerType = makeTypes(d.name, propName, prop, typescript)
+					inputsAPIType, outputsAPIType, providerType = makeTypes(d.name, propName, prop)
 
 					// `-` is invalid in TS variable names, so replace with `_`
 					propName = strings.ReplaceAll(propName, "-", "_")
@@ -648,16 +579,7 @@ func createGroups(definitionsJSON map[string]interface{}, opts groupOpts) []*Gro
 						defaultValue = "Object.assign({}, desc && desc.metadata || {}, { name })"
 					}
 
-					// TODO: implement
-					// t := makeType(prop, opts)
-
 					return &Property{
-						// comment: fmtComment(prop["description"], prefix, opts),
-						// // propType:     t,
-						// inputsAPIType: t,
-						// name:          propName,
-						// defaultValue:  defaultValue,
-						// isLast:        false,
 						comment:        fmtComment(prop["description"], prefix, false, opts),
 						inputsAPIType:  inputsAPIType,
 						outputsAPIType: outputsAPIType,
@@ -713,7 +635,6 @@ func createGroups(definitionsJSON map[string]interface{}, opts groupOpts) []*Gro
     }`, d.gvk.Kind, d.gvk.Kind, defaultGroupVersion, d.gvk.Kind)
 			}
 
-			//@TODO: enable
 			comment, deprecationComment := extractDeprecationComment(d.data["description"], d.gvk)
 
 			return linq.From([]*KindConfig{
@@ -812,5 +733,3 @@ func createGroups(definitionsJSON map[string]interface{}, opts groupOpts) []*Gro
 
 	return groups
 }
-
-// TODO: remove unused
