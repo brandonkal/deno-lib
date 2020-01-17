@@ -343,6 +343,28 @@ func fmtComment(comment interface{}, prefix string, bareRender bool, opts groupO
 	return ""
 }
 
+const (
+	apiextensionsV1beta1                = "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1"
+	apiextensionsV1                     = "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1"
+	quantity                            = "io.k8s.apimachinery.pkg.api.resource.Quantity"
+	rawExtension                        = "io.k8s.apimachinery.pkg.runtime.RawExtension"
+	intOrString                         = "io.k8s.apimachinery.pkg.util.intstr.IntOrString"
+	v1Fields                            = "io.k8s.apimachinery.pkg.apis.meta.v1.Fields"
+	v1FieldsV1                          = "io.k8s.apimachinery.pkg.apis.meta.v1.FieldsV1"
+	v1Time                              = "io.k8s.apimachinery.pkg.apis.meta.v1.Time"
+	v1MicroTime                         = "io.k8s.apimachinery.pkg.apis.meta.v1.MicroTime"
+	v1beta1JSONSchemaPropsOrBool        = apiextensionsV1beta1 + ".JSONSchemaPropsOrBool"
+	v1beta1JSONSchemaPropsOrArray       = apiextensionsV1beta1 + ".JSONSchemaPropsOrArray"
+	v1beta1JSONSchemaPropsOrStringArray = apiextensionsV1beta1 + ".JSONSchemaPropsOrStringArray"
+	v1beta1JSON                         = apiextensionsV1beta1 + ".JSON"
+	v1beta1CRSubresourceStatus          = apiextensionsV1beta1 + ".CustomResourceSubresourceStatus"
+	v1JSONSchemaPropsOrBool             = apiextensionsV1 + ".JSONSchemaPropsOrBool"
+	v1JSONSchemaPropsOrArray            = apiextensionsV1 + ".JSONSchemaPropsOrArray"
+	v1JSONSchemaPropsOrStringArray      = apiextensionsV1 + ".JSONSchemaPropsOrStringArray"
+	v1JSON                              = apiextensionsV1 + ".JSON"
+	v1CRSubresourceStatus               = apiextensionsV1 + ".CustomResourceSubresourceStatus"
+)
+
 func makeTypescriptType(prop map[string]interface{}, opts groupOpts) string {
 	if t, exists := prop["type"]; exists {
 		tstr := t.(string)
@@ -359,46 +381,55 @@ func makeTypescriptType(prop map[string]interface{}, opts groupOpts) string {
 					return fmt.Sprintf("{[key: %s]: %s}", ktype, ktype)
 				}
 			}
+			// } else if tstr == "string" && resourceType == "io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta" && propName == "namespace" {
+			// 	// Special case: `.metadata.namespace` should either take a string or a namespace object
+			// 	// itself.
+			// 	return "string | Namespace"
 		}
 		return tstr
 	}
 
 	ref := stripPrefix(prop["$ref"].(string))
-	const (
-		apiextensionsV1beta1          = "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1beta1"
-		quantity                      = "io.k8s.apimachinery.pkg.api.resource.Quantity"
-		intOrString                   = "io.k8s.apimachinery.pkg.util.intstr.IntOrString"
-		v1Time                        = "io.k8s.apimachinery.pkg.apis.meta.v1.Time"
-		v1MicroTime                   = "io.k8s.apimachinery.pkg.apis.meta.v1.MicroTime"
-		v1beta1JSONSchemaPropsOrBool  = apiextensionsV1beta1 + ".JSONSchemaPropsOrBool"
-		v1beta1JSONSchemaPropsOrArray = apiextensionsV1beta1 + ".JSONSchemaPropsOrArray"
-		v1beta1JSON                   = apiextensionsV1beta1 + ".JSON"
-		v1beta1CRSubresourceStatus    = apiextensionsV1beta1 + ".CustomResourceSubresourceStatus"
-	)
 
+	isSimpleRef := true
 	switch ref {
 	case quantity:
-		return stringT
+		ref = stringT
 	case intOrString:
-		return "number | string"
+		ref = "number | string"
+	case v1Fields, v1FieldsV1, rawExtension:
+		ref = object
 	case v1Time, v1MicroTime:
 		// TODO: Automatically deserialized with `DateConstructor`.
-		return stringT
+		ref = stringT
 	case v1beta1JSONSchemaPropsOrBool:
-		return "apiextensions.v1beta1.JSONSchemaProps | boolean"
+		ref = "types.apiextensions.v1beta1.JSONSchemaProps | boolean"
+	case v1JSONSchemaPropsOrBool:
+		ref = "types.apiextensions.v1.JSONSchemaProps | boolean"
 	case v1beta1JSONSchemaPropsOrArray:
-		return "apiextensions.v1beta1.JSONSchemaProps | any[]"
-	case v1beta1JSON, v1beta1CRSubresourceStatus:
-		return "any"
+		ref = "types.apiextensions.v1beta1.JSONSchemaProps | any[]"
+	case v1JSONSchemaPropsOrArray:
+		ref = "types.apiextensions.v1.JSONSchemaProps | any[]"
+	case v1beta1JSON, v1beta1CRSubresourceStatus, v1JSON, v1CRSubresourceStatus:
+		ref = "any"
+	case v1JSONSchemaPropsOrStringArray:
+		ref = "types.apiextensions.v1.JSONSchemaProps | string[]"
+	case v1beta1JSONSchemaPropsOrStringArray:
+		ref = "types.apiextensions.v1beta.JSONSchemaProps | string[]"
+	default:
+		isSimpleRef = false
+	}
+	if isSimpleRef {
+		return ref
 	}
 
 	gvk := gvkFromRef(ref)
-	return fmt.Sprintf("%s.%s.%s", gvk.Group, gvk.Version, gvk.Kind)
+	return fmt.Sprintf("types.%s.%s.%s", gvk.Group, gvk.Version, gvk.Kind)
 }
 
 func makeTypes(resourceType, propName string, prop map[string]interface{}) (string, string, string) {
-	inputsAPIType := makeType(prop, shapesOpts())
-	outputsAPIType := makeType(prop, shapesOpts())
+	inputsAPIType := makeType(prop, typesOpts())
+	outputsAPIType := makeType(prop, typesOpts())
 	providerType := makeType(prop, apiOpts())
 	return inputsAPIType, outputsAPIType, providerType
 }
@@ -458,7 +489,7 @@ type gentype int
 
 const (
 	api gentype = iota
-	shapes
+	types
 	// upstream has inputsAPI and outputsAPI
 )
 
@@ -467,8 +498,8 @@ type groupOpts struct {
 	generatorType gentype
 }
 
-func shapesOpts() groupOpts { return groupOpts{generatorType: shapes} }
-func apiOpts() groupOpts    { return groupOpts{generatorType: api} }
+func typesOpts() groupOpts { return groupOpts{generatorType: types} }
+func apiOpts() groupOpts   { return groupOpts{generatorType: api} }
 
 func createGroups(definitionsJSON map[string]interface{}, opts groupOpts) []*GroupConfig {
 	// Map definition JSON object -> `definition` with metadata.

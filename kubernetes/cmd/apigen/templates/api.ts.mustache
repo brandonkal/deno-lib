@@ -16,7 +16,7 @@ export namespace {{Group}} {
     export class {{Kind}} extends kite.Resource {
       {{#Properties}}
       {{{Comment}}}
-      public {{Name}}?: {{{OutputsAPIType}}};
+      readonly {{Name}}?: {{{OutputsAPIType}}};
 
       {{/Properties}}
 
@@ -38,7 +38,6 @@ export namespace {{Group}} {
       }
     {{/HasMeta}}
     }
-
     {{/Kinds}}
   }
 

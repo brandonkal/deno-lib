@@ -18,6 +18,7 @@ package gen
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/cbroglie/mustache"
 )
@@ -34,7 +35,7 @@ func NodeJSClient(
 ) (typests, apits string, err error) {
 	definitions := swagger["definitions"].(map[string]interface{})
 
-	groupsSlice := createGroups(definitions, shapesOpts())
+	groupsSlice := createGroups(definitions, typesOpts())
 	typests, err = mustache.RenderFile(fmt.Sprintf("%s/types.ts.mustache", templateDir),
 		map[string]interface{}{
 			"Groups": groupsSlice,
@@ -42,6 +43,8 @@ func NodeJSClient(
 	if err != nil {
 		return "", "", err
 	}
+
+	typests = strings.ReplaceAll(typests, ": types.", ": ")
 
 	groupsSlice = createGroups(definitions, apiOpts())
 	// filter api by top level
