@@ -571,10 +571,14 @@ func createGroups(definitionsJSON map[string]interface{}) []*GroupConfig {
 					switch propName {
 					case "apiVersion":
 						defaultValue = fmt.Sprintf(`"%s"`, defaultGroupVersion)
-						tsType = defaultValue
+						if isTopLevel {
+							tsType = defaultValue
+						}
 					case "kind":
 						defaultValue = fmt.Sprintf(`"%s"`, d.gvk.Kind)
-						tsType = defaultValue
+						if isTopLevel {
+							tsType = defaultValue
+						}
 					case "metadata":
 						defaultValue = "Object.assign({}, desc && desc.metadata || {}, { name })"
 					}

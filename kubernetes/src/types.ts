@@ -1325,7 +1325,7 @@ export namespace apiextensions {
        * kind is the serialized kind of the resource. It is normally CamelCase and singular. Custom
        * resource instances will use this value as the `kind` attribute in API calls.
        */
-      kind: "CustomResourceDefinitionNames";
+      kind: string;
 
       /**
        * plural is the plural name of the resource to serve. The custom resources are served under
@@ -1980,7 +1980,7 @@ export namespace apiextensions {
        * kind is the serialized kind of the resource. It is normally CamelCase and singular. Custom
        * resource instances will use this value as the `kind` attribute in API calls.
        */
-      kind: "CustomResourceDefinitionNames";
+      kind: string;
 
       /**
        * plural is the plural name of the resource to serve. The custom resources are served under
@@ -3818,7 +3818,7 @@ export namespace apps {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apps/v1beta1";
+      apiVersion?: string;
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3826,7 +3826,7 @@ export namespace apps {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "DeploymentRollback";
+      kind?: string;
 
       /**
        * The annotations to be updated to a deployment
@@ -3973,7 +3973,7 @@ export namespace apps {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apps/v1beta1";
+      apiVersion?: string;
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3981,7 +3981,7 @@ export namespace apps {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "Scale";
+      kind?: string;
 
       /**
        * Standard object metadata; More info:
@@ -4813,7 +4813,7 @@ export namespace apps {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "apps/v1beta2";
+      apiVersion?: string;
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -4821,7 +4821,7 @@ export namespace apps {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "Scale";
+      kind?: string;
 
       /**
        * Standard object metadata; More info:
@@ -5243,12 +5243,12 @@ export namespace authentication {
       /**
        * API version of the referent.
        */
-      apiVersion?: "authentication/v1";
+      apiVersion?: string;
 
       /**
        * Kind of the referent. Valid kinds are 'Pod' and 'Secret'.
        */
-      kind?: "BoundObjectReference";
+      kind?: string;
 
       /**
        * Name of the referent.
@@ -6173,7 +6173,7 @@ export namespace autoscaling {
        * Kind of the referent; More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"
        */
-      kind: "CrossVersionObjectReference";
+      kind: string;
 
       /**
        * Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
@@ -6183,7 +6183,7 @@ export namespace autoscaling {
       /**
        * API version of the referent
        */
-      apiVersion?: "autoscaling/v1";
+      apiVersion?: string;
     }
 
     export function isCrossVersionObjectReference(
@@ -6317,7 +6317,7 @@ export namespace autoscaling {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "autoscaling/v1";
+      apiVersion?: string;
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -6325,7 +6325,7 @@ export namespace autoscaling {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "Scale";
+      kind?: string;
 
       /**
        * Standard object metadata; More info:
@@ -6364,7 +6364,7 @@ export namespace autoscaling {
        * Kind of the referent; More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"
        */
-      kind: "CrossVersionObjectReference";
+      kind: string;
 
       /**
        * Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
@@ -6374,7 +6374,7 @@ export namespace autoscaling {
       /**
        * API version of the referent
        */
-      apiVersion?: "autoscaling/v2beta1";
+      apiVersion?: string;
     }
 
     export function isCrossVersionObjectReference(
@@ -6700,7 +6700,7 @@ export namespace autoscaling {
        * Kind of the referent; More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"
        */
-      kind: "CrossVersionObjectReference";
+      kind: string;
 
       /**
        * Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
@@ -6710,7 +6710,7 @@ export namespace autoscaling {
       /**
        * API version of the referent
        */
-      apiVersion?: "autoscaling/v2beta2";
+      apiVersion?: string;
     }
 
     export function isCrossVersionObjectReference(
@@ -7943,7 +7943,7 @@ export namespace core {
        * disk per storage account  Managed: azure managed data disk (only in managed availability
        * set). defaults to shared
        */
-      kind?: "AzureDiskVolumeSource";
+      kind?: string;
 
       /**
        * Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in
@@ -10720,7 +10720,7 @@ export namespace core {
       /**
        * Version of the schema the FieldPath is written in terms of, defaults to "v1".
        */
-      apiVersion?: "core/v1";
+      apiVersion?: string;
     }
 
     export function isObjectFieldSelector(o: any): o is ObjectFieldSelector {
@@ -10734,7 +10734,7 @@ export namespace core {
       /**
        * API version of the referent.
        */
-      apiVersion?: "core/v1";
+      apiVersion?: string;
 
       /**
        * If referring to a piece of an object instead of an entire object, this string should
@@ -10751,7 +10751,7 @@ export namespace core {
        * Kind of the referent. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "ObjectReference";
+      kind?: string;
 
       /**
        * Name of the referent. More info:
@@ -13551,7 +13551,7 @@ export namespace core {
       /**
        * Kind is the type of resource being referenced
        */
-      kind: "TypedLocalObjectReference";
+      kind: string;
 
       /**
        * Name is the name of resource being referenced
@@ -14586,7 +14586,7 @@ export namespace extensions {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "extensions/v1beta1";
+      apiVersion?: string;
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -14594,7 +14594,7 @@ export namespace extensions {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "DeploymentRollback";
+      kind?: string;
 
       /**
        * The annotations to be updated to a deployment
@@ -15693,7 +15693,7 @@ export namespace extensions {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "extensions/v1beta1";
+      apiVersion?: string;
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -15701,7 +15701,7 @@ export namespace extensions {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "Scale";
+      kind?: string;
 
       /**
        * Standard object metadata; More info:
@@ -16261,7 +16261,7 @@ export namespace flowcontrol {
       /**
        * Required
        */
-      kind: "Subject";
+      kind: string;
 
       group?: flowcontrol.v1alpha1.GroupSubject;
 
@@ -16304,7 +16304,7 @@ export namespace meta {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1";
+      apiVersion?: string;
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -16312,7 +16312,7 @@ export namespace meta {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "APIGroup";
+      kind?: string;
 
       /**
        * preferredVersion is the version preferred by the API server, which probably is the storage
@@ -16351,7 +16351,7 @@ export namespace meta {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1";
+      apiVersion?: string;
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -16359,7 +16359,7 @@ export namespace meta {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "APIGroupList";
+      kind?: string;
     }
 
     export function isAPIGroupList(o: any): o is APIGroupList {
@@ -16373,7 +16373,7 @@ export namespace meta {
       /**
        * kind is the kind for the resource (e.g. 'Foo' is the kind for a resource 'foo')
        */
-      kind: "APIResource";
+      kind: string;
 
       /**
        * name is the plural name of the resource.
@@ -16452,7 +16452,7 @@ export namespace meta {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1";
+      apiVersion?: string;
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -16460,7 +16460,7 @@ export namespace meta {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "APIResourceList";
+      kind?: string;
     }
 
     export function isAPIResourceList(o: any): o is APIResourceList {
@@ -16494,7 +16494,7 @@ export namespace meta {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1";
+      apiVersion?: string;
 
       /**
        * Kind is a string value representing the REST resource this object represents. Servers may
@@ -16502,7 +16502,7 @@ export namespace meta {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "APIVersions";
+      kind?: string;
     }
 
     export function isAPIVersions(o: any): o is APIVersions {
@@ -16519,7 +16519,7 @@ export namespace meta {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "v1";
+      apiVersion?: string;
 
       /**
        * When present, indicates that modifications should not be persisted. An invalid or
@@ -16542,7 +16542,7 @@ export namespace meta {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "DeleteOptions";
+      kind?: string;
 
       /**
        * Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should
@@ -16688,7 +16688,7 @@ export namespace meta {
        * is "group/version" just like the top-level APIVersion field. It is necessary to track the
        * version of a field set because it cannot be automatically converted.
        */
-      apiVersion?: "meta/v1";
+      apiVersion?: string;
 
       /**
        * FieldsType is the discriminator for the different fields format and version. There is
@@ -16903,13 +16903,13 @@ export namespace meta {
       /**
        * API version of the referent.
        */
-      apiVersion: "meta/v1";
+      apiVersion: string;
 
       /**
        * Kind of the referent. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind: "OwnerReference";
+      kind: string;
 
       /**
        * Name of the referent. More info: http://kubernetes.io/docs/user-guide/identifiers#names
@@ -17080,7 +17080,7 @@ export namespace meta {
        * operations may differ from the requested resource Kind. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "StatusDetails";
+      kind?: string;
 
       /**
        * The name attribute of the resource associated with the status StatusReason (when there is a
@@ -17920,7 +17920,7 @@ export namespace policy {
        * values. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
        */
-      apiVersion?: "policy/v1beta1";
+      apiVersion?: string;
 
       /**
        * DeleteOptions may be provided
@@ -17933,7 +17933,7 @@ export namespace policy {
        * CamelCase. More info:
        * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
        */
-      kind?: "Eviction";
+      kind?: string;
 
       /**
        * ObjectMeta describes the pod that is being evicted.
@@ -18806,7 +18806,7 @@ export namespace rbac {
       /**
        * Kind is the type of resource being referenced
        */
-      kind: "RoleRef";
+      kind: string;
 
       /**
        * Name is the name of resource being referenced
@@ -18825,7 +18825,7 @@ export namespace rbac {
        * "ServiceAccount". If the Authorizer does not recognized the kind value, the Authorizer
        * should report an error.
        */
-      kind: "Subject";
+      kind: string;
 
       /**
        * Name of the object being referenced.
@@ -19250,7 +19250,7 @@ export namespace rbac {
       /**
        * Kind is the type of resource being referenced
        */
-      kind: "RoleRef";
+      kind: string;
 
       /**
        * Name is the name of resource being referenced
@@ -19269,7 +19269,7 @@ export namespace rbac {
        * "ServiceAccount". If the Authorizer does not recognized the kind value, the Authorizer
        * should report an error.
        */
-      kind: "Subject";
+      kind: string;
 
       /**
        * Name of the object being referenced.
@@ -19281,7 +19281,7 @@ export namespace rbac {
        * ServiceAccount subjects. Defaults to "rbac.authorization.k8s.io/v1alpha1" for User and
        * Group subjects.
        */
-      apiVersion?: "rbac/v1alpha1";
+      apiVersion?: string;
 
       /**
        * Namespace of the referenced object.  If the object kind is non-namespace, such as "User" or
@@ -19700,7 +19700,7 @@ export namespace rbac {
       /**
        * Kind is the type of resource being referenced
        */
-      kind: "RoleRef";
+      kind: string;
 
       /**
        * Name is the name of resource being referenced
@@ -19719,7 +19719,7 @@ export namespace rbac {
        * "ServiceAccount". If the Authorizer does not recognized the kind value, the Authorizer
        * should report an error.
        */
-      kind: "Subject";
+      kind: string;
 
       /**
        * Name of the object being referenced.
