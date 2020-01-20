@@ -1,0 +1,20 @@
+{
+	"name": "deno-lib",
+	"version": "1.0.0",
+	"description": "Useful TypeScript libraries written for Deno. This file is required for debugging with babel-node",
+	"repository": "git@github.com:brandonkal/deno-lib.git",
+	"author": "Brandon Kalinowski <brandon@brandonkalinowski.com>",
+	"license": "N/A",
+	"private": true,
+	"devDependencies": {
+		"@babel/cli": "^7.8.3",
+		"@babel/core": "^7.8.3",
+		"@babel/plugin-proposal-export-default-from": "^7.8.3",
+		"@babel/plugin-syntax-import-meta": "^7.8.3",
+		"@babel/plugin-syntax-top-level-await": "^7.8.3",
+		"@babel/plugin-transform-typescript": "^7.8.3",
+		"@babel/preset-env": "^7.8.3",
+		"@babel/register": "^7.8.3",
+		"babel-plugin-deno": "^0.2.0"
+	}
+}

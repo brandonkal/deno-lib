@@ -1,15 +1,15 @@
 {
-  "compilerOptions": {
-    "allowJs": true,
-    "checkJs": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "noEmit": true,
-    "removeComments": true,
-    "resolveJsonModule": true,
-    "sourceMap": true,
-    "target": "esnext",
-    "isolatedModules": true,
-    "typeRoots": []
-  }
+	"compilerOptions": {
+		"allowJs": true,
+		"checkJs": true,
+		"esModuleInterop": true,
+		"module": "esnext",
+		"noEmit": true,
+		"removeComments": true,
+		"resolveJsonModule": true,
+		"sourceMap": true,
+		"target": "esnext",
+		"isolatedModules": false,
+		"typeRoots": []
+	}
 }
