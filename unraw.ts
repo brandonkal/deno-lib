@@ -15,8 +15,8 @@
  * number.
  */
 function parseHexToInt(hex: string): number {
-  const isOnlyHexChars = !hex.match(/[^a-f0-9]/i);
-  return isOnlyHexChars ? parseInt(hex, 16) : NaN;
+	const isOnlyHexChars = !hex.match(/[^a-f0-9]/i)
+	return isOnlyHexChars ? parseInt(hex, 16) : NaN
 }
 
 /**
@@ -31,18 +31,18 @@ function parseHexToInt(hex: string): number {
  * @throws {SyntaxError} If the code is not valid.
  */
 function validateAndParseHex(
-  hex: string,
-  errorName: ErrorType,
-  enforcedLength?: number
+	hex: string,
+	errorName: ErrorType,
+	enforcedLength?: number
 ): number {
-  const parsedHex = parseHexToInt(hex);
-  if (
-    Number.isNaN(parsedHex) ||
-    (enforcedLength !== undefined && enforcedLength !== hex.length)
-  ) {
-    throw new SyntaxError(errorMessages.get(errorName));
-  }
-  return parsedHex;
+	const parsedHex = parseHexToInt(hex)
+	if (
+		Number.isNaN(parsedHex) ||
+		(enforcedLength !== undefined && enforcedLength !== hex.length)
+	) {
+		throw new SyntaxError(errorMessages.get(errorName))
+	}
+	return parsedHex
 }
 
 /**
@@ -54,12 +54,12 @@ function validateAndParseHex(
  * length.
  */
 function parseHexadecimalCode(code: string): string {
-  const parsedCode = validateAndParseHex(
-    code,
-    ErrorType.MalformedHexadecimal,
-    2
-  );
-  return String.fromCharCode(parsedCode);
+	const parsedCode = validateAndParseHex(
+		code,
+		ErrorType.MalformedHexadecimal,
+		2
+	)
+	return String.fromCharCode(parsedCode)
 }
 
 /**
@@ -73,18 +73,18 @@ function parseHexadecimalCode(code: string): string {
  * length.
  */
 function parseUnicodeCode(code: string, surrogateCode?: string): string {
-  const parsedCode = validateAndParseHex(code, ErrorType.MalformedUnicode, 4);
+	const parsedCode = validateAndParseHex(code, ErrorType.MalformedUnicode, 4)
 
-  if (surrogateCode !== undefined) {
-    const parsedSurrogateCode = validateAndParseHex(
-      surrogateCode,
-      ErrorType.MalformedUnicode,
-      4
-    );
-    return String.fromCharCode(parsedCode, parsedSurrogateCode);
-  }
+	if (surrogateCode !== undefined) {
+		const parsedSurrogateCode = validateAndParseHex(
+			surrogateCode,
+			ErrorType.MalformedUnicode,
+			4
+		)
+		return String.fromCharCode(parsedCode, parsedSurrogateCode)
+	}
 
-  return String.fromCharCode(parsedCode);
+	return String.fromCharCode(parsedCode)
 }
 
 /**
@@ -93,7 +93,7 @@ function parseUnicodeCode(code: string, surrogateCode?: string): string {
  * @returns `true` if the text is in the form `{*}`.
  */
 function isCurlyBraced(text: string): boolean {
-  return text.charAt(0) === "{" && text.charAt(text.length - 1) === "}";
+	return text.charAt(0) === '{' && text.charAt(text.length - 1) === '}'
 }
 
 /**
@@ -105,22 +105,22 @@ function isCurlyBraced(text: string): boolean {
  * surrounding curly braces.
  */
 function parseUnicodeCodePointCode(codePoint: string): string {
-  if (!isCurlyBraced(codePoint)) {
-    throw new SyntaxError(errorMessages.get(ErrorType.MalformedUnicode));
-  }
-  const withoutBraces = codePoint.slice(1, -1);
-  const parsedCode = validateAndParseHex(
-    withoutBraces,
-    ErrorType.MalformedUnicode
-  );
+	if (!isCurlyBraced(codePoint)) {
+		throw new SyntaxError(errorMessages.get(ErrorType.MalformedUnicode))
+	}
+	const withoutBraces = codePoint.slice(1, -1)
+	const parsedCode = validateAndParseHex(
+		withoutBraces,
+		ErrorType.MalformedUnicode
+	)
 
-  try {
-    return String.fromCodePoint(parsedCode);
-  } catch (err) {
-    throw err instanceof RangeError
-      ? new SyntaxError(errorMessages.get(ErrorType.CodePointLimit))
-      : err;
-  }
+	try {
+		return String.fromCodePoint(parsedCode)
+	} catch (err) {
+		throw err instanceof RangeError
+			? new SyntaxError(errorMessages.get(ErrorType.CodePointLimit))
+			: err
+	}
 }
 
 /**
@@ -132,19 +132,19 @@ function parseUnicodeCodePointCode(codePoint: string): string {
  * @returns The single character represented by the code.
  * @throws {SyntaxError} Only if `throw` is `true`.
  */
-function parseOctalCode(code: string, error: true): never;
-function parseOctalCode(code: string, error?: false): string;
-function parseOctalCode(code: string, error: boolean): string | never;
+function parseOctalCode(code: string, error: true): never
+function parseOctalCode(code: string, error?: false): string
+function parseOctalCode(code: string, error: boolean): string | never
 // Have to give overload that takes boolean for when compiler doesn't know if
 // true or false
 function parseOctalCode(code: string, error = false): string | never {
-  if (error) {
-    throw new SyntaxError(errorMessages.get(ErrorType.OctalDeprecation));
-  }
-  // The original regex only allows digits so we don't need to have a strict
-  // octal parser like hexToInt. Length is not enforced for octals.
-  const parsedCode = parseInt(code, 8);
-  return String.fromCharCode(parsedCode);
+	if (error) {
+		throw new SyntaxError(errorMessages.get(ErrorType.OctalDeprecation))
+	}
+	// The original regex only allows digits so we don't need to have a strict
+	// octal parser like hexToInt. Length is not enforced for octals.
+	const parsedCode = parseInt(code, 8)
+	return String.fromCharCode(parsedCode)
 }
 
 /**
@@ -152,14 +152,14 @@ function parseOctalCode(code: string, error = false): string | never {
  * Intentionally does not include characters that map to themselves like "\'".
  */
 const singleCharacterEscapes = new Map<string, string>([
-  ["b", "\b"],
-  ["f", "\f"],
-  ["n", "\n"],
-  ["r", "\r"],
-  ["t", "\t"],
-  ["v", "\v"],
-  ["0", "\0"]
-]);
+	['b', '\b'],
+	['f', '\f'],
+	['n', '\n'],
+	['r', '\r'],
+	['t', '\t'],
+	['v', '\v'],
+	['0', '\0'],
+])
 
 /**
  * Parse a single character escape sequence and return the matching character.
@@ -167,7 +167,7 @@ const singleCharacterEscapes = new Map<string, string>([
  * @param code A single character code.
  */
 function parseSingleCharacterCode(code: string): string {
-  return singleCharacterEscapes.get(code) || code;
+	return singleCharacterEscapes.get(code) || code
 }
 
 /**
@@ -186,7 +186,7 @@ function parseSingleCharacterCode(code: string): string {
  * 6. Octal code _NOTE: includes "0"._
  * 7. A single character (will never be \, x, u, or 0-3)
  */
-const escapeMatch = /\\(?:(\\)|x([\s\S]{0,2})|u(\{[^}]*\}?)|u([\s\S]{4})\\u([^{][\s\S]{0,3})|u([\s\S]{0,4})|([0-3]?[0-7]{1,2})|([\s\S])|$)/g;
+const escapeMatch = /\\(?:(\\)|x([\s\S]{0,2})|u(\{[^}]*\}?)|u([\s\S]{4})\\u([^{][\s\S]{0,3})|u([\s\S]{0,4})|([0-3]?[0-7]{1,2})|([\s\S])|$)/g
 
 /**
  * Replace raw escape character strings with their escape characters.
@@ -198,47 +198,47 @@ const escapeMatch = /\\(?:(\\)|x([\s\S]{0,2})|u(\{[^}]*\}?)|u([\s\S]{4})\\u([^{]
  * respective actual Unicode characters.
  */
 export function unraw(raw: string, allowOctals = false): string {
-  return raw.replace(escapeMatch, function(
-    _,
-    backslash?: string,
-    hex?: string,
-    codePoint?: string,
-    unicodeWithSurrogate?: string,
-    surrogate?: string,
-    unicode?: string,
-    octal?: string,
-    singleCharacter?: string
-  ): string {
-    // Compare groups to undefined because empty strings mean different errors
-    // Otherwise, `\u` would fail the same as `\` which is wrong.
-    if (backslash !== undefined) {
-      return "\\";
-    }
-    if (hex !== undefined) {
-      return parseHexadecimalCode(hex);
-    }
-    if (codePoint !== undefined) {
-      return parseUnicodeCodePointCode(codePoint);
-    }
-    if (unicodeWithSurrogate !== undefined) {
-      return parseUnicodeCode(unicodeWithSurrogate, surrogate);
-    }
-    if (unicode !== undefined) {
-      return parseUnicodeCode(unicode);
-    }
-    if (octal === "0") {
-      return "\0";
-    }
-    if (octal !== undefined) {
-      return parseOctalCode(octal, !allowOctals);
-    }
-    if (singleCharacter !== undefined) {
-      return parseSingleCharacterCode(singleCharacter);
-    }
-    throw new SyntaxError(errorMessages.get(ErrorType.EndOfString));
-  });
+	return raw.replace(escapeMatch, function(
+		_,
+		backslash?: string,
+		hex?: string,
+		codePoint?: string,
+		unicodeWithSurrogate?: string,
+		surrogate?: string,
+		unicode?: string,
+		octal?: string,
+		singleCharacter?: string
+	): string {
+		// Compare groups to undefined because empty strings mean different errors
+		// Otherwise, `\u` would fail the same as `\` which is wrong.
+		if (backslash !== undefined) {
+			return '\\'
+		}
+		if (hex !== undefined) {
+			return parseHexadecimalCode(hex)
+		}
+		if (codePoint !== undefined) {
+			return parseUnicodeCodePointCode(codePoint)
+		}
+		if (unicodeWithSurrogate !== undefined) {
+			return parseUnicodeCode(unicodeWithSurrogate, surrogate)
+		}
+		if (unicode !== undefined) {
+			return parseUnicodeCode(unicode)
+		}
+		if (octal === '0') {
+			return '\0'
+		}
+		if (octal !== undefined) {
+			return parseOctalCode(octal, !allowOctals)
+		}
+		if (singleCharacter !== undefined) {
+			return parseSingleCharacterCode(singleCharacter)
+		}
+		throw new SyntaxError(errorMessages.get(ErrorType.EndOfString))
+	})
 }
-export default unraw;
+export default unraw
 
 /**
  * @file **unraw - errors.ts** | Error messages used by `unraw`.
@@ -257,51 +257,51 @@ export default unraw;
  */
 // Don't use const enum or JS users won't be able to access the enum values
 export enum ErrorType {
-  /**
-   * Thrown when a badly formed Unicode escape sequence is found. Possible
-   * reasons include the code being too short (`"\u25"`) or having invalid
-   * characters (`"\u2$A5"`).
-   */
-  MalformedUnicode = "MALFORMED_UNICODE",
-  /**
-   * Thrown when a badly formed hexadecimal escape sequence is found. Possible
-   * reasons include the code being too short (`"\x2"`) or having invalid
-   * characters (`"\x2$"`).
-   */
-  MalformedHexadecimal = "MALFORMED_HEXADECIMAL",
-  /**
-   * Thrown when a Unicode code point escape sequence has too high of a code
-   * point. The maximum code point allowed is `\u{10FFFF}`, so `\u{110000}` and
-   * higher will throw this error.
-   */
-  CodePointLimit = "CODE_POINT_LIMIT",
-  /**
-   * Thrown when an octal escape sequences is encountered and `allowOctals` is
-   * `false`. For example, `unraw("\234", false)`.
-   */
-  OctalDeprecation = "OCTAL_DEPRECATION",
-  /**
-   * Thrown only when a single backslash is found at the end of a string. For
-   * example, `"\\"` or `"test\\x24\\"`.
-   */
-  EndOfString = "END_OF_STRING"
+	/**
+	 * Thrown when a badly formed Unicode escape sequence is found. Possible
+	 * reasons include the code being too short (`"\u25"`) or having invalid
+	 * characters (`"\u2$A5"`).
+	 */
+	MalformedUnicode = 'MALFORMED_UNICODE',
+	/**
+	 * Thrown when a badly formed hexadecimal escape sequence is found. Possible
+	 * reasons include the code being too short (`"\x2"`) or having invalid
+	 * characters (`"\x2$"`).
+	 */
+	MalformedHexadecimal = 'MALFORMED_HEXADECIMAL',
+	/**
+	 * Thrown when a Unicode code point escape sequence has too high of a code
+	 * point. The maximum code point allowed is `\u{10FFFF}`, so `\u{110000}` and
+	 * higher will throw this error.
+	 */
+	CodePointLimit = 'CODE_POINT_LIMIT',
+	/**
+	 * Thrown when an octal escape sequences is encountered and `allowOctals` is
+	 * `false`. For example, `unraw("\234", false)`.
+	 */
+	OctalDeprecation = 'OCTAL_DEPRECATION',
+	/**
+	 * Thrown only when a single backslash is found at the end of a string. For
+	 * example, `"\\"` or `"test\\x24\\"`.
+	 */
+	EndOfString = 'END_OF_STRING',
 }
 
 /** Map of error message names to the full text of the message. */
 export const errorMessages: Readonly<Map<ErrorType, string>> = new Map([
-  [ErrorType.MalformedUnicode, "malformed Unicode character escape sequence"],
-  [
-    ErrorType.MalformedHexadecimal,
-    "malformed hexadecimal character escape sequence"
-  ],
-  [
-    ErrorType.CodePointLimit,
-    "Unicode codepoint must not be greater than 0x10FFFF in escape sequence"
-  ],
-  [
-    ErrorType.OctalDeprecation,
-    '"0"-prefixed octal literals and octal escape sequences are deprecated; ' +
-      'for octal literals use the "0o" prefix instead'
-  ],
-  [ErrorType.EndOfString, "malformed escape sequence at end of string"]
-]);
+	[ErrorType.MalformedUnicode, 'malformed Unicode character escape sequence'],
+	[
+		ErrorType.MalformedHexadecimal,
+		'malformed hexadecimal character escape sequence',
+	],
+	[
+		ErrorType.CodePointLimit,
+		'Unicode codepoint must not be greater than 0x10FFFF in escape sequence',
+	],
+	[
+		ErrorType.OctalDeprecation,
+		'"0"-prefixed octal literals and octal escape sequences are deprecated; ' +
+			'for octal literals use the "0o" prefix instead',
+	],
+	[ErrorType.EndOfString, 'malformed escape sequence at end of string'],
+])

@@ -6,8 +6,8 @@
  */
 
 export type PromiseType<T extends Promise<any>> = T extends Promise<infer U>
-  ? U
-  : never
+	? U
+	: never
 
 export type Arguments<T> = T extends (...args: infer U) => infer R ? U : never
 export type ReplaceReturn<T, TNewReturn> = (...a: Arguments<T>) => TNewReturn
@@ -15,8 +15,8 @@ export type ReplaceReturn<T, TNewReturn> = (...a: Arguments<T>) => TNewReturn
 type Fn = (...args: any[]) => any
 
 export type Go<E extends Error, T extends Fn> = {
-  res: PromiseType<ReturnType<T>>
-  err: E | undefined
+	res: PromiseType<ReturnType<T>>
+	err: E | undefined
 }
 
 /**
@@ -37,30 +37,30 @@ export type Go<E extends Error, T extends Fn> = {
  * ```
  */
 async function go<E extends Error, T extends Fn>(fn: T): Promise<Go<E, T>> {
-  let result
-  try {
-    result = await fn()
-    const err = result instanceof Error ? result : undefined
-    let output
-    if (result instanceof Object && result !== null) {
-      output = Object.create(result)
-    } else {
-      output = Object.create({})
-    }
-    output.err = err
-    output.res = result
-    return output
-  } catch (err) {
-    let output
-    if (result instanceof Object && result !== null) {
-      output = Object.create(result)
-    } else {
-      output = Object.create({})
-    }
-    output.res = undefined
-    output.err = err
-    return output
-  }
+	let result
+	try {
+		result = await fn()
+		const err = result instanceof Error ? result : undefined
+		let output
+		if (result instanceof Object && result !== null) {
+			output = Object.create(result)
+		} else {
+			output = Object.create({})
+		}
+		output.err = err
+		output.res = result
+		return output
+	} catch (err) {
+		let output
+		if (result instanceof Object && result !== null) {
+			output = Object.create(result)
+		} else {
+			output = Object.create({})
+		}
+		output.res = undefined
+		output.err = err
+		return output
+	}
 }
 
 export default go

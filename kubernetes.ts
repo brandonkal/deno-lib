@@ -4,4 +4,4 @@
  * @description Kubernetes Config Generation Library
  */
 
-export * from "./kubernetes/src/api.ts"
+export * from './kubernetes/src/api.ts'

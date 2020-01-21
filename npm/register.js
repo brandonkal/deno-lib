@@ -12,31 +12,31 @@
  */
 
 //@ts-nocheck
-global.Deno = require("./@brandonkal/deno-quokka/deno-bridge.js");
+global.Deno = require('./@brandonkal/deno-quokka/deno-bridge.js')
 
-require("@babel/register")({
-	extensions: [".ts", ".js"],
+require('@babel/register')({
+	extensions: ['.ts', '.js'],
 	ignore: [/node_modules/],
-	sourceMaps: "inline",
+	sourceMaps: 'inline',
 	retainLines: true,
 	configFile: false,
 	babelrc: false,
 	presets: [
 		[
-			"@babel/preset-env",
+			'@babel/preset-env',
 			{
-				targets: { node: "current" },
-				modules: "commonjs",
+				targets: { node: 'current' },
+				modules: 'commonjs',
 			},
 		],
 	],
 	plugins: [
-		"babel-plugin-deno",
-		"@babel/plugin-syntax-import-meta",
-		"@babel/plugin-syntax-top-level-await",
-		"@babel/plugin-proposal-export-default-from",
-		["@babel/plugin-transform-typescript", { allowNamespaces: true }],
+		'babel-plugin-deno',
+		'@babel/plugin-syntax-import-meta',
+		'@babel/plugin-syntax-top-level-await',
+		'@babel/plugin-proposal-export-default-from',
+		['@babel/plugin-transform-typescript', { allowNamespaces: true }],
 	],
-});
-const entry = process.argv[2];
-require(entry);
+})
+const entry = process.argv[2]
+require(entry)
