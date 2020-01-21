@@ -1,6 +1,6 @@
 // Copyright 2020 Brandon Kalinowski. All Rights reserved.
 // Portions of this work were obtained via the Apache 2.0 License.
-// that original work is Copyright 2016-2019, Pulumi Corporation.
+// That original work is Copyright 2016-2019, Pulumi Corporation.
 
 import * as k8s from './kubernetes.ts'
 import { y } from './yaml-tag.ts'

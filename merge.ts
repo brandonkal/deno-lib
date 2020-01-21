@@ -3,7 +3,7 @@
  * @author jk authors
  * @description Provides generic object merging functions. Useful for config generation.
  * Portions of this work were obtained via the Apache 2.0 License.
- * that original work is Copyright 2020, jk authors.
+ * That original work is Copyright 2020, jk authors.
  */
 
 function mergeFunc(rule, key, defaultFunc) {
