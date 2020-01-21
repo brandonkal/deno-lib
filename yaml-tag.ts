@@ -46,7 +46,7 @@ export function yamlfy(
 			result += yamlString(expr[i], indent)
 		}
 	})
-	return result
+	return result.replace(/\t/g, '  ')
 }
 
 function yamlString(item: unknown, indent: number) {

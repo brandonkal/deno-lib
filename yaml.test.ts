@@ -168,3 +168,33 @@ document: 2
 `
 	assertEquals(expectedString, printYaml(yml, true))
 })
+
+it('handles YAML with Tabs', () => {
+	const yml = y`
+	pod:
+		name: nginx
+		labels:
+			app: nginx
+		containers:
+		- name: nginx
+			image: nginx:latest
+			affinity:
+			- node: k8s.io/failure-domain=us-east1,us-east2
+`
+	const desiredObject = [
+		{
+			pod: {
+				name: 'nginx',
+				labels: { app: 'nginx' },
+				containers: [
+					{
+						name: 'nginx',
+						image: 'nginx:latest',
+						affinity: [{ node: 'k8s.io/failure-domain=us-east1,us-east2' }],
+					},
+				],
+			},
+		},
+	]
+	assertEquals(desiredObject, yml)
+})
