@@ -356,3 +356,60 @@ function parseOp(s: string, op: string): GoRet<Expr> {
 	}
 	return {} as any
 }
+
+//// Tolerations Conversion ////
+
+interface Toleration {
+	expiry_after?: number | null
+	selector: string
+}
+interface TolerationWrap {
+	spec?: {
+		tolerations: types.core.v1.Toleration[]
+	}
+}
+
+export function revertTolerations(t: Toleration[]): TolerationWrap {
+	const out: types.core.v1.Toleration[] = []
+	for (let i = 0; i < t.length; i++) {
+		const toleration = t[i]
+		const kubeToleration: types.core.v1.Toleration = {
+			tolerationSeconds: toleration.expiry_after,
+		}
+		const superFields = toleration.selector.split(':')
+		if (superFields.length === 2) {
+			switch (superFields[1]) {
+				case 'NoSchedule':
+					kubeToleration.effect = 'NoSchedule'
+					break
+				case 'PreferNoSchedule':
+					kubeToleration.effect = 'PreferNoSchedule'
+					break
+				case 'NoExecute':
+					kubeToleration.effect = 'NoExecute'
+					break
+				default:
+					return {} as any
+			}
+		} else if (superFields.length !== 1) {
+			throw new Error(`Unexpected toleration effect ${toleration}`)
+		}
+		const fields = superFields[0].split('=')
+		if (fields.length === 1) {
+			if (fields[0] === '*') {
+				kubeToleration.key = ''
+			} else {
+				kubeToleration.key = fields[0]
+			}
+			kubeToleration.operator = 'Exists'
+		} else if (fields.length === 2) {
+			kubeToleration.key = fields[0]
+			kubeToleration.operator = 'Equal'
+			kubeToleration.value = fields[1]
+		} else {
+			throw new Error(`Unexpected toleration selector ${toleration}`)
+		}
+		out.push(kubeToleration)
+	}
+	return out.length ? { spec: { tolerations: out } } : {}
+}

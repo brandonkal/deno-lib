@@ -121,7 +121,7 @@ function hostMode(flags: string[]) {
 	return { spec }
 }
 
-function hostName(h) {
+function hostName(h: string) {
 	const [hostname, ...subdomain] = h.split('.')
 	const spec: any = { hostname }
 	if (subdomain.length > 0) {
@@ -130,7 +130,7 @@ function hostName(h) {
 	return { spec }
 }
 
-function account(accountStr) {
+function account(accountStr: string) {
 	const [name, maybeAuto] = accountStr.split(':')
 	const spec: any = { serviceAccountName: name }
 	if (maybeAuto === 'auto') {
@@ -346,8 +346,8 @@ const podTemplateSpec = {
 	}),
 	scheduler_name: 'spec.schedulerName',
 	account: account,
-	tolerations: tolerations,
-	termination_grade_period: 'spec.terminationGradePeriodSeconds',
+	tolerations: expressions.revertTolerations,
+	termination_grace_period: 'spec.terminationGradePeriodSeconds',
 	active_deadline: 'spec.activeDeadlineSeconds',
 	priority: priority,
 	fs_gid: 'spec.securityContext.fsGroup',
@@ -364,7 +364,6 @@ const podMissing = {
 	qos: '',
 	reason: '',
 	cluster: '',
-	termination_grace_period: '',
 }
 
 export const podSpec = {
