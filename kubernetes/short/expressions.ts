@@ -98,8 +98,8 @@ function revertNodeAffinity(
 function splitAndRevertNodeAffinity(affinities: string[]) {
 	const hard: any[] = []
 	const soft: any[] = []
-	for (let i = 0; i < affinities.length; i++) {
-		const segs = affinities[i].split(':')
+	for (const affinity of affinities) {
+		const segs = affinity.split(':')
 		const { res: term, err } = parseNodeExprs(segs[0])
 		if (err != null) {
 			return { hard, soft, err }
@@ -137,8 +137,7 @@ function splitAndRevertNodeAffinity(affinities: string[]) {
 function parseNodeExprs(str: string): GoRet<types.core.v1.NodeSelectorTerm> {
 	const reqs: types.core.v1.NodeSelectorRequirement[] = []
 	const segs = str.split('&')
-	for (let i = 0; i < segs.length; i++) {
-		const seg = segs[i]
+	for (const seg of segs) {
 		const { res: expr, err } = parseExpression(seg, ['!=', '=', '>', '<'])
 		if (err != null) {
 			return { res: undefined, err }
@@ -213,8 +212,7 @@ function revertPodAffinity(pod: any[]): GoRet<types.core.v1.PodAffinity> {
 function splitAndRevertPodAffinity(affinities: PodAffinity[]) {
 	const hard: types.core.v1.PodAffinityTerm[] = []
 	const soft: types.core.v1.WeightedPodAffinityTerm[] = []
-	for (let i = 0; i < affinities.length; i++) {
-		const affinity = affinities[i]
+	for (const affinity of affinities) {
 		const segs = affinity.affinity.split(':')
 		const { res: term, err } = parsePodExprs(segs[0])
 		if (err != null) {
@@ -272,8 +270,7 @@ function parseLabelSelector(s: string): GoRet<types.meta.v1.LabelSelector> {
 	let labels: Record<string, string> = {}
 	let reqs: types.meta.v1.LabelSelectorRequirement[] = []
 	const segs = s.split('&')
-	for (let i = 0; i < segs.length; i++) {
-		const seg = segs[i]
+	for (const seg of segs) {
 		const { res: expr, err } = parseExpression(seg, ['!=', '='])
 		if (err != null) {
 			return {
@@ -327,8 +324,8 @@ function parseLabelSelector(s: string): GoRet<types.meta.v1.LabelSelector> {
 }
 
 function parseExpression(s: string, ops: string[]): GoRet<Expr> {
-	for (let i = 0; i < ops.length; i++) {
-		const x = parseOp(s, ops[i])
+	for (const op of ops) {
+		const x = parseOp(s, op)
 		if (x.res || x.err != null) {
 			return x
 		}
@@ -371,8 +368,7 @@ interface TolerationWrap {
 
 export function revertTolerations(t: Toleration[]): TolerationWrap {
 	const out: types.core.v1.Toleration[] = []
-	for (let i = 0; i < t.length; i++) {
-		const toleration = t[i]
+	for (const toleration of t) {
 		const kubeToleration: types.core.v1.Toleration = {
 			tolerationSeconds: toleration.expiry_after,
 		}
