@@ -33,6 +33,8 @@ export function relocate(path: string) {
 	}
 }
 
+export type Transformer = string | object | Function
+
 /**
  * transformer returns a field transformer given:
  *
@@ -41,7 +43,7 @@ export function relocate(path: string) {
  *  - an object, which will be treated as the spec for transforming
  *    the (assumed object) value to get a new value.
  */
-export function transformer(field: string | object | Function) {
+export function getTransfomer(field: Transformer) {
 	switch (typeof field) {
 		case 'string':
 			return relocate(field)
@@ -58,7 +60,7 @@ export function transformer(field: string | object | Function) {
 
 /** mapper lifts a value transformer into an array transformer */
 export function mapper(fn) {
-	const tx = transformer(fn)
+	const tx = getTransfomer(fn)
 	return (vals) => Array.prototype.map.call(vals, tx)
 }
 
@@ -67,9 +69,9 @@ export function mapper(fn) {
  * returns a function that will apply each transformer to the result
  * of the previous.
  */
-export function thread(...transformers) {
+export function thread(...transformers: (string | object | Function)[]) {
 	return (initial) =>
-		transformers.reduce((a, fn) => transformer(fn)(a), initial)
+		transformers.reduce((a, fn) => getTransfomer(fn)(a), initial)
 }
 
 /**
@@ -80,11 +82,11 @@ export function thread(...transformers) {
  * expected at the top level of the short form,
  * but relocated _enmasse_ to `spec.template.spec`.
  */
-export function drop(path: string, spec) {
+export function drop<T>(path: string, spec: T): T {
 	const reloc = relocate(path)
-	const newSpec = {}
+	const newSpec: any = {}
 	for (const [field, tx] of Object.entries(spec)) {
-		newSpec[field] = thread(tx, reloc)
+		newSpec[field] = thread(tx as any, reloc)
 	}
 	return newSpec
 }
@@ -95,7 +97,7 @@ export function drop(path: string, spec) {
  * example, when the format has shorthands or aliases for enum values
  * (like service.type='cluster-ip').
  */
-export function valueMap(field, map) {
+export function valueMap(field: string, map: Record<string, string>) {
 	return thread((v) => map[v], field)
 }
 
@@ -110,7 +112,7 @@ export function transform(spec, v0): any {
 	for (const [field, value] of Object.entries(v0)) {
 		const tx = spec[field]
 		if (tx !== undefined) {
-			const fn = transformer(tx)
+			const fn = getTransfomer(tx)
 			v1 = merge(v1, fn(value))
 		}
 	}

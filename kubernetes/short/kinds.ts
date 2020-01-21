@@ -8,16 +8,31 @@
  */
 
 import { apps, core } from '../src/api.ts'
-import { transform, valueMap, mapper, drop } from './transform.ts'
+import { transform, valueMap, mapper, drop, Transformer } from './transform.ts'
 import * as expressions from './expressions.ts'
+import * as st from './interfaces.ts'
+import * as types from '../src/types.ts'
+
+type AllAny<T> = { [P in keyof T]-?: any }
+
+interface Resource<T> extends Function {
+	new (name: string, shape: object): T
+}
 
 /**
  * Take a constructor (e.g., from the API) and return a transformer
  * that will construct the API resource given a API resource "shape".
  */
-function makeResource(Ctor, spec) {
-	return (v) => {
-		const shape = transform(spec, v)
+function makeResource(
+	Ctor: Resource<object>,
+	spec: Record<string, Transformer>,
+	postProcess?: Transformer
+) {
+	return (v: object) => {
+		let shape = transform(spec, v)
+		if (typeof postProcess == 'function') {
+			shape = postProcess(shape)
+		}
 		let name = ''
 		if (shape && shape.metadata && shape.metadata.name) {
 			;({
@@ -139,10 +154,6 @@ function account(accountStr: string) {
 	return { spec }
 }
 
-function tolerations() {
-	throw new Error('tolerations not implemented yet')
-}
-
 function priority(p) {
 	const { value } = p
 	const spec: any = { priority: value }
@@ -237,40 +248,75 @@ const probe = {
 	min_count_failure: 'failureThreshold',
 }
 
-const portRe = /(?:(tcp|udp):\/\/)?(?:(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}):)?(?:(\d{1,5}):)?(\d{1,5})/
+const protocolRe = /^(tcp|udp):\/\/([\d.:]*)$/
+const isIPv4Re = /^(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}$/
 
-function ports(pp) {
-	function parseContainerPort(p) {
-		let spec = p
-		let name
-		if (typeof p === 'object') {
-			for (name of Object.keys(p)) {
-				spec = p[name]
-				break
-			}
-		} else {
-			spec = String(p)
-		}
-		const [
-			,
-			/* scheme */ protocol,
-			hostIP,
-			hostPort,
-			containerPort,
-		] = spec.match(portRe)
-		const port = {
-			name,
-			protocol: protocol && protocol.toUpperCase(),
-			hostIP,
-			hostPort,
-			containerPort,
-		}
-		Object.keys(port).forEach(
-			(k) => port[k] === undefined && delete port[k]
-		)
-		return port
+/**
+ * @throws if invalid number provided
+ */
+function parsePort(s: string): number {
+	const mre = /^\d{1,5}$/
+	let m = s.match(mre)
+	if (!m) {
+		throw new Error(`Expected an integer from 1-99999 but got ${s}`)
 	}
-	return { ports: pp.map(parseContainerPort) }
+	const n = parseInt(s, 10)
+	if (Number.isNaN(n)) {
+		throw new Error(`Expected number but got ${s}`)
+	}
+	return n
+}
+
+function parseContainerPort(p, allowIP: boolean = true) {
+	let spec = p
+	let name
+	if (typeof p === 'object') {
+		for (name of Object.keys(p)) {
+			spec = p[name]
+			break
+		}
+	} else {
+		spec = String(p)
+	}
+	const m = protocolRe.exec(spec)
+	let protocol = 'TCP'
+	let str = ''
+	if (m != null) {
+		protocol = m[1].toUpperCase()
+		str = m[2]
+	}
+	const segments = str.split(':')
+	let parseIndex = 0
+	let hostIP
+	if (segments.length < 1) {
+		throw new Error(`too few sections for port string: "${spec}"`)
+	} else if (allowIP && segments.length === 3) {
+		hostIP = segments[0]
+		if (!hostIP.match(isIPv4Re)) {
+			throw new Error(`Expected a valid IPv4 but got "${spec}"`)
+		}
+		parseIndex = 1
+	} else if (segments.length > 2) {
+		throw new Error(`too many sections for port string: "${spec}"`)
+	}
+	const hostPort = parsePort(segments[parseIndex])
+	let containerPort: number
+	if (segments.length > 1) {
+		containerPort = parsePort[parseIndex + 1]
+	}
+	const port = {
+		name,
+		protocol: protocol != 'TCP' ? protocol : undefined,
+		hostIP,
+		hostPort,
+		containerPort,
+	}
+	Object.keys(port).forEach((k) => port[k] === undefined && delete port[k])
+	return port
+}
+
+function ports(pp: any[]) {
+	return { ports: pp.map((p) => parseContainerPort(p)) }
 }
 
 /* eslint-disable quote-props */
@@ -366,14 +412,20 @@ const podMissing = {
 	cluster: '',
 }
 
-export const podSpec = {
+export const podSpec: AllAny<st.Pod> = {
 	...topLevel,
 	...objectMeta,
 	...podTemplateSpec,
 	...podMissing,
 }
 
-const deploymentSpec = {
+const deploymentMissing = {
+	generation_observed: '',
+	replicas_status: '',
+	hash_collisions: '',
+}
+
+const deploymentSpec: AllAny<st.Deployment> = {
 	...topLevel,
 	...objectMeta,
 	// metadata (labels, annotations) are used in the pod template
@@ -393,6 +445,8 @@ const deploymentSpec = {
 	selector: 'spec.selector.matchLabels',
 	// most of the pod spec fields appear as a pod template
 	...drop('spec.template', podTemplateSpec),
+	...podMissing,
+	...deploymentMissing,
 }
 
 function sessionAffinity(value) {
@@ -415,7 +469,60 @@ function sessionAffinity(value) {
 	}
 }
 
-const serviceSpec = {
+const missingService = {
+	cluster: '',
+	generation_observed: '',
+	replicas_status: '',
+	condition: '',
+	hash_collisions: '',
+	endpoints: '',
+}
+
+interface svcForPorts extends types.core.v1.Service {
+	port?: string
+	node_port?: any
+	ports?: { [name: string]: string }[]
+}
+/**
+ * post-processes a service object moving short port properties.
+ */
+function processServicePorts(svc: svcForPorts): types.core.v1.Service {
+	const all: types.core.v1.ServicePort[] = []
+	if (svc.port != null && svc.port !== '') {
+		all.push(revertPort('', svc.port, svc.node_port))
+	} else if (svc.ports && svc.ports.length) {
+		svc.ports.forEach((p) => {
+			Object.entries(p).forEach(([name, config]) => {
+				const out = revertPort(name, config, svc.node_port)
+				all.push(out)
+			})
+		})
+	}
+	if (all.length) {
+		svc.spec.ports = all
+	}
+	svc.port = undefined
+	svc.node_port = undefined
+	svc.ports = undefined
+	return svc
+}
+
+function revertPort(
+	name: string,
+	port: string,
+	nodePort: number
+): types.core.v1.ServicePort {
+	const p = parseContainerPort(port)
+	return {
+		port: p.hostPort,
+		targetPort: p.containerPort,
+		protocol: p.protocol,
+		nodePort: nodePort > 0 ? nodePort : undefined,
+		name: name && name.length ? name : undefined,
+	}
+}
+
+const serviceSpec: AllAny<st.Service> = {
 	...topLevel,
 	...objectMeta,
 	cname: 'spec.externalName',
@@ -426,9 +533,12 @@ const serviceSpec = {
 	}),
 	selector: 'spec.selector',
 	external_ips: 'externalIPs',
-	// port, node_port, ports -> TODO
+	// port, node_port, and ports are post-processed together
+	port: '',
+	node_port: '',
+	ports: '',
 	cluster_ip: 'clusterIP',
-	unread_endpoints: 'publishNotReadyAddresses',
+	unready_endpoints: 'publishNotReadyAddresses',
 	route_policy: valueMap('externalTrafficPolicy', {
 		'node-local': 'Node',
 		'cluster-wide': 'Cluster',
@@ -437,6 +547,7 @@ const serviceSpec = {
 	lb_ip: 'loadBalancerIP',
 	lb_client_ips: 'loadBalancerSourceRanges',
 	healthcheck_port: 'healthCheckNodePort',
+	...missingService,
 }
 
 // TODO all the other ones.
@@ -446,5 +557,5 @@ export default {
 	namespace: makeResource(core.v1.Namespace, objectMeta),
 	pod: makeResource(core.v1.Pod, podSpec),
 	deployment: makeResource(apps.v1.Deployment, deploymentSpec),
-	service: makeResource(core.v1.Service, serviceSpec),
+	service: makeResource(core.v1.Service, serviceSpec, processServicePorts),
 }
