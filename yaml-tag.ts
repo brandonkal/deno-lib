@@ -6,7 +6,24 @@
  */
 
 import * as yaml from 'https://deno.land/std/encoding/yaml.ts'
+import { Type } from 'https://deno.land/std/encoding/yaml/type.ts'
+import { Schema } from 'https://deno.land/std/encoding/yaml/schema.ts'
 import { execDedent } from './dedent.ts'
+
+const undefinedType = new Type('tag:yaml.org,2002:js/undefined', {
+	kind: 'scalar',
+	resolve: () => true,
+	construct: () => undefined,
+	predicate: function isUndefined(object) {
+		return typeof object === 'undefined'
+	},
+	represent: () => '',
+})
+
+export const JSON_AND_UNDEFINED = new Schema({
+	explicit: [undefinedType],
+	include: [yaml.JSON_SCHEMA],
+})
 
 /**
  * Stringifies a JavaScript object to YAML.
@@ -32,7 +49,8 @@ export function printYaml(input: any, sortKeys: boolean = true): string {
 }
 
 /**
- * converts a yaml template literal to string
+ * converts a yaml template literal to string.
+ * Used internally by y().
  */
 export function yamlfy(
 	strings: string[] | TemplateStringsArray,
@@ -48,7 +66,7 @@ export function yamlfy(
 	})
 	return result.replace(/\t/g, '  ')
 }
-
+/** serializes item to a string form that can be inserted in YAML text */
 function yamlString(item: unknown, indent: number) {
 	if (typeof item === 'boolean' || typeof item === 'number') {
 		return item.toString()
@@ -60,9 +78,10 @@ function yamlString(item: unknown, indent: number) {
 		}
 		return JSON.stringify(item)
 	} else if (item === null) {
-		return null
+		return 'null'
 	} else if (typeof item === 'undefined') {
-		return ''
+		// we load with undefined supported. Otherwise YAML will interpret as null.
+		return '!!js/undefined'
 	} else {
 		throw new Error('Invalid YAML input:' + item)
 	}
@@ -74,8 +93,12 @@ function yamlString(item: unknown, indent: number) {
  * Object interpolations are serialized to JSON first.
  * @returns Array of YAML document JavaScript Objects
  */
-export function y(literals: TemplateStringsArray, ...expr: unknown[]) {
+export function y<T extends object>(
+	literals: TemplateStringsArray,
+	...expr: unknown[]
+): T[] {
 	const { strings } = execDedent(literals, expr)
 	const result = yamlfy(strings, ...expr)
-	return yaml.parseAll(result, undefined, { schema: yaml.JSON_SCHEMA })
+	//@ts-ignore -- YAML lib TS bug. parseAll expects options for 2nd param.
+	return yaml.parseAll(result, { schema: JSON_AND_UNDEFINED }) as T[]
 }
