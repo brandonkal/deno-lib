@@ -337,6 +337,9 @@ export function deepWithKey(mergeKey, rules) {
  * ```
  */
 export function merge(a, b, rule?: any) {
+	if (a === b) {
+		return a
+	}
 	const [typeA, typeB] = [typeof a, typeof b]
 
 	if (a === undefined) {
