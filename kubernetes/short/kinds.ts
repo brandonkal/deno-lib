@@ -248,7 +248,7 @@ const probe = {
 	min_count_failure: 'failureThreshold',
 }
 
-const protocolRe = /^(tcp|udp):\/\/([\d.:]*)$/
+const protocolRe = /^(tcp|udp):\/\/([\d.:]*)$/i
 const isIPv4Re = /^(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}$/
 
 /**
@@ -280,7 +280,7 @@ function parseContainerPort(p, allowIP: boolean = true) {
 	}
 	const m = protocolRe.exec(spec)
 	let protocol = 'TCP'
-	let str = ''
+	let str = spec
 	if (m != null) {
 		protocol = m[1].toUpperCase()
 		str = m[2]
@@ -297,12 +297,12 @@ function parseContainerPort(p, allowIP: boolean = true) {
 		}
 		parseIndex = 1
 	} else if (segments.length > 2) {
-		throw new Error(`too many sections for port string: "${spec}"`)
+		throw new Error(`Too many sections for port string: "${spec}"`)
 	}
 	const hostPort = parsePort(segments[parseIndex])
 	let containerPort: number
 	if (segments.length > 1) {
-		containerPort = parsePort[parseIndex + 1]
+		containerPort = parsePort(segments[parseIndex + 1])
 	}
 	const port = {
 		name,
@@ -512,7 +512,7 @@ function revertPort(
 	port: string,
 	nodePort: number
 ): types.core.v1.ServicePort {
-	const p = parseContainerPort(port)
+	const p = parseContainerPort(port, false)
 	return {
 		port: p.hostPort,
 		targetPort: p.containerPort,
@@ -534,9 +534,9 @@ const serviceSpec: AllAny<st.Service> = {
 	selector: 'spec.selector',
 	external_ips: 'externalIPs',
 	// port, node_port, and ports are post-processed together
-	port: '',
-	node_port: '',
-	ports: '',
+	port: 'port',
+	node_port: 'node_port',
+	ports: 'ports',
 	cluster_ip: 'clusterIP',
 	unready_endpoints: 'publishNotReadyAddresses',
 	route_policy: valueMap('externalTrafficPolicy', {
