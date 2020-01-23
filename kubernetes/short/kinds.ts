@@ -7,7 +7,6 @@
  * That original work is Copyright 2020, jk authors.
  */
 
-import { apps, core } from '../src/api.ts'
 import { transform, valueMap, mapper, drop, Transformer } from './transform.ts'
 import * as expressions from './expressions.ts'
 import * as st from './interfaces.ts'
@@ -15,31 +14,21 @@ import * as types from '../src/types.ts'
 
 type AllAny<T> = { [P in keyof T]-?: any }
 
-interface Resource<T> extends Function {
-	new (name: string, shape: object): T
-}
-
 /**
- * Take a constructor (e.g., from the API) and return a transformer
- * that will construct the API resource given a API resource "shape".
+ * Take a spec object and optional postProcess function. Returns a function
+ * that will reshape the API resource. After this transform
+ * the user must use the appropriate constructor from the API.
  */
 function makeResource(
-	Ctor: Resource<object>,
 	spec: Record<string, Transformer>,
 	postProcess?: Transformer
 ) {
-	return (v: object) => {
+	return (v) => {
 		let shape = transform(spec, v)
 		if (typeof postProcess == 'function') {
 			shape = postProcess(shape)
 		}
-		let name = ''
-		if (shape && shape.metadata && shape.metadata.name) {
-			;({
-				metadata: { name },
-			} = shape)
-		}
-		return new Ctor(name, shape)
+		return shape
 	}
 }
 
@@ -163,7 +152,11 @@ function priority(p) {
 	return { spec }
 }
 
-function envVars(envs) {
+function envVars(envs: any[]) {
+	if (!envs || !envs.length) {
+		// if not an array, return empty object to merge
+		return envs
+	}
 	const env = []
 	const envFrom = []
 	/* eslint-disable no-continue */
@@ -554,8 +547,8 @@ const serviceSpec: AllAny<st.Service> = {
 // TODO register new transforms (e.g., for custom resources).
 
 export default {
-	namespace: makeResource(core.v1.Namespace, objectMeta),
-	pod: makeResource(core.v1.Pod, podSpec),
-	deployment: makeResource(apps.v1.Deployment, deploymentSpec),
-	service: makeResource(core.v1.Service, serviceSpec, processServicePorts),
+	namespace: makeResource(objectMeta),
+	pod: makeResource(podSpec),
+	deployment: makeResource(deploymentSpec),
+	service: makeResource(serviceSpec, processServicePorts),
 }

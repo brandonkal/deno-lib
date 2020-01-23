@@ -17,11 +17,15 @@ interface Expr {
 	values: string[]
 }
 interface AffinityWrap {
-	spec?: types.core.v1.Affinity
+	spec?: { affinity: types.core.v1.Affinity }
 }
 
 export function convertAffinityList(all: shorts.Affinity[]): AffinityWrap {
-	if (!all || !all.length) {
+	// This will only be an array if it is short syntax
+	if (!Array.isArray(all)) {
+		return { spec: { affinity: all } }
+	}
+	if (Array.isArray(all) && !all.length) {
 		throw new Error(`Affinity list cannot be empty`)
 	}
 	const node: string[] = []
@@ -65,9 +69,11 @@ export function convertAffinityList(all: shorts.Affinity[]): AffinityWrap {
 	}
 	return {
 		spec: {
-			nodeAffinity,
-			podAffinity,
-			podAntiAffinity,
+			affinity: {
+				nodeAffinity,
+				podAffinity,
+				podAntiAffinity,
+			},
 		},
 	}
 }

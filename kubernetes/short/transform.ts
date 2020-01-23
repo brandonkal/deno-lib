@@ -21,10 +21,13 @@ import { merge } from '../../merge.ts'
  * which effectively renames a field.
  */
 export function relocate(path: string) {
-	if (path === '') return (v) => v
+	if (path === '')
+		return function same(v) {
+			return v
+		}
 
 	const elems = path.split('.').reverse()
-	return (v) => {
+	return function relocator(v) {
 		let obj = v
 		for (const p of elems) {
 			obj = { [p]: obj }
@@ -111,9 +114,14 @@ export function transform(spec, v0): any {
 	let v1 = {}
 	for (const [field, value] of Object.entries(v0)) {
 		const tx = spec[field]
-		if (tx !== undefined) {
-			const fn = getTransfomer(tx)
-			v1 = merge(v1, fn(value))
+		if (value !== undefined) {
+			if (tx !== undefined) {
+				const fn = getTransfomer(tx)
+				const next = fn(value)
+				v1 = merge(v1, next)
+			} else {
+				v1[field] = value
+			}
 		}
 	}
 	return v1
