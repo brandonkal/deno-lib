@@ -5,8 +5,9 @@
 import * as k8s from './kubernetes.ts'
 import { y } from './yaml-tag.ts'
 import { Resource } from './kubernetes/src/kite.ts'
+import shorts from './kubernetes/short/kinds.ts'
 
-namespace types {
+export namespace types {
 	export type EnvMap = Record<string, string | k8s.types.core.v1.EnvVarSource>
 	export type PortMap = Record<string, number>
 
@@ -77,6 +78,7 @@ namespace types {
 }
 
 function buildPodSpec(podSpec: types.PodSpec): k8s.types.core.v1.PodSpec {
+	const spec: types.PodSpec = shorts.pod(podSpec).spec
 	const containers: k8s.types.core.v1.Container[] = []
 	const volumes: k8s.types.core.v1.Volume[] = []
 	const isEnvMap = (env: any): env is types.EnvMap => env.length === undefined
@@ -84,7 +86,7 @@ function buildPodSpec(podSpec: types.PodSpec): k8s.types.core.v1.PodSpec {
 		ports.length === undefined
 	const isMountObject = (object: any): object is types.VolumeMount =>
 		object.hasOwnProperty('volume')
-	podSpec.containers.forEach((container) => {
+	spec.containers.forEach((container) => {
 		const c: k8s.types.core.v1.Container = {
 			...container,
 			env: [],
@@ -157,9 +159,9 @@ function buildPodSpec(podSpec: types.PodSpec): k8s.types.core.v1.PodSpec {
 		}
 		containers.push(c)
 	})
-	const podVolumes = [...(podSpec.volumes || []), ...volumes]
+	const podVolumes = [...(spec.volumes || []), ...volumes]
 	return {
-		...podSpec,
+		...spec,
 		containers,
 		volumes: podVolumes.length ? podVolumes : undefined,
 	}
@@ -224,10 +226,12 @@ export class PodBuilder {
 	}
 }
 
+const isPodBuilder = (object: any): object is PodBuilder => {
+	return object.hasOwnProperty('podSpec')
+}
+
 export class Pod extends k8s.core.v1.Pod {
 	constructor(name: string, desc: types.Pod) {
-		const isPodBuilder = (object: any): object is PodBuilder =>
-			object.hasOwnProperty('podSpec')
 		const specArg = desc.spec
 		const spec: k8s.types.core.v1.PodSpec = isPodBuilder(specArg)
 			? specArg.podSpec
@@ -236,8 +240,9 @@ export class Pod extends k8s.core.v1.Pod {
 	}
 }
 
-const isPortMap = (ports: any): ports is types.PortMap =>
-	ports.length === undefined
+const isPortMap = (ports: any): ports is types.PortMap => {
+	return ports.length === undefined
+}
 
 export class Deployment extends k8s.apps.v1.Deployment {
 	constructor(name: string, desc: types.Deployment) {
