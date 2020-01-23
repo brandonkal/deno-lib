@@ -9,6 +9,7 @@ import * as yaml from 'https://deno.land/std/encoding/yaml.ts'
 import { Type } from 'https://deno.land/std/encoding/yaml/type.ts'
 import { Schema } from 'https://deno.land/std/encoding/yaml/schema.ts'
 import { execDedent } from './dedent.ts'
+import { stripUndefined } from './utils.ts'
 
 const undefinedType = new Type('tag:yaml.org,2002:js/undefined', {
 	kind: 'scalar',
@@ -28,7 +29,7 @@ export const JSON_AND_UNDEFINED = new Schema({
 /**
  * Stringifies a JavaScript object to YAML.
  * If the object is an array, a multi-document string will be printed.
- * Only JSON schema is allowed and object keys are always sorted to ensure deterministic results.
+ * Only JSON schema is allowed and maps are sorted by default for deterministic results.
  */
 export function printYaml(input: any, sortKeys: boolean = true): string {
 	let objs: any[] = input
@@ -36,6 +37,7 @@ export function printYaml(input: any, sortKeys: boolean = true): string {
 		objs = [input]
 	}
 	return objs
+		.map(stripUndefined)
 		.map(
 			(doc) =>
 				'---\n' +

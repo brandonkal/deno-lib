@@ -1,4 +1,5 @@
 import { printYaml } from '../../yaml-tag.ts'
+import { stripUndefined } from '../../utils.ts'
 
 let output: Resource[] = []
 
@@ -9,7 +10,7 @@ interface hiddenFields {
 	readonly name: string
 }
 
-class Resource {
+export class Resource {
 	constructor(name: string, desc: any) {
 		// Allow namespace as object
 		if (
@@ -32,6 +33,8 @@ class Resource {
 		if (containsEmptyArray(desc)) {
 			throw new Error(`Resource ${name} contains an unexpected empty array`)
 		}
+		/* This makes things cleaner to debug. */
+		stripUndefined(desc)
 		registerResource(name, desc, this)
 	}
 }
@@ -85,16 +88,14 @@ export function containsEmptyArray(search: any) {
 /**
  * call flush at the end of a Kite program to flush the queue to stdout
  */
-function flush() {
+export function flush() {
 	console.log(printYaml(output, true))
 }
 
 /**
  * clear state
  */
-function reset() {
+export function reset() {
 	output = []
 	map.clear()
 }
-
-export { Resource, flush, reset }
