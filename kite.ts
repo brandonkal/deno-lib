@@ -174,3 +174,31 @@ export function make(
 	const out = json ? buf : buf.map(genComments)
 	return json ? JSON.stringify(out, undefined, 2) : printYaml(out, true, true)
 }
+
+let revoked = false
+
+/** Revoke deno permissions that we do not require early */
+async function revoke() {
+	if (revoked) {
+		return Promise.resolve(revoked)
+	}
+	await Promise.all([
+		Deno.permissions.revoke({ name: 'env' }),
+		Deno.permissions.revoke({ name: 'hrtime' }),
+		Deno.permissions.revoke({ name: 'net' }),
+		Deno.permissions.revoke({ name: 'run' }),
+		Deno.permissions.revoke({ name: 'write' }),
+	])
+	return (revoked = true)
+}
+
+/**
+ * Call start at the start of Config generation.
+ * This invokes permissions to ensure hermesticity.
+ */
+export async function start() {
+	if (import.meta.main) {
+		reset()
+	}
+	await revoke()
+}
