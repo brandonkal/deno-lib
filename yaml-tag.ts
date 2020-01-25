@@ -27,27 +27,49 @@ export const JSON_AND_UNDEFINED = new Schema({
 })
 
 /**
+ * If true, sort keys when dumping YAML in ascending, ASCII character order.
+ * If a function, use the function to sort the keys. (default: false)
+ * If a function is specified, the function must return a negative value
+ * if first argument is less than second argument, zero if they're equal
+ * and a positive value otherwise.
+ */
+type SortFn = (a: string, b: string) => number
+
+/**
  * Stringifies a JavaScript object to YAML.
  * If the object is an array, a multi-document string will be printed.
  * Only JSON schema is allowed and maps are sorted by default for deterministic results.
  */
-export function printYaml(input: any, sortKeys: boolean = true): string {
-	let objs: any[] = input
+export function printYaml(
+	input: any,
+	sortKeys: boolean | SortFn = true,
+	comments?: boolean
+): string {
+	let docs: any[] = input
 	if (!Array.isArray(input)) {
-		objs = [input]
+		docs = [input]
 	}
-	return objs
-		.map(stripUndefined)
-		.map(
-			(doc) =>
-				'---\n' +
-				yaml.stringify(doc, {
+	return docs
+		.map((doc) => {
+			let obj = stripUndefined(comments ? doc[1] : doc)
+			let prefix = '---\n'
+			if (comments) {
+				prefix + toComment(doc[0])
+			}
+			return (
+				prefix +
+				yaml.stringify(obj, {
 					schema: yaml.JSON_SCHEMA,
-					sortKeys,
+					sortKeys: sortKeys,
 					skipInvalid: true,
 				})
-		)
+			)
+		})
 		.join('')
+}
+/** generate yaml comment */
+function toComment(str: string) {
+	return '# ' + str + '\n'
 }
 
 /**
