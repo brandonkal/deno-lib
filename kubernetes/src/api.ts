@@ -3,7 +3,7 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as types from './types.ts'
-import * as kite from './kite.ts'
+import * as kite from '../../kite.ts'
 
 export namespace admissionregistration {
 	export namespace v1 {

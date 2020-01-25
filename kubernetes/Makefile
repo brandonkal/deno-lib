@@ -14,4 +14,4 @@ all: gen
 
 gen:: $(OPENAPI_FILE)
 	GO111MODULE=on go run ./cmd/apigen/ $(OPENAPI_FILE) cmd/apigen/templates ./src/
-	deno fmt src/api.ts src/types.ts
+	prettier --write src/api.ts src/types.ts
