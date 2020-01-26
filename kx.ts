@@ -4,7 +4,7 @@
 
 import * as k8s from './kubernetes.ts'
 import { y } from './yaml-tag.ts'
-import { Resource } from './kubernetes/src/kite.ts'
+import { Resource } from './kite.ts'
 import shorts from './kubernetes/short/kinds.ts'
 
 export namespace types {
