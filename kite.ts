@@ -13,13 +13,20 @@
 
 import { printYaml } from './yaml-tag.ts'
 import { stripUndefined } from './utils.ts'
+import * as yaml from 'https://deno.land/std/encoding/yaml.ts'
 
-let outBuffer: Resource[] = []
-
+/**
+ * A kite.Resource is the base class that all generated config objects should extend.
+ * It allows annotations as numbers (converted to strings) and defines some hidden properties to keep track of the graph.
+ * On construction, the Resource is registered into the shared output buffer. The buffer is drained by calling `kite.make()`.
+ */
 export class Resource {
 	readonly __id: number
 	readonly __name: string
 	readonly __parent: Resource | undefined
+	/**
+	 * Build a new Resource Object
+	 */
 	constructor(name: string, desc: any, parent?: Resource) {
 		// Allow namespace as object
 		if (
@@ -64,6 +71,9 @@ export class Resource {
 	}
 }
 
+let outBuffer: Resource[] = []
+
+/** Register a resource in the shared buffer. */
 function registerResource(name: string, desc: object, instance: Resource) {
 	try {
 		Object.entries(desc).forEach(([key, val]) => {
@@ -111,7 +121,7 @@ export function containsEmptyArray(search: any) {
  * Call at the end of a Kite program to write to stdout.
  * Essentially the same as console.log, but useful to lint against console.log
  */
-export function output(config: string) {
+export function log(config: string) {
 	console.log(config)
 }
 
@@ -129,25 +139,44 @@ function reset() {
  */
 type Transformer = (objs: Resource[]) => Resource[]
 
+interface MakeOpts {
+	/** Set to true if provided function should be called with Deno arguments */
+	main?: boolean
+	/** An array of transforming functions. */
+	post?: Transformer[]
+	/** Set to true to receive JSON.stringify output rather than YAML. Note that sort order is not deterministic. */
+	json?: boolean
+}
+
+/** Parse Deno arguments to object */
+function handleArgs(): object | undefined {
+	const a = Deno.args
+	if (a.length) {
+		if (a.length !== 1) {
+			throw new Error(`Expected only one arg but got ${a.length}`)
+		}
+		return yaml.parse(a[0], { schema: yaml.JSON_SCHEMA }) as object
+	}
+	return undefined
+}
+
 /**
  * make takes a config generation function and returns a string.
  * Pass it a module default export and console.log the output.
  * An optional second argument is supported to post-process the generated config array before printing.
- * @param fn A syncronous function to call that registers Resources.
- * @param post An array of transforming functions.
- * @param json Set to true to receive JSON.stringify output rather than YAML. Note that sort order is not deterministic.
  */
-export function make(
-	fn: Function,
-	post?: Transformer[],
-	json?: boolean
-): string {
+export function make(fn: Function, { main, post, json }: MakeOpts): string {
 	if (typeof fn !== 'function') {
 		throw new Error('Expected function for make')
 	}
 	reset()
 	// run user's function
-	fn()
+	if (main) {
+		const args = handleArgs()
+		fn(args)
+	} else {
+		fn()
+	}
 	let buf = [...outBuffer]
 	// keep track of input to validate that transformers do not create new objects
 	const beforeLength = buf.length
@@ -197,8 +226,6 @@ async function revoke() {
  * This invokes permissions to ensure hermesticity.
  */
 export async function start() {
-	if (import.meta.main) {
-		reset()
-	}
+	reset()
 	await revoke()
 }
