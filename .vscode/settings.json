@@ -1,13 +1,13 @@
 {
-  "deno.enable": true,
-  "runOnSave.commands": [
-    // {
-    //   "command": "deno fmt ${file} && node ${file}",
-    //   "runIn": "terminal"
-    // }
-    // {
-    //   "command": "deno fmt ${file} && deno test -A -f dedent.test.ts",
-    //   "runIn": "terminal"
-    // }
-  ]
+	"deno.enable": true,
+	"runOnSave.commands": [
+		// {
+		//   "command": "deno fmt ${file} && node ${file}",
+		//   "runIn": "terminal"
+		// }
+		// {
+		//   "command": "deno fmt ${file} && deno test -A -f dedent.test.ts",
+		//   "runIn": "terminal"
+		// }
+	]
 }
