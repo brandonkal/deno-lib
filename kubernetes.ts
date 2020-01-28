@@ -44,11 +44,7 @@ export namespace yaml {
 				objs = desc.yaml
 			}
 			let transform: ((obj: any) => void) | undefined
-			if (
-				typeof desc !== 'string' &&
-				desc.transformations &&
-				desc.transformations.length
-			) {
+			if (typeof desc !== 'string' && desc.transformations?.length) {
 				transform = (obj: any) => {
 					desc.transformations.forEach((fn) => fn(obj, name))
 				}
@@ -62,7 +58,7 @@ export namespace yaml {
 			})
 			Resource.start(`k8s:yaml:Config:${name}`)
 			parsed.forEach((item) => {
-				const n = (item && item.metadata && item.metadata.name) || undefined
+				const n = item?.metadata?.name || undefined
 				if (typeof n !== 'string') {
 					throw new Error(
 						`Invalid k8s metadata.name field. Got: ${n} for k8s:yaml.Config:${name}`

@@ -37,16 +37,11 @@ export class Resource {
 	 */
 	constructor(name: string, desc: any) {
 		// Allow namespace as object
-		if (
-			desc.metadata &&
-			desc.metadata.namespace &&
-			desc.metadata.namespace.metadata &&
-			desc.metadata.namespace.metadata.name
-		) {
+		if (desc?.metadata?.namespace?.metadata?.name) {
 			desc.metadata.namespace = desc.metadata.namespace.metadata.name
 		}
 		// Allow annotation inputs as numbers
-		if (desc.metadata && desc.metadata.annotations) {
+		if (desc.metadata?.annotations) {
 			desc.metadata.annotations = Object.entries(
 				desc.metadata.annotations
 			).forEach(([key, val]) => {
@@ -72,7 +67,7 @@ export class Resource {
 		let number = registerResource(name, desc, this)
 		// if a name is specified it must be a valid k8s name
 		Resource.validateName(name)
-		if (desc && desc.metadata && desc.matadata.name) {
+		if (desc?.metadata?.name) {
 			Resource.validateName(desc.metadata.name)
 		}
 		Object.defineProperty(this, '__number', {
