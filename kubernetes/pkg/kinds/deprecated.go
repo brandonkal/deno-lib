@@ -81,6 +81,16 @@ func RemovedInVersion(gvk schema.GroupVersionKind) *cluster.ServerVersion {
 	case schema.GroupVersion{Group: "scheduling", Version: "v1beta1"},
 		schema.GroupVersion{Group: "scheduling", Version: "v1alpha1"}:
 		removedIn = cluster.ServerVersion{Major: 1, Minor: 17}
+	case schema.GroupVersion{Group: "admissionregistration", Version: "v1beta1"}:
+		removedIn = cluster.ServerVersion{Major: 1, Minor: 19}
+	case schema.GroupVersion{Group: "core", Version: "v1"}:
+		if gvk.Kind == "Binding" {
+			removedIn = cluster.ServerVersion{Major: 1, Minor: 7}
+		} else {
+			return nil
+		}
+	case schema.GroupVersion{Group: "apiextensions", Version: "v1beta1"}:
+		removedIn = cluster.ServerVersion{Major: 1, Minor: 19}
 	default:
 		return nil
 	}
@@ -108,13 +118,13 @@ func SuggestedApiVersion(gvk schema.GroupVersionKind) string {
 		return "apps/v1/" + gvk.Kind
 	case schema.GroupVersion{Group: "extensions", Version: "v1beta1"}:
 		switch Kind(gvk.Kind) {
-		case DaemonSet, Deployment, ReplicaSet:
+		case DaemonSet, "DaemonSetList", Deployment, "DeploymentList", ReplicaSet, "ReplicaSetList":
 			return "apps/v1/" + gvk.Kind
-		case Ingress:
+		case Ingress, "IngressList":
 			return "networking/v1beta1/" + gvk.Kind
-		case NetworkPolicy:
+		case NetworkPolicy, "NetworkPolicyList":
 			return "networking/v1/" + gvk.Kind
-		case PodSecurityPolicy:
+		case PodSecurityPolicy, "PodSecurityPolicyList":
 			return "policy/v1beta1/" + gvk.Kind
 		default:
 			return gvkStr(gvk)
@@ -127,11 +137,20 @@ func SuggestedApiVersion(gvk schema.GroupVersionKind) string {
 		return "scheduling/v1/" + gvk.Kind
 	case schema.GroupVersion{Group: "storage", Version: "v1beta1"}:
 		switch Kind(gvk.Kind) {
-		case CSINode:
+		case CSINode, "CSINodeList":
 			return "storage/v1/" + gvk.Kind
 		default:
 			return gvkStr(gvk)
 		}
+	case schema.GroupVersion{Group: "admissionregistration", Version: "v1beta1"}:
+		return "admissionregistration/v1/" + gvk.Kind
+	case schema.GroupVersion{Group: "apiextensions", Version: "v1beta1"}:
+		return "apiextensions/v1/" + gvk.Kind
+	case schema.GroupVersion{Group: "core", Version: "v1"}:
+		if gvk.Kind == "Binding" {
+			return "the bindings subresource of pods"
+		}
+		return gvkStr(gvk)
 	default:
 		return gvkStr(gvk)
 	}
