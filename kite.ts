@@ -212,6 +212,53 @@ function handleArgs(): object | undefined {
 	return undefined
 }
 
+const sortedK8s = [
+	'apiVersion',
+	'kind',
+	'metadata', // before spec and data keys
+	'name',
+	'namespace',
+	'containers',
+	'initContainers',
+	'image',
+	'imagePullPolicy',
+	'command',
+	'args',
+	'selector', // selector before ports in serviceSpec
+	// Ingress spec
+	'path',
+	'backend',
+	'serviceName',
+	'storageClassName', // PVC before dataSource
+	'dataSource',
+	'accessModes',
+	// Secrets
+	'type', // before data
+	// RBAC
+	'apiGroups',
+	'subjects',
+	'roleRef',
+]
+
+/**
+ * A function to sort map keys to match hand-written YAML. i.e. kind before data.
+ * The function returns negative if first is less.
+ * Zero if equal.
+ * Positive otherwise.
+ */
+export function sortK8sYaml(a: string, b: string): number {
+	const idxA = sortedK8s.indexOf(a)
+	const idxB = sortedK8s.indexOf(b)
+	if (idxA !== -1 && idxB !== -1) {
+		return idxA < idxB ? -1 : idxA > idxB ? 1 : 0
+	} else if (idxA !== -1 && idxB === -1) {
+		return -1
+	} else if (idxA === -1 && idxB !== -1) {
+		return 1
+	}
+	return a < b ? -1 : a > b ? 1 : 0
+}
+
 /**
  * make takes a config generation function and returns a string.
  * Pass it a module default export and console.log the output.
@@ -249,7 +296,9 @@ export function make(fn: Function, { main, post, json }: MakeOpts): string {
 		return [res.uid(), res]
 	}
 	const out = json ? buf : buf.map(genComments)
-	return json ? JSON.stringify(out, undefined, 2) : printYaml(out, true, true)
+	return json
+		? JSON.stringify(out, undefined, 2)
+		: printYaml(out, sortK8sYaml, true)
 }
 
 let revoked = false
