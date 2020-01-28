@@ -7,7 +7,7 @@
  * 2. No console.log
  * 3. post-processors cannot generate new objects
  * 4. Everything is a function. Export it as default and optionally call make() if import.meta.main
- * 5. Contract: All module functions should be a function that accepts one JSON argument.
+ * 5. Contract: All module functions should be a function that accepts or ignores one object argument.
  * 6. make() should always be in scope for all config gen modules.
  */
 
@@ -224,7 +224,10 @@ const sortedK8s = [
 	'imagePullPolicy',
 	'command',
 	'args',
+	// Deployment/ReplicaSet
+	'replicas',
 	'selector', // selector before ports in serviceSpec
+	'template',
 	// Ingress spec
 	'path',
 	'backend',
