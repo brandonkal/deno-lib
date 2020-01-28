@@ -156,7 +156,7 @@ export namespace yaml {
 }
 
 export namespace helm {
-	export interface IHelmChart {
+	export interface IChart {
 		/**
 		 * APIVersion defines the versioned schema of this representation of an object. Servers should
 		 * convert recognized schemas to the latest internal value, and may reject unrecognized
@@ -217,14 +217,14 @@ export namespace helm {
 		helmVersion?: string
 	}
 
-	export class Helm extends kite.Resource implements IHelmChart {
+	export class Chart extends kite.Resource implements IChart {
 		kind: 'HelmChart'
 		apiVersion: 'helm.cattle.io/v1'
 		metadata: meta.v1.ObjectMeta
 		spec: IChartSpec
 
-		constructor(name: string, args: IHelmChart) {
-			const props: IHelmChart = {
+		constructor(name: string, args: IChart) {
+			const props: IChart = {
 				...args,
 				kind: 'HelmChart',
 				apiVersion: 'helm.cattle.io/v1',
