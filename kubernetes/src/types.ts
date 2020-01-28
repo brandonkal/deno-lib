@@ -731,8 +731,11 @@ export namespace admissionregistration {
 
 		/**
 		 * MutatingWebhookConfiguration describes the configuration of and admission webhook that accept
-		 * or reject and may change the object. Deprecated in v1.16, planned for removal in v1.19. Use
-		 * admissionregistration.k8s.io/v1 MutatingWebhookConfiguration instead.
+		 * or reject and may change the object.
+		 *
+		 * @deprecated admissionregistration/v1beta1/MutatingWebhookConfiguration is deprecated by
+		 * admissionregistration/v1/MutatingWebhookConfiguration and not supported by Kubernetes v1.19+
+		 * clusters.
 		 */
 		export interface MutatingWebhookConfiguration {
 			/**
@@ -1022,8 +1025,11 @@ export namespace admissionregistration {
 
 		/**
 		 * ValidatingWebhookConfiguration describes the configuration of and admission webhook that
-		 * accept or reject and object without changing it. Deprecated in v1.16, planned for removal in
-		 * v1.19. Use admissionregistration.k8s.io/v1 ValidatingWebhookConfiguration instead.
+		 * accept or reject and object without changing it.
+		 *
+		 * @deprecated admissionregistration/v1beta1/ValidatingWebhookConfiguration is deprecated by
+		 * admissionregistration/v1/ValidatingWebhookConfiguration and not supported by Kubernetes
+		 * v1.19+ clusters.
 		 */
 		export interface ValidatingWebhookConfiguration {
 			/**
@@ -1872,8 +1878,10 @@ export namespace apiextensions {
 
 		/**
 		 * CustomResourceDefinition represents a resource that should be exposed on the API server.  Its
-		 * name MUST be in the format <.spec.name>.<.spec.group>. Deprecated in v1.16, planned for
-		 * removal in v1.19. Use apiextensions.k8s.io/v1 CustomResourceDefinition instead.
+		 * name MUST be in the format <.spec.name>.<.spec.group>.
+		 *
+		 * @deprecated apiextensions/v1beta1/CustomResourceDefinition is deprecated by
+		 * apiextensions/v1/CustomResourceDefinition and not supported by Kubernetes v1.19+ clusters.
 		 */
 		export interface CustomResourceDefinition {
 			/**
@@ -8002,7 +8010,9 @@ export namespace core {
 
 		/**
 		 * Binding ties one object to another; for example, a pod is bound to a node by a scheduler.
-		 * Deprecated in 1.7, please use the bindings subresource of pods instead.
+		 *
+		 * @deprecated core/v1/Binding is deprecated by the bindings subresource of pods and not
+		 * supported by Kubernetes v1.7+ clusters.
 		 */
 		export interface Binding {
 			/**
@@ -15039,8 +15049,10 @@ export namespace extensions {
 		}
 
 		/**
-		 * DEPRECATED 1.9 - This group version of NetworkPolicyList is deprecated by
-		 * networking/v1/NetworkPolicyList. Network Policy List is a list of NetworkPolicy objects.
+		 * Network Policy List is a list of NetworkPolicy objects.
+		 *
+		 * @deprecated extensions/v1beta1/NetworkPolicyList is deprecated by
+		 * networking/v1/NetworkPolicyList and not supported by Kubernetes v1.16+ clusters.
 		 */
 		export interface NetworkPolicyList {
 			/**
@@ -15219,8 +15231,10 @@ export namespace extensions {
 		}
 
 		/**
-		 * PodSecurityPolicyList is a list of PodSecurityPolicy objects. Deprecated: use
-		 * PodSecurityPolicyList from policy API Group instead.
+		 * PodSecurityPolicyList is a list of PodSecurityPolicy objects.
+		 *
+		 * @deprecated extensions/v1beta1/PodSecurityPolicyList is deprecated by
+		 * policy/v1beta1/PodSecurityPolicyList and not supported by Kubernetes v1.16+ clusters.
 		 */
 		export interface PodSecurityPolicyList {
 			/**
@@ -19871,7 +19885,8 @@ export namespace scheduling {
 	}
 	export namespace v1alpha1 {
 		/**
-		 *
+		 * PriorityClass defines mapping from a priority class name to the priority integer value. The
+		 * value can be any valid integer.
 		 *
 		 * @deprecated scheduling/v1alpha1/PriorityClass is deprecated by scheduling/v1/PriorityClass
 		 * and not supported by Kubernetes v1.17+ clusters.
@@ -19976,7 +19991,8 @@ export namespace scheduling {
 	}
 	export namespace v1beta1 {
 		/**
-		 *
+		 * PriorityClass defines mapping from a priority class name to the priority integer value. The
+		 * value can be any valid integer.
 		 *
 		 * @deprecated scheduling/v1beta1/PriorityClass is deprecated by scheduling/v1/PriorityClass and
 		 * not supported by Kubernetes v1.17+ clusters.

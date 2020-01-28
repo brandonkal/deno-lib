@@ -20,20 +20,16 @@ import (
 	"fmt"
 	"regexp"
 
-	"github.com/brandonkal/deno-lib/kubernetes/kinds"
+	"github.com/brandonkal/deno-lib/kubernetes/pkg/kinds"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 )
-
-func gvkStr(gvk schema.GroupVersionKind) string {
-	return gvk.GroupVersion().String() + "/" + gvk.Kind
-}
 
 func ApiVersionComment(gvk schema.GroupVersionKind) string {
 	const deprecatedTemplate = `%s is deprecated by %s`
 	const notSupportedTemplate = ` and not supported by Kubernetes v%v+ clusters.`
 	removedIn := kinds.RemovedInVersion(gvk)
 
-	comment := fmt.Sprintf(deprecatedTemplate, gvkStr(gvk), kinds.SuggestedApiVersion(gvk))
+	comment := fmt.Sprintf(deprecatedTemplate, kinds.GvkStr(gvk), kinds.SuggestedApiVersion(gvk))
 	if removedIn != nil {
 		comment += fmt.Sprintf(notSupportedTemplate, removedIn)
 	} else {
@@ -56,14 +52,18 @@ func extractDeprecationComment(comment interface{}, gvk schema.GroupVersionKind)
 	}
 
 	if kinds.DeprecatedApiVersion(gvk) {
-		re := regexp.MustCompile(`((DEPRECATED - .* is deprecated by .* for more information)|(Deprecated in .*, planned for removal in .* Use .* instead)|(Deprecated in 1.7, please use the bindings subresource of pods instead)|(DEPRECATED.* - This group version of .* is deprecated by .*)|(Deprecated: use .* from policy .* instead)|(Deprecated in .* in favor of .*, and will no longer be served in .*))\.\s*`)
+		re := regexp.MustCompile(`((DEPRECATED - .* is deprecated by .* for more information)|(Deprecated in .*, planned for removal in .* Use .* instead)|(Deprecated in 1\.7, please use the bindings subresource of pods instead)|(DEPRECATED.* - This group version of .* is deprecated by [.\w/]+)|(Deprecated: use .* from policy .* instead)|(Deprecated in .* in favor of .*, and will no longer be served in .*))\.\s*`)
 
 		var prefix = "\n\n@deprecated "
 		var suffix = ""
 
 		if re.MatchString(commentstr) {
 			deprecationMessage := prefix + ApiVersionComment(gvk) + suffix
-			return re.ReplaceAllString(commentstr, ""), deprecationMessage
+			cmt := re.ReplaceAllString(commentstr, "")
+			if cmt == "" {
+				panic("Found invalid comment for: " + commentstr)
+			}
+			return cmt, deprecationMessage
 		}
 	}
 

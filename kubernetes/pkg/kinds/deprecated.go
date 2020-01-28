@@ -51,13 +51,14 @@ import (
 // rbac/v1beta1/* / 1.17 / 1.20
 // https://git.k8s.io/kubernetes/CHANGELOG-1.17.md#deprecations-and-removals
 
-func gvkStr(gvk schema.GroupVersionKind) string {
+// GvkStr returns group/version/kind as a string
+func GvkStr(gvk schema.GroupVersionKind) string {
 	return gvk.GroupVersion().String() + "/" + gvk.Kind
 }
 
 // DeprecatedApiVersion returns true if the given GVK is deprecated in the most recent k8s release.
 func DeprecatedApiVersion(gvk schema.GroupVersionKind) bool {
-	return SuggestedApiVersion(gvk) != gvkStr(gvk)
+	return SuggestedApiVersion(gvk) != GvkStr(gvk)
 }
 
 // RemovedInVersion returns the ServerVersion of k8s that a GVK is removed in. The return value is
@@ -127,7 +128,7 @@ func SuggestedApiVersion(gvk schema.GroupVersionKind) string {
 		case PodSecurityPolicy, "PodSecurityPolicyList":
 			return "policy/v1beta1/" + gvk.Kind
 		default:
-			return gvkStr(gvk)
+			return GvkStr(gvk)
 		}
 	case schema.GroupVersion{Group: "rbac", Version: "v1beta1"},
 		schema.GroupVersion{Group: "rbac", Version: "v1alpha1"}:
@@ -140,7 +141,7 @@ func SuggestedApiVersion(gvk schema.GroupVersionKind) string {
 		case CSINode, "CSINodeList":
 			return "storage/v1/" + gvk.Kind
 		default:
-			return gvkStr(gvk)
+			return GvkStr(gvk)
 		}
 	case schema.GroupVersion{Group: "admissionregistration", Version: "v1beta1"}:
 		return "admissionregistration/v1/" + gvk.Kind
@@ -150,9 +151,9 @@ func SuggestedApiVersion(gvk schema.GroupVersionKind) string {
 		if gvk.Kind == "Binding" {
 			return "the bindings subresource of pods"
 		}
-		return gvkStr(gvk)
+		return GvkStr(gvk)
 	default:
-		return gvkStr(gvk)
+		return GvkStr(gvk)
 	}
 }
 
@@ -177,12 +178,12 @@ type RemovedApiError struct {
 
 func (e *RemovedApiError) Error() string {
 	if e.Version == nil {
-		return fmt.Sprintf("apiVersion %q was removed in a previous version of Kubernetes", gvkStr(e.GVK))
+		return fmt.Sprintf("apiVersion %q was removed in a previous version of Kubernetes", GvkStr(e.GVK))
 	}
 
 	link := upstreamDocsLink(*e.Version)
 	str := fmt.Sprintf("apiVersion %q was removed in Kubernetes %s. Use %q instead.",
-		gvkStr(e.GVK), e.Version, SuggestedApiVersion(e.GVK))
+		GvkStr(e.GVK), e.Version, SuggestedApiVersion(e.GVK))
 
 	if len(link) > 0 {
 		str += fmt.Sprintf("\nSee %s for more information.", link)
