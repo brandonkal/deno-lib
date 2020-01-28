@@ -20,7 +20,7 @@ import (
 	"fmt"
 	"regexp"
 
-	"github.com/pulumi/pulumi-kubernetes/pkg/kinds"
+	"github.com/brandonkal/deno-lib/kubernetes/kinds"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 )
 
