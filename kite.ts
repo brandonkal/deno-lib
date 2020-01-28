@@ -65,6 +65,10 @@ export class Resource {
 			enumerable: false,
 			value: name,
 		})
+		if (desc.__type) {
+			this.setType(desc.__type)
+			delete desc.__type
+		}
 		let number = registerResource(name, desc, this)
 		Object.defineProperty(this, '__number', {
 			writable: false,
@@ -99,7 +103,8 @@ export class Resource {
 	/** Get a unique identifier for this Resource */
 	uid() {
 		const parent = this.__parents ? this.__parents.join('/') + '/' : ''
-		return `urn:${parent}${this.__type}:${this.__name}:${this.__number}`
+		const type = this.__type || 'und'
+		return `urn:${parent}${type}:n=${this.__name}:${this.__number}`
 	}
 
 	/**
