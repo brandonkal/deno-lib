@@ -65,11 +65,6 @@ export class Resource {
 			delete desc.__type
 		}
 		let number = registerResource(name, desc, this)
-		// if a name is specified it must be a valid k8s name
-		Resource.validateName(name)
-		if (desc?.metadata?.name) {
-			Resource.validateName(desc.metadata.name)
-		}
 		Object.defineProperty(this, '__number', {
 			writable: false,
 			enumerable: false,
@@ -125,13 +120,19 @@ export class Resource {
 	}
 
 	/**
-	 * @throws if the string is not a valid k8s name
+	 * Is the string a valid name?
+	 *
+	 * We can't run this on all Resources because
+	 * k8s actually doesn't follow its own rules regarding name validation.
+	 * i.e. ClusterRoles can contain `:`
+	 * @return Error if the string is not a valid k8s name
 	 */
 	static validateName(name: string) {
-		const check = /^[\da-z.-]+$/
+		const check = /^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$/
 		if (!name.match(check)) {
-			throw new Error(
-				`${name} is not a valid k8s name. Must match /^[\\da-z.-]+$/.`
+			return new Error(
+				`"${name}" is not a valid k8s name. Expected a DNS-1123 subdomain (e.g. 'example.com'` +
+					`Validated with '^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$')`
 			)
 		}
 	}
