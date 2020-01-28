@@ -31,10 +31,9 @@ interface YamlArgs {
 	transformations?: ((o: any, name?: string) => void)[]
 }
 
-namespace yaml {
+export namespace yaml {
 	export class Config {
 		constructor(name: string, desc: YamlArgs | string) {
-			let p = desc
 			let objs: any[]
 			let parsed: object[] = []
 			if (typeof desc === 'string') {
@@ -61,9 +60,9 @@ namespace yaml {
 					}) as any[])
 				)
 			})
-			Resource.start(name)
+			Resource.start(`k8s:yaml:Config:${name}`)
 			objs.forEach((item) => {
-				new Resource(item.metadata.name, item)
+				new Resource(item.metadata.name, { ...item, __type: 'k8s:yaml' })
 			})
 			Resource.end()
 		}

@@ -3,7 +3,6 @@
 // That original work is Copyright 2016-2019, Pulumi Corporation.
 
 import * as k8s from './kubernetes.ts'
-import { y } from './yaml-tag.ts'
 import { Resource } from './kite.ts'
 import shorts from './kubernetes/short/kinds.ts'
 
@@ -1039,61 +1038,6 @@ export class Ingress extends k8s.extensions.v1beta1.Ingress {
 	}
 }
 
-y`
-ingress:
-  name: cafe-ingress
-  rules:
-  - host: cafe.example.com
-    paths:
-    - path: /tea
-      port: 80
-      service: tea-svc
-    - path: /coffee
-      port: 80
-      service: coffee-svc
-  tls:
-  - hosts:
-    - cafe.example.com
-    secret: cafe-secret
-  version: extensions/v1beta1
-`
-
-y`
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: cafe-ingress
-spec:
-  rules:
-  - host: cafe.example.com
-    http:
-      paths:
-      - backend:
-          serviceName: tea-svc
-          servicePort: 80
-        path: /tea
-      - backend:
-          serviceName: coffee-svc
-          servicePort: 80
-        path: /coffee
-  tls:
-  - hosts:
-    - cafe.example.com
-    secretName: cafe-secret
-`
-
-new k8s.extensions.v1beta1.Ingress('ing', {
-	spec: {
-		rules: [
-			{
-				http: {
-					paths: [
-						{
-							backend: {} as any,
-						},
-					],
-				},
-			},
-		],
-	},
-})
+// Re-export k8s.yaml for convenience
+const k8sYaml = k8s.yaml
+export { k8sYaml as yaml }
