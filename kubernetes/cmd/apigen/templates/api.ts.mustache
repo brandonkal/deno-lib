@@ -7,41 +7,42 @@ import * as kite from "../../kite.ts";
 
 {{#Groups}}
 export namespace {{Group}} {
-  {{#Versions}}
-  export namespace {{Version}} {
-    {{#Kinds}}
-    /**
-     * {{{Comment}}}{{{DeprecationComment}}}
-     */
-    export class {{Kind}} extends kite.Resource {
-      {{#Properties}}
-      {{{Comment}}}
-      readonly {{Name}}{{^Required}}?{{/Required}}: {{{Type}}};
+	{{#Versions}}
+	export namespace {{Version}} {
+		{{#Kinds}}
+		/**
+		 * {{{Comment}}}{{{DeprecationComment}}}
+		 */
+		export class {{Kind}} extends kite.Resource {
+			{{#Properties}}
+			{{{Comment}}}
+			readonly {{Name}}{{^Required}}?{{/Required}}: {{{Type}}};
 
-      {{/Properties}}
+			{{/Properties}}
 
-    {{#HasMeta}}
-      /**
-      * Create a {{Group}}.{{Version}}.{{Kind}} object with the given unique name and description.
-      *
-      * @param name The _unique_ name of the resource. Will configure metadata.name by default.
-      * @param desc The description to use to populate this object's properties.
-      */
-      constructor(name: string, desc{{DescQuestionMark}}: types.{{Group}}.{{Version}}.{{Kind}}) {
-          const props: any = {}
-          {{#Properties}}
-          props.{{Name}} = {{{DefaultValue}}};
-          {{/Properties}}
-          Object.assign(props.metadata, { name });
+			{{#HasMeta}}
+			/**
+			* Create a {{Group}}.{{Version}}.{{Kind}} object with the given unique name and description.
+			*
+			* @param name The _unique_ name of the resource. Will configure metadata.name by default.
+			* @param desc The description to use to populate this object's properties.
+			*/
+			constructor(name: string, desc{{DescQuestionMark}}: types.{{Group}}.{{Version}}.{{Kind}}) {
+				const props: any = {}
+				{{#Properties}}
+				props.{{Name}} = {{{DefaultValue}}};
+				{{/Properties}}
+				Object.assign(props.metadata, { name });
 
-          super(name, props);
-      }
-    {{/HasMeta}}
-    }
-    {{/Kinds}}
-  }
+				super(name, props);
+				this.setType(`k8s:{{Kind}}`)
+			}
+			{{/HasMeta}}
+		}
+		{{/Kinds}}
+	}
 
-  {{/Versions}}
+	{{/Versions}}
 }
 
 {{/Groups}}

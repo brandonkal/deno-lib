@@ -15,19 +15,27 @@ import { printYaml } from './yaml-tag.ts'
 import { stripUndefined } from './utils.ts'
 import * as yaml from 'https://deno.land/std/encoding/yaml.ts'
 
+let outBuffer: Resource[] = []
+let stack: string[] = []
+
 /**
  * A kite.Resource is the base class that all generated config objects should extend.
  * It allows annotations as numbers (converted to strings) and defines some hidden properties to keep track of the graph.
  * On construction, the Resource is registered into the shared output buffer. The buffer is drained by calling `kite.make()`.
  */
 export class Resource {
-	readonly __id: number
-	readonly __name: string
-	readonly __parent: Resource | undefined
+	/**
+	 * Call `setTypes()` instead.
+	 * The type for a Resource i.e. `kx:Deployment` or `k8s:Deployment`
+	 */
+	private __type: string
+	private readonly __number: number
+	private readonly __name: string
+	private readonly __parents?: string[]
 	/**
 	 * Build a new Resource Object
 	 */
-	constructor(name: string, desc: any, parent?: Resource) {
+	constructor(name: string, desc: any) {
 		// Allow namespace as object
 		if (
 			desc.metadata &&
@@ -57,21 +65,58 @@ export class Resource {
 			enumerable: false,
 			value: name,
 		})
-		let id = registerResource(name, desc, this)
-		Object.defineProperty(this, '__id', {
+		let number = registerResource(name, desc, this)
+		Object.defineProperty(this, '__number', {
 			writable: false,
 			enumerable: false,
-			value: id,
+			value: number,
 		})
-		Object.defineProperty(this, '__parent', {
-			writable: false,
-			enumerable: false,
-			value: parent,
-		})
+		if (stack.length) {
+			Object.defineProperty(this, '__parents', {
+				writable: false,
+				enumerable: false,
+				value: [...stack],
+			})
+		}
+	}
+
+	/**
+	 * Call to inform the stack that a Resource is starting.
+	 * This makes component resources simple.
+	 * A component resource calls Resource.start(name) before creating other resources.
+	 * When it is done, it calls Resource.end()
+	 */
+	static start(name: string) {
+		stack.push(name)
+	}
+	/**
+	 * Call to inform the stack that a ComponentResource will not create any more Resources.
+	 */
+	static end() {
+		stack.pop()
+	}
+
+	/** Get a unique identifier for this Resource */
+	uid() {
+		const parent = this.__parents ? this.__parents.join('/') + '/' : ''
+		return `urn:${parent}${this.__type}:${this.__name}:${this.__number}`
+	}
+
+	/**
+	 * Call to set the Resource type.
+	 * Must be called by subclasses.
+	 * Format like `kx:Deployment` or `k8s:Deployment`
+	 */
+	protected setType(type: string) {
+		if (!this.__type) {
+			Object.defineProperty(this, '__type', {
+				writable: false,
+				enumerable: false,
+				value: type,
+			})
+		}
 	}
 }
-
-let outBuffer: Resource[] = []
 
 /** Register a resource in the shared buffer. */
 function registerResource(name: string, desc: object, instance: Resource) {
@@ -194,11 +239,7 @@ export function make(fn: Function, { main, post, json }: MakeOpts): string {
 	}
 	// Convert buffer to add identifying comments
 	function genComments(res: Resource) {
-		const name = res.__name
-		const id = res.__id
-		const parent = res.__parent.__id
-		const comment = `name:${name} / kite:${id} parent:${parent}`
-		return [comment, res]
+		return [res.uid(), res]
 	}
 	const out = json ? buf : buf.map(genComments)
 	return json ? JSON.stringify(out, undefined, 2) : printYaml(out, true, true)

@@ -4,29 +4,29 @@
 
 {{#Groups}}
 export namespace {{Group}} {
-  {{#Versions}}
-  export namespace {{Version}} {
-    {{#Kinds}}
-    /**
-     * {{{Comment}}}{{{DeprecationComment}}}
-     */
-    export interface {{Kind}} {
-      {{#RequiredProperties}}
-      {{{Comment}}}
-      {{Name}}: {{{Type}}};
+	{{#Versions}}
+	export namespace {{Version}} {
+		{{#Kinds}}
+		/**
+		 * {{{Comment}}}{{{DeprecationComment}}}
+		 */
+		export interface {{Kind}} {
+			{{#RequiredProperties}}
+			{{{Comment}}}
+			{{Name}}: {{{Type}}};
 
-      {{/RequiredProperties}}
-      {{#OptionalProperties}}
-      {{{Comment}}}
-      {{Name}}?: {{{Type}}};
+			{{/RequiredProperties}}
+			{{#OptionalProperties}}
+			{{{Comment}}}
+			{{Name}}?: {{{Type}}};
 
-      {{/OptionalProperties}}
-    }
+			{{/OptionalProperties}}
+		}
 {{{TypeGuard}}}
 
-    {{/Kinds}}
-  }
-  {{/Versions}}
+		{{/Kinds}}
+	}
+	{{/Versions}}
 }
 
 {{/Groups}}

@@ -59,6 +59,7 @@ export namespace admissionregistration {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:MutatingWebhookConfiguration`)
 			}
 		}
 		/**
@@ -112,6 +113,7 @@ export namespace admissionregistration {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:MutatingWebhookConfigurationList`)
 			}
 		}
 		/**
@@ -166,6 +168,7 @@ export namespace admissionregistration {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ValidatingWebhookConfiguration`)
 			}
 		}
 		/**
@@ -219,6 +222,7 @@ export namespace admissionregistration {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ValidatingWebhookConfigurationList`)
 			}
 		}
 	}
@@ -277,6 +281,7 @@ export namespace admissionregistration {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:MutatingWebhookConfiguration`)
 			}
 		}
 		/**
@@ -330,6 +335,7 @@ export namespace admissionregistration {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:MutatingWebhookConfigurationList`)
 			}
 		}
 		/**
@@ -385,6 +391,7 @@ export namespace admissionregistration {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ValidatingWebhookConfiguration`)
 			}
 		}
 		/**
@@ -438,6 +445,7 @@ export namespace admissionregistration {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ValidatingWebhookConfigurationList`)
 			}
 		}
 	}
@@ -493,6 +501,7 @@ export namespace apiextensions {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:CustomResourceDefinition`)
 			}
 		}
 		/**
@@ -542,6 +551,7 @@ export namespace apiextensions {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:CustomResourceDefinitionList`)
 			}
 		}
 	}
@@ -596,6 +606,7 @@ export namespace apiextensions {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:CustomResourceDefinition`)
 			}
 		}
 		/**
@@ -645,6 +656,7 @@ export namespace apiextensions {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:CustomResourceDefinitionList`)
 			}
 		}
 	}
@@ -696,6 +708,7 @@ export namespace apiregistration {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:APIService`)
 			}
 		}
 		/**
@@ -739,6 +752,7 @@ export namespace apiregistration {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:APIServiceList`)
 			}
 		}
 	}
@@ -791,6 +805,7 @@ export namespace apiregistration {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:APIService`)
 			}
 		}
 		/**
@@ -837,6 +852,7 @@ export namespace apiregistration {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:APIServiceList`)
 			}
 		}
 	}
@@ -905,6 +921,7 @@ export namespace apps {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ControllerRevision`)
 			}
 		}
 		/**
@@ -955,6 +972,7 @@ export namespace apps {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ControllerRevisionList`)
 			}
 		}
 		/**
@@ -1006,6 +1024,7 @@ export namespace apps {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:DaemonSet`)
 			}
 		}
 		/**
@@ -1056,6 +1075,7 @@ export namespace apps {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:DaemonSetList`)
 			}
 		}
 		/**
@@ -1105,6 +1125,7 @@ export namespace apps {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:Deployment`)
 			}
 		}
 		/**
@@ -1154,6 +1175,7 @@ export namespace apps {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:DeploymentList`)
 			}
 		}
 		/**
@@ -1206,6 +1228,7 @@ export namespace apps {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ReplicaSet`)
 			}
 		}
 		/**
@@ -1257,6 +1280,7 @@ export namespace apps {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ReplicaSetList`)
 			}
 		}
 		/**
@@ -1307,6 +1331,7 @@ export namespace apps {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:StatefulSet`)
 			}
 		}
 		/**
@@ -1350,6 +1375,7 @@ export namespace apps {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:StatefulSetList`)
 			}
 		}
 	}
@@ -1419,6 +1445,7 @@ export namespace apps {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ControllerRevision`)
 			}
 		}
 		/**
@@ -1472,6 +1499,7 @@ export namespace apps {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ControllerRevisionList`)
 			}
 		}
 		/**
@@ -1524,6 +1552,7 @@ export namespace apps {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:Deployment`)
 			}
 		}
 		/**
@@ -1573,6 +1602,7 @@ export namespace apps {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:DeploymentList`)
 			}
 		}
 		/**
@@ -1626,6 +1656,7 @@ export namespace apps {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:StatefulSet`)
 			}
 		}
 		/**
@@ -1669,6 +1700,7 @@ export namespace apps {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:StatefulSetList`)
 			}
 		}
 	}
@@ -1738,6 +1770,7 @@ export namespace apps {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ControllerRevision`)
 			}
 		}
 		/**
@@ -1791,6 +1824,7 @@ export namespace apps {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ControllerRevisionList`)
 			}
 		}
 		/**
@@ -1845,6 +1879,7 @@ export namespace apps {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:DaemonSet`)
 			}
 		}
 		/**
@@ -1895,6 +1930,7 @@ export namespace apps {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:DaemonSetList`)
 			}
 		}
 		/**
@@ -1947,6 +1983,7 @@ export namespace apps {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:Deployment`)
 			}
 		}
 		/**
@@ -1996,6 +2033,7 @@ export namespace apps {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:DeploymentList`)
 			}
 		}
 		/**
@@ -2051,6 +2089,7 @@ export namespace apps {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ReplicaSet`)
 			}
 		}
 		/**
@@ -2102,6 +2141,7 @@ export namespace apps {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ReplicaSetList`)
 			}
 		}
 		/**
@@ -2155,6 +2195,7 @@ export namespace apps {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:StatefulSet`)
 			}
 		}
 		/**
@@ -2198,6 +2239,7 @@ export namespace apps {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:StatefulSetList`)
 			}
 		}
 	}
@@ -2252,6 +2294,7 @@ export namespace auditregistration {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:AuditSink`)
 			}
 		}
 		/**
@@ -2301,6 +2344,7 @@ export namespace auditregistration {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:AuditSinkList`)
 			}
 		}
 	}
@@ -2349,6 +2393,7 @@ export namespace authentication {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:TokenRequest`)
 			}
 		}
 		/**
@@ -2396,6 +2441,7 @@ export namespace authentication {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:TokenReview`)
 			}
 		}
 	}
@@ -2449,6 +2495,7 @@ export namespace authentication {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:TokenReview`)
 			}
 		}
 	}
@@ -2506,6 +2553,7 @@ export namespace authorization {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:LocalSubjectAccessReview`)
 			}
 		}
 		/**
@@ -2557,6 +2605,7 @@ export namespace authorization {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:SelfSubjectAccessReview`)
 			}
 		}
 		/**
@@ -2613,6 +2662,7 @@ export namespace authorization {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:SelfSubjectRulesReview`)
 			}
 		}
 		/**
@@ -2662,6 +2712,7 @@ export namespace authorization {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:SubjectAccessReview`)
 			}
 		}
 	}
@@ -2717,6 +2768,7 @@ export namespace authorization {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:LocalSubjectAccessReview`)
 			}
 		}
 		/**
@@ -2768,6 +2820,7 @@ export namespace authorization {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:SelfSubjectAccessReview`)
 			}
 		}
 		/**
@@ -2824,6 +2877,7 @@ export namespace authorization {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:SelfSubjectRulesReview`)
 			}
 		}
 		/**
@@ -2873,6 +2927,7 @@ export namespace authorization {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:SubjectAccessReview`)
 			}
 		}
 	}
@@ -2932,6 +2987,7 @@ export namespace autoscaling {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:HorizontalPodAutoscaler`)
 			}
 		}
 		/**
@@ -2984,6 +3040,7 @@ export namespace autoscaling {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:HorizontalPodAutoscalerList`)
 			}
 		}
 	}
@@ -3043,6 +3100,7 @@ export namespace autoscaling {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:HorizontalPodAutoscaler`)
 			}
 		}
 		/**
@@ -3095,6 +3153,7 @@ export namespace autoscaling {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:HorizontalPodAutoscalerList`)
 			}
 		}
 	}
@@ -3154,6 +3213,7 @@ export namespace autoscaling {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:HorizontalPodAutoscaler`)
 			}
 		}
 		/**
@@ -3206,6 +3266,7 @@ export namespace autoscaling {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:HorizontalPodAutoscalerList`)
 			}
 		}
 	}
@@ -3262,6 +3323,7 @@ export namespace batch {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:Job`)
 			}
 		}
 		/**
@@ -3312,6 +3374,7 @@ export namespace batch {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:JobList`)
 			}
 		}
 	}
@@ -3366,6 +3429,7 @@ export namespace batch {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:CronJob`)
 			}
 		}
 		/**
@@ -3416,6 +3480,7 @@ export namespace batch {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:CronJobList`)
 			}
 		}
 	}
@@ -3470,6 +3535,7 @@ export namespace batch {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:CronJob`)
 			}
 		}
 		/**
@@ -3520,6 +3586,7 @@ export namespace batch {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:CronJobList`)
 			}
 		}
 	}
@@ -3574,6 +3641,7 @@ export namespace certificates {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:CertificateSigningRequest`)
 			}
 		}
 		/**
@@ -3620,6 +3688,7 @@ export namespace certificates {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:CertificateSigningRequestList`)
 			}
 		}
 	}
@@ -3676,6 +3745,7 @@ export namespace coordination {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:Lease`)
 			}
 		}
 		/**
@@ -3726,6 +3796,7 @@ export namespace coordination {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:LeaseList`)
 			}
 		}
 	}
@@ -3780,6 +3851,7 @@ export namespace coordination {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:Lease`)
 			}
 		}
 		/**
@@ -3830,6 +3902,7 @@ export namespace coordination {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:LeaseList`)
 			}
 		}
 	}
@@ -3886,6 +3959,7 @@ export namespace core {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:Binding`)
 			}
 		}
 		/**
@@ -3948,6 +4022,7 @@ export namespace core {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ConfigMap`)
 			}
 		}
 		/**
@@ -3998,6 +4073,7 @@ export namespace core {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ConfigMapList`)
 			}
 		}
 		/**
@@ -4064,6 +4140,7 @@ export namespace core {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:Endpoints`)
 			}
 		}
 		/**
@@ -4114,6 +4191,7 @@ export namespace core {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:EndpointsList`)
 			}
 		}
 		/**
@@ -4244,6 +4322,7 @@ export namespace core {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:Event`)
 			}
 		}
 		/**
@@ -4294,6 +4373,7 @@ export namespace core {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:EventList`)
 			}
 		}
 		/**
@@ -4345,6 +4425,7 @@ export namespace core {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:LimitRange`)
 			}
 		}
 		/**
@@ -4396,6 +4477,7 @@ export namespace core {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:LimitRangeList`)
 			}
 		}
 		/**
@@ -4447,6 +4529,7 @@ export namespace core {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:Namespace`)
 			}
 		}
 		/**
@@ -4498,6 +4581,7 @@ export namespace core {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:NamespaceList`)
 			}
 		}
 		/**
@@ -4550,6 +4634,7 @@ export namespace core {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:Node`)
 			}
 		}
 		/**
@@ -4600,6 +4685,7 @@ export namespace core {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:NodeList`)
 			}
 		}
 		/**
@@ -4653,6 +4739,7 @@ export namespace core {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:PersistentVolume`)
 			}
 		}
 		/**
@@ -4704,6 +4791,7 @@ export namespace core {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:PersistentVolumeClaim`)
 			}
 		}
 		/**
@@ -4755,6 +4843,7 @@ export namespace core {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:PersistentVolumeClaimList`)
 			}
 		}
 		/**
@@ -4806,6 +4895,7 @@ export namespace core {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:PersistentVolumeList`)
 			}
 		}
 		/**
@@ -4858,6 +4948,7 @@ export namespace core {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:Pod`)
 			}
 		}
 		/**
@@ -4909,6 +5000,7 @@ export namespace core {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:PodList`)
 			}
 		}
 		/**
@@ -4960,6 +5052,7 @@ export namespace core {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:PodTemplate`)
 			}
 		}
 		/**
@@ -5010,6 +5103,7 @@ export namespace core {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:PodTemplateList`)
 			}
 		}
 		/**
@@ -5063,6 +5157,7 @@ export namespace core {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ReplicationController`)
 			}
 		}
 		/**
@@ -5114,6 +5209,7 @@ export namespace core {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ReplicationControllerList`)
 			}
 		}
 		/**
@@ -5165,6 +5261,7 @@ export namespace core {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ResourceQuota`)
 			}
 		}
 		/**
@@ -5216,6 +5313,7 @@ export namespace core {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ResourceQuotaList`)
 			}
 		}
 		/**
@@ -5284,6 +5382,7 @@ export namespace core {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:Secret`)
 			}
 		}
 		/**
@@ -5335,6 +5434,7 @@ export namespace core {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:SecretList`)
 			}
 		}
 		/**
@@ -5388,6 +5488,7 @@ export namespace core {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:Service`)
 			}
 		}
 		/**
@@ -5459,6 +5560,7 @@ export namespace core {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ServiceAccount`)
 			}
 		}
 		/**
@@ -5510,6 +5612,7 @@ export namespace core {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ServiceAccountList`)
 			}
 		}
 		/**
@@ -5560,6 +5663,7 @@ export namespace core {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ServiceList`)
 			}
 		}
 	}
@@ -5635,6 +5739,7 @@ export namespace discovery {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:EndpointSlice`)
 			}
 		}
 		/**
@@ -5687,6 +5792,7 @@ export namespace discovery {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:EndpointSliceList`)
 			}
 		}
 	}
@@ -5824,6 +5930,7 @@ export namespace events {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:Event`)
 			}
 		}
 		/**
@@ -5874,6 +5981,7 @@ export namespace events {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:EventList`)
 			}
 		}
 	}
@@ -5933,6 +6041,7 @@ export namespace extensions {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:DaemonSet`)
 			}
 		}
 		/**
@@ -5983,6 +6092,7 @@ export namespace extensions {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:DaemonSetList`)
 			}
 		}
 		/**
@@ -6035,6 +6145,7 @@ export namespace extensions {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:Deployment`)
 			}
 		}
 		/**
@@ -6084,6 +6195,7 @@ export namespace extensions {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:DeploymentList`)
 			}
 		}
 		/**
@@ -6140,6 +6252,7 @@ export namespace extensions {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:Ingress`)
 			}
 		}
 		/**
@@ -6190,6 +6303,7 @@ export namespace extensions {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:IngressList`)
 			}
 		}
 		/**
@@ -6242,6 +6356,7 @@ export namespace extensions {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:NetworkPolicy`)
 			}
 		}
 		/**
@@ -6296,6 +6411,7 @@ export namespace extensions {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:NetworkPolicyList`)
 			}
 		}
 		/**
@@ -6351,6 +6467,7 @@ export namespace extensions {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:PodSecurityPolicy`)
 			}
 		}
 		/**
@@ -6405,6 +6522,7 @@ export namespace extensions {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:PodSecurityPolicyList`)
 			}
 		}
 		/**
@@ -6460,6 +6578,7 @@ export namespace extensions {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ReplicaSet`)
 			}
 		}
 		/**
@@ -6511,6 +6630,7 @@ export namespace extensions {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ReplicaSetList`)
 			}
 		}
 	}
@@ -6569,6 +6689,7 @@ export namespace flowcontrol {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:FlowSchema`)
 			}
 		}
 		/**
@@ -6622,6 +6743,7 @@ export namespace flowcontrol {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:FlowSchemaList`)
 			}
 		}
 		/**
@@ -6676,6 +6798,7 @@ export namespace flowcontrol {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:PriorityLevelConfiguration`)
 			}
 		}
 		/**
@@ -6729,6 +6852,7 @@ export namespace flowcontrol {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:PriorityLevelConfigurationList`)
 			}
 		}
 	}
@@ -6806,6 +6930,7 @@ export namespace meta {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:Status`)
 			}
 		}
 	}
@@ -6861,6 +6986,7 @@ export namespace networking {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:NetworkPolicy`)
 			}
 		}
 		/**
@@ -6911,6 +7037,7 @@ export namespace networking {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:NetworkPolicyList`)
 			}
 		}
 	}
@@ -6967,6 +7094,7 @@ export namespace networking {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:Ingress`)
 			}
 		}
 		/**
@@ -7017,6 +7145,7 @@ export namespace networking {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:IngressList`)
 			}
 		}
 	}
@@ -7078,6 +7207,7 @@ export namespace node {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:RuntimeClass`)
 			}
 		}
 		/**
@@ -7128,6 +7258,7 @@ export namespace node {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:RuntimeClassList`)
 			}
 		}
 	}
@@ -7210,6 +7341,7 @@ export namespace node {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:RuntimeClass`)
 			}
 		}
 		/**
@@ -7260,6 +7392,7 @@ export namespace node {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:RuntimeClassList`)
 			}
 		}
 	}
@@ -7315,6 +7448,7 @@ export namespace policy {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:PodDisruptionBudget`)
 			}
 		}
 		/**
@@ -7361,6 +7495,7 @@ export namespace policy {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:PodDisruptionBudgetList`)
 			}
 		}
 		/**
@@ -7412,6 +7547,7 @@ export namespace policy {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:PodSecurityPolicy`)
 			}
 		}
 		/**
@@ -7465,6 +7601,7 @@ export namespace policy {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:PodSecurityPolicyList`)
 			}
 		}
 	}
@@ -7528,6 +7665,7 @@ export namespace rbac {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ClusterRole`)
 			}
 		}
 		/**
@@ -7585,6 +7723,7 @@ export namespace rbac {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ClusterRoleBinding`)
 			}
 		}
 		/**
@@ -7634,6 +7773,7 @@ export namespace rbac {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ClusterRoleBindingList`)
 			}
 		}
 		/**
@@ -7683,6 +7823,7 @@ export namespace rbac {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ClusterRoleList`)
 			}
 		}
 		/**
@@ -7733,6 +7874,7 @@ export namespace rbac {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:Role`)
 			}
 		}
 		/**
@@ -7792,6 +7934,7 @@ export namespace rbac {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:RoleBinding`)
 			}
 		}
 		/**
@@ -7841,6 +7984,7 @@ export namespace rbac {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:RoleBindingList`)
 			}
 		}
 		/**
@@ -7890,6 +8034,7 @@ export namespace rbac {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:RoleList`)
 			}
 		}
 	}
@@ -7952,6 +8097,7 @@ export namespace rbac {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ClusterRole`)
 			}
 		}
 		/**
@@ -8011,6 +8157,7 @@ export namespace rbac {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ClusterRoleBinding`)
 			}
 		}
 		/**
@@ -8064,6 +8211,7 @@ export namespace rbac {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ClusterRoleBindingList`)
 			}
 		}
 		/**
@@ -8114,6 +8262,7 @@ export namespace rbac {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ClusterRoleList`)
 			}
 		}
 		/**
@@ -8165,6 +8314,7 @@ export namespace rbac {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:Role`)
 			}
 		}
 		/**
@@ -8225,6 +8375,7 @@ export namespace rbac {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:RoleBinding`)
 			}
 		}
 		/**
@@ -8275,6 +8426,7 @@ export namespace rbac {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:RoleBindingList`)
 			}
 		}
 		/**
@@ -8325,6 +8477,7 @@ export namespace rbac {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:RoleList`)
 			}
 		}
 	}
@@ -8387,6 +8540,7 @@ export namespace rbac {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ClusterRole`)
 			}
 		}
 		/**
@@ -8446,6 +8600,7 @@ export namespace rbac {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ClusterRoleBinding`)
 			}
 		}
 		/**
@@ -8500,6 +8655,7 @@ export namespace rbac {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ClusterRoleBindingList`)
 			}
 		}
 		/**
@@ -8550,6 +8706,7 @@ export namespace rbac {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:ClusterRoleList`)
 			}
 		}
 		/**
@@ -8601,6 +8758,7 @@ export namespace rbac {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:Role`)
 			}
 		}
 		/**
@@ -8661,6 +8819,7 @@ export namespace rbac {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:RoleBinding`)
 			}
 		}
 		/**
@@ -8711,6 +8870,7 @@ export namespace rbac {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:RoleBindingList`)
 			}
 		}
 		/**
@@ -8761,6 +8921,7 @@ export namespace rbac {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:RoleList`)
 			}
 		}
 	}
@@ -8843,6 +9004,7 @@ export namespace scheduling {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:PriorityClass`)
 			}
 		}
 		/**
@@ -8893,6 +9055,7 @@ export namespace scheduling {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:PriorityClassList`)
 			}
 		}
 	}
@@ -8974,6 +9137,7 @@ export namespace scheduling {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:PriorityClass`)
 			}
 		}
 		/**
@@ -9027,6 +9191,7 @@ export namespace scheduling {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:PriorityClassList`)
 			}
 		}
 	}
@@ -9108,6 +9273,7 @@ export namespace scheduling {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:PriorityClass`)
 			}
 		}
 		/**
@@ -9161,6 +9327,7 @@ export namespace scheduling {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:PriorityClassList`)
 			}
 		}
 	}
@@ -9209,6 +9376,7 @@ export namespace settings {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:PodPreset`)
 			}
 		}
 		/**
@@ -9259,6 +9427,7 @@ export namespace settings {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:PodPresetList`)
 			}
 		}
 	}
@@ -9319,6 +9488,7 @@ export namespace storage {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:CSINode`)
 			}
 		}
 		/**
@@ -9369,6 +9539,7 @@ export namespace storage {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:CSINodeList`)
 			}
 		}
 		/**
@@ -9469,6 +9640,7 @@ export namespace storage {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:StorageClass`)
 			}
 		}
 		/**
@@ -9519,6 +9691,7 @@ export namespace storage {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:StorageClassList`)
 			}
 		}
 		/**
@@ -9573,6 +9746,7 @@ export namespace storage {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:VolumeAttachment`)
 			}
 		}
 		/**
@@ -9623,6 +9797,7 @@ export namespace storage {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:VolumeAttachmentList`)
 			}
 		}
 	}
@@ -9680,6 +9855,7 @@ export namespace storage {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:VolumeAttachment`)
 			}
 		}
 		/**
@@ -9733,6 +9909,7 @@ export namespace storage {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:VolumeAttachmentList`)
 			}
 		}
 	}
@@ -9796,6 +9973,7 @@ export namespace storage {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:CSIDriver`)
 			}
 		}
 		/**
@@ -9846,6 +10024,7 @@ export namespace storage {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:CSIDriverList`)
 			}
 		}
 		/**
@@ -9903,6 +10082,7 @@ export namespace storage {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:CSINode`)
 			}
 		}
 		/**
@@ -9953,6 +10133,7 @@ export namespace storage {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:CSINodeList`)
 			}
 		}
 		/**
@@ -10053,6 +10234,7 @@ export namespace storage {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:StorageClass`)
 			}
 		}
 		/**
@@ -10103,6 +10285,7 @@ export namespace storage {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:StorageClassList`)
 			}
 		}
 		/**
@@ -10157,6 +10340,7 @@ export namespace storage {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:VolumeAttachment`)
 			}
 		}
 		/**
@@ -10210,6 +10394,7 @@ export namespace storage {
 				Object.assign(props.metadata, { name })
 
 				super(name, props)
+				this.setType(`k8s:VolumeAttachmentList`)
 			}
 		}
 	}

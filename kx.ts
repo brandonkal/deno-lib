@@ -255,6 +255,7 @@ export class Deployment extends k8s.apps.v1.Deployment {
 			},
 		}
 		super(name, { ...desc, spec })
+		this.setType('kx:Deployment')
 	}
 
 	public createService(desc: types.ServiceSpec = {}) {
@@ -327,6 +328,7 @@ export class Service extends k8s.core.v1.Service {
 		}
 
 		super(name, { ...args, spec })
+		this.setType('kx:Service')
 	}
 }
 
@@ -360,11 +362,13 @@ export class StatefulSet {
 			selector: statefulSet.spec.selector.matchLabels,
 			clusterIP: 'None',
 		}
+		Resource.start(name)
 
 		this.service = new Service(name, {
 			metadata: { name: `${name}-service` },
 			spec: serviceSpec,
 		})
+		Resource.end()
 	}
 }
 
@@ -792,7 +796,9 @@ export class Rio {
  */
 export class NSA {
 	constructor(name: string) {
+		Resource.start(name)
 		new k8s.core.v1.Namespace(name)
+
 		new k8s.core.v1.ServiceAccount(`${name}-sa`, {
 			metadata: { namespace: name },
 		})
@@ -821,6 +827,7 @@ export class NSA {
 				name: name + '-role',
 			},
 		})
+		Resource.end()
 	}
 }
 
