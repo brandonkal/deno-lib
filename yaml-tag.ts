@@ -54,7 +54,7 @@ export function printYaml(
 			let obj = stripUndefined(comments ? doc[1] : doc)
 			let prefix = '---\n'
 			if (comments) {
-				prefix + toComment(doc[0])
+				prefix += toComment(doc[0])
 			}
 			return (
 				prefix +
