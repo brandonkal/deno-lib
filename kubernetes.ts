@@ -35,7 +35,7 @@ export namespace yaml {
 	export class Config {
 		constructor(name: string, desc: YamlArgs | string) {
 			let objs: any[]
-			let parsed: object[] = []
+			let parsed: any[] = []
 			if (typeof desc === 'string') {
 				objs = [desc]
 			} else if (desc.yaml && typeof desc.yaml === 'string') {
@@ -61,8 +61,14 @@ export namespace yaml {
 				)
 			})
 			Resource.start(`k8s:yaml:Config:${name}`)
-			objs.forEach((item) => {
-				new Resource(item.metadata.name, { ...item, __type: 'k8s:yaml' })
+			parsed.forEach((item) => {
+				const n = (item && item.metadata && item.metadata.name) || undefined
+				if (typeof n !== 'string') {
+					throw new Error(
+						`Invalid k8s metadata.name field. Got: ${n} for k8s:yaml.Config:${name}`
+					)
+				}
+				new Resource(n, { ...item, __type: 'k8s:yaml' })
 			})
 			Resource.end()
 		}
