@@ -4,7 +4,6 @@
 
 import * as k8s from './kubernetes.ts'
 import { Resource } from './kite.ts'
-import shorts from './kubernetes/short/kinds.ts'
 
 export namespace types {
 	export type EnvMap = Record<string, string | k8s.types.core.v1.EnvVarSource>
@@ -77,7 +76,7 @@ export namespace types {
 }
 
 function buildPodSpec(podSpec: types.PodSpec): k8s.types.core.v1.PodSpec {
-	const spec: types.PodSpec = shorts.pod(podSpec).spec
+	const spec = podSpec
 	const containers: k8s.types.core.v1.Container[] = []
 	const volumes: k8s.types.core.v1.Volume[] = []
 	const isEnvMap = (env: any): env is types.EnvMap => env.length === undefined
