@@ -18,7 +18,6 @@ package gen
 
 import (
 	"fmt"
-	"regexp"
 	"strings"
 
 	linq "github.com/ahmetb/go-linq"
@@ -276,31 +275,6 @@ func stripPrefix(name string) string {
 	return strings.TrimPrefix(name, prefix)
 }
 
-// extractDeprecationComment returns the comment with deprecation comment removed and the extracted deprecation
-// comment, fixed-up for the specified language.
-func extractDeprecationComment(comment interface{}, gvk schema.GroupVersionKind) (string, string) {
-	if comment == nil {
-		return "", ""
-	}
-
-	commentstr, _ := comment.(string)
-	if commentstr == "" {
-		return "", ""
-	}
-
-	re := regexp.MustCompile(`DEPRECATED - .* is deprecated by .* for more information\.\s*`)
-
-	var prefix = "\n\n@deprecated "
-	var suffix = ""
-
-	if re.MatchString(commentstr) {
-		deprecationMessage := prefix + ApiVersionComment(gvk) + suffix
-		return re.ReplaceAllString(commentstr, ""), deprecationMessage
-	}
-
-	return commentstr, ""
-}
-
 func fmtComment(comment interface{}, prefix string, bareRender bool) string {
 	if comment == nil {
 		return ""
@@ -326,7 +300,7 @@ func fmtComment(comment interface{}, prefix string, bareRender bool) string {
 	commentstr, _ := comment.(string)
 	if len(commentstr) > 0 {
 
-		// hack(levi): The OpenAPI docs currently include broken links to k8s docs. Until this is fixed
+		// hack(levi): The OpenAPI docs currently includes broken links to k8s docs. Until this is fixed
 		// upstream, manually replace these with working links.
 		// Upstream issue: https://github.com/kubernetes/kubernetes/issues/81526
 		// Upstream PR: https://github.com/kubernetes/kubernetes/pull/74245
@@ -439,8 +413,7 @@ func isDefTopLevel(d *definition) bool {
 		return false
 	}
 
-	// Return `false` for the handful of top-level imperative resource types that can't be managed
-	// by Pulumi.
+	// Return `false` for the handful of top-level imperative resource types that can't be managed.
 	switch fmt.Sprintf("%s/%s", d.gvk.GroupVersion().String(), d.gvk.Kind) {
 	case "policy/v1beta1/Eviction", "v1/Status", "apps/v1beta1/Scale", "apps/v1beta2/Scale",
 		"autoscaling/v1/Scale", "extensions/v1beta1/Scale":

@@ -14950,9 +14950,10 @@ export namespace extensions {
 		}
 
 		/**
-		 * DEPRECATED 1.9 - This group version of NetworkPolicy is deprecated by
-		 * networking/v1/NetworkPolicy. NetworkPolicy describes what network traffic is allowed for a
-		 * set of Pods
+		 * NetworkPolicy describes what network traffic is allowed for a set of Pods
+		 *
+		 * @deprecated extensions/v1beta1/NetworkPolicy is deprecated by networking/v1/NetworkPolicy and
+		 * not supported by Kubernetes v1.16+ clusters.
 		 */
 		export interface NetworkPolicy {
 			/**
@@ -15177,8 +15178,10 @@ export namespace extensions {
 
 		/**
 		 * PodSecurityPolicy governs the ability to make requests that affect the Security Context that
-		 * will be applied to a pod and container. Deprecated: use PodSecurityPolicy from policy API
-		 * Group instead.
+		 * will be applied to a pod and container.
+		 *
+		 * @deprecated extensions/v1beta1/PodSecurityPolicy is deprecated by
+		 * policy/v1beta1/PodSecurityPolicy and not supported by Kubernetes v1.16+ clusters.
 		 */
 		export interface PodSecurityPolicy {
 			/**
@@ -18856,8 +18859,10 @@ export namespace rbac {
 
 		/**
 		 * ClusterRole is a cluster level, logical grouping of PolicyRules that can be referenced as a
-		 * unit by a RoleBinding or ClusterRoleBinding. Deprecated in v1.17 in favor of
-		 * rbac.authorization.k8s.io/v1 ClusterRole, and will no longer be served in v1.20.
+		 * unit by a RoleBinding or ClusterRoleBinding.
+		 *
+		 * @deprecated rbac/v1alpha1/ClusterRole is deprecated by rbac/v1/ClusterRole and not supported
+		 * by Kubernetes v1.20+ clusters.
 		 */
 		export interface ClusterRole {
 			/**
@@ -18903,9 +18908,10 @@ export namespace rbac {
 
 		/**
 		 * ClusterRoleBinding references a ClusterRole, but not contain it.  It can reference a
-		 * ClusterRole in the global namespace, and adds who information via Subject. Deprecated in
-		 * v1.17 in favor of rbac.authorization.k8s.io/v1 ClusterRoleBinding, and will no longer be
-		 * served in v1.20.
+		 * ClusterRole in the global namespace, and adds who information via Subject.
+		 *
+		 * @deprecated rbac/v1alpha1/ClusterRoleBinding is deprecated by rbac/v1/ClusterRoleBinding and
+		 * not supported by Kubernetes v1.20+ clusters.
 		 */
 		export interface ClusterRoleBinding {
 			/**
@@ -18949,8 +18955,10 @@ export namespace rbac {
 		}
 
 		/**
-		 * ClusterRoleBindingList is a collection of ClusterRoleBindings. Deprecated in v1.17 in favor
-		 * of rbac.authorization.k8s.io/v1 ClusterRoleBindings, and will no longer be served in v1.20.
+		 * ClusterRoleBindingList is a collection of ClusterRoleBindings.
+		 *
+		 * @deprecated rbac/v1alpha1/ClusterRoleBindingList is deprecated by
+		 * rbac/v1/ClusterRoleBindingList and not supported by Kubernetes v1.20+ clusters.
 		 */
 		export interface ClusterRoleBindingList {
 			/**
@@ -18990,8 +18998,10 @@ export namespace rbac {
 		}
 
 		/**
-		 * ClusterRoleList is a collection of ClusterRoles. Deprecated in v1.17 in favor of
-		 * rbac.authorization.k8s.io/v1 ClusterRoles, and will no longer be served in v1.20.
+		 * ClusterRoleList is a collection of ClusterRoles.
+		 *
+		 * @deprecated rbac/v1alpha1/ClusterRoleList is deprecated by rbac/v1/ClusterRoleList and not
+		 * supported by Kubernetes v1.20+ clusters.
 		 */
 		export interface ClusterRoleList {
 			/**
@@ -19071,8 +19081,10 @@ export namespace rbac {
 
 		/**
 		 * Role is a namespaced, logical grouping of PolicyRules that can be referenced as a unit by a
-		 * RoleBinding. Deprecated in v1.17 in favor of rbac.authorization.k8s.io/v1 Role, and will no
-		 * longer be served in v1.20.
+		 * RoleBinding.
+		 *
+		 * @deprecated rbac/v1alpha1/Role is deprecated by rbac/v1/Role and not supported by Kubernetes
+		 * v1.20+ clusters.
 		 */
 		export interface Role {
 			/**
@@ -19112,8 +19124,10 @@ export namespace rbac {
 		 * RoleBinding references a role, but does not contain it.  It can reference a Role in the same
 		 * namespace or a ClusterRole in the global namespace. It adds who information via Subjects and
 		 * namespace information by which namespace it exists in.  RoleBindings in a given namespace
-		 * only have effect in that namespace. Deprecated in v1.17 in favor of
-		 * rbac.authorization.k8s.io/v1 RoleBinding, and will no longer be served in v1.20.
+		 * only have effect in that namespace.
+		 *
+		 * @deprecated rbac/v1alpha1/RoleBinding is deprecated by rbac/v1/RoleBinding and not supported
+		 * by Kubernetes v1.20+ clusters.
 		 */
 		export interface RoleBinding {
 			/**
@@ -19157,8 +19171,10 @@ export namespace rbac {
 		}
 
 		/**
-		 * RoleBindingList is a collection of RoleBindings Deprecated in v1.17 in favor of
-		 * rbac.authorization.k8s.io/v1 RoleBindingList, and will no longer be served in v1.20.
+		 * RoleBindingList is a collection of RoleBindings
+		 *
+		 * @deprecated rbac/v1alpha1/RoleBindingList is deprecated by rbac/v1/RoleBindingList and not
+		 * supported by Kubernetes v1.20+ clusters.
 		 */
 		export interface RoleBindingList {
 			/**
@@ -19196,8 +19212,10 @@ export namespace rbac {
 		}
 
 		/**
-		 * RoleList is a collection of Roles. Deprecated in v1.17 in favor of
-		 * rbac.authorization.k8s.io/v1 RoleList, and will no longer be served in v1.20.
+		 * RoleList is a collection of Roles.
+		 *
+		 * @deprecated rbac/v1alpha1/RoleList is deprecated by rbac/v1/RoleList and not supported by
+		 * Kubernetes v1.20+ clusters.
 		 */
 		export interface RoleList {
 			/**
@@ -19305,8 +19323,10 @@ export namespace rbac {
 
 		/**
 		 * ClusterRole is a cluster level, logical grouping of PolicyRules that can be referenced as a
-		 * unit by a RoleBinding or ClusterRoleBinding. Deprecated in v1.17 in favor of
-		 * rbac.authorization.k8s.io/v1 ClusterRole, and will no longer be served in v1.20.
+		 * unit by a RoleBinding or ClusterRoleBinding.
+		 *
+		 * @deprecated rbac/v1beta1/ClusterRole is deprecated by rbac/v1/ClusterRole and not supported
+		 * by Kubernetes v1.20+ clusters.
 		 */
 		export interface ClusterRole {
 			/**
@@ -19352,9 +19372,10 @@ export namespace rbac {
 
 		/**
 		 * ClusterRoleBinding references a ClusterRole, but not contain it.  It can reference a
-		 * ClusterRole in the global namespace, and adds who information via Subject. Deprecated in
-		 * v1.17 in favor of rbac.authorization.k8s.io/v1 ClusterRoleBinding, and will no longer be
-		 * served in v1.20.
+		 * ClusterRole in the global namespace, and adds who information via Subject.
+		 *
+		 * @deprecated rbac/v1beta1/ClusterRoleBinding is deprecated by rbac/v1/ClusterRoleBinding and
+		 * not supported by Kubernetes v1.20+ clusters.
 		 */
 		export interface ClusterRoleBinding {
 			/**
@@ -19398,9 +19419,10 @@ export namespace rbac {
 		}
 
 		/**
-		 * ClusterRoleBindingList is a collection of ClusterRoleBindings. Deprecated in v1.17 in favor
-		 * of rbac.authorization.k8s.io/v1 ClusterRoleBindingList, and will no longer be served in
-		 * v1.20.
+		 * ClusterRoleBindingList is a collection of ClusterRoleBindings.
+		 *
+		 * @deprecated rbac/v1beta1/ClusterRoleBindingList is deprecated by
+		 * rbac/v1/ClusterRoleBindingList and not supported by Kubernetes v1.20+ clusters.
 		 */
 		export interface ClusterRoleBindingList {
 			/**
@@ -19440,8 +19462,10 @@ export namespace rbac {
 		}
 
 		/**
-		 * ClusterRoleList is a collection of ClusterRoles. Deprecated in v1.17 in favor of
-		 * rbac.authorization.k8s.io/v1 ClusterRoles, and will no longer be served in v1.20.
+		 * ClusterRoleList is a collection of ClusterRoles.
+		 *
+		 * @deprecated rbac/v1beta1/ClusterRoleList is deprecated by rbac/v1/ClusterRoleList and not
+		 * supported by Kubernetes v1.20+ clusters.
 		 */
 		export interface ClusterRoleList {
 			/**
@@ -19521,8 +19545,10 @@ export namespace rbac {
 
 		/**
 		 * Role is a namespaced, logical grouping of PolicyRules that can be referenced as a unit by a
-		 * RoleBinding. Deprecated in v1.17 in favor of rbac.authorization.k8s.io/v1 Role, and will no
-		 * longer be served in v1.20.
+		 * RoleBinding.
+		 *
+		 * @deprecated rbac/v1beta1/Role is deprecated by rbac/v1/Role and not supported by Kubernetes
+		 * v1.20+ clusters.
 		 */
 		export interface Role {
 			/**
@@ -19562,8 +19588,10 @@ export namespace rbac {
 		 * RoleBinding references a role, but does not contain it.  It can reference a Role in the same
 		 * namespace or a ClusterRole in the global namespace. It adds who information via Subjects and
 		 * namespace information by which namespace it exists in.  RoleBindings in a given namespace
-		 * only have effect in that namespace. Deprecated in v1.17 in favor of
-		 * rbac.authorization.k8s.io/v1 RoleBinding, and will no longer be served in v1.20.
+		 * only have effect in that namespace.
+		 *
+		 * @deprecated rbac/v1beta1/RoleBinding is deprecated by rbac/v1/RoleBinding and not supported
+		 * by Kubernetes v1.20+ clusters.
 		 */
 		export interface RoleBinding {
 			/**
@@ -19607,8 +19635,10 @@ export namespace rbac {
 		}
 
 		/**
-		 * RoleBindingList is a collection of RoleBindings Deprecated in v1.17 in favor of
-		 * rbac.authorization.k8s.io/v1 RoleBindingList, and will no longer be served in v1.20.
+		 * RoleBindingList is a collection of RoleBindings
+		 *
+		 * @deprecated rbac/v1beta1/RoleBindingList is deprecated by rbac/v1/RoleBindingList and not
+		 * supported by Kubernetes v1.20+ clusters.
 		 */
 		export interface RoleBindingList {
 			/**
@@ -19646,8 +19676,10 @@ export namespace rbac {
 		}
 
 		/**
-		 * RoleList is a collection of Roles Deprecated in v1.17 in favor of
-		 * rbac.authorization.k8s.io/v1 RoleList, and will no longer be served in v1.20.
+		 * RoleList is a collection of Roles
+		 *
+		 * @deprecated rbac/v1beta1/RoleList is deprecated by rbac/v1/RoleList and not supported by
+		 * Kubernetes v1.20+ clusters.
 		 */
 		export interface RoleList {
 			/**
@@ -19839,9 +19871,10 @@ export namespace scheduling {
 	}
 	export namespace v1alpha1 {
 		/**
-		 * DEPRECATED - This group version of PriorityClass is deprecated by
-		 * scheduling.k8s.io/v1/PriorityClass. PriorityClass defines mapping from a priority class name
-		 * to the priority integer value. The value can be any valid integer.
+		 *
+		 *
+		 * @deprecated scheduling/v1alpha1/PriorityClass is deprecated by scheduling/v1/PriorityClass
+		 * and not supported by Kubernetes v1.17+ clusters.
 		 */
 		export interface PriorityClass {
 			/**
@@ -19943,9 +19976,10 @@ export namespace scheduling {
 	}
 	export namespace v1beta1 {
 		/**
-		 * DEPRECATED - This group version of PriorityClass is deprecated by
-		 * scheduling.k8s.io/v1/PriorityClass. PriorityClass defines mapping from a priority class name
-		 * to the priority integer value. The value can be any valid integer.
+		 *
+		 *
+		 * @deprecated scheduling/v1beta1/PriorityClass is deprecated by scheduling/v1/PriorityClass and
+		 * not supported by Kubernetes v1.17+ clusters.
 		 */
 		export interface PriorityClass {
 			/**
@@ -20822,15 +20856,14 @@ export namespace storage {
 		}
 
 		/**
-		 * CSINode holds information about all CSI drivers installed on a node. CSI drivers do not need
-		 * to create the CSINode object directly. As long as they use the node-driver-registrar sidecar
-		 * container, the kubelet will automatically populate the CSINode object for the CSI driver as
-		 * part of kubelet plugin registration. CSINode has the same name as a node. If the object is
-		 * missing, it means either there are no CSI Drivers available on the node, or the Kubelet
-		 * version is low enough that it doesn't create this object. CSINode has an OwnerReference that
-		 * points to the corresponding node object.
-		 *
-		 * @deprecated storage/v1beta1/CSINode is deprecated by storage/v1beta1/CSINode.
+		 * DEPRECATED - This group version of CSINode is deprecated by storage/v1/CSINode. See the
+		 * release notes for more information. CSINode holds information about all CSI drivers installed
+		 * on a node. CSI drivers do not need to create the CSINode object directly. As long as they use
+		 * the node-driver-registrar sidecar container, the kubelet will automatically populate the
+		 * CSINode object for the CSI driver as part of kubelet plugin registration. CSINode has the
+		 * same name as a node. If the object is missing, it means either there are no CSI Drivers
+		 * available on the node, or the Kubelet version is low enough that it doesn't create this
+		 * object. CSINode has an OwnerReference that points to the corresponding node object.
 		 */
 		export interface CSINode {
 			/**
