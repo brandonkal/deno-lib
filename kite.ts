@@ -11,9 +11,9 @@
  * 6. make() should always be in scope for all config gen modules.
  */
 
-import { printYaml } from './yaml-tag.ts'
+import { printYaml as printYamlImpl } from './yaml-tag.ts'
 import { stripUndefined } from './utils.ts'
-import * as yaml from 'https://deno.land/std/encoding/yaml.ts'
+import { parse, JSON_SCHEMA } from 'https://deno.land/std/encoding/yaml.ts'
 
 let outBuffer: Resource[] = []
 let stack: string[] = []
@@ -220,7 +220,7 @@ function handleArgs(): object | undefined {
 		if (a.length !== 1) {
 			throw new Error(`Expected only one arg but got ${a.length}`)
 		}
-		return yaml.parse(a[0], { schema: yaml.JSON_SCHEMA }) as object
+		return parse(a[0], { schema: JSON_SCHEMA }) as object
 	}
 	return undefined
 }
@@ -275,6 +275,12 @@ export function sortK8sYaml(a: string, b: string): number {
 	return a < b ? -1 : a > b ? 1 : 0
 }
 
+export namespace yaml {
+	export function print(out: any) {
+		return printYamlImpl(out, sortK8sYaml)
+	}
+}
+
 /**
  * make takes a config generation function and returns a string.
  * Pass it a module default export and console.log the output.
@@ -314,7 +320,7 @@ export function make(fn: Function, { main, post, json }: MakeOpts): string {
 	const out = json ? buf : buf.map(genComments)
 	return json
 		? JSON.stringify(out, undefined, 2)
-		: printYaml(out, sortK8sYaml, true)
+		: printYamlImpl(out, sortK8sYaml, true)
 }
 
 let revoked = false
