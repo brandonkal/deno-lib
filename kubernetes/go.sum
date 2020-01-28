@@ -64,6 +64,7 @@ github.com/beorn7/perks v1.0.0/go.mod h1:KWe93zE9D1o94FZ5RNwFwVgaQK1VOXiVxmqh+Ce
 github.com/bgentry/speakeasy v0.1.0/go.mod h1:+zsyZBPWlz7T6j88CTgSN5bM796AkVf0kBD4zp0CCIs=
 github.com/blang/semver v3.5.0+incompatible/go.mod h1:kRBLl5iJ+tD4TcOOxsy/0fnwebNt5EWlYSAyrTnjyyk=
 github.com/blang/semver v3.5.1+incompatible/go.mod h1:kRBLl5iJ+tD4TcOOxsy/0fnwebNt5EWlYSAyrTnjyyk=
+github.com/brandonkal/deno-lib v0.0.0-20200128091223-19b452250d54 h1:yfO8Lp8TpHH2pJI0xHiIWJ3a2kD9iUlHQU5UyNnNFsU=
 github.com/cbroglie/mustache v1.0.1 h1:ivMg8MguXq/rrz2eu3tw6g3b16+PQhoTn6EZAhst2mw=
 github.com/cbroglie/mustache v1.0.1/go.mod h1:R/RUa+SobQ14qkP4jtx5Vke5sDytONDQXNLPY/PO69g=
 github.com/census-instrumentation/opencensus-proto v0.2.0/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
@@ -364,6 +365,8 @@ github.com/prometheus/procfs v0.0.2/go.mod h1:TjEm7ze935MbeOT/UhFTIMYKhuLP4wbCsT
 github.com/pulumi/pulumi v1.6.1/go.mod h1:wWGvPIg2xvpYNJbIWjJsusLEBpApiR/Yp3FMhUMxp9I=
 github.com/pulumi/pulumi-kubernetes v1.4.3 h1:SgmLAnCCFOCtRQpI6BfATM4Sf33ug8archClALEDLOQ=
 github.com/pulumi/pulumi-kubernetes v1.4.3/go.mod h1:fzy18g5MwpgWNbVG7Op64oT4lRkc6rp15cCRjIYwncc=
+github.com/pulumi/pulumi-kubernetes v1.4.5 h1:Hj/jNCTB3CTPbA75RKEGnPBN6hs9ESucskGlqy0lAJg=
+github.com/pulumi/pulumi-kubernetes v1.4.5/go.mod h1:fzy18g5MwpgWNbVG7Op64oT4lRkc6rp15cCRjIYwncc=
 github.com/remyoudompheng/bigfft v0.0.0-20170806203942-52369c62f446/go.mod h1:uYEyJGbgTkfkS4+E/PavXkNJcbFIpEtjt2B0KDQ5+9M=
 github.com/rjeczalik/notify v0.9.2/go.mod h1:aErll2f0sUX9PXZnVNyeiObbmTlk5jnMoCa4QEjJeqM=
 github.com/rogpeppe/fastuuid v0.0.0-20150106093220-6724a57986af/go.mod h1:XWv6SoW27p1b0cqNHllgS5HIMJraePCO15w5zCzIWYg=
@@ -606,6 +609,8 @@ k8s.io/apimachinery v0.17.0 h1:xRBnuie9rXcPxUkDizUsGvPf1cnlZCFu210op7J7LJo=
 k8s.io/apimachinery v0.17.0/go.mod h1:b9qmWdKlLuU9EBh+06BtLcSf/Mu89rWL33naRxs1uZg=
 k8s.io/apimachinery v0.17.1 h1:zUjS3szTxoUjTDYNvdFkYt2uMEXLcthcbp+7uZvWhYM=
 k8s.io/apimachinery v0.17.1/go.mod h1:b9qmWdKlLuU9EBh+06BtLcSf/Mu89rWL33naRxs1uZg=
+k8s.io/apimachinery v0.17.2 h1:hwDQQFbdRlpnnsR64Asdi55GyCaIP/3WQpMmbNBeWr4=
+k8s.io/apimachinery v0.17.2/go.mod h1:b9qmWdKlLuU9EBh+06BtLcSf/Mu89rWL33naRxs1uZg=
 k8s.io/apiserver v0.17.1/go.mod h1:BQEUObJv8H6ZYO7DeKI5vb50tjk6paRJ4ZhSyJsiSco=
 k8s.io/cli-runtime v0.17.0/go.mod h1:1E5iQpMODZq2lMWLUJELwRu2MLWIzwvMgDBpn3Y81Qo=
 k8s.io/client-go v0.17.0 h1:8QOGvUGdqDMFrm9sD6IUFl256BcffynGoe80sxgTEDg=

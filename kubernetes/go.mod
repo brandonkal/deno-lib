@@ -8,9 +8,9 @@ require (
 	github.com/koki/short v0.4.0 // indirect
 	github.com/koki/structurederrors v0.0.0-20180506174113-6b997eb5e2ca // indirect
 	github.com/mitchellh/go-wordwrap v1.0.0
-	github.com/pulumi/pulumi-kubernetes v1.4.3
+	github.com/pulumi/pulumi-kubernetes v1.4.5
 	k8s.io/apiextensions-apiserver v0.17.1 // indirect
-	k8s.io/apimachinery v0.17.1
+	k8s.io/apimachinery v0.17.2
 	k8s.io/kube-aggregator v0.17.1 // indirect
 )
 
