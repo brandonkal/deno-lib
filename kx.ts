@@ -348,6 +348,7 @@ export class StatefulSet {
 		}
 
 		const statefulSet = new k8s.apps.v1.StatefulSet(name, { ...args, spec })
+		statefulSet.setType('kx:StatefulSet')
 
 		this.name = name
 
@@ -362,7 +363,7 @@ export class StatefulSet {
 			selector: statefulSet.spec.selector.matchLabels,
 			clusterIP: 'None',
 		}
-		Resource.start(name)
+		Resource.start(`kx:StatefulSet:${name}`)
 
 		this.service = new Service(name, {
 			metadata: { name: `${name}-service` },
@@ -387,12 +388,14 @@ export class Job extends k8s.batch.v1.Job {
 
 		super(name, { ...desc, spec })
 		this.name = name
+		this.setType('kx:Job')
 	}
 }
 
 export class PersistentVolumeClaim extends k8s.core.v1.PersistentVolumeClaim {
 	constructor(name: string, desc: k8s.types.core.v1.PersistentVolumeClaim) {
 		super(name, desc)
+		this.setType('kx:PersistentVolumeClaim')
 	}
 
 	public mount(destPath: string, srcPath?: string): types.VolumeMount {
@@ -412,6 +415,7 @@ export class PersistentVolumeClaim extends k8s.core.v1.PersistentVolumeClaim {
 export class ConfigMap extends k8s.core.v1.ConfigMap {
 	constructor(name: string, desc: k8s.types.core.v1.ConfigMap) {
 		super(name, desc)
+		this.setType('kx:ConfigMap')
 	}
 
 	public mount(destPath: string, srcPath?: string): types.VolumeMount {
@@ -441,6 +445,7 @@ export class ConfigMap extends k8s.core.v1.ConfigMap {
 export class Secret extends k8s.core.v1.Secret {
 	constructor(name: string, args: k8s.types.core.v1.Secret) {
 		super(name, args)
+		this.setType('kx:Secret')
 	}
 
 	public mount(destPath: string, srcPath?: string): types.VolumeMount {
@@ -796,7 +801,7 @@ export class Rio {
  */
 export class NSA {
 	constructor(name: string) {
-		Resource.start(name)
+		Resource.start(`kx:NSA:${name}`)
 		new k8s.core.v1.Namespace(name)
 
 		new k8s.core.v1.ServiceAccount(`${name}-sa`, {
@@ -840,6 +845,7 @@ export class NSA {
  */
 export class App {
 	constructor(name: string, desc: any) {
+		Resource.start(`kx:App:${name}`)
 		const labels = {} as any
 		new Deployment(name, {
 			spec: {
@@ -938,6 +944,7 @@ export class App {
 				],
 			},
 		})
+		Resource.end()
 	}
 }
 

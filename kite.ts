@@ -104,16 +104,18 @@ export class Resource {
 
 	/**
 	 * Call to set the Resource type.
-	 * Must be called by subclasses.
+	 * Must be called by subclass constructors only.
 	 * Format like `kx:Deployment` or `k8s:Deployment`
 	 */
-	protected setType(type: string) {
+	setType(type: string) {
 		if (!this.__type) {
 			Object.defineProperty(this, '__type', {
-				writable: false,
+				writable: true,
 				enumerable: false,
 				value: type,
 			})
+		} else {
+			this.__type = type
 		}
 	}
 }
