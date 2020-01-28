@@ -6,7 +6,7 @@
  */
 
 import { parseAll, JSON_SCHEMA } from 'https://deno.land/std/encoding/yaml.ts'
-import { Resource } from './kite.ts'
+import * as kite from './kite.ts'
 import { meta } from './kubernetes/src/types.ts'
 
 export * from './kubernetes/src/api.ts'
@@ -48,14 +48,14 @@ export interface CustomResourceArgs {
  * instantiate this as a Kite resource, call `new CustomResource`, passing the
  * `ServiceMonitor` resource definition as an argument.
  */
-export class CustomResource extends Resource {
+export class CustomResource extends kite.Resource {
 	/**
 	 * APIVersion defines the versioned schema of this representation of an object. Servers should
 	 * convert recognized schemas to the latest internal value, and may reject unrecognized
 	 * values. More info:
 	 * https://git.k8s.io/community/contributors/devel/api-conventions.md#resources
 	 */
-	public readonly apiVersion: string
+	readonly apiVersion: string
 
 	/**
 	 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -63,13 +63,13 @@ export class CustomResource extends Resource {
 	 * CamelCase. More info:
 	 * https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
 	 */
-	public readonly kind: string
+	readonly kind: string
 
 	/**
 	 * Standard object metadata; More info:
 	 * https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata.
 	 */
-	public readonly metadata: meta.v1.ObjectMeta
+	readonly metadata: meta.v1.ObjectMeta
 
 	/**
 	 * Create a CustomResource resource with the given unique name, arguments, and options.
@@ -104,7 +104,16 @@ interface YamlArgs {
 }
 
 export namespace yaml {
+	/**
+	 * Load an arbitrary YAML string or object as a ConfigFile.
+	 * Useful to bring existing manifests into a config program.
+	 */
 	export class Config {
+		/**
+		 * The set of Resources created by the Config
+		 */
+		resources: kite.Resource[]
+
 		constructor(name: string, desc: YamlArgs | string) {
 			let objs: any[]
 			let parsed: any[] = []
@@ -128,7 +137,8 @@ export namespace yaml {
 					}) as any[])
 				)
 			})
-			Resource.start(`k8s:yaml:Config:${name}`)
+			kite.Resource.start(`k8s:yaml:Config:${name}`)
+			this.resources = []
 			parsed.forEach((item) => {
 				const n = item?.metadata?.name || undefined
 				if (typeof n !== 'string') {
@@ -136,9 +146,103 @@ export namespace yaml {
 						`Invalid k8s metadata.name field. Got: ${n} for k8s:yaml.Config:${name}`
 					)
 				}
-				new Resource(n, { ...item, __type: 'k8s:yaml' })
+				this.resources.push(
+					new kite.Resource(n, { ...item, __type: 'k8s:yaml' })
+				)
 			})
-			Resource.end()
+			kite.Resource.end()
+		}
+	}
+}
+
+export namespace helm {
+	export interface IHelmChart {
+		/**
+		 * APIVersion defines the versioned schema of this representation of an object. Servers should
+		 * convert recognized schemas to the latest internal value, and may reject unrecognized
+		 * values. More info:
+		 * https://git.k8s.io/community/contributors/devel/api-conventions.md#resources
+		 */
+		apiVersion?: 'helm.cattle.io/v1'
+
+		/**
+		 * Kind is a string value representing the REST resource this object represents. Servers may
+		 * infer this from the endpoint the client submits requests to. Cannot be updated. In
+		 * CamelCase. More info:
+		 * https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
+		 */
+		kind?: 'HelmChart'
+
+		/**
+		 * Standard object metadata; More info:
+		 * https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata.
+		 */
+		metadata?: meta.v1.ObjectMeta
+		/**
+		 * Specify the HelmChart spec
+		 */
+		spec: IChartSpec
+	}
+
+	export interface IChartSpec {
+		/**
+		 * Specify the chart name
+		 */
+		chart: string
+		/**
+		 * Specify the Chart repo. Should be a URL or "stable".
+		 */
+		repo?: string
+		/**
+		 * Specify the Chart version. If unspecified, latest is used.
+		 */
+		version?: string
+		/**
+		 * Set the namespace the chart resources should be deployed into
+		 */
+		targetNamespace?: string
+		/**
+		 * Specify chart values with similar syntax to helm --set.
+		 * Prefer valuesContent.
+		 */
+		set?: Record<string, string>
+		/**
+		 * Specify Helm Chart values.
+		 * The constructor will transform an object value into a YAML string.
+		 */
+		valuesContent?: string | Record<string, any>
+		/**
+		 * Optionally specify a helmVersion to use to deploy the chart.
+		 */
+		helmVersion?: string
+	}
+
+	export class Helm extends kite.Resource implements IHelmChart {
+		kind: 'HelmChart'
+		apiVersion: 'helm.cattle.io/v1'
+		metadata: meta.v1.ObjectMeta
+		spec: IChartSpec
+
+		constructor(name: string, args: IHelmChart) {
+			const props: IHelmChart = {
+				...args,
+				kind: 'HelmChart',
+				apiVersion: 'helm.cattle.io/v1',
+				metadata: args.metadata || undefined,
+				spec: args.spec || undefined,
+			}
+			if (!props.spec || !props.spec.chart) {
+				throw new Error(`HelmChart ${name} is must specify a chart.`)
+			}
+			if (!props.spec.set || !props.spec.valuesContent) {
+				throw new Error(
+					`HelmChart ${name} must specify either valuesContent or set.`
+				)
+			}
+			if (typeof props.spec.valuesContent !== 'string') {
+				props.spec.valuesContent = kite.yaml.print(props.spec.valuesContent)
+			}
+			super(name, props)
 		}
 	}
 }
