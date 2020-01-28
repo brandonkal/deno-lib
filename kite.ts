@@ -70,6 +70,11 @@ export class Resource {
 			delete desc.__type
 		}
 		let number = registerResource(name, desc, this)
+		// if a name is specified it must be a valid k8s name
+		Resource.validateName(name)
+		if (desc && desc.metadata && desc.matadata.name) {
+			Resource.validateName(desc.metadata.name)
+		}
 		Object.defineProperty(this, '__number', {
 			writable: false,
 			enumerable: false,
@@ -121,6 +126,18 @@ export class Resource {
 			})
 		} else {
 			this.__type = type
+		}
+	}
+
+	/**
+	 * @throws if the string is not a valid k8s name
+	 */
+	static validateName(name: string) {
+		const check = /^[\da-z.-]+$/
+		if (!name.match(check)) {
+			throw new Error(
+				`${name} is not a valid k8s name. Must match /^[\\da-z.-]+$/.`
+			)
 		}
 	}
 }
