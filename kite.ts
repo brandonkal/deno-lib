@@ -213,16 +213,45 @@ interface MakeOpts {
 	json?: boolean
 }
 
+const parsedOpts: { args: undefined | object; parsed: boolean } = {
+	args: undefined,
+	parsed: false,
+}
+
 /** Parse Deno arguments to object */
 function handleArgs(): object | undefined {
 	const a = Deno.args
 	if (a.length) {
-		if (a.length !== 1) {
-			throw new Error(`Expected only one arg but got ${a.length}`)
+		if (a.length === 2 && a[0] === '-f') {
+			if (a[1] === '-') {
+				const buf = new Uint8Array(1024)
+				try {
+					const n = Deno.stdin.readSync(buf)
+					if (n === Deno.EOF) {
+						return undefined
+					} else {
+						const txt = new TextDecoder().decode(buf.subarray(0, n))
+						return parse(txt, { schema: JSON_SCHEMA }) as object
+					}
+				} catch (e) {
+					return undefined
+				}
+			}
+			return parse(a[0], { schema: JSON_SCHEMA }) as object
 		}
-		return parse(a[0], { schema: JSON_SCHEMA }) as object
+		throw new Error(`Expected "-f 'arg'" but got ${a.length} arguments`)
 	}
 	return undefined
+}
+/** getArgs returns a cached argument or stdin from program. */
+function getArgs(): object | undefined {
+	if (parsedOpts.parsed) {
+		return parsedOpts.args
+	}
+	const a = handleArgs()
+	parsedOpts.parsed = true
+	parsedOpts.args = a
+	return a
 }
 
 const sortedK8s = [
@@ -293,7 +322,7 @@ export function make(fn: Function, { main, post, json }: MakeOpts): string {
 	reset()
 	// run user's function
 	if (main) {
-		const args = handleArgs()
+		const args = getArgs()
 		fn(args)
 	} else {
 		fn()
