@@ -368,7 +368,12 @@ export function make(fn: Function, { main, post, json }: MakeOpts): string {
 	console.log(tfBuffer)
 	// Convert buffer to add identifying comments
 	function genComments(res: Resource) {
-		return [res.uid(), res]
+		let comment: string
+		// Calling uid() may not be safe if converted
+		if (typeof res.uid === 'function') {
+			comment = res.uid()
+		}
+		return [comment, res]
 	}
 	const out = json ? buf : buf.map(genComments)
 	return json
