@@ -19,11 +19,13 @@ import { parse, JSON_SCHEMA } from 'https://deno.land/std/encoding/yaml.ts'
 declare module globalThis {
 	let outBuffer: Resource[]
 	let stack: string[]
+	let registeredNames: Set<string>
 }
 
 // initialize globals
 globalThis.outBuffer = globalThis.outBuffer || []
 globalThis.stack = globalThis.stack || []
+globalThis.registeredNames = globalThis.registeredNames || new Set()
 
 /**
  * A kite.Resource is the base class that all generated config objects should extend.
@@ -114,7 +116,10 @@ export class Resource {
 	}
 
 	/** Get a unique identifier for this Resource */
-	uid() {
+	uid(short?: boolean) {
+		if (short && typeof (this as any).id === 'function') {
+			return (this as any).id()
+		}
 		const parent = this.__parents ? this.__parents.join('/') + '/' : ''
 		const type = this.__type || 'und'
 		return `urn:${parent}${type}:n=${this.__name}:${this.__number}`
@@ -155,6 +160,11 @@ function registerResource(name: string, desc: object, instance: Resource) {
 			instance[key] = val
 		})
 		globalThis.outBuffer.push(instance)
+		const id = instance.uid(true)
+		if (globalThis.registeredNames.has(id)) {
+			throw new Error('Duplicate names are not allowed for this resource type')
+		}
+		globalThis.registeredNames.add(id)
 		return globalThis.outBuffer.length
 	} catch (e) {
 		throw new Error(`Unable to resolve resource inputs for ${name}: ${e}`)
@@ -205,6 +215,7 @@ export function log(config: string) {
  */
 function reset() {
 	globalThis.outBuffer = []
+	globalThis.registeredNames.clear()
 }
 
 /**
@@ -229,7 +240,7 @@ const parsedOpts: { args: undefined | object; parsed: boolean } = {
 }
 
 /** Parse Deno arguments to object */
-function handleArgs(): object | undefined {
+export function readArgs(): string | undefined {
 	const a = Deno.args
 	if (a.length) {
 		if (a.length === 2 && a[0] === '-f') {
@@ -240,25 +251,26 @@ function handleArgs(): object | undefined {
 					if (n === Deno.EOF) {
 						return undefined
 					} else {
-						const txt = new TextDecoder().decode(buf.subarray(0, n))
-						return parse(txt, { schema: JSON_SCHEMA }) as object
+						return new TextDecoder().decode(buf.subarray(0, n))
 					}
 				} catch (e) {
 					return undefined
 				}
 			}
-			return parse(a[0], { schema: JSON_SCHEMA }) as object
+			return a[0]
 		}
 		throw new Error(`Expected "-f 'arg'" but got ${a.length} arguments`)
 	}
 	return undefined
 }
 /** getArgs returns a cached argument or stdin from program. */
-function getArgs(): object | undefined {
+export function getArgsObject(): object | undefined {
 	if (parsedOpts.parsed) {
 		return parsedOpts.args
 	}
-	const a = handleArgs()
+	const read = readArgs()
+	//prettier-ignore
+	const a = read === undefined ? undefined : (parse(read, { schema: JSON_SCHEMA }) as object)
 	parsedOpts.parsed = true
 	parsedOpts.args = a
 	return a
@@ -332,7 +344,7 @@ export function make(fn: Function, { main, post, json }: MakeOpts): string {
 	reset()
 	// run user's function
 	if (main) {
-		const args = getArgs()
+		const args = getArgsObject()
 		fn(args)
 	} else {
 		fn()
@@ -353,9 +365,9 @@ export function make(fn: Function, { main, post, json }: MakeOpts): string {
 		})
 	}
 	let tfBuffer: Resource[] = []
-	console.log(buf.length)
 	buf = buf.filter((res) => {
 		/* private */
+		//@ts-ignore
 		const skip = ((res as any).__type as string).startsWith('tf:')
 		if (skip) tfBuffer.push(res)
 		return !skip
@@ -364,8 +376,6 @@ export function make(fn: Function, { main, post, json }: MakeOpts): string {
 	if (tfBuffer.length) {
 		buf.unshift(new TerraformJSON(tfBuffer))
 	}
-	console.log(buf)
-	console.log(tfBuffer)
 	// Convert buffer to add identifying comments
 	function genComments(res: Resource) {
 		let comment: string
@@ -386,13 +396,14 @@ class TerraformJSON extends Resource {
 	kind = 'Terraform'
 	spec: any
 	constructor(items: Resource[]) {
-		super('TerraformConfig', {})
+		super('TerraformCode', {})
 		const toMerge = items.map(runConvert)
 		let merged: any = {}
 		toMerge.forEach((next) => {
 			merged = merge(merged, next)
 		})
 		this.spec = merged
+		this.setType('TerraformJSON')
 	}
 }
 
