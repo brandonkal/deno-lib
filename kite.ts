@@ -13,6 +13,7 @@
 
 import { printYaml as printYamlImpl } from './yaml-tag.ts'
 import { stripUndefined } from './utils.ts'
+import { merge } from './merge.ts'
 import { parse, JSON_SCHEMA } from 'https://deno.land/std/encoding/yaml.ts'
 
 let outBuffer: Resource[] = []
@@ -32,6 +33,13 @@ export class Resource {
 	private readonly __number: number
 	private readonly __name: string
 	private readonly __parents?: string[]
+	/**
+	 * Optionally provide a convert function. This will transform the object's representation into a different shape.
+	 * This is useful for Terraform Resources. This will be called by `kite.make()` after post-processors but before printing.
+	 * @returns Object
+	 */
+	public convert?: () => any
+
 	/**
 	 * Build a new Resource Object
 	 */
@@ -202,7 +210,7 @@ function reset() {
  * It should be small and always return the same number of resources.
  * It is expected that it modifies the input directly and must return the same objects
  */
-type Transformer = (objs: Resource[]) => Resource[]
+export type Transformer = <Res extends Resource>(objs: Res[]) => Res[]
 
 interface MakeOpts {
 	/** Set to true if provided function should be called with Deno arguments */
@@ -342,6 +350,17 @@ export function make(fn: Function, { main, post, json }: MakeOpts): string {
 			}
 		})
 	}
+	let tfBuffer: Resource[] = []
+	buf = buf.filter((res) => {
+		/* private */
+		const pass = !((res as any).__type as string).startsWith('tf:')
+		if (!pass) tfBuffer.push(res)
+		return pass
+	})
+	buf = buf.map(runConvert)
+	if (tfBuffer.length) {
+		buf.unshift(new TerraformJSON(tfBuffer))
+	}
 	// Convert buffer to add identifying comments
 	function genComments(res: Resource) {
 		return [res.uid(), res]
@@ -352,7 +371,26 @@ export function make(fn: Function, { main, post, json }: MakeOpts): string {
 		: printYamlImpl(out, sortK8sYaml, true)
 }
 
+class TerraformJSON extends Resource {
+	apiVersion = 'kite.run/v1alpha1'
+	kind = 'Terraform'
+	spec: any
+	constructor(items: Resource[]) {
+		super('TerraformConfig', {})
+		const toMerge = items.map(runConvert)
+		let merged: any = {}
+		toMerge.forEach((next) => {
+			merged = merge(merged, next)
+		})
+		this.spec = merged
+	}
+}
+
 let revoked = false
+
+function runConvert(it: Resource): any {
+	return typeof it.convert === 'function' ? it.convert() : it
+}
 
 /** Revoke deno permissions that we do not require early */
 async function revoke() {
