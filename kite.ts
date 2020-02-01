@@ -33,8 +33,8 @@ export class Resource {
 	 * The type for a Resource i.e. `kx:Deployment` or `k8s:Deployment`
 	 */
 	private __type: string
-	private readonly __number: number
-	private readonly __name: string
+	protected readonly __number: number
+	protected readonly __name: string
 	private readonly __parents?: string[]
 
 	/**
