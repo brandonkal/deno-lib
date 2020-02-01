@@ -16,8 +16,14 @@ import { stripUndefined } from './utils.ts'
 import { merge } from './merge.ts'
 import { parse, JSON_SCHEMA } from 'https://deno.land/std/encoding/yaml.ts'
 
-let outBuffer: Resource[] = []
-let stack: string[] = []
+declare module globalThis {
+	let outBuffer: Resource[]
+	let stack: string[]
+}
+
+// initialize globals
+globalThis.outBuffer = globalThis.outBuffer || []
+globalThis.stack = globalThis.stack || []
 
 /**
  * A kite.Resource is the base class that all generated config objects should extend.
@@ -75,11 +81,18 @@ export class Resource {
 			enumerable: false,
 			value: number,
 		})
-		if (stack.length) {
+		if (globalThis.stack.length) {
 			Object.defineProperty(this, '__parents', {
 				writable: false,
 				enumerable: false,
-				value: [...stack],
+				value: [...globalThis.stack],
+			})
+		}
+		if (!this.__type) {
+			Object.defineProperty(this, '__type', {
+				writable: true,
+				enumerable: false,
+				value: 'Resource', // basic Resource type. Subclasses override this,
 			})
 		}
 	}
@@ -91,13 +104,13 @@ export class Resource {
 	 * When it is done, it calls Resource.end()
 	 */
 	static start(name: string) {
-		stack.push(name)
+		globalThis.stack.push(name)
 	}
 	/**
 	 * Call to inform the stack that a ComponentResource will not create any more Resources.
 	 */
 	static end() {
-		stack.pop()
+		globalThis.stack.pop()
 	}
 
 	/** Get a unique identifier for this Resource */
@@ -110,18 +123,10 @@ export class Resource {
 	/**
 	 * Call to set the Resource type.
 	 * Must be called by subclass constructors only.
-	 * Format like `kx:Deployment` or `k8s:Deployment`
+	 * Format like `kx:Deployment`, `k8s:Deployment`, or `tf:x`
 	 */
 	setType(type: string) {
-		if (!this.__type) {
-			Object.defineProperty(this, '__type', {
-				writable: true,
-				enumerable: false,
-				value: type,
-			})
-		} else {
-			this.__type = type
-		}
+		this.__type = type
 	}
 
 	/**
@@ -149,8 +154,8 @@ function registerResource(name: string, desc: object, instance: Resource) {
 		Object.entries(desc).forEach(([key, val]) => {
 			instance[key] = val
 		})
-		outBuffer.push(instance)
-		return outBuffer.length
+		globalThis.outBuffer.push(instance)
+		return globalThis.outBuffer.length
 	} catch (e) {
 		throw new Error(`Unable to resolve resource inputs for ${name}: ${e}`)
 	}
@@ -199,7 +204,7 @@ export function log(config: string) {
  * clear state
  */
 function reset() {
-	outBuffer = []
+	globalThis.outBuffer = []
 }
 
 /**
@@ -332,14 +337,14 @@ export function make(fn: Function, { main, post, json }: MakeOpts): string {
 	} else {
 		fn()
 	}
-	let buf = [...outBuffer]
+	let buf = [...globalThis.outBuffer]
 	// keep track of input to validate that transformers do not create new objects
 	const beforeLength = buf.length
 	if (post && post.length) {
 		post.forEach((transform) => {
 			if (typeof transform === 'function') {
 				buf = transform(buf)
-				if (beforeLength !== outBuffer.length) {
+				if (beforeLength !== globalThis.outBuffer.length) {
 					throw new Error('Post-processors cannot create new resources')
 				}
 			} else {
@@ -348,16 +353,19 @@ export function make(fn: Function, { main, post, json }: MakeOpts): string {
 		})
 	}
 	let tfBuffer: Resource[] = []
+	console.log(buf.length)
 	buf = buf.filter((res) => {
 		/* private */
-		const pass = !((res as any).__type as string).startsWith('tf:')
-		if (!pass) tfBuffer.push(res)
-		return pass
+		const skip = ((res as any).__type as string).startsWith('tf:')
+		if (skip) tfBuffer.push(res)
+		return !skip
 	})
 	buf = buf.map(runConvert)
 	if (tfBuffer.length) {
 		buf.unshift(new TerraformJSON(tfBuffer))
 	}
+	console.log(buf)
+	console.log(tfBuffer)
 	// Convert buffer to add identifying comments
 	function genComments(res: Resource) {
 		return [res.uid(), res]
