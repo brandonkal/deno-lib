@@ -23,6 +23,9 @@ let stack: string[] = []
  * A kite.Resource is the base class that all generated config objects should extend.
  * It allows annotations as numbers (converted to strings) and defines some hidden properties to keep track of the graph.
  * On construction, the Resource is registered into the shared output buffer. The buffer is drained by calling `kite.make()`.
+ *
+ * A class that extends Resource can optionally provide a convert method that transforms the object's representation
+ * into a different shape. If provided, it will be called by `kite.make()` after post-processors but before printing.
  */
 export class Resource {
 	/**
@@ -33,12 +36,6 @@ export class Resource {
 	private readonly __number: number
 	private readonly __name: string
 	private readonly __parents?: string[]
-	/**
-	 * Optionally provide a convert function. This will transform the object's representation into a different shape.
-	 * This is useful for Terraform Resources. This will be called by `kite.make()` after post-processors but before printing.
-	 * @returns Object
-	 */
-	public convert?: () => any
 
 	/**
 	 * Build a new Resource Object
@@ -388,7 +385,7 @@ class TerraformJSON extends Resource {
 
 let revoked = false
 
-function runConvert(it: Resource): any {
+function runConvert(it: any): any {
 	return typeof it.convert === 'function' ? it.convert() : it
 }
 
