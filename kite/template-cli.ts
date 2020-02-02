@@ -10,3 +10,20 @@ if (import.meta.main) {
 	// kite.readArgs
 	// template('name', '', args)
 }
+
+function y(...a: any) {}
+
+y`
+kind: TemplateConfig
+apiVersion: kite.run/v1alpha1
+metadata: { name: prod }
+spec:
+  args:
+	a: b
+  secrets:
+	- file.yaml
+	- file2.yaml
+  allowedEnv:
+	- something
+	- something
+`
