@@ -7,9 +7,9 @@
 
 import { parseAll, JSON_SCHEMA } from 'https://deno.land/std/encoding/yaml.ts'
 import * as kite from './kite.ts'
-import { meta } from './kubernetes/src/types.ts'
+import { meta } from './kubernetes/gen/types.ts'
 
-export * from './kubernetes/src/api.ts'
+export * from './kubernetes/gen/api.ts'
 
 /**
  * CustomResourceArgs represents a resource definition we'd use to create an instance of a
