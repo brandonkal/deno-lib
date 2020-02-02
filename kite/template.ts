@@ -13,6 +13,7 @@ import titleCase from 'https://deno.land/x/case/titleCase.ts'
 import { sha256 } from 'https://deno.land/x/sha256/mod.ts'
 import { parse, JSON_SCHEMA } from 'https://deno.land/std/encoding/yaml.ts'
 import { dotProp, jsonItem, visitAll, notImplemented } from '../utils.ts'
+import { merge } from '../merge.ts'
 
 /**
  * Takes input YAML as a string and executes Terraform if required.
@@ -20,10 +21,18 @@ import { dotProp, jsonItem, visitAll, notImplemented } from '../utils.ts'
  * The resulting YAML is returned without the Terraform Resource
  */
 export default async function template(
-	name: string,
+	/** A unique name to use for storing Terraform state */
+	name: string | undefined,
 	yamlText: string,
-	args: any
+	/** arguments object as parsed by CLI */
+	args: any,
+	/** Set to allow templates to read environment variables */
+	allowEnvironment = false
 ): Promise<string> {
+	if (!yamlText.startsWith('---')) {
+		// This is required for counting to function
+		yamlText = '---\n' + yamlText
+	}
 	const split = yamlText.split(/^---/m)
 	// Find first YAML doc
 	const first = split.findIndex((v) => v.includes(':'))
@@ -33,36 +42,109 @@ export default async function template(
 		toRemove += split[i].length + 3
 	}
 	const out = yamlText.substr(toRemove)
-	const p = parse(split[first], { schema: JSON_SCHEMA }) as any
+	const docs = split.map((yamlDoc) => {
+		return parse(yamlDoc, { schema: JSON_SCHEMA }) as any
+	})
+	const kiteConfigs: TemplateConfig[] = []
+	const terraformConfigs: any[] = []
+	docs.forEach((doc) => {
+		if (isTerraformConfig(doc)) {
+			terraformConfigs.push(doc)
+		} else if (isTemplateConfig(doc)) {
+			kiteConfigs.push(doc)
+		}
+	})
+	let config = {} as TemplateConfig
+	if (kiteConfigs.length) {
+		kiteConfigs.forEach((cfg) => merge(config, cfg))
+	}
+	config = merge(config, configFromArgs(name, args))
+	if (!allowEnvironment) {
+		config.spec.allowedEnv = undefined
+	}
+
+	let tfConfig: any = {}
+	terraformConfigs.forEach((cfg) => merge(tfConfig, cfg))
+
 	let state: any = {}
-	if (
-		p.apiVersion === 'kite.run/v1alpha1' &&
-		p.kind === 'Terraform' &&
-		p.spec &&
-		typeof p.spec === 'object'
-	) {
-		const tf = p.spec as object
+	if (isTerraformConfig(tfConfig)) {
+		const tf = tfConfig.spec as object
 		visitAll(tf, (value) => {
 			if (typeof value === 'string') {
-				const m = value.match(/^{{ tf (.*) }}$/)
+				const m = value.match(/^{{ tf (.*)}}$/)
 				if (m) {
-					console.log(m[1])
-					return `\${${m[1]}}`
+					// Ignore pipeline for TF refs
+					const [ref] = m[1].split('|')
+					// Replace with something TF understands
+					return `\${${ref.trim()}}`
 				}
 			}
 			return value
 		})
-		state = await execTerraform(name, tf)
+		state = await execTerraform(config, tf)
 	}
 	// Now return the filtered result
-	return substitutePlaceholders(out, args, state)
+	return substitutePlaceholders(out, config.spec, state)
+}
+
+function isTerraformConfig(p: any) {
+	return (
+		p &&
+		p.apiVersion === 'kite.run/v1alpha1' &&
+		p.kind === 'Terraform' &&
+		p.spec &&
+		typeof p.spec === 'object'
+	)
+}
+
+function isTemplateConfig(p: any): p is TemplateConfig {
+	return (
+		p &&
+		p.apiVersion === 'kite.run/v1alpha1' &&
+		p.kind === 'TemplateConfig' &&
+		p.spec &&
+		typeof p.spec === 'object'
+	)
+}
+
+interface TemplateConfigSpec {
+	args: Record<string, any>
+	secretFiles?: string[]
+	allowedEnv?: string[]
+}
+
+interface TemplateConfig {
+	apiVersion: 'kite.run/v1alpha1'
+	kind: 'TemplateConfig'
+	metadata: {
+		name: string
+	}
+	spec: TemplateConfigSpec
+}
+
+function configFromArgs(name, args: any): TemplateConfig {
+	return {
+		apiVersion: 'kite.run/v1alpha1',
+		kind: 'TemplateConfig',
+		metadata: {
+			name: name,
+		},
+		spec: {
+			args: args,
+		},
+	}
 }
 
 /** removes placeholders using Terraform state values */
-function substitutePlaceholders(str: string, args: any, state: any): string {
+function substitutePlaceholders(
+	str: string,
+	spec: TemplateConfigSpec,
+	state: any
+): string {
 	parseCache.clear()
+	const allOps = ops(buildEnv(spec.allowedEnv))
 	const out = str.replace(/['"]{{(.*?)}}['"]/, (_, dslText) => {
-		let r = parseDSL(dslText, args, state)
+		let r = parseDSL(dslText, spec, state, allOps)
 		if (r === undefined || r === 'undefined') {
 			throw new Error(`${dslText} returned ${r}`)
 		}
@@ -71,13 +153,27 @@ function substitutePlaceholders(str: string, args: any, state: any): string {
 	return out
 }
 
+/** builds an environment based on allowed environment variables in config */
+function buildEnv(envars: string[]) {
+	const tfEnv: Record<string, string> = {}
+	if (envars && Array.isArray(envars)) {
+		envars.forEach((envar) => {
+			tfEnv[envar] = Deno.env(envar)
+		})
+	}
+	tfEnv.TF_INPUT = '0'
+	tfEnv.TF_IN_AUTOMATION = 'true'
+	return tfEnv
+}
+
 /** execute Terraform as a process for given JSON and return state object. */
-async function execTerraform(name: string, tf: object) {
+async function execTerraform(config: TemplateConfig, tfConfig: object) {
+	const name = config.metadata.name
 	const homeDir = Deno.dir('home')
 	const tfDir = path.join(homeDir, '.kite', name)
 	const tfFile = path.join(tfDir + 'kite.tf.json')
 	await fs.ensureDir(tfDir)
-	await fs.writeJson(tfFile, tf, { spaces: 2 })
+	await fs.writeJson(tfFile, tfConfig, { spaces: 2 })
 	// Ensure tf config exists
 	const tfConfigPath = path.join(homeDir, '.terraformrc')
 	const hasTF = await fs.exists(tfConfigPath)
@@ -85,12 +181,13 @@ async function execTerraform(name: string, tf: object) {
 		const tfConfig = `plugin_cache_dir = "$HOME/.terraform.d/plugin-cache"\ndisable_checkpoint = true\n`
 		await fs.writeFileStr(tfConfigPath, tfConfig)
 	}
+
+	const env = buildEnv(config.spec.allowedEnv)
+
 	const init = Deno.run({
 		args: ['terraform', 'init', '-no-color'],
 		cwd: tfDir,
-		env: {
-			TF_INPUT: '0',
-		},
+		env,
 	})
 	let s = await init.status()
 	if (!s.success) {
@@ -99,10 +196,7 @@ async function execTerraform(name: string, tf: object) {
 	const apply = Deno.run({
 		args: ['terraform', 'apply', '-auto-approve'],
 		cwd: tfDir,
-		env: {
-			TF_IN_AUTOMATION: 'true',
-			TF_INPUT: '0',
-		},
+		env,
 	})
 	s = await apply.status()
 	if (!s.success) {
@@ -114,10 +208,7 @@ async function execTerraform(name: string, tf: object) {
 		stdout: 'piped',
 		stderr: 'piped',
 		cwd: tfDir,
-		env: {
-			TF_IN_AUTOMATION: 'true',
-			TF_INPUT: '0',
-		},
+		env,
 	})
 	s = await show.status()
 	if (!s.success) {
@@ -173,43 +264,52 @@ function findTerraformValue(state: any, path: string): jsonItem {
 
 const same = (x: any) => x
 
-const ops: Record<string, (a: any) => any> = {
-	// default requires special logic
-	default: same,
-	int: (a) => {
-		let n = parseInt(a, 10)
-		if (Number.isNaN(n)) throw new Error(`could not parse "${a}" as an integer`)
-		return n
-	},
-	number: (a) => {
-		let n = Number(a)
-		if (Number.isNaN(n)) throw new Error(`could not parse "${a}" as number`)
-		return n
-	},
-	trim: (a: string) => a.trim(),
-	upper: (a: string) => a.toUpperCase(),
-	lower: (a: string) => a.toLowerCase(),
-	title: titleCase,
-	toString: (a: any) => String(a),
-	env: (a: string) => {
-		const envar = Deno.env(a)
-		if (envar === undefined) {
-			throw new Error(`Environment variable ${a} is undefined`)
-		}
-	},
-	boolean: (a) => Boolean(a),
-	b64enc: btoa,
-	b64dec: atob,
-	b32enc: notImplemented('b32enc'),
-	b32dec: notImplemented('base32dec'),
-	sha1sum: sha1,
-	sha256sum: sha256,
-	toJson: (a) => JSON.stringify(a),
-	sec: same, // Requires custom logic
-	tf: same, // custom logic
+type OpMap = Record<string, (a: any) => any>
+
+function ops(env: Record<string, string>) {
+	const map: OpMap = {
+		// default requires special logic
+		default: same,
+		int: (a) => {
+			let n = parseInt(a, 10)
+			if (Number.isNaN(n))
+				throw new Error(`could not parse "${a}" as an integer`)
+			return n
+		},
+		number: (a) => {
+			let n = Number(a)
+			if (Number.isNaN(n)) throw new Error(`could not parse "${a}" as number`)
+			return n
+		},
+		trim: (a: string) => a.trim(),
+		upper: (a: string) => a.toUpperCase(),
+		lower: (a: string) => a.toLowerCase(),
+		title: titleCase,
+		toString: (a: any) => String(a),
+		env: (a: string) => {
+			const envar = env[a]
+			if (envar === undefined) {
+				throw new Error(
+					`Environment variable ${a} is undefined or access is disabled`
+				)
+			}
+			return envar
+		},
+		boolean: (a) => Boolean(a),
+		b64enc: btoa,
+		b64dec: atob,
+		b32enc: notImplemented('b32enc'),
+		b32dec: notImplemented('base32dec'),
+		sha1sum: sha1,
+		sha256sum: sha256,
+		toJson: (a) => JSON.stringify(a),
+		sec: same, // Requires custom logic
+		tf: same, // custom logic
+	}
+	return map
 }
 
-const opsRe = new RegExp('^' + Object.keys(ops).join('|'))
+const opsRe = new RegExp('^' + Object.keys(ops({})).join('|'))
 
 const ROOK = '♜'
 
@@ -218,10 +318,16 @@ const parseCache = new Map<string, any>()
 /**
  * parses DSL and returns the result
  * @param input The string to parse
- * @param args represents available args to evaluate template
+ * @param spec represents available args to evaluate template
  * @param tfState represents Terraform state object
  */
-function parseDSL(input: string, args: any, tfState: any) {
+function parseDSL(
+	input: string,
+	spec: TemplateConfigSpec,
+	tfState: any,
+	allOps: OpMap
+) {
+	const { args } = spec
 	input = input.trim()
 	if (parseCache.has(input)) {
 		return parseCache.get(input)
@@ -257,7 +363,7 @@ function parseDSL(input: string, args: any, tfState: any) {
 				}
 				last = findTerraformValue(tfState, txt)
 			} else {
-				last = ops[op](last)
+				last = allOps[op](last)
 			}
 		} else {
 			last = dotProp(args, txt)
