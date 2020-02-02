@@ -59,13 +59,20 @@ export function visitAll(item: unknown, visitor: Visitor) {
 }
 
 /**
- * getDotPath returns the value for a given object path.
+ * dotPath returns the value for a given object path.
  * @param object An object to search
- * @param path an array representing the dotPath for nested keys
+ * @param path is a dot seperated string or an array of nested keys
  * @param defaultValue An optional value to return if value not found
  */
-export function getDotPath(object: any, path: string[], defaultValue?: any) {
-	const pathArray = path
+export function dotProp(
+	object: any,
+	path: string | string[],
+	defaultValue?: any
+) {
+	if (!isObject(object)) {
+		throw new TypeError(`Expected object but got ${object}`)
+	}
+	const pathArray = typeof path === 'string' ? path.split('.') : path
 	if (pathArray.length === 0) {
 		return
 	}
@@ -89,4 +96,13 @@ export function getDotPath(object: any, path: string[], defaultValue?: any) {
 		}
 	}
 	return object
+}
+
+/**
+ * notImplemented returns a function that throws if called.
+ */
+export function notImplemented(name: string) {
+	return () => {
+		throw new Error(`${name} is not implemented.`)
+	}
 }
