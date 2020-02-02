@@ -15,6 +15,7 @@ import { printYaml as printYamlImpl } from './yaml-tag.ts'
 import { stripUndefined, isObject } from './utils.ts'
 import { merge } from './merge.ts'
 import { parse, JSON_SCHEMA } from 'https://deno.land/std/encoding/yaml.ts'
+import * as flags from 'https://deno.land/std/flags/mod.ts'
 
 declare module globalThis {
 	let outBuffer: Resource[]
@@ -233,27 +234,31 @@ const parsedOpts: { args: undefined | object; parsed: boolean } = {
 	parsed: false,
 }
 
+function textOrStdIn(value: string) {
+	if (value === '-') {
+		const buf = new Uint8Array(1024)
+		try {
+			const n = Deno.stdin.readSync(buf)
+			if (n === Deno.EOF) {
+				return undefined
+			} else {
+				return new TextDecoder().decode(buf.subarray(0, n))
+			}
+		} catch (e) {
+			return undefined
+		}
+	}
+	return value
+}
+
 /** Parse Deno arguments to object */
 export function readArgs(): string | undefined {
-	const a = Deno.args
-	if (a.length) {
-		if (a.length === 2 && a[0] === '-f') {
-			if (a[1] === '-') {
-				const buf = new Uint8Array(1024)
-				try {
-					const n = Deno.stdin.readSync(buf)
-					if (n === Deno.EOF) {
-						return undefined
-					} else {
-						return new TextDecoder().decode(buf.subarray(0, n))
-					}
-				} catch (e) {
-					return undefined
-				}
-			}
-			return a[0]
-		}
-		throw new Error(`Expected "-f 'arg'" but got ${a.length} arguments`)
+	const a = flags.parse(Deno.args)
+	if ('f' in a) {
+		return textOrStdIn(a.f)
+	} else if ('c' in a) {
+		// TODO: handle c for reading filename
+		return undefined
 	}
 	return undefined
 }
