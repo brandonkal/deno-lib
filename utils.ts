@@ -17,3 +17,76 @@ export function stripUndefined<T extends object>(obj: T): T {
 	})
 	return obj
 }
+
+/**
+ * Returns true if x is an object, false otherwise.
+ */
+export function isObject(o: any): boolean {
+	const t = typeof o
+	return typeof o === 'object' && !Array.isArray(o) && !!o
+}
+
+/**
+ * An primitive item that can be encoded as JSON or undefined (not object)
+ */
+export type jsonItem = string | number | null | undefined | boolean
+/**
+ * Visitor is a function that performs a modification on a visited object value.
+ */
+export type Visitor = (item: jsonItem) => jsonItem
+
+/**
+ * visitAll recursively visits all values of an object and
+ * applies a visitor function to each primitive value it encounters.
+ * @param item An item to modify
+ * @param visitor A function that updates primitives
+ */
+export function visitAll(item: unknown, visitor: Visitor) {
+	if (item === null || item === undefined) {
+		return visitor(item)
+	} else if (isObject(item)) {
+		Object.entries(item).forEach(([key, value]) => {
+			item[key] = visitAll(value, visitor)
+		})
+	} else if (Array.isArray(item)) {
+		return item.map((v) => {
+			return visitAll(v, visitor)
+		})
+	} else {
+		return visitor(item as string)
+	}
+	return item
+}
+
+/**
+ * getDotPath returns the value for a given object path.
+ * @param object An object to search
+ * @param path an array representing the dotPath for nested keys
+ * @param defaultValue An optional value to return if value not found
+ */
+export function getDotPath(object: any, path: string[], defaultValue?: any) {
+	const pathArray = path
+	if (pathArray.length === 0) {
+		return
+	}
+	for (let i = 0; i < pathArray.length; i++) {
+		if (!Object.prototype.propertyIsEnumerable.call(object, pathArray[i])) {
+			return defaultValue
+		}
+
+		object = object[pathArray[i]]
+
+		if (object === undefined || object === null) {
+			// `object` is either `undefined` or `null` so we want to stop the loop, and
+			// if this is not the last bit of the path, and
+			// if it did't return `undefined`
+			// it would return `null` if `object` is `null`
+			// but we want `get({foo: null}, 'foo.bar')` to equal `undefined`, or the supplied value, not `null`
+			if (i !== pathArray.length - 1) {
+				return defaultValue
+			}
+			break
+		}
+	}
+	return object
+}

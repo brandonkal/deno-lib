@@ -6,6 +6,8 @@
  * That original work is Copyright 2020, jk authors.
  */
 
+import { isObject } from './utils.ts'
+
 function mergeFunc(rule, key, defaultFunc) {
 	const f = rule && rule[key]
 	if (f === undefined) {
@@ -33,11 +35,6 @@ function objectMerge2(a, b, rules) {
 		r[key] = mergeFunc(rules, key, merge)(a[key], value)
 	}
 	return r
-}
-
-function isObject(o) {
-	const t = typeof o
-	return t === 'object' && !Array.isArray(o) && !!o
 }
 
 function assertObject(o, prefix) {

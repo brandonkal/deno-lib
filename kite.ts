@@ -12,7 +12,7 @@
  */
 
 import { printYaml as printYamlImpl } from './yaml-tag.ts'
-import { stripUndefined } from './utils.ts'
+import { stripUndefined, isObject } from './utils.ts'
 import { merge } from './merge.ts'
 import { parse, JSON_SCHEMA } from 'https://deno.land/std/encoding/yaml.ts'
 
@@ -170,12 +170,6 @@ function registerResource(name: string, desc: object, instance: Resource) {
 		throw new Error(`Unable to resolve resource inputs for ${name}: ${e}`)
 	}
 }
-
-/**
- * Returns true if x is an object, false otherwise.
- */
-const isObject = (x: any): boolean =>
-	x && typeof x === 'object' && x.constructor === Object
 
 /**
  * deeply searches an object for an empty array. Returns true if found.
@@ -337,7 +331,8 @@ export namespace yaml {
  * Pass it a module default export and console.log the output.
  * An optional second argument is supported to post-process the generated config array before printing.
  */
-export function make(fn: Function, { main, post, json }: MakeOpts): string {
+export function make(fn: Function, opts?: MakeOpts): string {
+	const { main, post, json } = opts || {}
 	if (typeof fn !== 'function') {
 		throw new Error('Expected function for make')
 	}
@@ -389,6 +384,26 @@ export function make(fn: Function, { main, post, json }: MakeOpts): string {
 	return json
 		? JSON.stringify(out, undefined, 2)
 		: printYamlImpl(out, sortK8sYaml, true)
+}
+
+/**
+ * `out` takes a config generation function and logs the string.
+ * Pass it a module default export function and it will log the output.
+ * An optional second argument is supported to post-process the generated config array before printing.
+ *
+ * `out` is a convenience function that wraps start, make, and log functions.
+ * If options are not provided, it will default main to to true before calling `make()`.
+ * @example
+ * ```ts
+ * if (import.meta.main) kite.out(generate)
+ * ```
+ */
+export async function out(fn: Function, opts?: MakeOpts) {
+	await start()
+	if (opts === undefined) {
+		opts = { main: true }
+	}
+	log(make(fn, opts))
 }
 
 class TerraformJSON extends Resource {
