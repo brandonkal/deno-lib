@@ -16,6 +16,7 @@ import { stripUndefined, isObject } from './utils.ts'
 import { merge } from './merge.ts'
 import { parse, JSON_SCHEMA } from 'https://deno.land/std/encoding/yaml.ts'
 import * as flags from 'https://deno.land/std/flags/mod.ts'
+import './kite/extended-string.ts'
 
 declare module globalThis {
 	let outBuffer: Resource[]
