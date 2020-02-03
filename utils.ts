@@ -102,7 +102,7 @@ export function dotProp(
  * notImplemented returns a function that throws if called.
  */
 export function notImplemented(name: string) {
-	return () => {
+	return (..._: any[]) => {
 		throw new Error(`${name} is not implemented.`)
 	}
 }
