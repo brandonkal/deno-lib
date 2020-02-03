@@ -4,10 +4,10 @@
  * It always returns a String though if it is known at runtime
  * it may be another type (i.e. number)
  *
- * we also:
- * intercept toUppercase()
- * intercept trim()
- * intercept toLowercase()
+ * we also intercept:
+ * trim()
+ * toLowercase()
+ * toUppercase()
  */
 
 import { notImplemented } from '../utils.ts'
@@ -54,6 +54,8 @@ declare global {
 	}
 }
 
+const _stdTrim = String.prototype.trim
+
 class Helpers {
 	// default requires special logic
 	default = (a, b) => a || b
@@ -70,7 +72,7 @@ class Helpers {
 		if (Number.isNaN(n)) throw new Error(`could not parse "${a}" as number`)
 		return a
 	}
-	trim = (a: string) => a.trim()
+	trim = (a: string) => _stdTrim.call(a)
 	upper = (a: string) => a.toUpperCase()
 	lower = (a: string) => a.toLowerCase()
 	title = titleCase
@@ -160,6 +162,17 @@ String.prototype.sha256sum = function() {
 String.prototype.toJson = function() {
 	const k = 'toJson'
 	return isFuture(this) ? appendOp(this, k) : h[k](this)
+}
+/// Intercepted Methods
+const _stdToLowerCase = String.prototype.toLowerCase
+String.prototype.toLowerCase = function() {
+	const k = 'lower'
+	return isFuture(this) ? appendOp(this, k) : _stdToLowerCase.call(this)
+}
+const _stdToUpperCase = String.prototype.toUpperCase
+String.prototype.toUpperCase = function() {
+	const k = 'upper'
+	return isFuture(this) ? appendOp(this, k) : _stdToUpperCase.call(this)
 }
 
 export {}
