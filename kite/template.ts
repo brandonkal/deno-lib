@@ -15,7 +15,7 @@ import * as yaml from 'https://deno.land/std/encoding/yaml.ts'
 
 import { dotProp, jsonItem, visitAll, notImplemented } from '../utils.ts'
 import { merge } from '../merge.ts'
-import { streamFiltered } from './filter-terraform.ts'
+import * as filter from './filter-terraform.ts'
 
 export class TemplateError extends Error {}
 
@@ -27,18 +27,33 @@ const banner = `\
  * Takes input YAML as a string and executes Terraform if required.
  * The resulting state is then queried and combined with argument inputs.
  * The resulting YAML is returned without the Terraform Resource
+ *
+ * @param name A unique name to use for storing Terraform state
+ * @param yamlText The multidocument text to parse.
+ * @param args Arguments object as parsed by CLI. If args.r || args.reload then Terraform will always run.
+ * If args.q || args.quiet then stderr will be silenced.
+ * @param allowEnvironment Set to allow templates to read environment variables
  */
 export default async function template(
-	/** A unique name to use for storing Terraform state */
 	name: string | undefined,
 	yamlText: string,
-	/** arguments object as parsed by CLI */
 	args: any,
-	/** Set to allow templates to read environment variables */
 	allowEnvironment = false
 ): Promise<string> {
+	// Normalize quiet argument
+	if (args.q) {
+		delete args.q
+		args.quiet = true
+	} else if (args.quiet) {
+		delete args.q
+		args.quiet = true
+	}
+
+	const quiet: boolean = args.quiet || false
+	const forceApply: boolean = args.r || args.reload || false
+
 	yamlText = addTopDashes(yamlText)
-	const docs = yamlText.split(/^---/m)
+	const docs = yamlText.split(/^---\n/m)
 	const toRemove = new Set<number>()
 	docs.forEach((doc, i) => {
 		if (!doc.includes(':')) {
@@ -103,7 +118,7 @@ export default async function template(
 			}
 			return value
 		})
-		state = await execTerraform(config, tf)
+		state = await execTerraform(config, tf, quiet, forceApply)
 	}
 	// Now return the filtered result
 	const result = docs
@@ -144,13 +159,13 @@ function isTemplateConfig(p: any): p is TemplateConfig {
 	)
 }
 
-interface TemplateConfigSpec {
+export interface TemplateConfigSpec {
 	args: Record<string, any>
 	secretFiles?: string[]
 	allowedEnv?: string[]
 }
 
-interface TemplateConfig {
+export interface TemplateConfig {
 	apiVersion: 'kite.run/v1alpha1'
 	kind: 'TemplateConfig'
 	metadata: {
@@ -163,7 +178,8 @@ function configFromArgs(name: string, args: any): TemplateConfig {
 	const a = Object.assign({}, args)
 	delete a._
 	delete a.n
-	delete a.name
+	delete a.q
+	delete a.quiet
 	a.name = name
 	return {
 		apiVersion: 'kite.run/v1alpha1',
@@ -209,56 +225,86 @@ function buildEnv(envars: string[]) {
 }
 
 /** execute Terraform as a process for given JSON and return state object. */
-async function execTerraform(config: TemplateConfig, tfConfig: object) {
+async function execTerraform(
+	config: TemplateConfig,
+	tfConfig: object,
+	quiet: boolean,
+	forceApply: boolean
+) {
 	const name = config.metadata.name
 	const homeDir = Deno.dir('home')
 	const tfDir = path.join(homeDir, '.kite', name)
 	const tfFile = path.join(tfDir + '/kite.tf.json')
 	await fs.ensureDir(tfDir)
-	await fs.writeJson(tfFile, tfConfig, { spaces: 2 })
-	// Ensure tf config exists
-	const tfConfigPath = path.join(homeDir, '.terraformrc')
-	const hasTF = await fs.exists(tfConfigPath)
-	if (!hasTF) {
-		const tfConfig = `plugin_cache_dir = "$HOME/.terraform.d/plugin-cache"\ndisable_checkpoint = true\n`
-		await fs.writeFileStr(tfConfigPath, tfConfig)
+	const cfgText = JSON.stringify(tfConfig, undefined, 2)
+	// Terraform is rather slow. So if the config has not changed, short-circuit.
+	// fs.exists(tfFile)
+	let currentContents: string
+	let willRun = true
+	if (!forceApply) {
+		if (await fs.exists(tfFile)) {
+			currentContents = await fs.readFileStr(tfFile)
+			if (cfgText === currentContents) {
+				willRun = false
+				if (!quiet) {
+					console.error('TerraformConfig unchanged. Skipping apply.')
+				}
+			}
+		}
 	}
 
 	const env = buildEnv(config.spec.allowedEnv)
 
-	const init = Deno.run({
-		args: ['terraform', 'init', '-no-color'],
-		cwd: tfDir,
-		stdout: 'piped',
-		stderr: 'piped',
-		env,
-	})
-	streamFiltered(init.stderr)
-	streamFiltered(init.stdout)
-	let s = await init.status()
-	if (!s.success) {
-		throw new TemplateError('Terraform init failed')
+	if (willRun) {
+		await fs.writeFileStr(tfFile, cfgText)
+		// Ensure tf config exists
+		const tfConfigPath = path.join(homeDir, '.terraformrc')
+		const hasTF = await fs.exists(tfConfigPath)
+		if (!hasTF) {
+			const tfConfig = `plugin_cache_dir = "$HOME/.terraform.d/plugin-cache"\ndisable_checkpoint = true\n`
+			await fs.writeFileStr(tfConfigPath, tfConfig)
+		}
+
+		const init = Deno.run({
+			args: ['terraform', 'init', '-no-color'],
+			cwd: tfDir,
+			stdout: 'piped',
+			stderr: 'piped',
+			env,
+		})
+		filter.clear()
+		filter.stream(init.stderr, quiet)
+		filter.stream(init.stdout, quiet)
+		let s = await init.status()
+		if (!s.success) {
+			if (quiet) console.error(filter.flush())
+			throw new TemplateError('Terraform init failed')
+		}
+
+		const apply = Deno.run({
+			args: [
+				'terraform',
+				'apply',
+				'-auto-approve',
+				'-no-color',
+				'-compact-warnings',
+			],
+			cwd: tfDir,
+			stderr: 'piped',
+			stdout: 'piped',
+			env,
+		})
+
+		filter.clear()
+		filter.stream(apply.stderr, quiet)
+		filter.stream(apply.stdout, quiet)
+		s = await apply.status()
+		if (!s.success) {
+			if (quiet) console.error(filter.flush())
+			throw new TemplateError('Terraform apply failed')
+		}
 	}
 
-	const apply = Deno.run({
-		args: [
-			'terraform',
-			'apply',
-			'-auto-approve',
-			'-no-color',
-			'-compact-warnings',
-		],
-		cwd: tfDir,
-		stderr: 'piped',
-		stdout: 'piped',
-		env,
-	})
-	streamFiltered(apply.stderr)
-	streamFiltered(apply.stdout)
-	s = await apply.status()
-	if (!s.success) {
-		throw new TemplateError('Terraform apply failed')
-	}
 	// Now suck in the needed state
 	const show = Deno.run({
 		args: ['terraform', 'show', '-json'],
@@ -267,9 +313,11 @@ async function execTerraform(config: TemplateConfig, tfConfig: object) {
 		cwd: tfDir,
 		env,
 	})
-	streamFiltered(show.stderr)
-	s = await show.status()
+	filter.clear()
+	filter.stream(show.stderr, quiet)
+	let s = await show.status()
 	if (!s.success) {
+		if (quiet) console.error(filter.flush())
 		throw new TemplateError('Terraform show -json failed')
 	}
 	const json = new TextDecoder().decode(await show.output())

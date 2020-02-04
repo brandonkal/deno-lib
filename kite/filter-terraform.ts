@@ -10,17 +10,20 @@ import { lines } from 'https://raw.githubusercontent.com/johnsonjo4531/read_line
 
 // Filter Sensitive values. Regex based on
 // https://github.com/cloudposse/tfmask/blob/7a4a942248c665b6a5c66f9c288fabe97550f43d/main.go
-const reTfValues = /(oauth|secret|token|password|key|result)/i
-const reTfResource = /^(random_(id|integret|password|pet|shuffle|uuid))/i
+const secretValuesRe = /(oauth|secret|token|password|key|result)/i
+const resourceRe = /^(random_(id|integer|password|pet|shuffle|uuid|string))/i
 // stage.0.action.0.configuration.OAuthToken: "" => "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-const reTfPlanLine = /^( +)([a-zA-Z0-9%._-]+):( +)(["<])(.*?)([>"]) +=> +(["<])(.*)([>"])(.*)$/
+const planLineRe = /^( +)([a-zA-Z0-9%._-]+):( +)(["<])(.*?)([>"]) +=> +(["<])(.*)([>"])(.*)$/
+
+// A name must start with a letter and may contain only letters, digits, underscores, and dashes.
+// per https://github.com/hashicorp/terraform/issues/16264#issuecomment-433995860
 
 // random_id.some_id: Refreshing state... (ID: x)
-const reTfPlanStatusLine = /^(.*?): (.*?) +\\(ID: (.*?)\\)$/
+const planStatusLineRe = /^(.*?): (.*?) +\[id=(.*)\]/
 
 // -/+ random_string.postgres_admin_password (tainted) (new resource required)
-const reTfPlanCurrentResource = /^([~/+-]+) (.*?) +(.*)$/
-const reTfApplyCurrentResource = /^([a-z].*?): (.*?)$/
+const planCurrentResourceRe = /^([~/+-]+) (.*?) +(.*)$/
+const applyCurrentResourceRe = /^([a-z].*?): (.*)$/
 
 const MASKED = '********'
 
@@ -35,7 +38,7 @@ suggested below.`.split('\n')
 const reIsUpWarning = new RegExp(`^(${upWarningLines.join('|')})`)
 
 /** Terraform stdout provides useful information, but we want it filtered */
-export function filterTFLine(line: string) {
+export function tFLine(line: string) {
 	// const refreshingState = /Refreshing state\.\.\..*$/gm
 	// make the text more concise
 	if (line === upWarningLines[0]) {
@@ -53,18 +56,20 @@ export function filterTFLine(line: string) {
 
 	let match
 	let currentResource
-	if ((match = reTfPlanCurrentResource.exec(line))) {
+	if ((match = planCurrentResourceRe.exec(line))) {
 		currentResource = match[2]
-	} else if ((match = reTfApplyCurrentResource.exec(line))) {
-		currentResource = match[1]
+	} else if ((match = applyCurrentResourceRe.exec(line))) {
+		match
+		currentResource = match[1] //?
 	}
 
-	if ((match = reTfPlanStatusLine.exec(line))) {
-		let resource = match[1]
-		if (reTfResource.exec(resource)) {
-			line = MASKED
+	if ((match = planStatusLineRe.exec(line)) /*?*/) {
+		let resource = match[1] //?
+		let id = match[3]
+		if (resourceRe.exec(resource)) {
+			return line.replace(id, MASKED)
 		}
-	} else if ((match = reTfPlanLine.exec(line))) {
+	} else if ((match = planLineRe.exec(line))) {
 		let leadingWhitespace = match[1]
 		let property = match[2] // something like `stage.0.action.0.configuration.OAuthToken`
 		let trailingWhitespace = match[3]
@@ -76,21 +81,13 @@ export function filterTFLine(line: string) {
 		let fourthQuote = match[9] // > or "
 		let postfix = match[10]
 
-		if (reTfValues.exec(property) || reTfResource.exec(currentResource)) {
+		if (secretValuesRe.exec(property) || resourceRe.exec(currentResource)) {
 			// The value inside the "..." or <...>
-			if (
-				oldValue !== 'sensitive' &&
-				oldValue !== 'computed' &&
-				oldValue !== '<computed'
-			) {
+			if (shouldHide(oldValue)) {
 				oldValue = MASKED
 			}
 			// The value inside the "..." or <...>
-			if (
-				newValue !== 'sensitive' &&
-				newValue !== 'computed' &&
-				newValue !== '<computed'
-			) {
+			if (shouldHide(newValue)) {
 				newValue = MASKED
 			}
 			return (
@@ -103,19 +100,49 @@ export function filterTFLine(line: string) {
 	return line.trim()
 }
 
-/**
- * filters Terraform command output and logs it to stderr.
- */
-export function streamFiltered(r: Deno.ReadCloser) {
-	streamIt(r, filterAndLog)
+function shouldHide(oldValue: any) {
+	return (
+		oldValue !== 'sensitive' &&
+		oldValue !== 'computed' &&
+		oldValue !== '<computed'
+	)
 }
 
 /**
  * filters Terraform command output and logs it to stderr.
  */
-export function filterAndLog(txt: string) {
-	const out = filterTFLine(txt)
-	if (out) console.error(out)
+export function stream(r: Deno.ReadCloser, shouldLog: boolean) {
+	streamIt(r, (txt) => log(txt, shouldLog))
+}
+
+const buffer = new Set<string>()
+
+/**
+ * call to flush the buffer and return the text
+ */
+export function flush() {
+	const txt = [...buffer].filter((line) => line !== '').join('\n')
+	buffer.clear()
+	return txt
+}
+
+/**
+ * clear the buffer for when Terraform output is not immediately logged.
+ */
+export function clear() {
+	buffer.clear()
+}
+
+/**
+ * filters Terraform command output and logs it to stderr.
+ */
+export function log(txt: string, shouldLog: boolean) {
+	const out = tFLine(txt)
+	if (!shouldLog) {
+		if (out) console.error(out)
+	} else {
+		buffer.add(out)
+	}
 }
 
 /**
