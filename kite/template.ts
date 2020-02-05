@@ -48,21 +48,18 @@ export interface TemplateConfigSpec {
 	yaml?: string
 	/** only render exec program. Do not Template */
 	preview?: boolean
-	allowEnvironment?: boolean
 	/** a list of environment variables that can be read during templating. */
-	allowedEnv?: string[]
+	allowEnv?: string[]
 }
 
 const rtTemplateConfigSpec = rt.Partial({
-	/** some doc for exec */
 	exec: rt.String,
 	help: rt.Boolean,
 	quiet: rt.Boolean,
 	reload: rt.Boolean,
 	yaml: rt.String,
 	preview: rt.Boolean,
-	allowEnvironment: rt.Boolean,
-	allowedEnv: rt.Array(rt.String),
+	allowEnv: rt.Array(rt.String),
 	args: rt.Record({ string: rt.Unknown }),
 	name: rt.String,
 })
@@ -123,7 +120,7 @@ export function configFromSpec(spec: any): TemplateConfig {
 export default async function template(cfg: TemplateConfig): Promise<string> {
 	cfg = rtTemplateConfig.check(cfg)
 	const { spec } = cfg
-	const { allowEnvironment } = spec
+	const { allowEnv } = spec
 	let yamlText: string
 	if (spec.exec) {
 		let cmd = ['deno', spec.exec]
@@ -193,7 +190,7 @@ export default async function template(cfg: TemplateConfig): Promise<string> {
  */
 export function getConfigFromYaml(yamlText: string, cfg: TemplateConfig) {
 	//prettier-ignore
-	const { spec: { allowEnvironment } } = cfg
+	const { spec: { allowEnv } } = cfg
 
 	yamlText = addTopDashes(yamlText)
 	const docs = yamlText.split(/^---\n/m)
@@ -225,8 +222,8 @@ export function getConfigFromYaml(yamlText: string, cfg: TemplateConfig) {
 		})
 	}
 	config = merge(config, cfg)
-	if (!allowEnvironment) {
-		config.spec.allowedEnv = undefined
+	if (!allowEnv) {
+		config.spec.allowEnv = undefined
 	}
 	let tfConfig: any = {}
 	terraformConfigs.forEach((cfg) => {
@@ -264,8 +261,9 @@ function substitutePlaceholders(
 	state: any
 ): string {
 	parseCache.clear()
-	const allOps = ops(buildEnv(spec.allowedEnv))
-	const out = str.replace(/['"]{{(.*?)}}['"]/, (_, dslText) => {
+	const allOps = ops(buildEnv(spec.allowEnv))
+	// match inside (( param ))
+	const out = str.replace(/['"]\(\((.*?)\)\)['"]/, (_, dslText) => {
 		let r = parseDSL(dslText, spec, state, allOps)
 		if (r === undefined || r === 'undefined') {
 			throw new TemplateError(`${dslText} returned ${r}`)
@@ -317,7 +315,7 @@ async function execTerraform(config: TemplateConfig, tfConfig: object) {
 		}
 	}
 
-	const env = buildEnv(config.spec.allowedEnv)
+	const env = buildEnv(config.spec.allowEnv)
 
 	if (willRun) {
 		await fs.writeFileStr(tfFile, cfgText)
@@ -435,7 +433,7 @@ const same = (x: any) => x
 
 type OpMap = Record<string, (a: any) => any>
 
-function ops(env: Record<string, string>) {
+function ops(envars: Record<string, string>) {
 	const map: OpMap = {
 		// default requires special logic
 		default: same,
@@ -457,7 +455,7 @@ function ops(env: Record<string, string>) {
 		title: titleCase,
 		toString: (a: any) => String(a),
 		env: (a: string) => {
-			const envar = env[a]
+			const envar = envars[a]
 			if (envar === undefined) {
 				throw new TemplateError(
 					`Environment variable ${a} is undefined or access is disabled`
@@ -479,7 +477,7 @@ function ops(env: Record<string, string>) {
 		sha1sum: sha1,
 		sha256sum: sha256,
 		toJson: (a) => JSON.stringify(a),
-		sec: same, // Requires custom logic
+		arg: same, // Requires custom logic
 		tf: same, // custom logic
 	}
 	return map
@@ -531,7 +529,7 @@ function parseDSL(
 			}
 			if (op === 'default') {
 				last = last || txt
-			} else if (op === 'sec') {
+			} else if (op === 'arg' && args) {
 				dotProp(args, txt)
 			} else if (op === 'tf') {
 				if (i !== 0) {
@@ -543,7 +541,7 @@ function parseDSL(
 			} else {
 				last = allOps[op](last)
 			}
-		} else {
+		} else if (args) {
 			last = dotProp(args, txt)
 		}
 	})

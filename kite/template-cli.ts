@@ -15,36 +15,66 @@ This CLI takes YAML input and renders the result. It has been designed for Kuber
 and Terraform configuration but is useful for general YAML config.
 
 It generally expects YAML rendered from a Kite TypeScript program.
-A Kite TypeScript program is limited. It cannot read environment variables or access the network or disk.
+A Kite TypeScript program is limited.
+It cannot read environment variables or access the network or disk.
 This makes configuration as code simple. A Kite program is a program that generates data,
 but it cannot perform external actions. This Template tool helps bridge that gap.
 
 The template operation is simple. It will:
 
-  1. Split the document into individual YAML documents and parse each one. If will then merge all
-     TerraformConfig and KiteConfig resources. The CLI also enables specifying a name as an argument, which will be merged
-     into the KiteConfig resource. This name is used to identify a Kite Stack and locate stored Terraform state on disk.
-  2. If a TerraformConfig was found, it will be executed and applied. This is handy for DNS records and random passwords.
-     Kite manages Terraform providers and state.
-  3. Kite Template then performs text templating on the YAML. It will substitue references to created Terraform resources
-     and allows for a few of the Sprig functions such as b64enc.
-  4. Finally, the rendered YAML document is printed to stdout with the TerraformConfig and KiteConfig resources removed.
-     If you are using Kubernetes, you can then apply this config to your cluster using a tool like Kapp.
+ 1. Split the document into individual YAML documents and parse each one.
+    If will then merge all TerraformConfig and KiteConfig resources. The CLI
+    also enables specifying a name as an argument, which will be merged
+    into the KiteConfig resource. This name is used to identify a Kite Stack
+    and locate stored Terraform state on disk.
+
+ 2. If a TerraformConfig was found, it will be executed and applied. This is
+    handy for DNS records and random passwords.
+    Kite manages Terraform providers and state.
+
+ 3. Kite Template then performs text templating on the YAML. It will
+    substitue references to created Terraform resources and allows for
+    a few of the Sprig functions such as b64enc.
+
+ 4. Finally, the rendered YAML document is printed to stdout with
+    the TerraformConfig and KiteConfig resources removed.
+    If you are using Kubernetes, you can then apply this config to your
+    cluster using a tool like Kapp.
 
 Usage:
   kite [flags]
 
+Examples:
+  jo name=dev yaml=$(cat opts.yaml) | kite -c-
+  kite -e cluster.ts -n prod
+
+The config property accepts these options as well. CLI flags always override config set
+via the config parameter. These flags enable forcing defaults but remember that it is possible
+to specify all these options in a kite.config.yaml file as well.
+
 Flags:
-  -q, --quiet         Set to disable logging progress to stderr unless an error is thrown
-  -n, --name          Set a unique name to identify this config state
-  -h, --help          Prints this help message
+  -n, --name        Set a unique name to identify this config state
+  -e, --exec        A filepath or URL representing the config program.
+  -p, --preview     Run a preview but do not create TF resources or run the
+                    final template. Output is equivelent to executing your Config file.
+
+  -y, --yaml        The YAML text document to template. Cannot be set with --exec.
+  -r, --reload      Force reload of any Terraform resources.
+  -c, --config       Set Config as a YAML/JSON string. Must be a KiteConfig or shorthand.
+  -q, --quiet       Set to disable logging progress to stderr unless an error is thrown
+  --allowEnv        Allow reading environment variables during final templating.
+                    The CLI only accepts a boolean value.
+                    The KiteConfigSpec accepts a list of strings.
+                    If unset, the config list is ignored.
+
+  -h, --help        Prints this help message
 `
 
 // examples POST http kite.ts.com { exec: my-program-url.ts, name: dev, args: yamlObj }
 // example CLI:
 // kite -e my-program.ts -n dev -a - -r -q
 
-interface CliFlags extends TemplateConfigSpec {
+export interface CliFlags extends TemplateConfigSpec {
 	e?: string
 	h?: boolean
 	config?: CliFlags
@@ -72,17 +102,19 @@ export function canonicalizeOptions(opts: CliFlags): TemplateConfig {
 	}
 	const stdSpec = asConfig(opts)
 	const stdCfgCanonical = configFromSpec(stdSpec)
+	// Arguments on the command line always override user arguments in config prop.
 	return merge(nestedConfigCanonical, stdCfgCanonical)
 }
 
 function asConfig(opts: CliFlags): TemplateConfigSpec {
+	const env = Array.isArray(opts.allowEnv) ? opts.allowEnv : []
 	const out = {
 		exec: opts.exec || opts.e,
 		reload: Boolean(opts.reload || opts.r),
 		quiet: Boolean(opts.quiet || opts.q),
 		name: opts.name || opts.n || undefined,
 		preview: Boolean(opts.preview),
-		allowEnvironment: Boolean(opts.allowEnvironment),
+		allowEnv: env,
 	}
 	if (!out.exec) {
 		opts.yaml = opts.yaml || opts.y || opts._[0]
