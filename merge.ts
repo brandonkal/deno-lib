@@ -8,8 +8,8 @@
 
 import { isObject } from './utils.ts'
 
-function mergeFunc(rule, key, defaultFunc) {
-	const f = rule && rule[key]
+function mergeFunc(rules: Record<string, any>, key: string, defaultFunc) {
+	const f = rules && rules[key]
 	if (f === undefined) {
 		return defaultFunc
 	}
@@ -27,8 +27,12 @@ function mergeFunc(rule, key, defaultFunc) {
 	return f
 }
 
-function objectMerge2(a, b, rules) {
-	const r = {}
+function objectMerge2<T extends object>(
+	a: T,
+	b: T,
+	rules: Record<keyof T, MergeRule>
+): T {
+	const r = {} as T
 
 	Object.assign(r, a)
 	for (const [key, value] of Object.entries(b)) {
@@ -37,18 +41,14 @@ function objectMerge2(a, b, rules) {
 	return r
 }
 
-function assertObject(o, prefix) {
+function assertObject(o: any, prefix: string) {
 	if (!isObject(o)) {
 		throw new Error(`${prefix}: input value is not an object`)
 	}
 }
 
-function isArray(a) {
-	return Array.isArray(a)
-}
-
-function assertArray(o, prefix) {
-	if (!isArray(o)) {
+function assertArray(o: unknown, prefix: string) {
+	if (!Array.isArray(o)) {
 		throw new Error(`${prefix}: input is not an array`)
 	}
 }
@@ -62,8 +62,8 @@ function assertArray(o, prefix) {
  * objects. It's possible to provide a set of rules to override the merge
  * strategy for some properties. See [[merge]].
  */
-export function deep(rules) {
-	return (a, b) => {
+export function deep(rules?: Record<any, MergeRule>) {
+	return <T extends object>(a: T, b: T): T => {
 		assertObject(a, 'deep')
 		assertObject(b, 'deep')
 		return objectMerge2(a, b, rules)
@@ -107,7 +107,7 @@ export function deep(rules) {
  * ```
  */
 export function first() {
-	return (a, _) => a
+	return <A>(a: A, _): A => a
 }
 
 /**
@@ -148,10 +148,15 @@ export function first() {
  * ```
  */
 export function replace() {
-	return (_, b) => b
+	return <B>(_, b: B): B => b
 }
 
-function arrayMergeWithKey(a, b, mergeKey, rules) {
+function arrayMergeWithKey<T extends Array<any>>(
+	a: T,
+	b: T,
+	mergeKey: string,
+	rules?: Record<string, MergeRule>
+) {
 	const r = Array.from(a)
 	const toAppend = []
 
@@ -234,8 +239,8 @@ function arrayMergeWithKey(a, b, mergeKey, rules) {
  * }
  * ```
  */
-export function deepWithKey(mergeKey, rules) {
-	return (a, b) => {
+export function deepWithKey(mergeKey: string, rules?: Record<any, MergeRule>) {
+	return <T extends Array<any>>(a: T, b: T) => {
 		assertArray(a, 'deepWithKey')
 		assertArray(b, 'deepWithKey')
 		return arrayMergeWithKey(a, b, mergeKey, rules)
@@ -333,22 +338,25 @@ export function deepWithKey(mergeKey, rules) {
  * }
  * ```
  */
-export function merge(a, b, rule?: any) {
+export function merge<A>(
+	a: A,
+	b: Partial<A>,
+	rule?: Record<keyof A, MergeRule> | MergeRule
+) {
+	//@ts-ignore
 	if (a === b) {
 		return a
 	}
 	const [typeA, typeB] = [typeof a, typeof b]
 
-	if (a === undefined) {
+	if (a == null) {
 		return b
 	}
-
 	if (typeA !== typeB) {
 		throw new Error(
 			`merge cannot combine values of types ${typeA} and ${typeB}`
 		)
 	}
-
 	// Primitive types and arrays default to being replaced.
 	if (Array.isArray(a) || typeA !== 'object') {
 		if (typeof rule === 'function') {
@@ -356,7 +364,8 @@ export function merge(a, b, rule?: any) {
 		}
 		return b
 	}
-
 	// Objects.
-	return objectMerge2(a, b, rule)
+	return objectMerge2(a as any, b, rule)
 }
+
+export type MergeRule = <T>(a: T, b: T) => T
