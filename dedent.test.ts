@@ -1,6 +1,6 @@
-import { test as it } from 'https://deno.land/std@v0.28.1/testing/mod.ts'
-import { assertEquals } from 'https://deno.land/std@v0.28.1/testing/asserts.ts'
-import { dedent, execDedent } from './dedent.ts'
+import { test as it } from 'https://deno.land/std@v0.32.0/testing/mod.ts'
+import { assertEquals } from 'https://deno.land/std@v0.32.0/testing/asserts.ts'
+import { dedent } from './dedent.ts'
 
 it('handle escaped linebreak', () => {
 	let text = dedent`one-\

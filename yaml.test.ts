@@ -1,5 +1,5 @@
-import { test as it } from 'https://deno.land/std@v0.28.1/testing/mod.ts'
-import { assertEquals } from 'https://deno.land/std@v0.28.1/testing/asserts.ts'
+import { test as it } from 'https://deno.land/std@v0.32.0/testing/mod.ts'
+import { assertEquals } from 'https://deno.land/std@v0.32.0/testing/asserts.ts'
 
 import { dedent } from './dedent.ts'
 import { y, printYaml, yamlfy } from './yaml-tag.ts'
