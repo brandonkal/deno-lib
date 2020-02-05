@@ -12,8 +12,9 @@ import { sha1 } from 'https://deno.land/x/sha1/mod.ts'
 import titleCase from 'https://deno.land/x/case/titleCase.ts'
 import { sha256 } from 'https://deno.land/x/sha256/mod.ts'
 import * as yaml from 'https://deno.land/std/encoding/yaml.ts'
+import * as base32 from 'https://deno.land/std/encoding/base32.ts'
 
-import { dotProp, jsonItem, visitAll, notImplemented } from '../utils.ts'
+import { dotProp, jsonItem, visitAll } from '../utils.ts'
 import { merge } from '../merge.ts'
 import * as filter from './filter-terraform.ts'
 import * as rt from '../runtypes.ts'
@@ -102,9 +103,7 @@ export function configFromSpec(spec: any): TemplateConfig {
 		metadata: {
 			name: spec.name,
 		},
-		spec: {
-			args: spec,
-		},
+		spec: spec,
 	}
 }
 
@@ -150,50 +149,7 @@ export default async function template(cfg: TemplateConfig): Promise<string> {
 		throw new TemplateError('Either yaml or exec must be specified')
 	}
 
-	yamlText = addTopDashes(yamlText)
-	const docs = yamlText.split(/^---\n/m)
-	const toRemove = new Set<number>()
-	docs.forEach((doc, i) => {
-		if (!doc.includes(': ')) {
-			toRemove.add(i)
-		}
-	})
-	const parsedDocs = docs.map((yamlDoc, i) => {
-		if (toRemove.has(i)) return {}
-		return yaml.parse(yamlDoc, { schema: yaml.JSON_SCHEMA }) as any
-	})
-	const kiteConfigs: TemplateConfig[] = []
-	const terraformConfigs: any[] = []
-
-	parsedDocs.forEach((doc, i) => {
-		if (isTerraformConfig(doc)) {
-			terraformConfigs.push(doc)
-			toRemove.add(i)
-		} else if (isTemplateConfig(doc)) {
-			kiteConfigs.push(doc)
-			toRemove.add(i)
-		}
-	})
-	let config = {} as TemplateConfig
-	if (kiteConfigs.length) {
-		kiteConfigs.forEach((cfg) => {
-			config = merge(config, cfg)
-		})
-	}
-	config = merge(config, cfg)
-	if (!allowEnvironment) {
-		config.spec.allowedEnv = undefined
-	}
-
-	let tfConfig: any = {}
-
-	terraformConfigs.forEach((cfg) => {
-		tfConfig = merge(tfConfig, cfg)
-	})
-	const name = config.metadata.name
-	if (name !== undefined) {
-		tfConfig = merge(tfConfig, { metadata: { name: name } })
-	}
+	let { tfConfig, config, docs, toRemove } = getConfigFromYaml(yamlText, cfg)
 
 	let state: any = {}
 	if (isTerraformConfig(tfConfig)) {
@@ -228,6 +184,59 @@ export default async function template(cfg: TemplateConfig): Promise<string> {
 		.join('---\n')
 	const header = banner + config.metadata.name + '\n'
 	return header + addTopDashes(result) + '\n'
+}
+
+/**
+ * extracts merged TerraformConfig and TemplateConfig objects.
+ * Returns metadata on which docs should be removed and an array of docs to join.
+ * @internal
+ */
+export function getConfigFromYaml(yamlText: string, cfg: TemplateConfig) {
+	//prettier-ignore
+	const { spec: { allowEnvironment } } = cfg
+
+	yamlText = addTopDashes(yamlText)
+	const docs = yamlText.split(/^---\n/m)
+	const toRemove = new Set<number>()
+	docs.forEach((doc, i) => {
+		if (!doc.includes(': ')) {
+			toRemove.add(i)
+		}
+	})
+	const parsedDocs = docs.map((yamlDoc, i) => {
+		if (toRemove.has(i)) return {}
+		return yaml.parse(yamlDoc, { schema: yaml.JSON_SCHEMA }) as any
+	})
+	const kiteConfigs: TemplateConfig[] = []
+	const terraformConfigs: any[] = []
+	parsedDocs.forEach((doc, i) => {
+		if (isTerraformConfig(doc)) {
+			terraformConfigs.push(doc)
+			toRemove.add(i)
+		} else if (isTemplateConfig(doc)) {
+			kiteConfigs.push(doc)
+			toRemove.add(i)
+		}
+	})
+	let config = {} as TemplateConfig
+	if (kiteConfigs.length) {
+		kiteConfigs.forEach((cfg) => {
+			config = merge(config, cfg)
+		})
+	}
+	config = merge(config, cfg)
+	if (!allowEnvironment) {
+		config.spec.allowedEnv = undefined
+	}
+	let tfConfig: any = {}
+	terraformConfigs.forEach((cfg) => {
+		tfConfig = merge(tfConfig, cfg)
+	})
+	const name = config.metadata.name
+	if (name !== undefined) {
+		tfConfig = merge(tfConfig, { metadata: { name: name } })
+	}
+	return { tfConfig, config, docs, toRemove }
 }
 
 function addTopDashes(yamlText: string) {
@@ -279,7 +288,10 @@ function buildEnv(envars: string[]) {
 	return tfEnv
 }
 
-/** execute Terraform as a process for given JSON and return state object. */
+/**
+ * execute Terraform as a process for given JSON and return state object.
+ * @internal
+ */
 async function execTerraform(config: TemplateConfig, tfConfig: object) {
 	const name = config.metadata.name
 	const quiet = config.spec.quiet
@@ -456,8 +468,14 @@ function ops(env: Record<string, string>) {
 		boolean: (a) => Boolean(a),
 		b64enc: btoa,
 		b64dec: atob,
-		b32enc: notImplemented('b32enc'),
-		b32dec: notImplemented('base32dec'),
+		b32enc: (a: string) => {
+			const binary = new TextEncoder().encode(a)
+			return base32.encode(binary)
+		},
+		b32dec: (a: string) => {
+			const decoded = base32.decode(a)
+			return new TextDecoder().decode(decoded)
+		},
 		sha1sum: sha1,
 		sha256sum: sha256,
 		toJson: (a) => JSON.stringify(a),

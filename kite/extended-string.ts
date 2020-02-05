@@ -10,10 +10,10 @@
  * toUppercase()
  */
 
-import { notImplemented } from '../utils.ts'
 import { sha1 } from 'https://deno.land/x/sha1/mod.ts'
 import titleCase from 'https://deno.land/x/case/titleCase.ts'
 import { sha256 } from 'https://deno.land/x/sha256/mod.ts'
+import * as base32 from 'https://deno.land/std/encoding/base32.ts'
 
 const RE = /^{{.*}}$/
 
@@ -56,6 +56,10 @@ declare global {
 
 const _stdTrim = String.prototype.trim
 
+/**
+ * This logic parrallels the string logic in template.ts.
+ * A duplicate implementation is required for now because we must always return a string here.
+ * */
 class Helpers {
 	// default requires special logic
 	default = (a, b) => a || b
@@ -80,8 +84,14 @@ class Helpers {
 	boolean = (a: string) => a
 	b64enc = btoa
 	b64dec = atob
-	b32enc = notImplemented('b32enc')
-	b32dec = notImplemented('base32dec')
+	b32enc = (a: string) => {
+		const binary = new TextEncoder().encode(a)
+		return base32.encode(binary)
+	}
+	b32dec = (a: string) => {
+		const decoded = base32.decode(a)
+		return new TextDecoder().decode(decoded)
+	}
 	sha1sum = sha1
 	sha256sum = sha256
 	toJson = (a: string) => JSON.stringify(a)
