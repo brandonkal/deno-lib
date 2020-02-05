@@ -14,8 +14,7 @@
 import { printYaml as printYamlImpl } from './yaml-tag.ts'
 import { stripUndefined, isObject } from './utils.ts'
 import { merge } from './merge.ts'
-import { parse, JSON_SCHEMA } from 'https://deno.land/std/encoding/yaml.ts'
-import * as flags from 'https://deno.land/std/flags/mod.ts'
+import { getArgsObject } from './args.ts'
 import './kite/extended-string.ts'
 
 declare module globalThis {
@@ -230,52 +229,6 @@ interface MakeOpts {
 	json?: boolean
 }
 
-const parsedOpts: { args: undefined | object; parsed: boolean } = {
-	args: undefined,
-	parsed: false,
-}
-
-function textOrStdIn(value: string) {
-	if (value === '-') {
-		const buf = new Uint8Array(1024)
-		try {
-			const n = Deno.stdin.readSync(buf)
-			if (n === Deno.EOF) {
-				return undefined
-			} else {
-				return new TextDecoder().decode(buf.subarray(0, n))
-			}
-		} catch (e) {
-			return undefined
-		}
-	}
-	return value
-}
-
-/** Parse Deno arguments to object */
-export function readArgs(): string | undefined {
-	const a = flags.parse(Deno.args)
-	if ('f' in a) {
-		return textOrStdIn(a.f)
-	} else if ('c' in a) {
-		// TODO: handle c for reading filename
-		return undefined
-	}
-	return undefined
-}
-/** getArgs returns a cached argument or stdin from program. */
-export function getArgsObject(): object | undefined {
-	if (parsedOpts.parsed) {
-		return parsedOpts.args
-	}
-	const read = readArgs()
-	//prettier-ignore
-	const a = read === undefined ? undefined : (parse(read, { schema: JSON_SCHEMA }) as object)
-	parsedOpts.parsed = true
-	parsedOpts.args = a
-	return a
-}
-
 const sortedK8s = [
 	'apiVersion',
 	'kind',
@@ -346,7 +299,8 @@ export function make(fn: Function, opts?: MakeOpts): string {
 	// run user's function
 	if (main) {
 		const args = getArgsObject()
-		fn(args)
+		// TODO: canonalize
+		fn(args.a)
 	} else {
 		fn()
 	}
