@@ -7,7 +7,8 @@
  * Useful as a lightweight CLI or as a formatting function.
  */
 
-import { yaml as yp, readArgs } from './kite.ts'
+import { yaml as yp } from './kite.ts'
+import { getArgsObject } from './args.ts'
 import * as yaml from 'https://deno.land/std/encoding/yaml.ts'
 
 export default function format(txt: string): string {
@@ -16,10 +17,10 @@ export default function format(txt: string): string {
 }
 
 if (import.meta.main) {
-	const txt = readArgs()
-	if (txt === undefined) {
+	const obj = getArgsObject()
+	if (!obj.f) {
 		console.error(`No input found. Supply as "-f -" or "-f '{"json":true}'"`)
 		Deno.exit(1)
 	}
-	console.log(format(txt))
+	console.log(format(obj.f))
 }

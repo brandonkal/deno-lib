@@ -197,7 +197,7 @@ const escapeMatch = /\\(?:(\\)|x([\s\S]{0,2})|u(\{[^}]*\}?)|u([\s\S]{4})\\u([^{]
  * @returns The processed string, with escape characters replaced by their
  * respective actual Unicode characters.
  */
-export function unraw(raw: string, allowOctals = false): string {
+export default function unraw(raw: string, allowOctals = false): string {
 	return raw.replace(escapeMatch, function(
 		_,
 		backslash?: string,
@@ -238,14 +238,6 @@ export function unraw(raw: string, allowOctals = false): string {
 		throw new SyntaxError(errorMessages.get(ErrorType.EndOfString))
 	})
 }
-export default unraw
-
-/**
- * @file **unraw - errors.ts** | Error messages used by `unraw`.
- * @author Ian Sanders
- * @copyright 2019 Ian Sanders
- * @license MIT
- */
 
 // NOTE: don't construct errors here or they'll have the wrong stack trace.
 // NOTE: don't make custom error class; the JS engines use `SyntaxError`

@@ -5,6 +5,7 @@
  * @license MIT
  */
 
+/** Get the inner type of a Promise */
 export type PromiseType<T extends Promise<any>> = T extends Promise<infer U>
 	? U
 	: never

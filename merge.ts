@@ -338,11 +338,11 @@ export function deepWithKey(mergeKey: string, rules?: Record<any, MergeRule>) {
  * }
  * ```
  */
-export function merge<A>(
+export function merge<A, B>(
 	a: A,
-	b: Partial<A>,
-	rule?: Record<keyof A, MergeRule> | MergeRule
-) {
+	b: B,
+	rule?: Partial<Record<keyof A, MergeRule>> | MergeRule
+): any {
 	//@ts-ignore
 	if (a === b) {
 		return a
@@ -360,12 +360,12 @@ export function merge<A>(
 	// Primitive types and arrays default to being replaced.
 	if (Array.isArray(a) || typeA !== 'object') {
 		if (typeof rule === 'function') {
-			return rule(a, b)
+			return rule(a, (b as unknown) as A)
 		}
 		return b
 	}
 	// Objects.
-	return objectMerge2(a as any, b, rule)
+	return objectMerge2(a as any, b as any, rule)
 }
 
 export type MergeRule = <T>(a: T, b: T) => T
