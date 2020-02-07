@@ -6,6 +6,7 @@
 		"module": "esnext",
 		"noEmit": true,
 		"removeComments": true,
+		"moduleResolution": "node",
 		"resolveJsonModule": true,
 		"sourceMap": true,
 		"target": "esnext",
