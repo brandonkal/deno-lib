@@ -1,3 +1,11 @@
+/**
+ * @file template-cli.ts
+ * @copyright 2020 Brandon Kalinowski (@brandonkal). All Rights Reserved.
+ * @description Kite Template Tool by Brandon Kalinowski (@brandonkal)
+ * This CLI takes YAML input and renders the result.
+ * It has been designed for Kubernetes and Terraform configuration but is useful for general YAML config.
+ */
+
 import template, {
 	TemplateError,
 	TemplateConfigSpec,
@@ -6,7 +14,7 @@ import template, {
 	configFromSpec,
 } from './template.ts'
 import { getArgsObject } from '../args.ts'
-import { merge } from '../merge.ts'
+import * as merge from '../merge.ts'
 
 const helpText = `\
 Kite Template Tool by Brandon Kalinowski @brandonkal
@@ -87,7 +95,11 @@ export interface CliFlags extends TemplateConfigSpec {
 	r?: boolean
 	/** args without a flag. Contains yaml if exec is not specified. */
 	_?: string[]
+	/** override allowEnv to accept boolean */
+	// allowEnv?: boolean | string | string[]
 }
+
+// type ReplaceWithString
 
 export function canonicalizeOptions(opts: CliFlags): TemplateConfig {
 	if (opts.help || opts.h) {
@@ -95,29 +107,69 @@ export function canonicalizeOptions(opts: CliFlags): TemplateConfig {
 		Deno.exit()
 	}
 	let nestedConfig = opts.config || opts.c
-	let nestedConfigCanonical
+	let nestedConfigCanonical: TemplateConfig
 	if (nestedConfig && !isTemplateConfig(nestedConfig)) {
-		nestedConfig = asConfig(nestedConfig)
+		nestedConfig = asConfig(nestedConfig, false)
 		nestedConfigCanonical = configFromSpec(nestedConfig)
 	}
-	const stdSpec = asConfig(opts)
+	const stdSpec = asConfig(opts, true)
+	d({ stdSpec })
 	const stdCfgCanonical = configFromSpec(stdSpec)
+	d({ stdCfgCanonical })
 	// Arguments on the command line always override user arguments in config prop.
-	return merge(nestedConfigCanonical, stdCfgCanonical)
+	// const mspec: TemplateConfigSpec = {
+
+	// }
+	return merge.merge(nestedConfigCanonical, stdCfgCanonical, {
+		spec: {
+			name: merge.replace(),
+			allowEnv: (a: string[], b: string[]) => {
+				return a.filter((v) => b.includes(v))
+			},
+			exec: merge.replace(),
+			preview: merge.replace(),
+			reload: merge.first(),
+		},
+	} as any)
 }
 
-function asConfig(opts: CliFlags): TemplateConfigSpec {
+/** converts to boolean or undefined loosely */
+function asBool(
+	vals: unknown[],
+	allowUndefined?: boolean
+): boolean | undefined {
+	const x = vals.find((v) => v != null) || vals[vals.length - 1]
+	if (x === 'false') return false
+	if (x === 'true') return true
+	if (x === undefined && allowUndefined) return x
+	return Boolean(x)
+}
+
+/** converts to string or undefined loosely */
+function asStr(vals: unknown[], allowUndefined?: boolean): string | undefined {
+	const x = vals.find((v) => v != null) || vals[vals.length - 1]
+	if ((x == null || x === '') && allowUndefined) return undefined
+	return String(x)
+}
+
+/**
+ * takes options and returns config. Set und to allow false values to be undefined.
+ * This allows unset values to be undefined.
+ */
+function asConfig(opts: CliFlags, und: boolean): TemplateConfigSpec {
+	//@ts-ignore -- could be wrong
+	const envOpt = opts.allowEnv === true || opts.allowEnv === 'true'
 	const env = Array.isArray(opts.allowEnv) ? opts.allowEnv : []
 	const out = {
-		exec: opts.exec || opts.e,
-		reload: Boolean(opts.reload || opts.r),
-		quiet: Boolean(opts.quiet || opts.q),
-		name: opts.name || opts.n || undefined,
-		preview: Boolean(opts.preview),
+		exec: asStr([opts.exec, opts.e], und),
+		reload: asBool([opts.reload, opts.r], und),
+		quiet: asBool([opts.quiet, opts.q], und),
+		name: asStr([opts.name, opts.n], und),
+		preview: asBool([opts.preview, opts.p], und),
 		allowEnv: env,
 	}
 	if (!out.exec) {
-		opts.yaml = opts.yaml || opts.y || opts._[0]
+		opts.yaml = opts.yaml || opts.y || (opts._ && opts._[0])
 	}
 	return out
 }
