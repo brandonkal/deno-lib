@@ -1,5 +1,5 @@
 /**
- * @file **utils**
+ * @file utils.ts
  * @author Brandon Kalinowski
  * @description A collection of useful small functions in one location.
  * @copyright 2020 Brandon Kalinowski

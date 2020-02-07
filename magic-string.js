@@ -1,12 +1,12 @@
 /**
+ * @file magic-string.js
  * @copyright 2018 Rich Harris
- * @module Magic-string
  * @description Manipulate strings like a wizard
- * @license MIT
- * @version 0.25.6
  * NOTE: This is the ES bundle with the sourcemap-codec import corrected.
  * Source is available at
  * https://cdn.jsdelivr.net/npm/magic-string@0.25.6/dist/magic-string.es.js
+ * @license MIT
+ * @version 0.25.6
  */
 
 import { encode } from './sourcemap-codec.ts'

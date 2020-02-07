@@ -1,10 +1,11 @@
 /**
- * @file YAML formatter
+ * @file yaml-formatter.ts
  * @author Brandon Kalinowski
- * @copyright 2020 Brandon Kalinowski
+ * @copyright 2020 Brandon Kalinowski (@brandonkal). All rights reserved.
  * @description Parses YAML or JSON input and prints out YAML documents with a stable object sort.
  * Ideal for converting JSON to YAML.
  * Useful as a lightweight CLI or as a formatting function.
+ * @license MIT
  */
 
 import { yaml as yp } from './kite.ts'

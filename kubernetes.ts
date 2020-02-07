@@ -1,6 +1,6 @@
 /**
- * @file **kubernetes.ts**
- * @author Brandon Kalinowski
+ * @file kubernetes.ts
+ * @copyright 2020 Brandon Kalinowski (@brandonkal). All rights reserved.
  * @description Kubernetes Config Generation Library
  * Refer to kite.ts for more info.
  */

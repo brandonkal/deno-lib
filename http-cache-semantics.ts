@@ -1,11 +1,12 @@
 /**
- * @copyright 2020 Brandon Kalinowski
+ * @file http-cache-semantics.ts
+ * @copyright 2020 Brandon Kalinowski.
+ * @copyright 2016-2018 Kornel Lesiński.
+ * Source: https://github.com/kornelski/http-cache-semantics/tree/71601466cfe1e17a5be85f0b5915704f6a494957
  * @license MIT
  * @description Parses Cache-Control and other headers. Helps building correct HTTP caches and proxies.
  * Ported from the npm package by the same name. Code optained via the BSD-2 license. See attribution below.
  */
-// Copyright 2016-2018 Kornel Lesiński
-// Source: https://github.com/kornelski/http-cache-semantics/tree/71601466cfe1e17a5be85f0b5915704f6a494957
 
 // Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 

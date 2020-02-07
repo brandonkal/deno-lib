@@ -1,8 +1,9 @@
 /**
- * @file **resolve-promise-object**
+ * @file resolve-promise-object.ts
  * @author Stephen Belanger <admin@stephenbelanger.com>
  * @author Brandon Kalinowski
- * @description Recursively resolve any promises in an object to form a resulting JSON structure
+ * @copyright 2020 Brandon Kalinowski (@brandonkal)
+ * @description Recursively resolve any promises in an object to form a resulting JSON structure.
  * @version 1.0.1
  * @license MIT
  */

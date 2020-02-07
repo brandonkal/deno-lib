@@ -1,8 +1,9 @@
 /**
- * @file **unraw** | Convert raw escape sequences to their respective characters
- * (undo `String.raw`).
+ * @file unraw.ts
  * @author Ian Sanders
  * @copyright 2019 Ian Sanders
+ * @description Undo `String.raw`.
+ * Convert raw escape sequences to their respective characters.
  * @license MIT
  */
 

@@ -1,3 +1,12 @@
+/**
+ * @file quokka-shim.ts
+ * @copyright 2020 Brandon Kalinowski (@brandonkal)
+ * @description A shim for test functions when running Deno code.
+ * Consider using @brandonkal/deno-quokka and babel-plugin-deno npm packages for
+ * a more robust debugging experience.
+ * @license MIT
+ */
+
 export function it(name, fn) {
 	console.log(`===${name}===`)
 	fn()

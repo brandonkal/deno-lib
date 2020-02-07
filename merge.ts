@@ -1,5 +1,6 @@
 /**
- * @copyright 2020 Brandon Kalinowski
+ * @file merge.ts
+ * @copyright 2020 Brandon Kalinowski (brandonkal)
  * @author jk authors
  * @description Provides generic object merging functions. Useful for config generation.
  * Portions of this work were obtained via the Apache 2.0 License.

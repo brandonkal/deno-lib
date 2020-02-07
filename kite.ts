@@ -1,7 +1,9 @@
 /**
- * @file **kite.ts**
+ * @file kite.ts
  * @author Brandon Kalinowski
- * @description Simplified Config Generation Library
+ * @copyright 2020 Brandon Kalinowski (@brandonkal)
+ * @description Kite™️ is a Simplified Config Generation Library
+ *
  * Ground Rules:
  * 1. No async code. Ever.
  * 2. No console.log

@@ -1,8 +1,11 @@
 /**
- * @file **proxymise**
+ * @file proxymise.ts
  * @author Brandon Kalinowski
- * @copyright 2020 Brandon Kalinowski
+ * @copyright 2020 Brandon Kalinowski (brandonkal)
  * @copyright 2018 Ilya Kozhevnikov <license@kozhevnikov.com>
+ * @description Chainable Promise Proxy utility.
+ * Proxymise allows for method and property chaining without need for intermediate
+ * then() or await for cleaner and simpler code.
  * @license MIT
  */
 

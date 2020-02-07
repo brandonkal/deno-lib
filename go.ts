@@ -1,7 +1,7 @@
 /**
- * @file **go.ts**
- * @author Brandon Kalinowski
- * @description Simplified async error handling in TypeScript
+ * @file go.ts
+ * @copyright 2020 Brandon Kalinowski @brandonkal
+ * @description Simplified async error handling in TypeScript.
  * @license MIT
  */
 

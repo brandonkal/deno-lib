@@ -1,6 +1,10 @@
-// Copyright 2020 Brandon Kalinowski. All Rights reserved.
-// Portions of this work were obtained via the Apache 2.0 License.
-// That original work is Copyright 2016-2019, Pulumi Corporation.
+/**
+ * @file kx.ts
+ * @copyright 2020 Brandon Kalinowski (@brandonkal). All Rights reserved.
+ * Portions of this work were obtained via the Apache 2.0 License.
+ * That original work is Copyright 2016-2019, Pulumi Corporation.
+ * @description kx is a simplified Kubernetes Config SDK for Kite.
+ */
 
 import * as k8s from './kubernetes.ts'
 import { Resource } from './kite.ts'

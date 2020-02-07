@@ -1,8 +1,8 @@
 /**
- * @file **args**
+ * @file args.ts
  * @author Brandon Kalinowski
- * @description Utilities for parsing CLI arguments.
  * @copyright 2020 Brandon Kalinowski
+ * @description Utilities for parsing CLI arguments.
  * @license MIT
  */
 
