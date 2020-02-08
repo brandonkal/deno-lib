@@ -9,7 +9,7 @@
 
 import { isObject } from './utils.ts'
 
-function mergeFunc(rules: Record<string, any>, key: string, defaultFunc) {
+function mergeFunc(rules: Record<string, any>, key: string, defaultFunc: any) {
 	const f = rules && rules[key]
 	if (f === undefined) {
 		return defaultFunc
@@ -28,18 +28,22 @@ function mergeFunc(rules: Record<string, any>, key: string, defaultFunc) {
 	return f
 }
 
-function objectMerge2<T extends object>(
-	a: T,
-	b: T,
-	rules: Record<keyof T, MergeRule>
-): T {
-	const r = {} as T
+/**
+ * objectMerge implementation
+ * @internal
+ */
+function objectMerge2<A extends Record<string, any>>(
+	a: A,
+	b: A,
+	rules: MergeObject<A>
+): A {
+	const r = {} as Record<string, any>
 
 	Object.assign(r, a)
 	for (const [key, value] of Object.entries(b)) {
 		r[key] = mergeFunc(rules, key, merge)(a[key], value)
 	}
-	return r
+	return r as A
 }
 
 function assertObject(o: any, prefix: string) {
@@ -63,11 +67,11 @@ function assertArray(o: unknown, prefix: string) {
  * objects. It's possible to provide a set of rules to override the merge
  * strategy for some properties. See [[merge]].
  */
-export function deep(rules?: Record<any, MergeRule>) {
+export function deep(rules?: MergeObject<any>) {
 	return <T extends object>(a: T, b: T): T => {
 		assertObject(a, 'deep')
 		assertObject(b, 'deep')
-		return objectMerge2(a, b, rules)
+		return objectMerge2(a, b, rules as any)
 	}
 }
 
@@ -108,7 +112,7 @@ export function deep(rules?: Record<any, MergeRule>) {
  * ```
  */
 export function first() {
-	return <A>(a: A, _): A => a
+	return <A>(a: A, _: any): A => a
 }
 
 /**
@@ -149,14 +153,14 @@ export function first() {
  * ```
  */
 export function replace() {
-	return <B>(_, b: B): B => b
+	return <B>(_: any, b: B): B => b
 }
 
-function arrayMergeWithKey<T extends Array<any>>(
-	a: T,
-	b: T,
+function arrayMergeWithKey<A extends Array<any>>(
+	a: A,
+	b: A,
 	mergeKey: string,
-	rules?: Record<string, MergeRule>
+	rules?: MergeObject<A>
 ) {
 	const r = Array.from(a)
 	const toAppend = []
@@ -168,9 +172,8 @@ function arrayMergeWithKey<T extends Array<any>>(
 			toAppend.push(value)
 			continue
 		}
-		r[i] = objectMerge2(a[i], value, rules)
+		r[i] = objectMerge2(a[i], value, rules as any)
 	}
-
 	Array.prototype.push.apply(r, toAppend)
 	return r
 }
@@ -240,7 +243,7 @@ function arrayMergeWithKey<T extends Array<any>>(
  * }
  * ```
  */
-export function deepWithKey(mergeKey: string, rules?: Record<any, MergeRule>) {
+export function deepWithKey(mergeKey: string, rules?: MergeObject<any>) {
 	return <T extends Array<any>>(a: T, b: T) => {
 		assertArray(a, 'deepWithKey')
 		assertArray(b, 'deepWithKey')
@@ -339,11 +342,7 @@ export function deepWithKey(mergeKey: string, rules?: Record<any, MergeRule>) {
  * }
  * ```
  */
-export function merge<A, B>(
-	a: A,
-	b: B,
-	rule?: Partial<Record<keyof A, MergeRule>> | MergeRule
-): any {
+export function merge<A>(a: A, b: A, rule?: MergeObject<A>): any {
 	//@ts-ignore
 	if (a === b) {
 		return a
@@ -352,6 +351,8 @@ export function merge<A, B>(
 
 	if (a == null) {
 		return b
+	} else if (b === undefined) {
+		return a
 	}
 	if (typeA !== typeB) {
 		throw new Error(
@@ -361,12 +362,26 @@ export function merge<A, B>(
 	// Primitive types and arrays default to being replaced.
 	if (Array.isArray(a) || typeA !== 'object') {
 		if (typeof rule === 'function') {
-			return rule(a, (b as unknown) as A)
+			return (rule as MergeFunction<A>)(a, b)
 		}
 		return b
 	}
-	// Objects.
-	return objectMerge2(a as any, b as any, rule)
+	// Objects. We cast as any because we know it to be an object
+	return objectMerge2(a as any, b, rule as any)
 }
 
-export type MergeRule = <T>(a: T, b: T) => T
+/** MergeObject is an object containing merge functions or a MergeFunction */
+export type MergeObject<T> = T extends object
+	? T extends Function
+		? MergeFunction<T>
+		: Partial<
+				{
+					[P in keyof T]: T[P] extends object
+						? MergeObject<T[P]>
+						: MergeFunction<T[P]>
+				}
+		  >
+	: MergeFunction<T>
+
+/** MergeFunction is a function that merges two values */
+export type MergeFunction<A> = (a: A, b: A) => A

@@ -82,7 +82,7 @@ Flags:
 // example CLI:
 // kite -e my-program.ts -n dev -a - -r -q
 
-export interface CliFlags extends TemplateConfigSpec {
+export interface CliFlags extends Omit<TemplateConfigSpec, 'allowEnv'> {
 	e?: string
 	h?: boolean
 	config?: CliFlags
@@ -96,7 +96,7 @@ export interface CliFlags extends TemplateConfigSpec {
 	/** args without a flag. Contains yaml if exec is not specified. */
 	_?: string[]
 	/** override allowEnv to accept boolean */
-	// allowEnv?: boolean | string | string[]
+	allowEnv?: boolean | string | string[]
 }
 
 // type ReplaceWithString
@@ -107,30 +107,30 @@ export function canonicalizeOptions(opts: CliFlags): TemplateConfig {
 		Deno.exit()
 	}
 	let nestedConfig = opts.config || opts.c
-	let nestedConfigCanonical: TemplateConfig
+	let nestedConfigCanonical = {} as TemplateConfig
 	if (nestedConfig && !isTemplateConfig(nestedConfig)) {
-		nestedConfig = asConfig(nestedConfig, false)
+		nestedConfig = asConfig(nestedConfig, true)
 		nestedConfigCanonical = configFromSpec(nestedConfig)
 	}
-	const stdSpec = asConfig(opts, true)
-	d({ stdSpec })
-	const stdCfgCanonical = configFromSpec(stdSpec)
-	d({ stdCfgCanonical })
-	// Arguments on the command line always override user arguments in config prop.
-	// const mspec: TemplateConfigSpec = {
-
-	// }
-	return merge.merge(nestedConfigCanonical, stdCfgCanonical, {
+	const baseSpec = asConfig(opts, true)
+	const baseCfgCanonical = configFromSpec(baseSpec)
+	if (opts.allowEnv === true) {
+		baseCfgCanonical.metadata._allowAnyEnv = true
+	}
+	if (!nestedConfig) {
+		return baseCfgCanonical
+	}
+	return merge.merge(nestedConfigCanonical, baseCfgCanonical, {
 		spec: {
-			name: merge.replace(),
-			allowEnv: (a: string[], b: string[]) => {
-				return a.filter((v) => b.includes(v))
+			allowEnv: (a, b) => {
+				if (baseCfgCanonical.metadata._allowAnyEnv) {
+					return a as string[]
+				}
+				return a!.filter((v) => b!.includes(v)) as string[]
 			},
-			exec: merge.replace(),
-			preview: merge.replace(),
 			reload: merge.first(),
 		},
-	} as any)
+	})
 }
 
 /** converts to boolean or undefined loosely */
@@ -138,7 +138,8 @@ function asBool(
 	vals: unknown[],
 	allowUndefined?: boolean
 ): boolean | undefined {
-	const x = vals.find((v) => v != null) || vals[vals.length - 1]
+	let x = vals.find((v) => v != null)
+	if (x == null) x = vals[vals.length - 1]
 	if (x === 'false') return false
 	if (x === 'true') return true
 	if (x === undefined && allowUndefined) return x
@@ -147,7 +148,8 @@ function asBool(
 
 /** converts to string or undefined loosely */
 function asStr(vals: unknown[], allowUndefined?: boolean): string | undefined {
-	const x = vals.find((v) => v != null) || vals[vals.length - 1]
+	let x = vals.find((v) => v != null)
+	if (x == null) x = vals[vals.length - 1]
 	if ((x == null || x === '') && allowUndefined) return undefined
 	return String(x)
 }
@@ -159,7 +161,10 @@ function asStr(vals: unknown[], allowUndefined?: boolean): string | undefined {
 function asConfig(opts: CliFlags, und: boolean): TemplateConfigSpec {
 	//@ts-ignore -- could be wrong
 	const envOpt = opts.allowEnv === true || opts.allowEnv === 'true'
-	const env = Array.isArray(opts.allowEnv) ? opts.allowEnv : []
+	let env = Array.isArray(opts.allowEnv) ? opts.allowEnv : []
+	if (envOpt) {
+		env = ['any']
+	}
 	const out = {
 		exec: asStr([opts.exec, opts.e], und),
 		reload: asBool([opts.reload, opts.r], und),
@@ -197,15 +202,9 @@ export default async function templateCli(cfg: TemplateConfig) {
 	}
 }
 
-function d(it: any) {
-	console.log(JSON.stringify(it, undefined, 2))
-}
-
 if (import.meta.main) {
 	const args = getArgsObject(new Set(['args', 'a']))
-	d(args)
 	let canon = canonicalizeOptions(args)
-	d(canon)
 	Deno.exit(1)
 	templateCli(canon)
 }
