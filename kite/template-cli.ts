@@ -181,11 +181,15 @@ function asConfig(opts: CliFlags, und: boolean): TemplateConfigSpec {
 }
 
 /**
- * templateCli is the main CLI process for kite
+ * templateCli is the main CLI process for Kite™️
  * @param cfg Takes canonicalizedOptions of the CLI
  */
-export default async function templateCli(cfg: TemplateConfig) {
+export default async function templateCli(cfg?: TemplateConfig) {
 	try {
+		if (!cfg) {
+			const args = getArgsObject(new Set(['args', 'a']))
+			cfg = canonicalizeOptions(args)
+		}
 		const out = await template(cfg)
 		console.log(out.trimEnd())
 	} catch (err) {
@@ -203,9 +207,4 @@ export default async function templateCli(cfg: TemplateConfig) {
 	}
 }
 
-if (import.meta.main) {
-	const args = getArgsObject(new Set(['args', 'a']))
-	let canon = canonicalizeOptions(args)
-	Deno.exit(1)
-	templateCli(canon)
-}
+if (import.meta.main) templateCli()
