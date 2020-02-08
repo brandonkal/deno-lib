@@ -1,18 +1,18 @@
 /**
- * @file **template**
+ * @file template.ts
  * @author Brandon Kalinowski
  * @description Templates YAML and applies Terraform as required.
  * @copyright 2020 Brandon Kalinowski
  * @license MIT
  */
 
-import * as fs from 'https://deno.land/std/fs/mod.ts'
-import * as path from 'https://deno.land/std/path/mod.ts'
+import * as fs from 'https://deno.land/std@v0.32.0/fs/mod.ts'
+import * as path from 'https://deno.land/std@v0.32.0/path/mod.ts'
 import { sha1 } from 'https://deno.land/x/sha1/mod.ts'
 import titleCase from 'https://deno.land/x/case/titleCase.ts'
 import { sha256 } from 'https://deno.land/x/sha256/mod.ts'
-import * as yaml from 'https://deno.land/std/encoding/yaml.ts'
-import * as base32 from 'https://deno.land/std/encoding/base32.ts'
+import * as yaml from 'https://deno.land/std@v0.32.0/encoding/yaml.ts'
+import * as base32 from 'https://deno.land/std@v0.32.0/encoding/base32.ts'
 
 import { dotProp, jsonItem, visitAll } from '../utils.ts'
 import { merge } from '../merge.ts'
@@ -39,6 +39,7 @@ export interface TemplateConfigSpec {
 	help?: boolean
 	/** These arguments will be passed to the exec program (if specified) and then the Templating function */
 	args?: Record<string, any>
+	/** silence stderr except on errors */
 	quiet?: boolean
 	/** Set a unique name to identify this config state */
 	name?: string
@@ -69,6 +70,7 @@ const rtTemplateConfig = rt.Record({
 	kind: rt.Literal('TemplateConfig'),
 	metadata: rt.Partial({
 		name: rt.String,
+		_allowAnyEnv: rt.Boolean,
 	}),
 	spec: rtTemplateConfigSpec,
 })
@@ -88,7 +90,10 @@ export interface TemplateConfig {
 	apiVersion: 'kite.run/v1alpha1'
 	kind: 'TemplateConfig'
 	metadata: {
+		/** A unique name to use for storing Terraform state. Required if TerraformConfig exists. */
 		name?: string
+		/** This parameter can only be set by the CLI. If true, env merges. */
+		_allowAnyEnv?: boolean
 	}
 	spec: TemplateConfigSpec
 }
@@ -110,17 +115,10 @@ export function configFromSpec(spec: any): TemplateConfig {
  * Takes input YAML as a string and executes Terraform if required.
  * The resulting state is then queried and combined with argument inputs.
  * The resulting YAML is returned without the Terraform Resource
- * // TODO: clean this up to interface docs
- * @param name A unique name to use for storing Terraform state
- * @param yamlText The multidocument text to parse.
- * @param args Arguments object as parsed by CLI. If args.r || args.reload then Terraform will always run.
- * If args.q || args.quiet then stderr will be silenced.
- * @param allowEnvironment Set to allow templates to read environment variables
  */
 export default async function template(cfg: TemplateConfig): Promise<string> {
 	cfg = rtTemplateConfig.check(cfg)
 	const { spec } = cfg
-	const { allowEnv } = spec
 	let yamlText: string
 	if (spec.exec) {
 		let cmd = ['deno', spec.exec]
@@ -274,11 +272,14 @@ function substitutePlaceholders(
 }
 
 /** builds an environment based on allowed environment variables in config */
-function buildEnv(envars: string[]) {
+function buildEnv(envars: string[] = []): Record<string, string> {
 	const tfEnv: Record<string, string> = {}
 	if (envars && Array.isArray(envars)) {
 		envars.forEach((envar) => {
-			tfEnv[envar] = Deno.env(envar)
+			const evar = Deno.env(envar)
+			if (evar !== undefined) {
+				tfEnv[envar] = evar
+			}
 		})
 	}
 	tfEnv.TF_INPUT = '0'
@@ -291,10 +292,13 @@ function buildEnv(envars: string[]) {
  * @internal
  */
 async function execTerraform(config: TemplateConfig, tfConfig: object) {
-	const name = config.metadata.name
-	const quiet = config.spec.quiet
+	const name = config.metadata.name!
+	const quiet = config.spec.quiet || false
 	const forceApply = config.spec.reload
 	const homeDir = Deno.dir('home')
+	if (!homeDir) {
+		throw new TemplateError('Could not locate home directory')
+	}
 	const tfDir = path.join(homeDir, '.kite', name)
 	const tfFile = path.join(tfDir + '/kite.tf.json')
 	await fs.ensureDir(tfDir)
@@ -335,8 +339,8 @@ async function execTerraform(config: TemplateConfig, tfConfig: object) {
 			env,
 		})
 		filter.clear()
-		filter.stream(init.stderr, quiet)
-		filter.stream(init.stdout, quiet)
+		filter.stream(init.stderr!, quiet)
+		filter.stream(init.stdout!, quiet)
 		let s = await init.status()
 		if (!s.success) {
 			if (quiet) console.error(filter.flush())
@@ -358,8 +362,8 @@ async function execTerraform(config: TemplateConfig, tfConfig: object) {
 		})
 
 		filter.clear()
-		filter.stream(apply.stderr, quiet)
-		filter.stream(apply.stdout, quiet)
+		filter.stream(apply.stderr!, quiet)
+		filter.stream(apply.stdout!, quiet)
 		s = await apply.status()
 		if (!s.success) {
 			if (quiet) console.error(filter.flush())
@@ -376,7 +380,7 @@ async function execTerraform(config: TemplateConfig, tfConfig: object) {
 		env,
 	})
 	filter.clear()
-	filter.stream(show.stderr, quiet)
+	filter.stream(show.stderr!, quiet)
 	let s = await show.status()
 	if (!s.success) {
 		if (quiet) console.error(filter.flush())
@@ -433,7 +437,7 @@ const same = (x: any) => x
 
 type OpMap = Record<string, (a: any) => any>
 
-function ops(envars: Record<string, string>) {
+function ops(envars: Record<string, string | undefined>) {
 	const map: OpMap = {
 		// default requires special logic
 		default: same,
