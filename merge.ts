@@ -372,15 +372,13 @@ export function merge<A>(a: A, b: A, rule?: MergeObject<A>): any {
 
 /** MergeObject is an object containing merge functions or a MergeFunction */
 export type MergeObject<T> = T extends object
-	? T extends Function
-		? MergeFunction<T>
-		: Partial<
-				{
-					[P in keyof T]: T[P] extends object
-						? MergeObject<T[P]>
-						: MergeFunction<T[P]>
-				}
-		  >
+	? Partial<
+			{
+				[P in keyof T]: T[P] extends object
+					? MergeObject<T[P]>
+					: MergeFunction<T[P]>
+			}
+	  >
 	: MergeFunction<T>
 
 /** MergeFunction is a function that merges two values */
