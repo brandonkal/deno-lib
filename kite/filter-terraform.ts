@@ -1,5 +1,5 @@
 /**
- * @file **filter-terraform**
+ * @file filter-terraform.ts
  * @author Brandon Kalinowski
  * @description Filters Terraform output
  * @copyright 2020 Brandon Kalinowski
