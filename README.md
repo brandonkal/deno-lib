@@ -138,10 +138,26 @@ Debug a Deno program via Node.
 
 ## Contributions Welcome
 
-Contributions for focused utilities are welcome.
+Contributions or requests for focused utilities are encouraged.
 
 ## License
 
-© 2020 Brandon Kalinowski.
+© 2020 Brandon Kalinowski (@brandonkal). All rights reserved.
 
-Not all files are released under a permissive open source license (though many are). See individual file headers for license information.
+Not all files are released under a permissive open source license (though many are).
+In particular, the modules in the `kite` directory do not carry an open-source license.
+
+See individual file headers for license information.
+Files without headers are © Brandon Kalinowski (@brandonkal). All rights reserved.
+
+If a file contains no specified license, no license has been provided.
+
+### Why
+
+It's simple really. Each module in this repository could have been released in its own repository.
+In the npm world, that would mean a seperate _package_. Each of those would contain their own license.
+With Deno, files are modules. The file is the distributed content. There is no "minification" step.
+Therefore, it is smarter to specify license information inside the files.
+It would be silly to provide a blanket license over the entire repository contents as that would require that a single license would apply to _all files_.
+
+This approach also makes automation of license compliance simpler. The rules above are simple. You can use `doc-gen.ts` or another JSDoc parser to scan the file's structured header block for all your imports.
