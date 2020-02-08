@@ -122,11 +122,12 @@ export function canonicalizeOptions(opts: CliFlags): TemplateConfig {
 	}
 	return merge.merge(nestedConfigCanonical, baseCfgCanonical, {
 		spec: {
+			//@ts-ignore -- Deno TS compiler is wrong here
 			allowEnv: (a, b) => {
 				if (baseCfgCanonical.metadata._allowAnyEnv) {
-					return a as string[]
+					return a
 				}
-				return a!.filter((v) => b!.includes(v)) as string[]
+				return a!.filter((v) => b!.includes(v))
 			},
 			reload: merge.first(),
 		},
