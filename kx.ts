@@ -261,12 +261,12 @@ export class Deployment extends k8s.apps.v1.Deployment {
 	}
 
 	public createService(desc: types.ServiceSpec = {}) {
-		const containers = this.spec.template.spec.containers
+		const containers = this.spec.template.spec!.containers
 		const ports: Record<string, number> = {}
 		containers.forEach((container) => {
 			if (container.ports) {
 				container.ports.forEach((port) => {
-					ports[port.name] = port.containerPort
+					ports[port.name!] = port.containerPort
 				})
 			}
 		})
@@ -288,8 +288,8 @@ export class Deployment extends k8s.apps.v1.Deployment {
 					if (tgtPort !== port.port) {
 						port.targetPort = tgtPort
 					}
-					return port
 				}
+				return port
 			})
 		}
 		const serviceSpec = {
@@ -299,7 +299,7 @@ export class Deployment extends k8s.apps.v1.Deployment {
 			type: desc?.type || undefined,
 		}
 
-		return new Service(this.metadata.name, {
+		return new Service(this.metadata.name!, {
 			metadata: { namespace: this.metadata.namespace },
 			spec: serviceSpec,
 		})
@@ -355,10 +355,12 @@ export class StatefulSet {
 		this.name = name
 
 		const ports: Record<string, number> = {}
-		statefulSet.spec.template.spec.containers.forEach((container) => {
-			container.ports.forEach((port) => {
-				ports[port.name] = port.containerPort
-			})
+		statefulSet.spec.template.spec!.containers.forEach((container) => {
+			if (container.ports) {
+				container.ports.forEach((port) => {
+					ports[port.name!] = port.containerPort
+				})
+			}
 		})
 		const serviceSpec = {
 			ports: ports,
@@ -403,9 +405,9 @@ export class PersistentVolumeClaim extends k8s.core.v1.PersistentVolumeClaim {
 	public mount(destPath: string, srcPath?: string): types.VolumeMount {
 		return {
 			volume: {
-				name: this.metadata.name,
+				name: this.metadata.name!,
 				persistentVolumeClaim: {
-					claimName: this.metadata.name,
+					claimName: this.metadata.name!,
 				},
 			},
 			destPath: destPath,
@@ -423,7 +425,7 @@ export class ConfigMap extends k8s.core.v1.ConfigMap {
 	public mount(destPath: string, srcPath?: string): types.VolumeMount {
 		return {
 			volume: {
-				name: this.metadata.name,
+				name: this.metadata.name!,
 				configMap: {
 					name: this.metadata.name,
 					// TODO: items
@@ -453,7 +455,7 @@ export class Secret extends k8s.core.v1.Secret {
 	public mount(destPath: string, srcPath?: string): types.VolumeMount {
 		return {
 			volume: {
-				name: this.metadata.name,
+				name: this.metadata.name!,
 				secret: {
 					secretName: this.metadata.name,
 					// TODO: items
@@ -998,8 +1000,8 @@ export class Ingress extends k8s.extensions.v1beta1.Ingress {
 		props.spec = {}
 		if (args.backend || args.backendPort) {
 			props.spec.backend = {
-				serviceName: args.backend || undefined,
-				servicePort: args.backendPort || undefined,
+				serviceName: args.backend!,
+				servicePort: args.backendPort!,
 			}
 		}
 		if (args?.tls?.length) {
@@ -1017,10 +1019,10 @@ export class Ingress extends k8s.extensions.v1beta1.Ingress {
 				(rule): k8s.types.extensions.v1beta1.IngressRule => {
 					type P = k8s.types.extensions.v1beta1.HTTPIngressPath
 					const paths: P[] = rule.paths.map(
-						(path): P => {
+						(path: simple.IngressPath): P => {
 							return {
 								backend: {
-									serviceName: path.service || undefined,
+									serviceName: path.service,
 									servicePort: path.port || 80,
 								},
 								path: path.path || undefined,

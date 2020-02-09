@@ -69,6 +69,7 @@ export default async function genDoc(files: string[] = []) {
 function isValid(obj: any): obj is ParsedTopDoc {
 	if (!obj) return false
 	if (obj.file && obj.description && obj.copyright) return true
+	return false
 }
 
 /** parses text contents line-by-line for the top JSDoc comment */
@@ -87,7 +88,7 @@ function parse(contents: string): ParsedTopDoc {
 				lastKind = m[1]
 			} else if ((m = jsDocMidRe.exec(line))) {
 				const v = line.replace(jsDocMidRe, '').trim()
-				buffer.push([lastKind, v])
+				buffer.push([lastKind!, v])
 			}
 			if (line.match(jsDocEndRe)) {
 				break

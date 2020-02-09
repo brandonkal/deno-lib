@@ -43,9 +43,9 @@ export class Resource {
 	 * Call `setTypes()` instead.
 	 * The type for a Resource i.e. `kx:Deployment` or `k8s:Deployment`
 	 */
-	private __type: string
-	protected readonly __number: number
-	protected readonly __name: string
+	private __type!: string
+	protected readonly __number!: number
+	protected readonly __name!: string
 	private readonly __parents?: string[]
 
 	/**
@@ -70,36 +70,7 @@ export class Resource {
 			throw new Error(`Resource ${name} contains an unexpected empty array`)
 		}
 		stripUndefined(desc) // This makes things cleaner to debug.
-		/* Define hidden properties for comments */
-		Object.defineProperty(this, '__name', {
-			writable: false,
-			enumerable: false,
-			value: name,
-		})
-		if (desc.__type) {
-			this.setType(desc.__type)
-			delete desc.__type
-		}
-		let number = registerResource(name, desc, this)
-		Object.defineProperty(this, '__number', {
-			writable: false,
-			enumerable: false,
-			value: number,
-		})
-		if (globalThis.stack.length) {
-			Object.defineProperty(this, '__parents', {
-				writable: false,
-				enumerable: false,
-				value: [...globalThis.stack],
-			})
-		}
-		if (!this.__type) {
-			Object.defineProperty(this, '__type', {
-				writable: true,
-				enumerable: false,
-				value: 'Resource', // basic Resource type. Subclasses override this,
-			})
-		}
+		registerResource(name, desc, this)
 	}
 
 	/**
@@ -156,19 +127,45 @@ export class Resource {
 	}
 }
 
-/** Register a resource in the shared buffer. */
-function registerResource(name: string, desc: object, instance: Resource) {
+/**
+ * Register a resource in the shared buffer and set private properties
+ */
+function registerResource(name: string, desc: any, instance: Resource) {
 	try {
+		if (desc.__type) {
+			instance.setType(desc.__type)
+			delete desc.__type
+		}
+		if (globalThis.stack.length) {
+			Object.defineProperty(instance, '__parents', {
+				writable: false,
+				enumerable: false,
+				value: [...globalThis.stack],
+			})
+		}
+		if (!(instance as any).__type /* private */) {
+			Object.defineProperty(instance, '__type', {
+				writable: true,
+				enumerable: false,
+				value: 'Resource', // basic Resource type. Subclasses override this
+			})
+		}
 		Object.entries(desc).forEach(([key, val]) => {
 			instance[key] = val
 		})
 		globalThis.outBuffer.push(instance)
+		let number = globalThis.outBuffer.length
+		Object.defineProperty(instance, '__number', {
+			writable: false,
+			enumerable: false,
+			value: number,
+		})
 		const id = instance.uid(true)
 		if (globalThis.registeredNames.has(id)) {
 			throw new Error('Duplicate names are not allowed for this resource type')
 		}
 		globalThis.registeredNames.add(id)
-		return globalThis.outBuffer.length
+		return number
 	} catch (e) {
 		throw new Error(`Unable to resolve resource inputs for ${name}: ${e}`)
 	}
@@ -335,7 +332,7 @@ export function make(fn: Function, opts?: MakeOpts): string {
 	}
 	// Convert buffer to add identifying comments
 	function genComments(res: Resource) {
-		let comment: string
+		let comment: string | undefined = undefined
 		// Calling uid() may not be safe if converted
 		if (typeof res.uid === 'function') {
 			comment = res.uid()

@@ -41,7 +41,6 @@ interface DedentResult {
 /*
  * Lines that contain only whitespace are not used for measuring.
  */
-export function execDedent(literals: string, []): DedentResult
 export function execDedent(
 	literals: TemplateStringsArray | string[],
 	values: any[]

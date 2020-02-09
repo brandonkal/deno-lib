@@ -87,7 +87,7 @@ export function yamlfy(
 	let result = ''
 	strings.forEach((string, i) => {
 		result += string
-		let indent = result.split('\n').pop().length
+		let indent = result.split('\n').pop()?.length || 0
 		if (i < expr.length) {
 			result += yamlString(expr[i], indent)
 		}
@@ -100,13 +100,13 @@ function yamlString(item: unknown, indent: number) {
 		return item.toString()
 	} else if (typeof item === 'string') {
 		return item
-	} else if (typeof item === 'object') {
-		if (indent === 0) {
-			return yaml.stringify(item, { schema: yaml.JSON_SCHEMA })
-		}
-		return JSON.stringify(item)
 	} else if (item === null) {
 		return 'null'
+	} else if (typeof item === 'object') {
+		if (indent === 0) {
+			return yaml.stringify(item as object, { schema: yaml.JSON_SCHEMA })
+		}
+		return JSON.stringify(item)
 	} else if (typeof item === 'undefined') {
 		// we load with undefined supported. Otherwise YAML will interpret as null.
 		return '!!js/undefined'

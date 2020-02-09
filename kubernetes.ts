@@ -55,7 +55,7 @@ export class CustomResource extends kite.Resource {
 	 * values. More info:
 	 * https://git.k8s.io/community/contributors/devel/api-conventions.md#resources
 	 */
-	readonly apiVersion: string
+	readonly apiVersion!: string
 
 	/**
 	 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -63,13 +63,13 @@ export class CustomResource extends kite.Resource {
 	 * CamelCase. More info:
 	 * https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
 	 */
-	readonly kind: string
+	readonly kind!: string
 
 	/**
 	 * Standard object metadata; More info:
 	 * https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata.
 	 */
-	readonly metadata: meta.v1.ObjectMeta
+	readonly metadata!: meta.v1.ObjectMeta
 
 	/**
 	 * Create a CustomResource resource with the given unique name, arguments, and options.
@@ -115,7 +115,7 @@ export namespace yaml {
 		resources: kite.Resource[]
 
 		constructor(name: string, desc: YamlArgs | string) {
-			let objs: any[]
+			let objs: any[] = []
 			let parsed: any[] = []
 			if (typeof desc === 'string') {
 				objs = [desc]
@@ -127,7 +127,7 @@ export namespace yaml {
 			let transform: ((obj: any) => void) | undefined
 			if (typeof desc !== 'string' && desc.transformations?.length) {
 				transform = (obj: any) => {
-					desc.transformations.forEach((fn) => fn(obj, name))
+					desc.transformations!.forEach((fn) => fn(obj, name))
 				}
 			}
 			objs.forEach((obj) => {
@@ -218,10 +218,10 @@ export namespace helm {
 	}
 
 	export class Chart extends kite.Resource implements IChart {
-		kind: 'HelmChart'
-		apiVersion: 'helm.cattle.io/v1'
-		metadata: meta.v1.ObjectMeta
-		spec: IChartSpec
+		kind!: 'HelmChart'
+		apiVersion!: 'helm.cattle.io/v1'
+		metadata!: meta.v1.ObjectMeta
+		spec!: IChartSpec
 
 		constructor(name: string, args: IChart) {
 			const props: IChart = {

@@ -165,7 +165,7 @@ function arrayMergeWithKey<A extends Array<any>>(
 	rules?: MergeObject<A>
 ) {
 	const r = Array.from(a)
-	const toAppend = []
+	const toAppend: any[] = []
 
 	for (const value of b) {
 		const i = a.findIndex((o) => o[mergeKey] === value[mergeKey])
