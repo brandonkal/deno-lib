@@ -92,9 +92,9 @@ export class Volume extends kite.Resource {
 		inputs.tags = args ? args.tags : undefined
 		super(name, inputs)
 		this.setType(Volume.__kiteType)
-		this.dropletIds = `{{ tf ${this.id()}.dropletIds }}` as any /*out*/
-		this.filesystemLabel = `{{ tf ${this.id()}.filesystemLabel }}` as any /*out*/
-		this.urn = `{{ tf ${this.id()}.urn }}` as any /*out*/
+		this.dropletIds = `(( tf ${this.id()}.dropletIds ))` as any /*out*/
+		this.filesystemLabel = `(( tf ${this.id()}.filesystemLabel ))` as any /*out*/
+		this.urn = `(( tf ${this.id()}.urn ))` as any /*out*/
 	}
 	/**
 	 * Used to map camelCased properties to Terraform snake_case

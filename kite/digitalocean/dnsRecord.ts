@@ -90,7 +90,7 @@ export class DnsRecord extends kite.Resource {
 		inputs.weight = args ? args.weight : undefined
 		super(name, inputs)
 		this.setType(DnsRecord.__kiteType)
-		this.fqdn = `{{ tf ${this.id()}.fqdn }}` as any /*out*/
+		this.fqdn = `(( tf ${this.id()}.fqdn ))` as any /*out*/
 	}
 	/**
 	 * Used to map camelCased properties to Terraform snake_case

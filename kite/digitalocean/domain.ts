@@ -43,7 +43,7 @@ export class Domain extends kite.Resource {
 		inputs.name = args ? args.name : undefined
 		super(name, inputs)
 		this.setType(Domain.__kiteType)
-		this.urn = `{{ tf ${this.id()}.urn }}` as any /*out*/
+		this.urn = `(( tf ${this.id()}.urn ))` as any /*out*/
 	}
 	/**
 	 * Used to map camelCased properties to Terraform snake_case

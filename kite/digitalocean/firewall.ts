@@ -73,9 +73,9 @@ export class Firewall extends kite.Resource {
 		inputs.tags = args ? args.tags : undefined
 		super(name, inputs)
 		this.setType(Firewall.__kiteType)
-		this.createdAt = `{{ tf ${this.id()}.createdAt }}` as any /*out*/
-		this.pendingChanges = `{{ tf ${this.id()}.pendingChanges }}` as any /*out*/
-		this.status = `{{ tf ${this.id()}.status }}` as any /*out*/
+		this.createdAt = `(( tf ${this.id()}.createdAt ))` as any /*out*/
+		this.pendingChanges = `(( tf ${this.id()}.pendingChanges ))` as any /*out*/
+		this.status = `(( tf ${this.id()}.status ))` as any /*out*/
 	}
 	/**
 	 * Used to map camelCased properties to Terraform snake_case

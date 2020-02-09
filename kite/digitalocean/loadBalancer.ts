@@ -101,9 +101,9 @@ export class LoadBalancer extends kite.Resource {
 		inputs.stickySessions = args ? args.stickySessions : undefined
 		super(name, inputs)
 		this.setType(LoadBalancer.__kiteType)
-		this.ip = `{{ tf ${this.id()}.ip }}` as any /*out*/
-		this.status = `{{ tf ${this.id()}.status }}` as any /*out*/
-		this.urn = `{{ tf ${this.id()}.urn }}` as any /*out*/
+		this.ip = `(( tf ${this.id()}.ip ))` as any /*out*/
+		this.status = `(( tf ${this.id()}.status ))` as any /*out*/
+		this.urn = `(( tf ${this.id()}.urn ))` as any /*out*/
 	}
 	/**
 	 * Used to map camelCased properties to Terraform snake_case

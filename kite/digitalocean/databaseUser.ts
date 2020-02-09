@@ -48,8 +48,8 @@ export class DatabaseUser extends kite.Resource {
 		inputs.name = args ? args.name : undefined
 		super(name, inputs)
 		this.setType(DatabaseUser.__kiteType)
-		this.password = `{{ tf ${this.id()}.password }}` as any /*out*/
-		this.role = `{{ tf ${this.id()}.role }}` as any /*out*/
+		this.password = `(( tf ${this.id()}.password ))` as any /*out*/
+		this.role = `(( tf ${this.id()}.role ))` as any /*out*/
 	}
 	/**
 	 * Used to map camelCased properties to Terraform snake_case

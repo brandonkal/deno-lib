@@ -46,7 +46,7 @@ export class SshKey extends kite.Resource {
 		inputs.publicKey = args ? args.publicKey : undefined
 		super(name, inputs)
 		this.setType(SshKey.__kiteType)
-		this.fingerprint = `{{ tf ${this.id()}.fingerprint }}` as any /*out*/
+		this.fingerprint = `(( tf ${this.id()}.fingerprint ))` as any /*out*/
 	}
 	/**
 	 * Used to map camelCased properties to Terraform snake_case

@@ -57,8 +57,8 @@ export class Cdn extends kite.Resource {
 		inputs.ttl = args ? args.ttl : undefined
 		super(name, inputs)
 		this.setType(Cdn.__kiteType)
-		this.createdAt = `{{ tf ${this.id()}.createdAt }}` as any /*out*/
-		this.endpoint = `{{ tf ${this.id()}.endpoint }}` as any /*out*/
+		this.createdAt = `(( tf ${this.id()}.createdAt ))` as any /*out*/
+		this.endpoint = `(( tf ${this.id()}.endpoint ))` as any /*out*/
 	}
 	/**
 	 * Used to map camelCased properties to Terraform snake_case

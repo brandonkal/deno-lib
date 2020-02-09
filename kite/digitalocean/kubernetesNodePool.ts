@@ -87,8 +87,8 @@ export class KubernetesNodePool extends kite.Resource {
 		inputs.tags = args ? args.tags : undefined
 		super(name, inputs)
 		this.setType(KubernetesNodePool.__kiteType)
-		this.actualNodeCount = `{{ tf ${this.id()}.actualNodeCount | number }}` as any /*out*/
-		this.nodes = `{{ tf ${this.id()}.nodes }}` as any /*out*/
+		this.actualNodeCount = `(( tf ${this.id()}.actualNodeCount | number ))` as any /*out*/
+		this.nodes = `(( tf ${this.id()}.nodes ))` as any /*out*/
 	}
 	/**
 	 * Used to map camelCased properties to Terraform snake_case

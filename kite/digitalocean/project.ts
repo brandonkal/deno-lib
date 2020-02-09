@@ -82,10 +82,10 @@ export class Project extends kite.Resource {
 		inputs.resources = args ? args.resources : undefined
 		super(name, inputs)
 		this.setType(Project.__kiteType)
-		this.createdAt = `{{ tf ${this.id()}.createdAt }}` as any /*out*/
-		this.ownerId = `{{ tf ${this.id()}.ownerId | number }}` as any /*out*/
-		this.ownerUuid = `{{ tf ${this.id()}.ownerUuid }}` as any /*out*/
-		this.updatedAt = `{{ tf ${this.id()}.updatedAt }}` as any /*out*/
+		this.createdAt = `(( tf ${this.id()}.createdAt ))` as any /*out*/
+		this.ownerId = `(( tf ${this.id()}.ownerId | number ))` as any /*out*/
+		this.ownerUuid = `(( tf ${this.id()}.ownerUuid ))` as any /*out*/
+		this.updatedAt = `(( tf ${this.id()}.updatedAt ))` as any /*out*/
 	}
 	/**
 	 * Used to map camelCased properties to Terraform snake_case

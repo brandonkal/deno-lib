@@ -121,8 +121,8 @@ export class SpacesBucket extends kite.Resource {
 		inputs.region = args ? args.region : undefined
 		super(name, inputs)
 		this.setType(SpacesBucket.__kiteType)
-		this.bucketDomainName = `{{ tf ${this.id()}.bucketDomainName }}` as any /*out*/
-		this.urn = `{{ tf ${this.id()}.urn }}` as any /*out*/
+		this.bucketDomainName = `(( tf ${this.id()}.bucketDomainName ))` as any /*out*/
+		this.urn = `(( tf ${this.id()}.urn ))` as any /*out*/
 	}
 	/**
 	 * Used to map camelCased properties to Terraform snake_case

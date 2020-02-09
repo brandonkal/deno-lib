@@ -84,14 +84,14 @@ export class DatabaseReplica extends kite.Resource {
 		inputs.tags = args ? args.tags : undefined
 		super(name, inputs)
 		this.setType(DatabaseReplica.__kiteType)
-		this.database = `{{ tf ${this.id()}.database }}` as any /*out*/
-		this.host = `{{ tf ${this.id()}.host }}` as any /*out*/
-		this.password = `{{ tf ${this.id()}.password }}` as any /*out*/
-		this.port = `{{ tf ${this.id()}.port | number }}` as any /*out*/
-		this.privateHost = `{{ tf ${this.id()}.privateHost }}` as any /*out*/
-		this.privateUri = `{{ tf ${this.id()}.privateUri }}` as any /*out*/
-		this.uri = `{{ tf ${this.id()}.uri }}` as any /*out*/
-		this.user = `{{ tf ${this.id()}.user }}` as any /*out*/
+		this.database = `(( tf ${this.id()}.database ))` as any /*out*/
+		this.host = `(( tf ${this.id()}.host ))` as any /*out*/
+		this.password = `(( tf ${this.id()}.password ))` as any /*out*/
+		this.port = `(( tf ${this.id()}.port | number ))` as any /*out*/
+		this.privateHost = `(( tf ${this.id()}.privateHost ))` as any /*out*/
+		this.privateUri = `(( tf ${this.id()}.privateUri ))` as any /*out*/
+		this.uri = `(( tf ${this.id()}.uri ))` as any /*out*/
+		this.user = `(( tf ${this.id()}.user ))` as any /*out*/
 	}
 	/**
 	 * Used to map camelCased properties to Terraform snake_case
