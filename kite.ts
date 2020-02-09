@@ -154,8 +154,18 @@ function registerResource(name: string, desc: any, instance: Resource) {
 		if (!(instance as any).__type /* private */) {
 			instance.setType('Resource') // basic Resource type. Subclasses override this
 		}
+		// These properties should not be set manually
+		delete desc.__name
+		delete desc.__parents
+		delete desc.__number
+		// load all properties
 		Object.entries(desc).forEach(([key, val]) => {
 			instance[key] = val
+		})
+		Object.defineProperty(instance, '__name', {
+			writable: false,
+			enumerable: false,
+			value: name,
 		})
 		globalThis.outBuffer.push(instance)
 		let number = globalThis.outBuffer.length
