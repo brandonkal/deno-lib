@@ -9,15 +9,6 @@
 import * as flags from 'https://deno.land/std/flags/mod.ts'
 import { parse, JSON_SCHEMA } from 'https://deno.land/std/encoding/yaml.ts'
 
-// Cache the parsed args. This is safe because Deno.args is global.
-declare module globalThis {
-	let parsedOpts: { args: undefined | object; isParsed: boolean }
-}
-globalThis.parsedOpts = globalThis.parsedOpts || {
-	args: undefined,
-	isParsed: false,
-}
-
 /**
  * If the value is '-' stdin is read and returned.
  * If stdin fails to be read, undefined is returned
@@ -44,14 +35,14 @@ export const looksLikeYamlRe = /(" *?:)|(: )/
 
 /**
  * getArgsObject is a helper utility like flags.parse().
- * It memoizes the result.
  * It parses flags. Flag values that look like YAML will be parsed to their object form.
  * @param yamlKeys Disable YAML inference and always parse these values as YAML.
+ * @param argsArray Specify to parse an alternative value instead of Deno.args.
  */
-export function getArgsObject(yamlKeys?: Set<string>): Record<string, any> {
-	if (globalThis.parsedOpts.isParsed) {
-		return globalThis.parsedOpts.args
-	}
+export function getArgsObject(
+	yamlKeys?: Set<string>,
+	argsArray?: string[]
+): Record<string, any> {
 	const isYaml = yamlKeys
 		? (key: string, _: string) => {
 				return yamlKeys.has(key)
@@ -59,7 +50,7 @@ export function getArgsObject(yamlKeys?: Set<string>): Record<string, any> {
 		: (_: string, value: string) => {
 				return !!looksLikeYamlRe.exec(value)
 		  }
-	const rawArgs = flags.parse(Deno.args)
+	const rawArgs = flags.parse(argsArray || Deno.args)
 	const parsedArgs: any = {}
 	Object.entries(rawArgs).forEach(([key, rawValue]) => {
 		let value = textOrStdIn(rawValue)
@@ -71,7 +62,5 @@ export function getArgsObject(yamlKeys?: Set<string>): Record<string, any> {
 			}
 		}
 	})
-	globalThis.parsedOpts.isParsed = true
-	globalThis.parsedOpts.args = parsedArgs
 	return parsedArgs
 }
