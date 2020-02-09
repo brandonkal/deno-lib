@@ -36,6 +36,7 @@ const banner = `\
 export interface TemplateConfigSpec {
 	/** a string representing the Kite program to execute. Cannot be specified if yaml is set. */
 	exec?: string
+	/** display help text for CLI usage */
 	help?: boolean
 	/** These arguments will be passed to the exec program (if specified) and then the Templating function */
 	args?: Record<string, any>
@@ -92,12 +93,13 @@ export interface TemplateConfig {
 	metadata: {
 		/** A unique name to use for storing Terraform state. Required if TerraformConfig exists. */
 		name?: string
-		/** This parameter can only be set by the CLI. If true, env merges. */
+		/** This private parameter can only be set by the CLI. If true, env merges. */
 		_allowAnyEnv?: boolean
 	}
 	spec: TemplateConfigSpec
 }
 
+/** Creates a TemplateConfig from spec property object. */
 export function configFromSpec(spec: any): TemplateConfig {
 	return {
 		apiVersion: 'kite.run/v1alpha1',

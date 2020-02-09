@@ -1,7 +1,7 @@
 /**
  * @file template-cli.ts
  * @copyright 2020 Brandon Kalinowski (@brandonkal). All Rights Reserved.
- * @description Kite Template Tool by Brandon Kalinowski (@brandonkal)
+ * @description Kite™️ Template Tool by Brandon Kalinowski (@brandonkal)
  * This CLI takes YAML input and renders the result.
  * It has been designed for Kubernetes and Terraform configuration but is useful for general YAML config.
  */
@@ -18,7 +18,7 @@ import { getArgsObject } from '../args.ts'
 import { merge } from '../merge.ts'
 
 const helpText = `\
-Kite Template Tool by Brandon Kalinowski @brandonkal
+Kite™️ Template Tool by Brandon Kalinowski @brandonkal
 
 This CLI takes YAML input and renders the result. It has been designed for Kubernetes
 and Terraform configuration but is useful for general YAML config.
@@ -84,13 +84,21 @@ Flags:
 // kite -e my-program.ts -n dev -a - -r -q
 
 export interface CliFlags extends Omit<TemplateConfigSpec, 'allowEnv'> {
+	/** shorthand alias for exec */
 	e?: string
+	/** shorthand alias for help */
 	h?: boolean
+	/** pass config as TemplateConfig or shorthand object*/
 	config?: CliFlags
+	/** shorthand for config */
 	c?: CliFlags
+	/** shorthand for name */
 	n?: string
+	/** shorthand for quiet */
 	q?: boolean
+	/** shorthand for preview */
 	p?: boolean
+	/** shorthand for yaml */
 	y?: string
 	/** shorthand to force reload of Terraform state */
 	r?: boolean
