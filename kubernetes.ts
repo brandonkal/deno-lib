@@ -231,12 +231,12 @@ export namespace helm {
 				metadata: args.metadata || undefined,
 				spec: args.spec || undefined,
 			}
-			if (!props.spec || !props.spec.chart) {
+			if (!props.spec?.chart) {
 				throw new Error(`HelmChart ${name} is must specify a chart.`)
 			}
-			if (!props.spec.set || !props.spec.valuesContent) {
+			if (!props.spec.valuesContent && !props.spec.set) {
 				throw new Error(
-					`HelmChart ${name} must specify either valuesContent or set.`
+					`HelmChart ${name} must specify either valuesContent or set. An empty object is valid.`
 				)
 			}
 			if (typeof props.spec.valuesContent !== 'string') {
