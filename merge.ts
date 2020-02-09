@@ -69,6 +69,8 @@ function assertArray(o: unknown, prefix: string) {
  */
 export function deep(rules?: MergeObject<any>) {
 	return <T extends object>(a: T, b: T): T => {
+		if (a === undefined) a = {} as T
+		if (b === undefined) b = {} as T
 		assertObject(a, 'deep')
 		assertObject(b, 'deep')
 		return objectMerge2(a, b, rules as any)
