@@ -102,11 +102,11 @@ export class RandomId extends kite.Resource {
 		inputs.prefix = args ? args.prefix : undefined
 		super(name, inputs)
 		this.setType(RandomId.__kiteType)
-		this.b64 = `{{ tf ${this.id()}.b64 }}` as any /*out*/
-		this.b64Std = `{{ tf ${this.id()}.b64Std }}` as any /*out*/
-		this.b64Url = `{{ tf ${this.id()}.b64Url }}` as any /*out*/
-		this.dec = `{{ tf ${this.id()}.dec }}` as any /*out*/
-		this.hex = `{{ tf ${this.id()}.hex }}` as any /*out*/
+		this.b64 = `(( tf ${this.id()}.b64 ))` as any /*out*/
+		this.b64Std = `(( tf ${this.id()}.b64Std ))` as any /*out*/
+		this.b64Url = `(( tf ${this.id()}.b64Url ))` as any /*out*/
+		this.dec = `(( tf ${this.id()}.dec ))` as any /*out*/
+		this.hex = `(( tf ${this.id()}.hex ))` as any /*out*/
 	}
 	/**
 	 * Used to map camelCased properties to Terraform snake_case

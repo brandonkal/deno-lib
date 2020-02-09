@@ -57,7 +57,7 @@ export class RandomUuid extends kite.Resource {
 		inputs.keepers = args ? args.keepers : undefined
 		super(name, inputs)
 		this.setType(RandomUuid.__kiteType)
-		this.result = `{{ tf ${this.id()}.result }}` as any /*out*/
+		this.result = `(( tf ${this.id()}.result ))` as any /*out*/
 	}
 	/**
 	 * Used to map camelCased properties to Terraform snake_case

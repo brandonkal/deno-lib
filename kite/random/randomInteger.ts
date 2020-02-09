@@ -93,7 +93,7 @@ export class RandomInteger extends kite.Resource {
 		inputs.seed = args ? args.seed : undefined
 		super(name, inputs)
 		this.setType(RandomInteger.__kiteType)
-		this.result = `{{ tf ${this.id()}.result | number }}` as any /*out*/
+		this.result = `(( tf ${this.id()}.result | number ))` as any /*out*/
 	}
 	/**
 	 * Used to map camelCased properties to Terraform snake_case
