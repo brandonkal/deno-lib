@@ -12,9 +12,10 @@ import template, {
 	TemplateConfig,
 	isTemplateConfig,
 	configFromSpec,
+	templateConfigMergeObject,
 } from './template.ts'
 import { getArgsObject } from '../args.ts'
-import * as merge from '../merge.ts'
+import { merge } from '../merge.ts'
 
 const helpText = `\
 Kite Template Tool by Brandon Kalinowski @brandonkal
@@ -99,8 +100,6 @@ export interface CliFlags extends Omit<TemplateConfigSpec, 'allowEnv'> {
 	allowEnv?: boolean | string | string[]
 }
 
-// type ReplaceWithString
-
 export function canonicalizeOptions(opts: CliFlags): TemplateConfig {
 	if (opts.help || opts.h) {
 		console.log(helpText)
@@ -120,18 +119,11 @@ export function canonicalizeOptions(opts: CliFlags): TemplateConfig {
 	if (!nestedConfig) {
 		return baseCfgCanonical
 	}
-	return merge.merge(nestedConfigCanonical, baseCfgCanonical, {
-		spec: {
-			//@ts-ignore -- Deno TS compiler is wrong here
-			allowEnv: (a, b) => {
-				if (baseCfgCanonical.metadata._allowAnyEnv) {
-					return a
-				}
-				return a!.filter((v) => b!.includes(v))
-			},
-			reload: merge.first(),
-		},
-	})
+	return merge(
+		nestedConfigCanonical,
+		baseCfgCanonical,
+		templateConfigMergeObject(baseCfgCanonical)
+	)
 }
 
 /** converts to boolean or undefined loosely */
@@ -160,6 +152,7 @@ function asStr(vals: unknown[], allowUndefined?: boolean): string | undefined {
  * This allows unset values to be undefined.
  */
 function asConfig(opts: CliFlags, und: boolean): TemplateConfigSpec {
+	if (typeof opts !== 'object') throw new TemplateError('Invalid config')
 	//@ts-ignore -- could be wrong
 	const envOpt = opts.allowEnv === true || opts.allowEnv === 'true'
 	let env = Array.isArray(opts.allowEnv) ? opts.allowEnv : []
@@ -187,7 +180,7 @@ function asConfig(opts: CliFlags, und: boolean): TemplateConfigSpec {
 export default async function templateCli(cfg?: TemplateConfig) {
 	try {
 		if (!cfg) {
-			const args = getArgsObject(new Set(['args', 'a']))
+			const args = getArgsObject(new Set(['config', 'c']))
 			cfg = canonicalizeOptions(args)
 		}
 		const out = await template(cfg)

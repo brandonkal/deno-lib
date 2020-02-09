@@ -2,10 +2,18 @@ import { test as it } from 'https://deno.land/std@v0.32.0/testing/mod.ts'
 import { assertEquals } from 'https://deno.land/std@v0.32.0/testing/asserts.ts'
 import { canonicalizeOptions as cOpts, CliFlags } from './template-cli.ts'
 import { TemplateConfig } from './template.ts'
+import { getArgsObject } from '../args.ts'
 
 /** a function to skip a test */
 function xit(name: string, _fn: any) {
 	console.log('Skipping:', name)
+}
+
+/** mock function to parse args like template-cli */
+function parseArgs(argsArray: string[]) {
+	const args = getArgsObject(new Set(['config', 'c']), argsArray)
+	console.log(args)
+	return cOpts(args)
 }
 
 it('returns expected format', () => {
@@ -122,4 +130,45 @@ it('denies all env if allowEnv=false', () => {
 		},
 	}
 	assertEquals(expected, out)
+})
+
+it('parses from CLI', () => {
+	const parsed = parseArgs(['-c', 'name: production'])
+	// -e my-program.ts -n dev -a - -r -q
+	const expected: TemplateConfig = {
+		apiVersion: 'kite.run/v1alpha1',
+		kind: 'TemplateConfig',
+		metadata: { name: 'production' },
+		spec: {
+			allowEnv: [],
+			name: 'production',
+			exec: undefined,
+			preview: undefined,
+			quiet: undefined,
+			reload: undefined,
+		},
+	}
+	assertEquals(expected, parsed)
+})
+
+it('parses advanced from CLI', () => {
+	const parsed = parseArgs([
+		'-c',
+		'{"name":"dev","exec":"file.ts","allowEnv":["API_KEY"]}',
+	])
+	// -e my-program.ts -n dev -a - -r -q
+	const expected: TemplateConfig = {
+		apiVersion: 'kite.run/v1alpha1',
+		kind: 'TemplateConfig',
+		metadata: { name: 'dev' },
+		spec: {
+			allowEnv: [],
+			name: 'dev',
+			exec: 'file.ts',
+			preview: undefined,
+			quiet: undefined,
+			reload: undefined,
+		},
+	}
+	assertEquals(expected, parsed)
 })

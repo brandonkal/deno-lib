@@ -15,7 +15,7 @@ import * as yaml from 'https://deno.land/std@v0.32.0/encoding/yaml.ts'
 import * as base32 from 'https://deno.land/std@v0.32.0/encoding/base32.ts'
 
 import { dotProp, jsonItem, visitAll } from '../utils.ts'
-import { merge } from '../merge.ts'
+import { merge, MergeObject } from '../merge.ts'
 import * as filter from './filter-terraform.ts'
 import * as rt from '../runtypes.ts'
 
@@ -145,6 +145,7 @@ export default async function template(cfg: TemplateConfig): Promise<string> {
 	}
 
 	let { tfConfig, config, docs, toRemove } = getConfigFromYaml(yamlText, cfg)
+	rtTemplateConfig.check(config)
 
 	let state: any = {}
 	if (isTerraformConfig(tfConfig)) {
@@ -187,9 +188,6 @@ export default async function template(cfg: TemplateConfig): Promise<string> {
  * @internal
  */
 export function getConfigFromYaml(yamlText: string, cfg: TemplateConfig) {
-	//prettier-ignore
-	const { spec: { allowEnv } } = cfg
-
 	yamlText = addTopDashes(yamlText)
 	const docs = yamlText.split(/^---\n/m)
 	const toRemove = new Set<number>()
@@ -215,14 +213,15 @@ export function getConfigFromYaml(yamlText: string, cfg: TemplateConfig) {
 	})
 	let config = {} as TemplateConfig
 	if (kiteConfigs.length) {
-		kiteConfigs.forEach((cfg) => {
-			config = merge(config, cfg)
+		kiteConfigs.forEach((cfgN, i) => {
+			config = merge(config, cfgN)
 		})
 	}
-	config = merge(config, cfg)
-	if (!allowEnv) {
-		config.spec.allowEnv = undefined
+	// As a security measure, this private value can only come via CLI args
+	if (config?.metadata?._allowAnyEnv) {
+		delete config.metadata._allowAnyEnv
 	}
+	config = merge(config, cfg, templateConfigMergeObject(cfg))
 	let tfConfig: any = {}
 	terraformConfigs.forEach((cfg) => {
 		tfConfig = merge(tfConfig, cfg)
@@ -230,11 +229,13 @@ export function getConfigFromYaml(yamlText: string, cfg: TemplateConfig) {
 	const name = config.metadata.name
 	if (name !== undefined) {
 		tfConfig = merge(tfConfig, { metadata: { name: name } })
+		config.spec.name = name
 	}
 	return { tfConfig, config, docs, toRemove }
 }
 
 function addTopDashes(yamlText: string) {
+	yamlText = yamlText.trimStart()
 	if (!yamlText.startsWith('---')) {
 		// This is required for counting to function
 		yamlText = '---\n' + yamlText
@@ -550,4 +551,31 @@ function parseDSL(
 		}
 	})
 	return last
+}
+
+/**
+ * Builds a config merge object where allowEnv is filtered
+ */
+export function templateConfigMergeObject(
+	objectB: TemplateConfig
+): MergeObject<TemplateConfig> {
+	return {
+		spec: {
+			//@ts-ignore -- Deno is wrong here
+			allowEnv: (a, b) => {
+				if (objectB.metadata._allowAnyEnv) {
+					return a
+				}
+				if (a === undefined) {
+					if (Array.isArray(b)) {
+						return b
+					}
+					return []
+				} else if (b === undefined) {
+					return []
+				}
+				return a.filter((v) => b.includes(v))
+			},
+		},
+	}
 }
