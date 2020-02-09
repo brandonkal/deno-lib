@@ -217,6 +217,11 @@ export namespace helm {
 		helmVersion?: string
 	}
 
+	/**
+	 * Creating a HelmChart Resource is useful for managing external charts.
+	 * The cluster must have helm-controller installed. k3s has this by default.
+	 * @see https://github.com/rancher/helm-controller
+	 */
 	export class Chart extends kite.Resource implements IChart {
 		kind!: 'HelmChart'
 		apiVersion!: 'helm.cattle.io/v1'
