@@ -18,7 +18,7 @@ export namespace admissionregistration {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'admissionregistration.k8s.io/v1'
+			readonly apiVersion!: 'admissionregistration.k8s.io/v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -26,13 +26,13 @@ export namespace admissionregistration {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'MutatingWebhookConfiguration'
+			readonly kind!: 'MutatingWebhookConfiguration'
 
 			/**
 			 * Standard object metadata; More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata.
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Webhooks is a list of webhooks and the affected resources and operations.
@@ -72,12 +72,12 @@ export namespace admissionregistration {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'admissionregistration.k8s.io/v1'
+			readonly apiVersion!: 'admissionregistration.k8s.io/v1'
 
 			/**
 			 * List of MutatingWebhookConfiguration.
 			 */
-			readonly items: types.admissionregistration.v1.MutatingWebhookConfiguration[]
+			readonly items!: types.admissionregistration.v1.MutatingWebhookConfiguration[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -85,13 +85,13 @@ export namespace admissionregistration {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'MutatingWebhookConfigurationList'
+			readonly kind!: 'MutatingWebhookConfigurationList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a admissionregistration.v1.MutatingWebhookConfigurationList object with the given unique name and description.
@@ -127,7 +127,7 @@ export namespace admissionregistration {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'admissionregistration.k8s.io/v1'
+			readonly apiVersion!: 'admissionregistration.k8s.io/v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -135,13 +135,13 @@ export namespace admissionregistration {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ValidatingWebhookConfiguration'
+			readonly kind!: 'ValidatingWebhookConfiguration'
 
 			/**
 			 * Standard object metadata; More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata.
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Webhooks is a list of webhooks and the affected resources and operations.
@@ -181,12 +181,12 @@ export namespace admissionregistration {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'admissionregistration.k8s.io/v1'
+			readonly apiVersion!: 'admissionregistration.k8s.io/v1'
 
 			/**
 			 * List of ValidatingWebhookConfiguration.
 			 */
-			readonly items: types.admissionregistration.v1.ValidatingWebhookConfiguration[]
+			readonly items!: types.admissionregistration.v1.ValidatingWebhookConfiguration[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -194,13 +194,13 @@ export namespace admissionregistration {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ValidatingWebhookConfigurationList'
+			readonly kind!: 'ValidatingWebhookConfigurationList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a admissionregistration.v1.ValidatingWebhookConfigurationList object with the given unique name and description.
@@ -243,7 +243,7 @@ export namespace admissionregistration {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'admissionregistration.k8s.io/v1beta1'
+			readonly apiVersion!: 'admissionregistration.k8s.io/v1beta1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -251,13 +251,13 @@ export namespace admissionregistration {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'MutatingWebhookConfiguration'
+			readonly kind!: 'MutatingWebhookConfiguration'
 
 			/**
 			 * Standard object metadata; More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata.
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Webhooks is a list of webhooks and the affected resources and operations.
@@ -297,12 +297,12 @@ export namespace admissionregistration {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'admissionregistration.k8s.io/v1beta1'
+			readonly apiVersion!: 'admissionregistration.k8s.io/v1beta1'
 
 			/**
 			 * List of MutatingWebhookConfiguration.
 			 */
-			readonly items: types.admissionregistration.v1beta1.MutatingWebhookConfiguration[]
+			readonly items!: types.admissionregistration.v1beta1.MutatingWebhookConfiguration[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -310,13 +310,13 @@ export namespace admissionregistration {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'MutatingWebhookConfigurationList'
+			readonly kind!: 'MutatingWebhookConfigurationList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a admissionregistration.v1beta1.MutatingWebhookConfigurationList object with the given unique name and description.
@@ -356,7 +356,7 @@ export namespace admissionregistration {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'admissionregistration.k8s.io/v1beta1'
+			readonly apiVersion!: 'admissionregistration.k8s.io/v1beta1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -364,13 +364,13 @@ export namespace admissionregistration {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ValidatingWebhookConfiguration'
+			readonly kind!: 'ValidatingWebhookConfiguration'
 
 			/**
 			 * Standard object metadata; More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata.
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Webhooks is a list of webhooks and the affected resources and operations.
@@ -410,12 +410,12 @@ export namespace admissionregistration {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'admissionregistration.k8s.io/v1beta1'
+			readonly apiVersion!: 'admissionregistration.k8s.io/v1beta1'
 
 			/**
 			 * List of ValidatingWebhookConfiguration.
 			 */
-			readonly items: types.admissionregistration.v1beta1.ValidatingWebhookConfiguration[]
+			readonly items!: types.admissionregistration.v1beta1.ValidatingWebhookConfiguration[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -423,13 +423,13 @@ export namespace admissionregistration {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ValidatingWebhookConfigurationList'
+			readonly kind!: 'ValidatingWebhookConfigurationList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a admissionregistration.v1beta1.ValidatingWebhookConfigurationList object with the given unique name and description.
@@ -470,7 +470,7 @@ export namespace apiextensions {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'apiextensions.k8s.io/v1'
+			readonly apiVersion!: 'apiextensions.k8s.io/v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -478,14 +478,14 @@ export namespace apiextensions {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'CustomResourceDefinition'
+			readonly kind!: 'CustomResourceDefinition'
 
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * spec describes how the user wants the resources to appear
 			 */
-			readonly spec: types.apiextensions.v1.CustomResourceDefinitionSpec
+			readonly spec!: types.apiextensions.v1.CustomResourceDefinitionSpec
 
 			/**
 			 * Create a apiextensions.v1.CustomResourceDefinition object with the given unique name and description.
@@ -520,12 +520,12 @@ export namespace apiextensions {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'apiextensions.k8s.io/v1'
+			readonly apiVersion!: 'apiextensions.k8s.io/v1'
 
 			/**
 			 * items list individual CustomResourceDefinition objects
 			 */
-			readonly items: types.apiextensions.v1.CustomResourceDefinition[]
+			readonly items!: types.apiextensions.v1.CustomResourceDefinition[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -533,9 +533,9 @@ export namespace apiextensions {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'CustomResourceDefinitionList'
+			readonly kind!: 'CustomResourceDefinitionList'
 
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a apiextensions.v1.CustomResourceDefinitionList object with the given unique name and description.
@@ -577,7 +577,7 @@ export namespace apiextensions {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'apiextensions.k8s.io/v1beta1'
+			readonly apiVersion!: 'apiextensions.k8s.io/v1beta1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -585,14 +585,14 @@ export namespace apiextensions {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'CustomResourceDefinition'
+			readonly kind!: 'CustomResourceDefinition'
 
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * spec describes how the user wants the resources to appear
 			 */
-			readonly spec: types.apiextensions.v1beta1.CustomResourceDefinitionSpec
+			readonly spec!: types.apiextensions.v1beta1.CustomResourceDefinitionSpec
 
 			/**
 			 * Create a apiextensions.v1beta1.CustomResourceDefinition object with the given unique name and description.
@@ -627,12 +627,12 @@ export namespace apiextensions {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'apiextensions.k8s.io/v1beta1'
+			readonly apiVersion!: 'apiextensions.k8s.io/v1beta1'
 
 			/**
 			 * items list individual CustomResourceDefinition objects
 			 */
-			readonly items: types.apiextensions.v1beta1.CustomResourceDefinition[]
+			readonly items!: types.apiextensions.v1beta1.CustomResourceDefinition[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -640,9 +640,9 @@ export namespace apiextensions {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'CustomResourceDefinitionList'
+			readonly kind!: 'CustomResourceDefinitionList'
 
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a apiextensions.v1beta1.CustomResourceDefinitionList object with the given unique name and description.
@@ -682,7 +682,7 @@ export namespace apiregistration {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'apiregistration.k8s.io/v1'
+			readonly apiVersion!: 'apiregistration.k8s.io/v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -690,14 +690,14 @@ export namespace apiregistration {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'APIService'
+			readonly kind!: 'APIService'
 
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Spec contains information for locating and communicating with a server
 			 */
-			readonly spec: types.apiregistration.v1.APIServiceSpec
+			readonly spec!: types.apiregistration.v1.APIServiceSpec
 
 			/**
 			 * Create a apiregistration.v1.APIService object with the given unique name and description.
@@ -729,9 +729,9 @@ export namespace apiregistration {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'apiregistration.k8s.io/v1'
+			readonly apiVersion!: 'apiregistration.k8s.io/v1'
 
-			readonly items: types.apiregistration.v1.APIService[]
+			readonly items!: types.apiregistration.v1.APIService[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -739,9 +739,9 @@ export namespace apiregistration {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'APIServiceList'
+			readonly kind!: 'APIServiceList'
 
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a apiregistration.v1.APIServiceList object with the given unique name and description.
@@ -776,7 +776,7 @@ export namespace apiregistration {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'apiregistration.k8s.io/v1beta1'
+			readonly apiVersion!: 'apiregistration.k8s.io/v1beta1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -784,14 +784,14 @@ export namespace apiregistration {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'APIService'
+			readonly kind!: 'APIService'
 
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Spec contains information for locating and communicating with a server
 			 */
-			readonly spec: types.apiregistration.v1beta1.APIServiceSpec
+			readonly spec!: types.apiregistration.v1beta1.APIServiceSpec
 
 			/**
 			 * Create a apiregistration.v1beta1.APIService object with the given unique name and description.
@@ -826,9 +826,9 @@ export namespace apiregistration {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'apiregistration.k8s.io/v1beta1'
+			readonly apiVersion!: 'apiregistration.k8s.io/v1beta1'
 
-			readonly items: types.apiregistration.v1beta1.APIService[]
+			readonly items!: types.apiregistration.v1beta1.APIService[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -836,9 +836,9 @@ export namespace apiregistration {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'APIServiceList'
+			readonly kind!: 'APIServiceList'
 
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a apiregistration.v1beta1.APIServiceList object with the given unique name and description.
@@ -885,7 +885,7 @@ export namespace apps {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'apps/v1'
+			readonly apiVersion!: 'apps/v1'
 
 			/**
 			 * Data is the serialized representation of the state.
@@ -898,18 +898,18 @@ export namespace apps {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ControllerRevision'
+			readonly kind!: 'ControllerRevision'
 
 			/**
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Revision indicates the revision of the state represented by Data.
 			 */
-			readonly revision: number
+			readonly revision!: number
 
 			/**
 			 * Create a apps.v1.ControllerRevision object with the given unique name and description.
@@ -942,12 +942,12 @@ export namespace apps {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'apps/v1'
+			readonly apiVersion!: 'apps/v1'
 
 			/**
 			 * Items is the list of ControllerRevisions
 			 */
-			readonly items: types.apps.v1.ControllerRevision[]
+			readonly items!: types.apps.v1.ControllerRevision[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -955,13 +955,13 @@ export namespace apps {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ControllerRevisionList'
+			readonly kind!: 'ControllerRevisionList'
 
 			/**
 			 * More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a apps.v1.ControllerRevisionList object with the given unique name and description.
@@ -993,7 +993,7 @@ export namespace apps {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'apps/v1'
+			readonly apiVersion!: 'apps/v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -1001,19 +1001,19 @@ export namespace apps {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'DaemonSet'
+			readonly kind!: 'DaemonSet'
 
 			/**
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * The desired behavior of this daemon set. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 			 */
-			readonly spec: types.apps.v1.DaemonSetSpec
+			readonly spec!: types.apps.v1.DaemonSetSpec
 
 			/**
 			 * Create a apps.v1.DaemonSet object with the given unique name and description.
@@ -1045,12 +1045,12 @@ export namespace apps {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'apps/v1'
+			readonly apiVersion!: 'apps/v1'
 
 			/**
 			 * A list of daemon sets.
 			 */
-			readonly items: types.apps.v1.DaemonSet[]
+			readonly items!: types.apps.v1.DaemonSet[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -1058,13 +1058,13 @@ export namespace apps {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'DaemonSetList'
+			readonly kind!: 'DaemonSetList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a apps.v1.DaemonSetList object with the given unique name and description.
@@ -1096,7 +1096,7 @@ export namespace apps {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'apps/v1'
+			readonly apiVersion!: 'apps/v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -1104,17 +1104,17 @@ export namespace apps {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'Deployment'
+			readonly kind!: 'Deployment'
 
 			/**
 			 * Standard object metadata.
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Specification of the desired behavior of the Deployment.
 			 */
-			readonly spec: types.apps.v1.DeploymentSpec
+			readonly spec!: types.apps.v1.DeploymentSpec
 
 			/**
 			 * Create a apps.v1.Deployment object with the given unique name and description.
@@ -1146,12 +1146,12 @@ export namespace apps {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'apps/v1'
+			readonly apiVersion!: 'apps/v1'
 
 			/**
 			 * Items is the list of Deployments.
 			 */
-			readonly items: types.apps.v1.Deployment[]
+			readonly items!: types.apps.v1.Deployment[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -1159,12 +1159,12 @@ export namespace apps {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'DeploymentList'
+			readonly kind!: 'DeploymentList'
 
 			/**
 			 * Standard list metadata.
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a apps.v1.DeploymentList object with the given unique name and description.
@@ -1196,7 +1196,7 @@ export namespace apps {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'apps/v1'
+			readonly apiVersion!: 'apps/v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -1204,20 +1204,20 @@ export namespace apps {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ReplicaSet'
+			readonly kind!: 'ReplicaSet'
 
 			/**
 			 * If the Labels of a ReplicaSet are empty, they are defaulted to be the same as the Pod(s)
 			 * that the ReplicaSet manages. Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Spec defines the specification of the desired behavior of the ReplicaSet. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 			 */
-			readonly spec: types.apps.v1.ReplicaSetSpec
+			readonly spec!: types.apps.v1.ReplicaSetSpec
 
 			/**
 			 * Create a apps.v1.ReplicaSet object with the given unique name and description.
@@ -1249,13 +1249,13 @@ export namespace apps {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'apps/v1'
+			readonly apiVersion!: 'apps/v1'
 
 			/**
 			 * List of ReplicaSets. More info:
 			 * https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller
 			 */
-			readonly items: types.apps.v1.ReplicaSet[]
+			readonly items!: types.apps.v1.ReplicaSet[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -1263,13 +1263,13 @@ export namespace apps {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ReplicaSetList'
+			readonly kind!: 'ReplicaSetList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a apps.v1.ReplicaSetList object with the given unique name and description.
@@ -1305,7 +1305,7 @@ export namespace apps {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'apps/v1'
+			readonly apiVersion!: 'apps/v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -1313,14 +1313,14 @@ export namespace apps {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'StatefulSet'
+			readonly kind!: 'StatefulSet'
 
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Spec defines the desired identities of pods in this set.
 			 */
-			readonly spec: types.apps.v1.StatefulSetSpec
+			readonly spec!: types.apps.v1.StatefulSetSpec
 
 			/**
 			 * Create a apps.v1.StatefulSet object with the given unique name and description.
@@ -1352,9 +1352,9 @@ export namespace apps {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'apps/v1'
+			readonly apiVersion!: 'apps/v1'
 
-			readonly items: types.apps.v1.StatefulSet[]
+			readonly items!: types.apps.v1.StatefulSet[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -1362,9 +1362,9 @@ export namespace apps {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'StatefulSetList'
+			readonly kind!: 'StatefulSetList'
 
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a apps.v1.StatefulSetList object with the given unique name and description.
@@ -1409,7 +1409,7 @@ export namespace apps {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'apps/v1beta1'
+			readonly apiVersion!: 'apps/v1beta1'
 
 			/**
 			 * Data is the serialized representation of the state.
@@ -1422,18 +1422,18 @@ export namespace apps {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ControllerRevision'
+			readonly kind!: 'ControllerRevision'
 
 			/**
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Revision indicates the revision of the state represented by Data.
 			 */
-			readonly revision: number
+			readonly revision!: number
 
 			/**
 			 * Create a apps.v1beta1.ControllerRevision object with the given unique name and description.
@@ -1466,12 +1466,12 @@ export namespace apps {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'apps/v1beta1'
+			readonly apiVersion!: 'apps/v1beta1'
 
 			/**
 			 * Items is the list of ControllerRevisions
 			 */
-			readonly items: types.apps.v1beta1.ControllerRevision[]
+			readonly items!: types.apps.v1beta1.ControllerRevision[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -1479,13 +1479,13 @@ export namespace apps {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ControllerRevisionList'
+			readonly kind!: 'ControllerRevisionList'
 
 			/**
 			 * More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a apps.v1beta1.ControllerRevisionList object with the given unique name and description.
@@ -1523,7 +1523,7 @@ export namespace apps {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'apps/v1beta1'
+			readonly apiVersion!: 'apps/v1beta1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -1531,17 +1531,17 @@ export namespace apps {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'Deployment'
+			readonly kind!: 'Deployment'
 
 			/**
 			 * Standard object metadata.
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Specification of the desired behavior of the Deployment.
 			 */
-			readonly spec: types.apps.v1beta1.DeploymentSpec
+			readonly spec!: types.apps.v1beta1.DeploymentSpec
 
 			/**
 			 * Create a apps.v1beta1.Deployment object with the given unique name and description.
@@ -1573,12 +1573,12 @@ export namespace apps {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'apps/v1beta1'
+			readonly apiVersion!: 'apps/v1beta1'
 
 			/**
 			 * Items is the list of Deployments.
 			 */
-			readonly items: types.apps.v1beta1.Deployment[]
+			readonly items!: types.apps.v1beta1.Deployment[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -1586,12 +1586,12 @@ export namespace apps {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'DeploymentList'
+			readonly kind!: 'DeploymentList'
 
 			/**
 			 * Standard list metadata.
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a apps.v1beta1.DeploymentList object with the given unique name and description.
@@ -1630,7 +1630,7 @@ export namespace apps {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'apps/v1beta1'
+			readonly apiVersion!: 'apps/v1beta1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -1638,14 +1638,14 @@ export namespace apps {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'StatefulSet'
+			readonly kind!: 'StatefulSet'
 
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Spec defines the desired identities of pods in this set.
 			 */
-			readonly spec: types.apps.v1beta1.StatefulSetSpec
+			readonly spec!: types.apps.v1beta1.StatefulSetSpec
 
 			/**
 			 * Create a apps.v1beta1.StatefulSet object with the given unique name and description.
@@ -1677,9 +1677,9 @@ export namespace apps {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'apps/v1beta1'
+			readonly apiVersion!: 'apps/v1beta1'
 
-			readonly items: types.apps.v1beta1.StatefulSet[]
+			readonly items!: types.apps.v1beta1.StatefulSet[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -1687,9 +1687,9 @@ export namespace apps {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'StatefulSetList'
+			readonly kind!: 'StatefulSetList'
 
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a apps.v1beta1.StatefulSetList object with the given unique name and description.
@@ -1734,7 +1734,7 @@ export namespace apps {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'apps/v1beta2'
+			readonly apiVersion!: 'apps/v1beta2'
 
 			/**
 			 * Data is the serialized representation of the state.
@@ -1747,18 +1747,18 @@ export namespace apps {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ControllerRevision'
+			readonly kind!: 'ControllerRevision'
 
 			/**
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Revision indicates the revision of the state represented by Data.
 			 */
-			readonly revision: number
+			readonly revision!: number
 
 			/**
 			 * Create a apps.v1beta2.ControllerRevision object with the given unique name and description.
@@ -1791,12 +1791,12 @@ export namespace apps {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'apps/v1beta2'
+			readonly apiVersion!: 'apps/v1beta2'
 
 			/**
 			 * Items is the list of ControllerRevisions
 			 */
-			readonly items: types.apps.v1beta2.ControllerRevision[]
+			readonly items!: types.apps.v1beta2.ControllerRevision[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -1804,13 +1804,13 @@ export namespace apps {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ControllerRevisionList'
+			readonly kind!: 'ControllerRevisionList'
 
 			/**
 			 * More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a apps.v1beta2.ControllerRevisionList object with the given unique name and description.
@@ -1848,7 +1848,7 @@ export namespace apps {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'apps/v1beta2'
+			readonly apiVersion!: 'apps/v1beta2'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -1856,19 +1856,19 @@ export namespace apps {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'DaemonSet'
+			readonly kind!: 'DaemonSet'
 
 			/**
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * The desired behavior of this daemon set. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 			 */
-			readonly spec: types.apps.v1beta2.DaemonSetSpec
+			readonly spec!: types.apps.v1beta2.DaemonSetSpec
 
 			/**
 			 * Create a apps.v1beta2.DaemonSet object with the given unique name and description.
@@ -1900,12 +1900,12 @@ export namespace apps {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'apps/v1beta2'
+			readonly apiVersion!: 'apps/v1beta2'
 
 			/**
 			 * A list of daemon sets.
 			 */
-			readonly items: types.apps.v1beta2.DaemonSet[]
+			readonly items!: types.apps.v1beta2.DaemonSet[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -1913,13 +1913,13 @@ export namespace apps {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'DaemonSetList'
+			readonly kind!: 'DaemonSetList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a apps.v1beta2.DaemonSetList object with the given unique name and description.
@@ -1954,7 +1954,7 @@ export namespace apps {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'apps/v1beta2'
+			readonly apiVersion!: 'apps/v1beta2'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -1962,17 +1962,17 @@ export namespace apps {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'Deployment'
+			readonly kind!: 'Deployment'
 
 			/**
 			 * Standard object metadata.
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Specification of the desired behavior of the Deployment.
 			 */
-			readonly spec: types.apps.v1beta2.DeploymentSpec
+			readonly spec!: types.apps.v1beta2.DeploymentSpec
 
 			/**
 			 * Create a apps.v1beta2.Deployment object with the given unique name and description.
@@ -2004,12 +2004,12 @@ export namespace apps {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'apps/v1beta2'
+			readonly apiVersion!: 'apps/v1beta2'
 
 			/**
 			 * Items is the list of Deployments.
 			 */
-			readonly items: types.apps.v1beta2.Deployment[]
+			readonly items!: types.apps.v1beta2.Deployment[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -2017,12 +2017,12 @@ export namespace apps {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'DeploymentList'
+			readonly kind!: 'DeploymentList'
 
 			/**
 			 * Standard list metadata.
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a apps.v1beta2.DeploymentList object with the given unique name and description.
@@ -2057,7 +2057,7 @@ export namespace apps {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'apps/v1beta2'
+			readonly apiVersion!: 'apps/v1beta2'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -2065,20 +2065,20 @@ export namespace apps {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ReplicaSet'
+			readonly kind!: 'ReplicaSet'
 
 			/**
 			 * If the Labels of a ReplicaSet are empty, they are defaulted to be the same as the Pod(s)
 			 * that the ReplicaSet manages. Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Spec defines the specification of the desired behavior of the ReplicaSet. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 			 */
-			readonly spec: types.apps.v1beta2.ReplicaSetSpec
+			readonly spec!: types.apps.v1beta2.ReplicaSetSpec
 
 			/**
 			 * Create a apps.v1beta2.ReplicaSet object with the given unique name and description.
@@ -2110,13 +2110,13 @@ export namespace apps {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'apps/v1beta2'
+			readonly apiVersion!: 'apps/v1beta2'
 
 			/**
 			 * List of ReplicaSets. More info:
 			 * https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller
 			 */
-			readonly items: types.apps.v1beta2.ReplicaSet[]
+			readonly items!: types.apps.v1beta2.ReplicaSet[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -2124,13 +2124,13 @@ export namespace apps {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ReplicaSetList'
+			readonly kind!: 'ReplicaSetList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a apps.v1beta2.ReplicaSetList object with the given unique name and description.
@@ -2169,7 +2169,7 @@ export namespace apps {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'apps/v1beta2'
+			readonly apiVersion!: 'apps/v1beta2'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -2177,14 +2177,14 @@ export namespace apps {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'StatefulSet'
+			readonly kind!: 'StatefulSet'
 
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Spec defines the desired identities of pods in this set.
 			 */
-			readonly spec: types.apps.v1beta2.StatefulSetSpec
+			readonly spec!: types.apps.v1beta2.StatefulSetSpec
 
 			/**
 			 * Create a apps.v1beta2.StatefulSet object with the given unique name and description.
@@ -2216,9 +2216,9 @@ export namespace apps {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'apps/v1beta2'
+			readonly apiVersion!: 'apps/v1beta2'
 
-			readonly items: types.apps.v1beta2.StatefulSet[]
+			readonly items!: types.apps.v1beta2.StatefulSet[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -2226,9 +2226,9 @@ export namespace apps {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'StatefulSetList'
+			readonly kind!: 'StatefulSetList'
 
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a apps.v1beta2.StatefulSetList object with the given unique name and description.
@@ -2265,7 +2265,7 @@ export namespace auditregistration {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'auditregistration.k8s.io/v1alpha1'
+			readonly apiVersion!: 'auditregistration.k8s.io/v1alpha1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -2273,14 +2273,14 @@ export namespace auditregistration {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'AuditSink'
+			readonly kind!: 'AuditSink'
 
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Spec defines the audit configuration spec
 			 */
-			readonly spec: types.auditregistration.v1alpha1.AuditSinkSpec
+			readonly spec!: types.auditregistration.v1alpha1.AuditSinkSpec
 
 			/**
 			 * Create a auditregistration.v1alpha1.AuditSink object with the given unique name and description.
@@ -2315,12 +2315,12 @@ export namespace auditregistration {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'auditregistration.k8s.io/v1alpha1'
+			readonly apiVersion!: 'auditregistration.k8s.io/v1alpha1'
 
 			/**
 			 * List of audit configurations.
 			 */
-			readonly items: types.auditregistration.v1alpha1.AuditSink[]
+			readonly items!: types.auditregistration.v1alpha1.AuditSink[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -2328,9 +2328,9 @@ export namespace auditregistration {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'AuditSinkList'
+			readonly kind!: 'AuditSinkList'
 
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a auditregistration.v1alpha1.AuditSinkList object with the given unique name and description.
@@ -2370,7 +2370,7 @@ export namespace authentication {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'authentication.k8s.io/v1'
+			readonly apiVersion!: 'authentication.k8s.io/v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -2378,11 +2378,11 @@ export namespace authentication {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'TokenRequest'
+			readonly kind!: 'TokenRequest'
 
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
-			readonly spec: types.authentication.v1.TokenRequestSpec
+			readonly spec!: types.authentication.v1.TokenRequestSpec
 
 			/**
 			 * Create a authentication.v1.TokenRequest object with the given unique name and description.
@@ -2415,7 +2415,7 @@ export namespace authentication {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'authentication.k8s.io/v1'
+			readonly apiVersion!: 'authentication.k8s.io/v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -2423,14 +2423,14 @@ export namespace authentication {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'TokenReview'
+			readonly kind!: 'TokenReview'
 
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Spec holds information about the request being evaluated
 			 */
-			readonly spec: types.authentication.v1.TokenReviewSpec
+			readonly spec!: types.authentication.v1.TokenReviewSpec
 
 			/**
 			 * Create a authentication.v1.TokenReview object with the given unique name and description.
@@ -2466,7 +2466,7 @@ export namespace authentication {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'authentication.k8s.io/v1beta1'
+			readonly apiVersion!: 'authentication.k8s.io/v1beta1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -2474,14 +2474,14 @@ export namespace authentication {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'TokenReview'
+			readonly kind!: 'TokenReview'
 
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Spec holds information about the request being evaluated
 			 */
-			readonly spec: types.authentication.v1beta1.TokenReviewSpec
+			readonly spec!: types.authentication.v1beta1.TokenReviewSpec
 
 			/**
 			 * Create a authentication.v1beta1.TokenReview object with the given unique name and description.
@@ -2523,7 +2523,7 @@ export namespace authorization {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'authorization.k8s.io/v1'
+			readonly apiVersion!: 'authorization.k8s.io/v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -2531,15 +2531,15 @@ export namespace authorization {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'LocalSubjectAccessReview'
+			readonly kind!: 'LocalSubjectAccessReview'
 
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Spec holds information about the request being evaluated.  spec.namespace must be equal to
 			 * the namespace you made the request against.  If empty, it is defaulted.
 			 */
-			readonly spec: types.authorization.v1.SubjectAccessReviewSpec
+			readonly spec!: types.authorization.v1.SubjectAccessReviewSpec
 
 			/**
 			 * Create a authorization.v1.LocalSubjectAccessReview object with the given unique name and description.
@@ -2576,7 +2576,7 @@ export namespace authorization {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'authorization.k8s.io/v1'
+			readonly apiVersion!: 'authorization.k8s.io/v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -2584,14 +2584,14 @@ export namespace authorization {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'SelfSubjectAccessReview'
+			readonly kind!: 'SelfSubjectAccessReview'
 
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Spec holds information about the request being evaluated.  user and groups must be empty
 			 */
-			readonly spec: types.authorization.v1.SelfSubjectAccessReviewSpec
+			readonly spec!: types.authorization.v1.SelfSubjectAccessReviewSpec
 
 			/**
 			 * Create a authorization.v1.SelfSubjectAccessReview object with the given unique name and description.
@@ -2633,7 +2633,7 @@ export namespace authorization {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'authorization.k8s.io/v1'
+			readonly apiVersion!: 'authorization.k8s.io/v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -2641,14 +2641,14 @@ export namespace authorization {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'SelfSubjectRulesReview'
+			readonly kind!: 'SelfSubjectRulesReview'
 
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Spec holds information about the request being evaluated.
 			 */
-			readonly spec: types.authorization.v1.SelfSubjectRulesReviewSpec
+			readonly spec!: types.authorization.v1.SelfSubjectRulesReviewSpec
 
 			/**
 			 * Create a authorization.v1.SelfSubjectRulesReview object with the given unique name and description.
@@ -2683,7 +2683,7 @@ export namespace authorization {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'authorization.k8s.io/v1'
+			readonly apiVersion!: 'authorization.k8s.io/v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -2691,14 +2691,14 @@ export namespace authorization {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'SubjectAccessReview'
+			readonly kind!: 'SubjectAccessReview'
 
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Spec holds information about the request being evaluated
 			 */
-			readonly spec: types.authorization.v1.SubjectAccessReviewSpec
+			readonly spec!: types.authorization.v1.SubjectAccessReviewSpec
 
 			/**
 			 * Create a authorization.v1.SubjectAccessReview object with the given unique name and description.
@@ -2738,7 +2738,7 @@ export namespace authorization {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'authorization.k8s.io/v1beta1'
+			readonly apiVersion!: 'authorization.k8s.io/v1beta1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -2746,15 +2746,15 @@ export namespace authorization {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'LocalSubjectAccessReview'
+			readonly kind!: 'LocalSubjectAccessReview'
 
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Spec holds information about the request being evaluated.  spec.namespace must be equal to
 			 * the namespace you made the request against.  If empty, it is defaulted.
 			 */
-			readonly spec: types.authorization.v1beta1.SubjectAccessReviewSpec
+			readonly spec!: types.authorization.v1beta1.SubjectAccessReviewSpec
 
 			/**
 			 * Create a authorization.v1beta1.LocalSubjectAccessReview object with the given unique name and description.
@@ -2791,7 +2791,7 @@ export namespace authorization {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'authorization.k8s.io/v1beta1'
+			readonly apiVersion!: 'authorization.k8s.io/v1beta1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -2799,14 +2799,14 @@ export namespace authorization {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'SelfSubjectAccessReview'
+			readonly kind!: 'SelfSubjectAccessReview'
 
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Spec holds information about the request being evaluated.  user and groups must be empty
 			 */
-			readonly spec: types.authorization.v1beta1.SelfSubjectAccessReviewSpec
+			readonly spec!: types.authorization.v1beta1.SelfSubjectAccessReviewSpec
 
 			/**
 			 * Create a authorization.v1beta1.SelfSubjectAccessReview object with the given unique name and description.
@@ -2848,7 +2848,7 @@ export namespace authorization {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'authorization.k8s.io/v1beta1'
+			readonly apiVersion!: 'authorization.k8s.io/v1beta1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -2856,14 +2856,14 @@ export namespace authorization {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'SelfSubjectRulesReview'
+			readonly kind!: 'SelfSubjectRulesReview'
 
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Spec holds information about the request being evaluated.
 			 */
-			readonly spec: types.authorization.v1beta1.SelfSubjectRulesReviewSpec
+			readonly spec!: types.authorization.v1beta1.SelfSubjectRulesReviewSpec
 
 			/**
 			 * Create a authorization.v1beta1.SelfSubjectRulesReview object with the given unique name and description.
@@ -2898,7 +2898,7 @@ export namespace authorization {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'authorization.k8s.io/v1beta1'
+			readonly apiVersion!: 'authorization.k8s.io/v1beta1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -2906,14 +2906,14 @@ export namespace authorization {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'SubjectAccessReview'
+			readonly kind!: 'SubjectAccessReview'
 
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Spec holds information about the request being evaluated
 			 */
-			readonly spec: types.authorization.v1beta1.SubjectAccessReviewSpec
+			readonly spec!: types.authorization.v1beta1.SubjectAccessReviewSpec
 
 			/**
 			 * Create a authorization.v1beta1.SubjectAccessReview object with the given unique name and description.
@@ -2953,7 +2953,7 @@ export namespace autoscaling {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'autoscaling/v1'
+			readonly apiVersion!: 'autoscaling/v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -2961,19 +2961,19 @@ export namespace autoscaling {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'HorizontalPodAutoscaler'
+			readonly kind!: 'HorizontalPodAutoscaler'
 
 			/**
 			 * Standard object metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * behaviour of autoscaler. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status.
 			 */
-			readonly spec: types.autoscaling.v1.HorizontalPodAutoscalerSpec
+			readonly spec!: types.autoscaling.v1.HorizontalPodAutoscalerSpec
 
 			/**
 			 * Create a autoscaling.v1.HorizontalPodAutoscaler object with the given unique name and description.
@@ -3008,12 +3008,12 @@ export namespace autoscaling {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'autoscaling/v1'
+			readonly apiVersion!: 'autoscaling/v1'
 
 			/**
 			 * list of horizontal pod autoscaler objects.
 			 */
-			readonly items: types.autoscaling.v1.HorizontalPodAutoscaler[]
+			readonly items!: types.autoscaling.v1.HorizontalPodAutoscaler[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3021,12 +3021,12 @@ export namespace autoscaling {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'HorizontalPodAutoscalerList'
+			readonly kind!: 'HorizontalPodAutoscalerList'
 
 			/**
 			 * Standard list metadata.
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a autoscaling.v1.HorizontalPodAutoscalerList object with the given unique name and description.
@@ -3066,7 +3066,7 @@ export namespace autoscaling {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'autoscaling/v2beta1'
+			readonly apiVersion!: 'autoscaling/v2beta1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3074,19 +3074,19 @@ export namespace autoscaling {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'HorizontalPodAutoscaler'
+			readonly kind!: 'HorizontalPodAutoscaler'
 
 			/**
 			 * metadata is the standard object metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * spec is the specification for the behaviour of the autoscaler. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status.
 			 */
-			readonly spec: types.autoscaling.v2beta1.HorizontalPodAutoscalerSpec
+			readonly spec!: types.autoscaling.v2beta1.HorizontalPodAutoscalerSpec
 
 			/**
 			 * Create a autoscaling.v2beta1.HorizontalPodAutoscaler object with the given unique name and description.
@@ -3121,12 +3121,12 @@ export namespace autoscaling {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'autoscaling/v2beta1'
+			readonly apiVersion!: 'autoscaling/v2beta1'
 
 			/**
 			 * items is the list of horizontal pod autoscaler objects.
 			 */
-			readonly items: types.autoscaling.v2beta1.HorizontalPodAutoscaler[]
+			readonly items!: types.autoscaling.v2beta1.HorizontalPodAutoscaler[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3134,12 +3134,12 @@ export namespace autoscaling {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'HorizontalPodAutoscalerList'
+			readonly kind!: 'HorizontalPodAutoscalerList'
 
 			/**
 			 * metadata is the standard list metadata.
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a autoscaling.v2beta1.HorizontalPodAutoscalerList object with the given unique name and description.
@@ -3179,7 +3179,7 @@ export namespace autoscaling {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'autoscaling/v2beta2'
+			readonly apiVersion!: 'autoscaling/v2beta2'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3187,19 +3187,19 @@ export namespace autoscaling {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'HorizontalPodAutoscaler'
+			readonly kind!: 'HorizontalPodAutoscaler'
 
 			/**
 			 * metadata is the standard object metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * spec is the specification for the behaviour of the autoscaler. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status.
 			 */
-			readonly spec: types.autoscaling.v2beta2.HorizontalPodAutoscalerSpec
+			readonly spec!: types.autoscaling.v2beta2.HorizontalPodAutoscalerSpec
 
 			/**
 			 * Create a autoscaling.v2beta2.HorizontalPodAutoscaler object with the given unique name and description.
@@ -3234,12 +3234,12 @@ export namespace autoscaling {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'autoscaling/v2beta2'
+			readonly apiVersion!: 'autoscaling/v2beta2'
 
 			/**
 			 * items is the list of horizontal pod autoscaler objects.
 			 */
-			readonly items: types.autoscaling.v2beta2.HorizontalPodAutoscaler[]
+			readonly items!: types.autoscaling.v2beta2.HorizontalPodAutoscaler[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3247,12 +3247,12 @@ export namespace autoscaling {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'HorizontalPodAutoscalerList'
+			readonly kind!: 'HorizontalPodAutoscalerList'
 
 			/**
 			 * metadata is the standard list metadata.
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a autoscaling.v2beta2.HorizontalPodAutoscalerList object with the given unique name and description.
@@ -3292,7 +3292,7 @@ export namespace batch {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'batch/v1'
+			readonly apiVersion!: 'batch/v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3300,19 +3300,19 @@ export namespace batch {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'Job'
+			readonly kind!: 'Job'
 
 			/**
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Specification of the desired behavior of a job. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 			 */
-			readonly spec: types.batch.v1.JobSpec
+			readonly spec!: types.batch.v1.JobSpec
 
 			/**
 			 * Create a batch.v1.Job object with the given unique name and description.
@@ -3344,12 +3344,12 @@ export namespace batch {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'batch/v1'
+			readonly apiVersion!: 'batch/v1'
 
 			/**
 			 * items is the list of Jobs.
 			 */
-			readonly items: types.batch.v1.Job[]
+			readonly items!: types.batch.v1.Job[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3357,13 +3357,13 @@ export namespace batch {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'JobList'
+			readonly kind!: 'JobList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a batch.v1.JobList object with the given unique name and description.
@@ -3398,7 +3398,7 @@ export namespace batch {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'batch/v1beta1'
+			readonly apiVersion!: 'batch/v1beta1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3406,19 +3406,19 @@ export namespace batch {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'CronJob'
+			readonly kind!: 'CronJob'
 
 			/**
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Specification of the desired behavior of a cron job, including the schedule. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 			 */
-			readonly spec: types.batch.v1beta1.CronJobSpec
+			readonly spec!: types.batch.v1beta1.CronJobSpec
 
 			/**
 			 * Create a batch.v1beta1.CronJob object with the given unique name and description.
@@ -3450,12 +3450,12 @@ export namespace batch {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'batch/v1beta1'
+			readonly apiVersion!: 'batch/v1beta1'
 
 			/**
 			 * items is the list of CronJobs.
 			 */
-			readonly items: types.batch.v1beta1.CronJob[]
+			readonly items!: types.batch.v1beta1.CronJob[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3463,13 +3463,13 @@ export namespace batch {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'CronJobList'
+			readonly kind!: 'CronJobList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a batch.v1beta1.CronJobList object with the given unique name and description.
@@ -3504,7 +3504,7 @@ export namespace batch {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'batch/v2alpha1'
+			readonly apiVersion!: 'batch/v2alpha1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3512,19 +3512,19 @@ export namespace batch {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'CronJob'
+			readonly kind!: 'CronJob'
 
 			/**
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Specification of the desired behavior of a cron job, including the schedule. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 			 */
-			readonly spec: types.batch.v2alpha1.CronJobSpec
+			readonly spec!: types.batch.v2alpha1.CronJobSpec
 
 			/**
 			 * Create a batch.v2alpha1.CronJob object with the given unique name and description.
@@ -3556,12 +3556,12 @@ export namespace batch {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'batch/v2alpha1'
+			readonly apiVersion!: 'batch/v2alpha1'
 
 			/**
 			 * items is the list of CronJobs.
 			 */
-			readonly items: types.batch.v2alpha1.CronJob[]
+			readonly items!: types.batch.v2alpha1.CronJob[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3569,13 +3569,13 @@ export namespace batch {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'CronJobList'
+			readonly kind!: 'CronJobList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a batch.v2alpha1.CronJobList object with the given unique name and description.
@@ -3612,7 +3612,7 @@ export namespace certificates {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'certificates.k8s.io/v1beta1'
+			readonly apiVersion!: 'certificates.k8s.io/v1beta1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3620,14 +3620,14 @@ export namespace certificates {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'CertificateSigningRequest'
+			readonly kind!: 'CertificateSigningRequest'
 
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * The certificate request itself and any additional information.
 			 */
-			readonly spec: types.certificates.v1beta1.CertificateSigningRequestSpec
+			readonly spec!: types.certificates.v1beta1.CertificateSigningRequestSpec
 
 			/**
 			 * Create a certificates.v1beta1.CertificateSigningRequest object with the given unique name and description.
@@ -3662,9 +3662,9 @@ export namespace certificates {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'certificates.k8s.io/v1beta1'
+			readonly apiVersion!: 'certificates.k8s.io/v1beta1'
 
-			readonly items: types.certificates.v1beta1.CertificateSigningRequest[]
+			readonly items!: types.certificates.v1beta1.CertificateSigningRequest[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3672,9 +3672,9 @@ export namespace certificates {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'CertificateSigningRequestList'
+			readonly kind!: 'CertificateSigningRequestList'
 
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a certificates.v1beta1.CertificateSigningRequestList object with the given unique name and description.
@@ -3714,7 +3714,7 @@ export namespace coordination {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'coordination.k8s.io/v1'
+			readonly apiVersion!: 'coordination.k8s.io/v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3722,19 +3722,19 @@ export namespace coordination {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'Lease'
+			readonly kind!: 'Lease'
 
 			/**
 			 * More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Specification of the Lease. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 			 */
-			readonly spec: types.coordination.v1.LeaseSpec
+			readonly spec!: types.coordination.v1.LeaseSpec
 
 			/**
 			 * Create a coordination.v1.Lease object with the given unique name and description.
@@ -3766,12 +3766,12 @@ export namespace coordination {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'coordination.k8s.io/v1'
+			readonly apiVersion!: 'coordination.k8s.io/v1'
 
 			/**
 			 * Items is a list of schema objects.
 			 */
-			readonly items: types.coordination.v1.Lease[]
+			readonly items!: types.coordination.v1.Lease[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3779,13 +3779,13 @@ export namespace coordination {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'LeaseList'
+			readonly kind!: 'LeaseList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a coordination.v1.LeaseList object with the given unique name and description.
@@ -3820,7 +3820,7 @@ export namespace coordination {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'coordination.k8s.io/v1beta1'
+			readonly apiVersion!: 'coordination.k8s.io/v1beta1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3828,19 +3828,19 @@ export namespace coordination {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'Lease'
+			readonly kind!: 'Lease'
 
 			/**
 			 * More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Specification of the Lease. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 			 */
-			readonly spec: types.coordination.v1beta1.LeaseSpec
+			readonly spec!: types.coordination.v1beta1.LeaseSpec
 
 			/**
 			 * Create a coordination.v1beta1.Lease object with the given unique name and description.
@@ -3872,12 +3872,12 @@ export namespace coordination {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'coordination.k8s.io/v1beta1'
+			readonly apiVersion!: 'coordination.k8s.io/v1beta1'
 
 			/**
 			 * Items is a list of schema objects.
 			 */
-			readonly items: types.coordination.v1beta1.Lease[]
+			readonly items!: types.coordination.v1beta1.Lease[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3885,13 +3885,13 @@ export namespace coordination {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'LeaseList'
+			readonly kind!: 'LeaseList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a coordination.v1beta1.LeaseList object with the given unique name and description.
@@ -3931,7 +3931,7 @@ export namespace core {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'v1'
+			readonly apiVersion!: 'v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3939,18 +3939,18 @@ export namespace core {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'Binding'
+			readonly kind!: 'Binding'
 
 			/**
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * The target object that you want to bind to the standard object.
 			 */
-			readonly target: types.core.v1.ObjectReference
+			readonly target!: types.core.v1.ObjectReference
 
 			/**
 			 * Create a core.v1.Binding object with the given unique name and description.
@@ -3982,7 +3982,7 @@ export namespace core {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'v1'
+			readonly apiVersion!: 'v1'
 
 			/**
 			 * BinaryData contains the binary data. Each key must consist of alphanumeric characters, '-',
@@ -4006,13 +4006,13 @@ export namespace core {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ConfigMap'
+			readonly kind!: 'ConfigMap'
 
 			/**
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Create a core.v1.ConfigMap object with the given unique name and description.
@@ -4045,12 +4045,12 @@ export namespace core {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'v1'
+			readonly apiVersion!: 'v1'
 
 			/**
 			 * Items is the list of ConfigMaps.
 			 */
-			readonly items: types.core.v1.ConfigMap[]
+			readonly items!: types.core.v1.ConfigMap[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -4058,13 +4058,13 @@ export namespace core {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ConfigMapList'
+			readonly kind!: 'ConfigMapList'
 
 			/**
 			 * More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a core.v1.ConfigMapList object with the given unique name and description.
@@ -4107,7 +4107,7 @@ export namespace core {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'v1'
+			readonly apiVersion!: 'v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -4115,13 +4115,13 @@ export namespace core {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'Endpoints'
+			readonly kind!: 'Endpoints'
 
 			/**
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * The set of all endpoints is the union of all subsets. Addresses are placed into subsets
@@ -4163,12 +4163,12 @@ export namespace core {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'v1'
+			readonly apiVersion!: 'v1'
 
 			/**
 			 * List of endpoints.
 			 */
-			readonly items: types.core.v1.Endpoints[]
+			readonly items!: types.core.v1.Endpoints[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -4176,13 +4176,13 @@ export namespace core {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'EndpointsList'
+			readonly kind!: 'EndpointsList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a core.v1.EndpointsList object with the given unique name and description.
@@ -4219,7 +4219,7 @@ export namespace core {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'v1'
+			readonly apiVersion!: 'v1'
 
 			/**
 			 * The number of times this event has occurred.
@@ -4239,7 +4239,7 @@ export namespace core {
 			/**
 			 * The object that this event is about.
 			 */
-			readonly involvedObject: types.core.v1.ObjectReference
+			readonly involvedObject!: types.core.v1.ObjectReference
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -4247,7 +4247,7 @@ export namespace core {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'Event'
+			readonly kind!: 'Event'
 
 			/**
 			 * The time at which the most recent occurrence of this event was recorded.
@@ -4263,7 +4263,7 @@ export namespace core {
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * This should be a short, machine understandable string that gives the reason for the
@@ -4345,12 +4345,12 @@ export namespace core {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'v1'
+			readonly apiVersion!: 'v1'
 
 			/**
 			 * List of events
 			 */
-			readonly items: types.core.v1.Event[]
+			readonly items!: types.core.v1.Event[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -4358,13 +4358,13 @@ export namespace core {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'EventList'
+			readonly kind!: 'EventList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a core.v1.EventList object with the given unique name and description.
@@ -4396,7 +4396,7 @@ export namespace core {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'v1'
+			readonly apiVersion!: 'v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -4404,19 +4404,19 @@ export namespace core {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'LimitRange'
+			readonly kind!: 'LimitRange'
 
 			/**
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Spec defines the limits enforced. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 			 */
-			readonly spec: types.core.v1.LimitRangeSpec
+			readonly spec!: types.core.v1.LimitRangeSpec
 
 			/**
 			 * Create a core.v1.LimitRange object with the given unique name and description.
@@ -4448,13 +4448,13 @@ export namespace core {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'v1'
+			readonly apiVersion!: 'v1'
 
 			/**
 			 * Items is a list of LimitRange objects. More info:
 			 * https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
 			 */
-			readonly items: types.core.v1.LimitRange[]
+			readonly items!: types.core.v1.LimitRange[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -4462,13 +4462,13 @@ export namespace core {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'LimitRangeList'
+			readonly kind!: 'LimitRangeList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a core.v1.LimitRangeList object with the given unique name and description.
@@ -4500,7 +4500,7 @@ export namespace core {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'v1'
+			readonly apiVersion!: 'v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -4508,19 +4508,19 @@ export namespace core {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'Namespace'
+			readonly kind!: 'Namespace'
 
 			/**
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Spec defines the behavior of the Namespace. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 			 */
-			readonly spec: types.core.v1.NamespaceSpec
+			readonly spec!: types.core.v1.NamespaceSpec
 
 			/**
 			 * Create a core.v1.Namespace object with the given unique name and description.
@@ -4552,13 +4552,13 @@ export namespace core {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'v1'
+			readonly apiVersion!: 'v1'
 
 			/**
 			 * Items is the list of Namespace objects in the list. More info:
 			 * https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
 			 */
-			readonly items: types.core.v1.Namespace[]
+			readonly items!: types.core.v1.Namespace[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -4566,13 +4566,13 @@ export namespace core {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'NamespaceList'
+			readonly kind!: 'NamespaceList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a core.v1.NamespaceList object with the given unique name and description.
@@ -4605,7 +4605,7 @@ export namespace core {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'v1'
+			readonly apiVersion!: 'v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -4613,19 +4613,19 @@ export namespace core {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'Node'
+			readonly kind!: 'Node'
 
 			/**
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Spec defines the behavior of a node.
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 			 */
-			readonly spec: types.core.v1.NodeSpec
+			readonly spec!: types.core.v1.NodeSpec
 
 			/**
 			 * Create a core.v1.Node object with the given unique name and description.
@@ -4657,12 +4657,12 @@ export namespace core {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'v1'
+			readonly apiVersion!: 'v1'
 
 			/**
 			 * List of nodes
 			 */
-			readonly items: types.core.v1.Node[]
+			readonly items!: types.core.v1.Node[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -4670,13 +4670,13 @@ export namespace core {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'NodeList'
+			readonly kind!: 'NodeList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a core.v1.NodeList object with the given unique name and description.
@@ -4709,7 +4709,7 @@ export namespace core {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'v1'
+			readonly apiVersion!: 'v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -4717,20 +4717,20 @@ export namespace core {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'PersistentVolume'
+			readonly kind!: 'PersistentVolume'
 
 			/**
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Spec defines a specification of a persistent volume owned by the cluster. Provisioned by an
 			 * administrator. More info:
 			 * https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistent-volumes
 			 */
-			readonly spec: types.core.v1.PersistentVolumeSpec
+			readonly spec!: types.core.v1.PersistentVolumeSpec
 
 			/**
 			 * Create a core.v1.PersistentVolume object with the given unique name and description.
@@ -4762,7 +4762,7 @@ export namespace core {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'v1'
+			readonly apiVersion!: 'v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -4770,19 +4770,19 @@ export namespace core {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'PersistentVolumeClaim'
+			readonly kind!: 'PersistentVolumeClaim'
 
 			/**
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Spec defines the desired characteristics of a volume requested by a pod author. More info:
 			 * https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims
 			 */
-			readonly spec: types.core.v1.PersistentVolumeClaimSpec
+			readonly spec!: types.core.v1.PersistentVolumeClaimSpec
 
 			/**
 			 * Create a core.v1.PersistentVolumeClaim object with the given unique name and description.
@@ -4814,13 +4814,13 @@ export namespace core {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'v1'
+			readonly apiVersion!: 'v1'
 
 			/**
 			 * A list of persistent volume claims. More info:
 			 * https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims
 			 */
-			readonly items: types.core.v1.PersistentVolumeClaim[]
+			readonly items!: types.core.v1.PersistentVolumeClaim[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -4828,13 +4828,13 @@ export namespace core {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'PersistentVolumeClaimList'
+			readonly kind!: 'PersistentVolumeClaimList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a core.v1.PersistentVolumeClaimList object with the given unique name and description.
@@ -4866,13 +4866,13 @@ export namespace core {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'v1'
+			readonly apiVersion!: 'v1'
 
 			/**
 			 * List of persistent volumes. More info:
 			 * https://kubernetes.io/docs/concepts/storage/persistent-volumes
 			 */
-			readonly items: types.core.v1.PersistentVolume[]
+			readonly items!: types.core.v1.PersistentVolume[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -4880,13 +4880,13 @@ export namespace core {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'PersistentVolumeList'
+			readonly kind!: 'PersistentVolumeList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a core.v1.PersistentVolumeList object with the given unique name and description.
@@ -4919,7 +4919,7 @@ export namespace core {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'v1'
+			readonly apiVersion!: 'v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -4927,19 +4927,19 @@ export namespace core {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'Pod'
+			readonly kind!: 'Pod'
 
 			/**
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Specification of the desired behavior of the pod. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 			 */
-			readonly spec: types.core.v1.PodSpec
+			readonly spec!: types.core.v1.PodSpec
 
 			/**
 			 * Create a core.v1.Pod object with the given unique name and description.
@@ -4971,13 +4971,13 @@ export namespace core {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'v1'
+			readonly apiVersion!: 'v1'
 
 			/**
 			 * List of pods. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md
 			 */
-			readonly items: types.core.v1.Pod[]
+			readonly items!: types.core.v1.Pod[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -4985,13 +4985,13 @@ export namespace core {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'PodList'
+			readonly kind!: 'PodList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a core.v1.PodList object with the given unique name and description.
@@ -5023,7 +5023,7 @@ export namespace core {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'v1'
+			readonly apiVersion!: 'v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -5031,13 +5031,13 @@ export namespace core {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'PodTemplate'
+			readonly kind!: 'PodTemplate'
 
 			/**
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Template defines the pods that will be created from this pod template.
@@ -5075,12 +5075,12 @@ export namespace core {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'v1'
+			readonly apiVersion!: 'v1'
 
 			/**
 			 * List of pod templates
 			 */
-			readonly items: types.core.v1.PodTemplate[]
+			readonly items!: types.core.v1.PodTemplate[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -5088,13 +5088,13 @@ export namespace core {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'PodTemplateList'
+			readonly kind!: 'PodTemplateList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a core.v1.PodTemplateList object with the given unique name and description.
@@ -5126,7 +5126,7 @@ export namespace core {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'v1'
+			readonly apiVersion!: 'v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -5134,21 +5134,21 @@ export namespace core {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ReplicationController'
+			readonly kind!: 'ReplicationController'
 
 			/**
 			 * If the Labels of a ReplicationController are empty, they are defaulted to be the same as
 			 * the Pod(s) that the replication controller manages. Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Spec defines the specification of the desired behavior of the replication controller. More
 			 * info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 			 */
-			readonly spec: types.core.v1.ReplicationControllerSpec
+			readonly spec!: types.core.v1.ReplicationControllerSpec
 
 			/**
 			 * Create a core.v1.ReplicationController object with the given unique name and description.
@@ -5180,13 +5180,13 @@ export namespace core {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'v1'
+			readonly apiVersion!: 'v1'
 
 			/**
 			 * List of replication controllers. More info:
 			 * https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller
 			 */
-			readonly items: types.core.v1.ReplicationController[]
+			readonly items!: types.core.v1.ReplicationController[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -5194,13 +5194,13 @@ export namespace core {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ReplicationControllerList'
+			readonly kind!: 'ReplicationControllerList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a core.v1.ReplicationControllerList object with the given unique name and description.
@@ -5232,7 +5232,7 @@ export namespace core {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'v1'
+			readonly apiVersion!: 'v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -5240,19 +5240,19 @@ export namespace core {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ResourceQuota'
+			readonly kind!: 'ResourceQuota'
 
 			/**
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Spec defines the desired quota.
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 			 */
-			readonly spec: types.core.v1.ResourceQuotaSpec
+			readonly spec!: types.core.v1.ResourceQuotaSpec
 
 			/**
 			 * Create a core.v1.ResourceQuota object with the given unique name and description.
@@ -5284,13 +5284,13 @@ export namespace core {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'v1'
+			readonly apiVersion!: 'v1'
 
 			/**
 			 * Items is a list of ResourceQuota objects. More info:
 			 * https://kubernetes.io/docs/concepts/policy/resource-quotas/
 			 */
-			readonly items: types.core.v1.ResourceQuota[]
+			readonly items!: types.core.v1.ResourceQuota[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -5298,13 +5298,13 @@ export namespace core {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ResourceQuotaList'
+			readonly kind!: 'ResourceQuotaList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a core.v1.ResourceQuotaList object with the given unique name and description.
@@ -5337,7 +5337,7 @@ export namespace core {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'v1'
+			readonly apiVersion!: 'v1'
 
 			/**
 			 * Data contains the secret data. Each key must consist of alphanumeric characters, '-', '_'
@@ -5353,13 +5353,13 @@ export namespace core {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'Secret'
+			readonly kind!: 'Secret'
 
 			/**
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * stringData allows specifying non-binary secret data in string form. It is provided as a
@@ -5405,13 +5405,13 @@ export namespace core {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'v1'
+			readonly apiVersion!: 'v1'
 
 			/**
 			 * Items is a list of secret objects. More info:
 			 * https://kubernetes.io/docs/concepts/configuration/secret
 			 */
-			readonly items: types.core.v1.Secret[]
+			readonly items!: types.core.v1.Secret[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -5419,13 +5419,13 @@ export namespace core {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'SecretList'
+			readonly kind!: 'SecretList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a core.v1.SecretList object with the given unique name and description.
@@ -5459,7 +5459,7 @@ export namespace core {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'v1'
+			readonly apiVersion!: 'v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -5467,19 +5467,19 @@ export namespace core {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'Service'
+			readonly kind!: 'Service'
 
 			/**
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Spec defines the behavior of a service.
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 			 */
-			readonly spec: types.core.v1.ServiceSpec
+			readonly spec!: types.core.v1.ServiceSpec
 
 			/**
 			 * Create a core.v1.Service object with the given unique name and description.
@@ -5513,7 +5513,7 @@ export namespace core {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'v1'
+			readonly apiVersion!: 'v1'
 
 			/**
 			 * AutomountServiceAccountToken indicates whether pods running as this service account should
@@ -5536,13 +5536,13 @@ export namespace core {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ServiceAccount'
+			readonly kind!: 'ServiceAccount'
 
 			/**
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Secrets is the list of secrets allowed to be used by pods running using this
@@ -5583,13 +5583,13 @@ export namespace core {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'v1'
+			readonly apiVersion!: 'v1'
 
 			/**
 			 * List of ServiceAccounts. More info:
 			 * https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
 			 */
-			readonly items: types.core.v1.ServiceAccount[]
+			readonly items!: types.core.v1.ServiceAccount[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -5597,13 +5597,13 @@ export namespace core {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ServiceAccountList'
+			readonly kind!: 'ServiceAccountList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a core.v1.ServiceAccountList object with the given unique name and description.
@@ -5635,12 +5635,12 @@ export namespace core {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'v1'
+			readonly apiVersion!: 'v1'
 
 			/**
 			 * List of services
 			 */
-			readonly items: types.core.v1.Service[]
+			readonly items!: types.core.v1.Service[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -5648,13 +5648,13 @@ export namespace core {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ServiceList'
+			readonly kind!: 'ServiceList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a core.v1.ServiceList object with the given unique name and description.
@@ -5693,7 +5693,7 @@ export namespace discovery {
 			 * address types are currently supported: * IPv4: Represents an IPv4 Address. * IPv6:
 			 * Represents an IPv6 Address. * FQDN: Represents a Fully Qualified Domain Name.
 			 */
-			readonly addressType: string
+			readonly addressType!: string
 
 			/**
 			 * APIVersion defines the versioned schema of this representation of an object. Servers should
@@ -5701,13 +5701,13 @@ export namespace discovery {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'discovery.k8s.io/v1beta1'
+			readonly apiVersion!: 'discovery.k8s.io/v1beta1'
 
 			/**
 			 * endpoints is a list of unique endpoints in this slice. Each slice may include a maximum of
 			 * 1000 endpoints.
 			 */
-			readonly endpoints: types.discovery.v1beta1.Endpoint[]
+			readonly endpoints!: types.discovery.v1beta1.Endpoint[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -5715,12 +5715,12 @@ export namespace discovery {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'EndpointSlice'
+			readonly kind!: 'EndpointSlice'
 
 			/**
 			 * Standard object's metadata.
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * ports specifies the list of network ports exposed by each endpoint in this slice. Each port
@@ -5762,12 +5762,12 @@ export namespace discovery {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'discovery.k8s.io/v1beta1'
+			readonly apiVersion!: 'discovery.k8s.io/v1beta1'
 
 			/**
 			 * List of endpoint slices
 			 */
-			readonly items: types.discovery.v1beta1.EndpointSlice[]
+			readonly items!: types.discovery.v1beta1.EndpointSlice[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -5775,12 +5775,12 @@ export namespace discovery {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'EndpointSliceList'
+			readonly kind!: 'EndpointSliceList'
 
 			/**
 			 * Standard list metadata.
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a discovery.v1beta1.EndpointSliceList object with the given unique name and description.
@@ -5826,7 +5826,7 @@ export namespace events {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'events.k8s.io/v1beta1'
+			readonly apiVersion!: 'events.k8s.io/v1beta1'
 
 			/**
 			 * Deprecated field assuring backward compatibility with core.v1 Event type
@@ -5851,7 +5851,7 @@ export namespace events {
 			/**
 			 * Required. Time when this Event was first observed.
 			 */
-			readonly eventTime: string
+			readonly eventTime!: string
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -5859,9 +5859,9 @@ export namespace events {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'Event'
+			readonly kind!: 'Event'
 
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Optional. A human-readable description of the status of this operation. Maximal length of
@@ -5953,12 +5953,12 @@ export namespace events {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'events.k8s.io/v1beta1'
+			readonly apiVersion!: 'events.k8s.io/v1beta1'
 
 			/**
 			 * Items is a list of schema objects.
 			 */
-			readonly items: types.events.v1beta1.Event[]
+			readonly items!: types.events.v1beta1.Event[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -5966,13 +5966,13 @@ export namespace events {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'EventList'
+			readonly kind!: 'EventList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a events.v1beta1.EventList object with the given unique name and description.
@@ -6012,7 +6012,7 @@ export namespace extensions {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'extensions/v1beta1'
+			readonly apiVersion!: 'extensions/v1beta1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -6020,19 +6020,19 @@ export namespace extensions {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'DaemonSet'
+			readonly kind!: 'DaemonSet'
 
 			/**
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * The desired behavior of this daemon set. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 			 */
-			readonly spec: types.extensions.v1beta1.DaemonSetSpec
+			readonly spec!: types.extensions.v1beta1.DaemonSetSpec
 
 			/**
 			 * Create a extensions.v1beta1.DaemonSet object with the given unique name and description.
@@ -6064,12 +6064,12 @@ export namespace extensions {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'extensions/v1beta1'
+			readonly apiVersion!: 'extensions/v1beta1'
 
 			/**
 			 * A list of daemon sets.
 			 */
-			readonly items: types.extensions.v1beta1.DaemonSet[]
+			readonly items!: types.extensions.v1beta1.DaemonSet[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -6077,13 +6077,13 @@ export namespace extensions {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'DaemonSetList'
+			readonly kind!: 'DaemonSetList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a extensions.v1beta1.DaemonSetList object with the given unique name and description.
@@ -6118,7 +6118,7 @@ export namespace extensions {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'extensions/v1beta1'
+			readonly apiVersion!: 'extensions/v1beta1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -6126,17 +6126,17 @@ export namespace extensions {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'Deployment'
+			readonly kind!: 'Deployment'
 
 			/**
 			 * Standard object metadata.
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Specification of the desired behavior of the Deployment.
 			 */
-			readonly spec: types.extensions.v1beta1.DeploymentSpec
+			readonly spec!: types.extensions.v1beta1.DeploymentSpec
 
 			/**
 			 * Create a extensions.v1beta1.Deployment object with the given unique name and description.
@@ -6168,12 +6168,12 @@ export namespace extensions {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'extensions/v1beta1'
+			readonly apiVersion!: 'extensions/v1beta1'
 
 			/**
 			 * Items is the list of Deployments.
 			 */
-			readonly items: types.extensions.v1beta1.Deployment[]
+			readonly items!: types.extensions.v1beta1.Deployment[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -6181,12 +6181,12 @@ export namespace extensions {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'DeploymentList'
+			readonly kind!: 'DeploymentList'
 
 			/**
 			 * Standard list metadata.
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a extensions.v1beta1.DeploymentList object with the given unique name and description.
@@ -6223,7 +6223,7 @@ export namespace extensions {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'extensions/v1beta1'
+			readonly apiVersion!: 'extensions/v1beta1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -6231,19 +6231,19 @@ export namespace extensions {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'Ingress'
+			readonly kind!: 'Ingress'
 
 			/**
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Spec is the desired state of the Ingress. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 			 */
-			readonly spec: types.extensions.v1beta1.IngressSpec
+			readonly spec!: types.extensions.v1beta1.IngressSpec
 
 			/**
 			 * Create a extensions.v1beta1.Ingress object with the given unique name and description.
@@ -6275,12 +6275,12 @@ export namespace extensions {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'extensions/v1beta1'
+			readonly apiVersion!: 'extensions/v1beta1'
 
 			/**
 			 * Items is the list of Ingress.
 			 */
-			readonly items: types.extensions.v1beta1.Ingress[]
+			readonly items!: types.extensions.v1beta1.Ingress[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -6288,13 +6288,13 @@ export namespace extensions {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'IngressList'
+			readonly kind!: 'IngressList'
 
 			/**
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a extensions.v1beta1.IngressList object with the given unique name and description.
@@ -6329,7 +6329,7 @@ export namespace extensions {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'extensions/v1beta1'
+			readonly apiVersion!: 'extensions/v1beta1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -6337,18 +6337,18 @@ export namespace extensions {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'NetworkPolicy'
+			readonly kind!: 'NetworkPolicy'
 
 			/**
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Specification of the desired behavior for this NetworkPolicy.
 			 */
-			readonly spec: types.extensions.v1beta1.NetworkPolicySpec
+			readonly spec!: types.extensions.v1beta1.NetworkPolicySpec
 
 			/**
 			 * Create a extensions.v1beta1.NetworkPolicy object with the given unique name and description.
@@ -6383,12 +6383,12 @@ export namespace extensions {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'extensions/v1beta1'
+			readonly apiVersion!: 'extensions/v1beta1'
 
 			/**
 			 * Items is a list of schema objects.
 			 */
-			readonly items: types.extensions.v1beta1.NetworkPolicy[]
+			readonly items!: types.extensions.v1beta1.NetworkPolicy[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -6396,13 +6396,13 @@ export namespace extensions {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'NetworkPolicyList'
+			readonly kind!: 'NetworkPolicyList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a extensions.v1beta1.NetworkPolicyList object with the given unique name and description.
@@ -6441,7 +6441,7 @@ export namespace extensions {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'extensions/v1beta1'
+			readonly apiVersion!: 'extensions/v1beta1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -6449,18 +6449,18 @@ export namespace extensions {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'PodSecurityPolicy'
+			readonly kind!: 'PodSecurityPolicy'
 
 			/**
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * spec defines the policy enforced.
 			 */
-			readonly spec: types.extensions.v1beta1.PodSecurityPolicySpec
+			readonly spec!: types.extensions.v1beta1.PodSecurityPolicySpec
 
 			/**
 			 * Create a extensions.v1beta1.PodSecurityPolicy object with the given unique name and description.
@@ -6498,12 +6498,12 @@ export namespace extensions {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'extensions/v1beta1'
+			readonly apiVersion!: 'extensions/v1beta1'
 
 			/**
 			 * items is a list of schema objects.
 			 */
-			readonly items: types.extensions.v1beta1.PodSecurityPolicy[]
+			readonly items!: types.extensions.v1beta1.PodSecurityPolicy[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -6511,13 +6511,13 @@ export namespace extensions {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'PodSecurityPolicyList'
+			readonly kind!: 'PodSecurityPolicyList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a extensions.v1beta1.PodSecurityPolicyList object with the given unique name and description.
@@ -6555,7 +6555,7 @@ export namespace extensions {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'extensions/v1beta1'
+			readonly apiVersion!: 'extensions/v1beta1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -6563,20 +6563,20 @@ export namespace extensions {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ReplicaSet'
+			readonly kind!: 'ReplicaSet'
 
 			/**
 			 * If the Labels of a ReplicaSet are empty, they are defaulted to be the same as the Pod(s)
 			 * that the ReplicaSet manages. Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Spec defines the specification of the desired behavior of the ReplicaSet. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 			 */
-			readonly spec: types.extensions.v1beta1.ReplicaSetSpec
+			readonly spec!: types.extensions.v1beta1.ReplicaSetSpec
 
 			/**
 			 * Create a extensions.v1beta1.ReplicaSet object with the given unique name and description.
@@ -6608,13 +6608,13 @@ export namespace extensions {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'extensions/v1beta1'
+			readonly apiVersion!: 'extensions/v1beta1'
 
 			/**
 			 * List of ReplicaSets. More info:
 			 * https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller
 			 */
-			readonly items: types.extensions.v1beta1.ReplicaSet[]
+			readonly items!: types.extensions.v1beta1.ReplicaSet[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -6622,13 +6622,13 @@ export namespace extensions {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ReplicaSetList'
+			readonly kind!: 'ReplicaSetList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a extensions.v1beta1.ReplicaSetList object with the given unique name and description.
@@ -6667,7 +6667,7 @@ export namespace flowcontrol {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'flowcontrol.apiserver.k8s.io/v1alpha1'
+			readonly apiVersion!: 'flowcontrol.apiserver.k8s.io/v1alpha1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -6675,19 +6675,19 @@ export namespace flowcontrol {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'FlowSchema'
+			readonly kind!: 'FlowSchema'
 
 			/**
 			 * `metadata` is the standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * `spec` is the specification of the desired behavior of a FlowSchema. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 			 */
-			readonly spec: types.flowcontrol.v1alpha1.FlowSchemaSpec
+			readonly spec!: types.flowcontrol.v1alpha1.FlowSchemaSpec
 
 			/**
 			 * Create a flowcontrol.v1alpha1.FlowSchema object with the given unique name and description.
@@ -6719,12 +6719,12 @@ export namespace flowcontrol {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'flowcontrol.apiserver.k8s.io/v1alpha1'
+			readonly apiVersion!: 'flowcontrol.apiserver.k8s.io/v1alpha1'
 
 			/**
 			 * `items` is a list of FlowSchemas.
 			 */
-			readonly items: types.flowcontrol.v1alpha1.FlowSchema[]
+			readonly items!: types.flowcontrol.v1alpha1.FlowSchema[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -6732,13 +6732,13 @@ export namespace flowcontrol {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'FlowSchemaList'
+			readonly kind!: 'FlowSchemaList'
 
 			/**
 			 * `metadata` is the standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a flowcontrol.v1alpha1.FlowSchemaList object with the given unique name and description.
@@ -6773,7 +6773,7 @@ export namespace flowcontrol {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'flowcontrol.apiserver.k8s.io/v1alpha1'
+			readonly apiVersion!: 'flowcontrol.apiserver.k8s.io/v1alpha1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -6781,19 +6781,19 @@ export namespace flowcontrol {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'PriorityLevelConfiguration'
+			readonly kind!: 'PriorityLevelConfiguration'
 
 			/**
 			 * `metadata` is the standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * `spec` is the specification of the desired behavior of a "request-priority". More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 			 */
-			readonly spec: types.flowcontrol.v1alpha1.PriorityLevelConfigurationSpec
+			readonly spec!: types.flowcontrol.v1alpha1.PriorityLevelConfigurationSpec
 
 			/**
 			 * Create a flowcontrol.v1alpha1.PriorityLevelConfiguration object with the given unique name and description.
@@ -6828,12 +6828,12 @@ export namespace flowcontrol {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'flowcontrol.apiserver.k8s.io/v1alpha1'
+			readonly apiVersion!: 'flowcontrol.apiserver.k8s.io/v1alpha1'
 
 			/**
 			 * `items` is a list of request-priorities.
 			 */
-			readonly items: types.flowcontrol.v1alpha1.PriorityLevelConfiguration[]
+			readonly items!: types.flowcontrol.v1alpha1.PriorityLevelConfiguration[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -6841,13 +6841,13 @@ export namespace flowcontrol {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'PriorityLevelConfigurationList'
+			readonly kind!: 'PriorityLevelConfigurationList'
 
 			/**
 			 * `metadata` is the standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a flowcontrol.v1alpha1.PriorityLevelConfigurationList object with the given unique name and description.
@@ -6887,7 +6887,7 @@ export namespace meta {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'v1'
+			readonly apiVersion!: 'v1'
 
 			/**
 			 * Suggested HTTP return code for this status, 0 if not set.
@@ -6907,7 +6907,7 @@ export namespace meta {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'Status'
+			readonly kind!: 'Status'
 
 			/**
 			 * A human-readable description of the status of this operation.
@@ -6918,7 +6918,7 @@ export namespace meta {
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * A machine-readable description of why this operation is in the "Failure" status. If this
@@ -6965,7 +6965,7 @@ export namespace networking {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'networking.k8s.io/v1'
+			readonly apiVersion!: 'networking.k8s.io/v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -6973,18 +6973,18 @@ export namespace networking {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'NetworkPolicy'
+			readonly kind!: 'NetworkPolicy'
 
 			/**
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Specification of the desired behavior for this NetworkPolicy.
 			 */
-			readonly spec: types.networking.v1.NetworkPolicySpec
+			readonly spec!: types.networking.v1.NetworkPolicySpec
 
 			/**
 			 * Create a networking.v1.NetworkPolicy object with the given unique name and description.
@@ -7016,12 +7016,12 @@ export namespace networking {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'networking.k8s.io/v1'
+			readonly apiVersion!: 'networking.k8s.io/v1'
 
 			/**
 			 * Items is a list of schema objects.
 			 */
-			readonly items: types.networking.v1.NetworkPolicy[]
+			readonly items!: types.networking.v1.NetworkPolicy[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -7029,13 +7029,13 @@ export namespace networking {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'NetworkPolicyList'
+			readonly kind!: 'NetworkPolicyList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a networking.v1.NetworkPolicyList object with the given unique name and description.
@@ -7072,7 +7072,7 @@ export namespace networking {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'networking.k8s.io/v1beta1'
+			readonly apiVersion!: 'networking.k8s.io/v1beta1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -7080,19 +7080,19 @@ export namespace networking {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'Ingress'
+			readonly kind!: 'Ingress'
 
 			/**
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Spec is the desired state of the Ingress. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 			 */
-			readonly spec: types.networking.v1beta1.IngressSpec
+			readonly spec!: types.networking.v1beta1.IngressSpec
 
 			/**
 			 * Create a networking.v1beta1.Ingress object with the given unique name and description.
@@ -7124,12 +7124,12 @@ export namespace networking {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'networking.k8s.io/v1beta1'
+			readonly apiVersion!: 'networking.k8s.io/v1beta1'
 
 			/**
 			 * Items is the list of Ingress.
 			 */
-			readonly items: types.networking.v1beta1.Ingress[]
+			readonly items!: types.networking.v1beta1.Ingress[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -7137,13 +7137,13 @@ export namespace networking {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'IngressList'
+			readonly kind!: 'IngressList'
 
 			/**
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a networking.v1beta1.IngressList object with the given unique name and description.
@@ -7185,7 +7185,7 @@ export namespace node {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'node.k8s.io/v1alpha1'
+			readonly apiVersion!: 'node.k8s.io/v1alpha1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -7193,19 +7193,19 @@ export namespace node {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'RuntimeClass'
+			readonly kind!: 'RuntimeClass'
 
 			/**
 			 * More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Specification of the RuntimeClass More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 			 */
-			readonly spec: types.node.v1alpha1.RuntimeClassSpec
+			readonly spec!: types.node.v1alpha1.RuntimeClassSpec
 
 			/**
 			 * Create a node.v1alpha1.RuntimeClass object with the given unique name and description.
@@ -7237,12 +7237,12 @@ export namespace node {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'node.k8s.io/v1alpha1'
+			readonly apiVersion!: 'node.k8s.io/v1alpha1'
 
 			/**
 			 * Items is a list of schema objects.
 			 */
-			readonly items: types.node.v1alpha1.RuntimeClass[]
+			readonly items!: types.node.v1alpha1.RuntimeClass[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -7250,13 +7250,13 @@ export namespace node {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'RuntimeClassList'
+			readonly kind!: 'RuntimeClassList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a node.v1alpha1.RuntimeClassList object with the given unique name and description.
@@ -7296,7 +7296,7 @@ export namespace node {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'node.k8s.io/v1beta1'
+			readonly apiVersion!: 'node.k8s.io/v1beta1'
 
 			/**
 			 * Handler specifies the underlying runtime and configuration that the CRI implementation will
@@ -7307,7 +7307,7 @@ export namespace node {
 			 * containers in a pod. The Handler must conform to the DNS Label (RFC 1123) requirements, and
 			 * is immutable.
 			 */
-			readonly handler: string
+			readonly handler!: string
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -7315,13 +7315,13 @@ export namespace node {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'RuntimeClass'
+			readonly kind!: 'RuntimeClass'
 
 			/**
 			 * More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Overhead represents the resource overhead associated with running a pod for a given
@@ -7371,12 +7371,12 @@ export namespace node {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'node.k8s.io/v1beta1'
+			readonly apiVersion!: 'node.k8s.io/v1beta1'
 
 			/**
 			 * Items is a list of schema objects.
 			 */
-			readonly items: types.node.v1beta1.RuntimeClass[]
+			readonly items!: types.node.v1beta1.RuntimeClass[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -7384,13 +7384,13 @@ export namespace node {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'RuntimeClassList'
+			readonly kind!: 'RuntimeClassList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a node.v1beta1.RuntimeClassList object with the given unique name and description.
@@ -7428,7 +7428,7 @@ export namespace policy {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'policy/v1beta1'
+			readonly apiVersion!: 'policy/v1beta1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -7436,14 +7436,14 @@ export namespace policy {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'PodDisruptionBudget'
+			readonly kind!: 'PodDisruptionBudget'
 
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Specification of the desired behavior of the PodDisruptionBudget.
 			 */
-			readonly spec: types.policy.v1beta1.PodDisruptionBudgetSpec
+			readonly spec!: types.policy.v1beta1.PodDisruptionBudgetSpec
 
 			/**
 			 * Create a policy.v1beta1.PodDisruptionBudget object with the given unique name and description.
@@ -7478,9 +7478,9 @@ export namespace policy {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'policy/v1beta1'
+			readonly apiVersion!: 'policy/v1beta1'
 
-			readonly items: types.policy.v1beta1.PodDisruptionBudget[]
+			readonly items!: types.policy.v1beta1.PodDisruptionBudget[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -7488,9 +7488,9 @@ export namespace policy {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'PodDisruptionBudgetList'
+			readonly kind!: 'PodDisruptionBudgetList'
 
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a policy.v1beta1.PodDisruptionBudgetList object with the given unique name and description.
@@ -7526,7 +7526,7 @@ export namespace policy {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'policy/v1beta1'
+			readonly apiVersion!: 'policy/v1beta1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -7534,18 +7534,18 @@ export namespace policy {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'PodSecurityPolicy'
+			readonly kind!: 'PodSecurityPolicy'
 
 			/**
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * spec defines the policy enforced.
 			 */
-			readonly spec: types.policy.v1beta1.PodSecurityPolicySpec
+			readonly spec!: types.policy.v1beta1.PodSecurityPolicySpec
 
 			/**
 			 * Create a policy.v1beta1.PodSecurityPolicy object with the given unique name and description.
@@ -7577,12 +7577,12 @@ export namespace policy {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'policy/v1beta1'
+			readonly apiVersion!: 'policy/v1beta1'
 
 			/**
 			 * items is a list of schema objects.
 			 */
-			readonly items: types.policy.v1beta1.PodSecurityPolicy[]
+			readonly items!: types.policy.v1beta1.PodSecurityPolicy[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -7590,13 +7590,13 @@ export namespace policy {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'PodSecurityPolicyList'
+			readonly kind!: 'PodSecurityPolicyList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a policy.v1beta1.PodSecurityPolicyList object with the given unique name and description.
@@ -7644,7 +7644,7 @@ export namespace rbac {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'rbac.authorization.k8s.io/v1'
+			readonly apiVersion!: 'rbac.authorization.k8s.io/v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -7652,12 +7652,12 @@ export namespace rbac {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ClusterRole'
+			readonly kind!: 'ClusterRole'
 
 			/**
 			 * Standard object's metadata.
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Rules holds all the PolicyRules for this ClusterRole
@@ -7696,7 +7696,7 @@ export namespace rbac {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'rbac.authorization.k8s.io/v1'
+			readonly apiVersion!: 'rbac.authorization.k8s.io/v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -7704,18 +7704,18 @@ export namespace rbac {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ClusterRoleBinding'
+			readonly kind!: 'ClusterRoleBinding'
 
 			/**
 			 * Standard object's metadata.
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * RoleRef can only reference a ClusterRole in the global namespace. If the RoleRef cannot be
 			 * resolved, the Authorizer must return an error.
 			 */
-			readonly roleRef: types.rbac.v1.RoleRef
+			readonly roleRef!: types.rbac.v1.RoleRef
 
 			/**
 			 * Subjects holds references to the objects the role applies to.
@@ -7753,12 +7753,12 @@ export namespace rbac {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'rbac.authorization.k8s.io/v1'
+			readonly apiVersion!: 'rbac.authorization.k8s.io/v1'
 
 			/**
 			 * Items is a list of ClusterRoleBindings
 			 */
-			readonly items: types.rbac.v1.ClusterRoleBinding[]
+			readonly items!: types.rbac.v1.ClusterRoleBinding[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -7766,12 +7766,12 @@ export namespace rbac {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ClusterRoleBindingList'
+			readonly kind!: 'ClusterRoleBindingList'
 
 			/**
 			 * Standard object's metadata.
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a rbac.v1.ClusterRoleBindingList object with the given unique name and description.
@@ -7803,12 +7803,12 @@ export namespace rbac {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'rbac.authorization.k8s.io/v1'
+			readonly apiVersion!: 'rbac.authorization.k8s.io/v1'
 
 			/**
 			 * Items is a list of ClusterRoles
 			 */
-			readonly items: types.rbac.v1.ClusterRole[]
+			readonly items!: types.rbac.v1.ClusterRole[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -7816,12 +7816,12 @@ export namespace rbac {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ClusterRoleList'
+			readonly kind!: 'ClusterRoleList'
 
 			/**
 			 * Standard object's metadata.
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a rbac.v1.ClusterRoleList object with the given unique name and description.
@@ -7854,7 +7854,7 @@ export namespace rbac {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'rbac.authorization.k8s.io/v1'
+			readonly apiVersion!: 'rbac.authorization.k8s.io/v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -7862,12 +7862,12 @@ export namespace rbac {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'Role'
+			readonly kind!: 'Role'
 
 			/**
 			 * Standard object's metadata.
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Rules holds all the PolicyRules for this Role
@@ -7907,7 +7907,7 @@ export namespace rbac {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'rbac.authorization.k8s.io/v1'
+			readonly apiVersion!: 'rbac.authorization.k8s.io/v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -7915,18 +7915,18 @@ export namespace rbac {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'RoleBinding'
+			readonly kind!: 'RoleBinding'
 
 			/**
 			 * Standard object's metadata.
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * RoleRef can reference a Role in the current namespace or a ClusterRole in the global
 			 * namespace. If the RoleRef cannot be resolved, the Authorizer must return an error.
 			 */
-			readonly roleRef: types.rbac.v1.RoleRef
+			readonly roleRef!: types.rbac.v1.RoleRef
 
 			/**
 			 * Subjects holds references to the objects the role applies to.
@@ -7964,12 +7964,12 @@ export namespace rbac {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'rbac.authorization.k8s.io/v1'
+			readonly apiVersion!: 'rbac.authorization.k8s.io/v1'
 
 			/**
 			 * Items is a list of RoleBindings
 			 */
-			readonly items: types.rbac.v1.RoleBinding[]
+			readonly items!: types.rbac.v1.RoleBinding[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -7977,12 +7977,12 @@ export namespace rbac {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'RoleBindingList'
+			readonly kind!: 'RoleBindingList'
 
 			/**
 			 * Standard object's metadata.
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a rbac.v1.RoleBindingList object with the given unique name and description.
@@ -8014,12 +8014,12 @@ export namespace rbac {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'rbac.authorization.k8s.io/v1'
+			readonly apiVersion!: 'rbac.authorization.k8s.io/v1'
 
 			/**
 			 * Items is a list of Roles
 			 */
-			readonly items: types.rbac.v1.Role[]
+			readonly items!: types.rbac.v1.Role[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -8027,12 +8027,12 @@ export namespace rbac {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'RoleList'
+			readonly kind!: 'RoleList'
 
 			/**
 			 * Standard object's metadata.
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a rbac.v1.RoleList object with the given unique name and description.
@@ -8078,7 +8078,7 @@ export namespace rbac {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'rbac.authorization.k8s.io/v1alpha1'
+			readonly apiVersion!: 'rbac.authorization.k8s.io/v1alpha1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -8086,12 +8086,12 @@ export namespace rbac {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ClusterRole'
+			readonly kind!: 'ClusterRole'
 
 			/**
 			 * Standard object's metadata.
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Rules holds all the PolicyRules for this ClusterRole
@@ -8133,7 +8133,7 @@ export namespace rbac {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'rbac.authorization.k8s.io/v1alpha1'
+			readonly apiVersion!: 'rbac.authorization.k8s.io/v1alpha1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -8141,18 +8141,18 @@ export namespace rbac {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ClusterRoleBinding'
+			readonly kind!: 'ClusterRoleBinding'
 
 			/**
 			 * Standard object's metadata.
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * RoleRef can only reference a ClusterRole in the global namespace. If the RoleRef cannot be
 			 * resolved, the Authorizer must return an error.
 			 */
-			readonly roleRef: types.rbac.v1alpha1.RoleRef
+			readonly roleRef!: types.rbac.v1alpha1.RoleRef
 
 			/**
 			 * Subjects holds references to the objects the role applies to.
@@ -8193,12 +8193,12 @@ export namespace rbac {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'rbac.authorization.k8s.io/v1alpha1'
+			readonly apiVersion!: 'rbac.authorization.k8s.io/v1alpha1'
 
 			/**
 			 * Items is a list of ClusterRoleBindings
 			 */
-			readonly items: types.rbac.v1alpha1.ClusterRoleBinding[]
+			readonly items!: types.rbac.v1alpha1.ClusterRoleBinding[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -8206,12 +8206,12 @@ export namespace rbac {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ClusterRoleBindingList'
+			readonly kind!: 'ClusterRoleBindingList'
 
 			/**
 			 * Standard object's metadata.
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a rbac.v1alpha1.ClusterRoleBindingList object with the given unique name and description.
@@ -8249,12 +8249,12 @@ export namespace rbac {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'rbac.authorization.k8s.io/v1alpha1'
+			readonly apiVersion!: 'rbac.authorization.k8s.io/v1alpha1'
 
 			/**
 			 * Items is a list of ClusterRoles
 			 */
-			readonly items: types.rbac.v1alpha1.ClusterRole[]
+			readonly items!: types.rbac.v1alpha1.ClusterRole[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -8262,12 +8262,12 @@ export namespace rbac {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ClusterRoleList'
+			readonly kind!: 'ClusterRoleList'
 
 			/**
 			 * Standard object's metadata.
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a rbac.v1alpha1.ClusterRoleList object with the given unique name and description.
@@ -8303,7 +8303,7 @@ export namespace rbac {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'rbac.authorization.k8s.io/v1alpha1'
+			readonly apiVersion!: 'rbac.authorization.k8s.io/v1alpha1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -8311,12 +8311,12 @@ export namespace rbac {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'Role'
+			readonly kind!: 'Role'
 
 			/**
 			 * Standard object's metadata.
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Rules holds all the PolicyRules for this Role
@@ -8359,7 +8359,7 @@ export namespace rbac {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'rbac.authorization.k8s.io/v1alpha1'
+			readonly apiVersion!: 'rbac.authorization.k8s.io/v1alpha1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -8367,18 +8367,18 @@ export namespace rbac {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'RoleBinding'
+			readonly kind!: 'RoleBinding'
 
 			/**
 			 * Standard object's metadata.
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * RoleRef can reference a Role in the current namespace or a ClusterRole in the global
 			 * namespace. If the RoleRef cannot be resolved, the Authorizer must return an error.
 			 */
-			readonly roleRef: types.rbac.v1alpha1.RoleRef
+			readonly roleRef!: types.rbac.v1alpha1.RoleRef
 
 			/**
 			 * Subjects holds references to the objects the role applies to.
@@ -8419,12 +8419,12 @@ export namespace rbac {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'rbac.authorization.k8s.io/v1alpha1'
+			readonly apiVersion!: 'rbac.authorization.k8s.io/v1alpha1'
 
 			/**
 			 * Items is a list of RoleBindings
 			 */
-			readonly items: types.rbac.v1alpha1.RoleBinding[]
+			readonly items!: types.rbac.v1alpha1.RoleBinding[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -8432,12 +8432,12 @@ export namespace rbac {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'RoleBindingList'
+			readonly kind!: 'RoleBindingList'
 
 			/**
 			 * Standard object's metadata.
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a rbac.v1alpha1.RoleBindingList object with the given unique name and description.
@@ -8472,12 +8472,12 @@ export namespace rbac {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'rbac.authorization.k8s.io/v1alpha1'
+			readonly apiVersion!: 'rbac.authorization.k8s.io/v1alpha1'
 
 			/**
 			 * Items is a list of Roles
 			 */
-			readonly items: types.rbac.v1alpha1.Role[]
+			readonly items!: types.rbac.v1alpha1.Role[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -8485,12 +8485,12 @@ export namespace rbac {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'RoleList'
+			readonly kind!: 'RoleList'
 
 			/**
 			 * Standard object's metadata.
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a rbac.v1alpha1.RoleList object with the given unique name and description.
@@ -8536,7 +8536,7 @@ export namespace rbac {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'rbac.authorization.k8s.io/v1beta1'
+			readonly apiVersion!: 'rbac.authorization.k8s.io/v1beta1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -8544,12 +8544,12 @@ export namespace rbac {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ClusterRole'
+			readonly kind!: 'ClusterRole'
 
 			/**
 			 * Standard object's metadata.
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Rules holds all the PolicyRules for this ClusterRole
@@ -8591,7 +8591,7 @@ export namespace rbac {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'rbac.authorization.k8s.io/v1beta1'
+			readonly apiVersion!: 'rbac.authorization.k8s.io/v1beta1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -8599,18 +8599,18 @@ export namespace rbac {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ClusterRoleBinding'
+			readonly kind!: 'ClusterRoleBinding'
 
 			/**
 			 * Standard object's metadata.
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * RoleRef can only reference a ClusterRole in the global namespace. If the RoleRef cannot be
 			 * resolved, the Authorizer must return an error.
 			 */
-			readonly roleRef: types.rbac.v1beta1.RoleRef
+			readonly roleRef!: types.rbac.v1beta1.RoleRef
 
 			/**
 			 * Subjects holds references to the objects the role applies to.
@@ -8651,12 +8651,12 @@ export namespace rbac {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'rbac.authorization.k8s.io/v1beta1'
+			readonly apiVersion!: 'rbac.authorization.k8s.io/v1beta1'
 
 			/**
 			 * Items is a list of ClusterRoleBindings
 			 */
-			readonly items: types.rbac.v1beta1.ClusterRoleBinding[]
+			readonly items!: types.rbac.v1beta1.ClusterRoleBinding[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -8664,12 +8664,12 @@ export namespace rbac {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ClusterRoleBindingList'
+			readonly kind!: 'ClusterRoleBindingList'
 
 			/**
 			 * Standard object's metadata.
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a rbac.v1beta1.ClusterRoleBindingList object with the given unique name and description.
@@ -8707,12 +8707,12 @@ export namespace rbac {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'rbac.authorization.k8s.io/v1beta1'
+			readonly apiVersion!: 'rbac.authorization.k8s.io/v1beta1'
 
 			/**
 			 * Items is a list of ClusterRoles
 			 */
-			readonly items: types.rbac.v1beta1.ClusterRole[]
+			readonly items!: types.rbac.v1beta1.ClusterRole[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -8720,12 +8720,12 @@ export namespace rbac {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'ClusterRoleList'
+			readonly kind!: 'ClusterRoleList'
 
 			/**
 			 * Standard object's metadata.
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a rbac.v1beta1.ClusterRoleList object with the given unique name and description.
@@ -8761,7 +8761,7 @@ export namespace rbac {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'rbac.authorization.k8s.io/v1beta1'
+			readonly apiVersion!: 'rbac.authorization.k8s.io/v1beta1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -8769,12 +8769,12 @@ export namespace rbac {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'Role'
+			readonly kind!: 'Role'
 
 			/**
 			 * Standard object's metadata.
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Rules holds all the PolicyRules for this Role
@@ -8817,7 +8817,7 @@ export namespace rbac {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'rbac.authorization.k8s.io/v1beta1'
+			readonly apiVersion!: 'rbac.authorization.k8s.io/v1beta1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -8825,18 +8825,18 @@ export namespace rbac {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'RoleBinding'
+			readonly kind!: 'RoleBinding'
 
 			/**
 			 * Standard object's metadata.
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * RoleRef can reference a Role in the current namespace or a ClusterRole in the global
 			 * namespace. If the RoleRef cannot be resolved, the Authorizer must return an error.
 			 */
-			readonly roleRef: types.rbac.v1beta1.RoleRef
+			readonly roleRef!: types.rbac.v1beta1.RoleRef
 
 			/**
 			 * Subjects holds references to the objects the role applies to.
@@ -8877,12 +8877,12 @@ export namespace rbac {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'rbac.authorization.k8s.io/v1beta1'
+			readonly apiVersion!: 'rbac.authorization.k8s.io/v1beta1'
 
 			/**
 			 * Items is a list of RoleBindings
 			 */
-			readonly items: types.rbac.v1beta1.RoleBinding[]
+			readonly items!: types.rbac.v1beta1.RoleBinding[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -8890,12 +8890,12 @@ export namespace rbac {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'RoleBindingList'
+			readonly kind!: 'RoleBindingList'
 
 			/**
 			 * Standard object's metadata.
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a rbac.v1beta1.RoleBindingList object with the given unique name and description.
@@ -8930,12 +8930,12 @@ export namespace rbac {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'rbac.authorization.k8s.io/v1beta1'
+			readonly apiVersion!: 'rbac.authorization.k8s.io/v1beta1'
 
 			/**
 			 * Items is a list of Roles
 			 */
-			readonly items: types.rbac.v1beta1.Role[]
+			readonly items!: types.rbac.v1beta1.Role[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -8943,12 +8943,12 @@ export namespace rbac {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'RoleList'
+			readonly kind!: 'RoleList'
 
 			/**
 			 * Standard object's metadata.
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a rbac.v1beta1.RoleList object with the given unique name and description.
@@ -8986,7 +8986,7 @@ export namespace scheduling {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'scheduling.k8s.io/v1'
+			readonly apiVersion!: 'scheduling.k8s.io/v1'
 
 			/**
 			 * description is an arbitrary string that usually provides guidelines on when this priority
@@ -9009,13 +9009,13 @@ export namespace scheduling {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'PriorityClass'
+			readonly kind!: 'PriorityClass'
 
 			/**
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * PreemptionPolicy is the Policy for preempting pods with lower priority. One of Never,
@@ -9028,7 +9028,7 @@ export namespace scheduling {
 			 * The value of this priority class. This is the actual priority that pods receive when they
 			 * have the name of this class in their pod spec.
 			 */
-			readonly value: number
+			readonly value!: number
 
 			/**
 			 * Create a scheduling.v1.PriorityClass object with the given unique name and description.
@@ -9063,12 +9063,12 @@ export namespace scheduling {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'scheduling.k8s.io/v1'
+			readonly apiVersion!: 'scheduling.k8s.io/v1'
 
 			/**
 			 * items is the list of PriorityClasses
 			 */
-			readonly items: types.scheduling.v1.PriorityClass[]
+			readonly items!: types.scheduling.v1.PriorityClass[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -9076,13 +9076,13 @@ export namespace scheduling {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'PriorityClassList'
+			readonly kind!: 'PriorityClassList'
 
 			/**
 			 * Standard list metadata More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a scheduling.v1.PriorityClassList object with the given unique name and description.
@@ -9121,7 +9121,7 @@ export namespace scheduling {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'scheduling.k8s.io/v1alpha1'
+			readonly apiVersion!: 'scheduling.k8s.io/v1alpha1'
 
 			/**
 			 * description is an arbitrary string that usually provides guidelines on when this priority
@@ -9144,13 +9144,13 @@ export namespace scheduling {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'PriorityClass'
+			readonly kind!: 'PriorityClass'
 
 			/**
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * PreemptionPolicy is the Policy for preempting pods with lower priority. One of Never,
@@ -9163,7 +9163,7 @@ export namespace scheduling {
 			 * The value of this priority class. This is the actual priority that pods receive when they
 			 * have the name of this class in their pod spec.
 			 */
-			readonly value: number
+			readonly value!: number
 
 			/**
 			 * Create a scheduling.v1alpha1.PriorityClass object with the given unique name and description.
@@ -9198,12 +9198,12 @@ export namespace scheduling {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'scheduling.k8s.io/v1alpha1'
+			readonly apiVersion!: 'scheduling.k8s.io/v1alpha1'
 
 			/**
 			 * items is the list of PriorityClasses
 			 */
-			readonly items: types.scheduling.v1alpha1.PriorityClass[]
+			readonly items!: types.scheduling.v1alpha1.PriorityClass[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -9211,13 +9211,13 @@ export namespace scheduling {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'PriorityClassList'
+			readonly kind!: 'PriorityClassList'
 
 			/**
 			 * Standard list metadata More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a scheduling.v1alpha1.PriorityClassList object with the given unique name and description.
@@ -9259,7 +9259,7 @@ export namespace scheduling {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'scheduling.k8s.io/v1beta1'
+			readonly apiVersion!: 'scheduling.k8s.io/v1beta1'
 
 			/**
 			 * description is an arbitrary string that usually provides guidelines on when this priority
@@ -9282,13 +9282,13 @@ export namespace scheduling {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'PriorityClass'
+			readonly kind!: 'PriorityClass'
 
 			/**
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * PreemptionPolicy is the Policy for preempting pods with lower priority. One of Never,
@@ -9301,7 +9301,7 @@ export namespace scheduling {
 			 * The value of this priority class. This is the actual priority that pods receive when they
 			 * have the name of this class in their pod spec.
 			 */
-			readonly value: number
+			readonly value!: number
 
 			/**
 			 * Create a scheduling.v1beta1.PriorityClass object with the given unique name and description.
@@ -9336,12 +9336,12 @@ export namespace scheduling {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'scheduling.k8s.io/v1beta1'
+			readonly apiVersion!: 'scheduling.k8s.io/v1beta1'
 
 			/**
 			 * items is the list of PriorityClasses
 			 */
-			readonly items: types.scheduling.v1beta1.PriorityClass[]
+			readonly items!: types.scheduling.v1beta1.PriorityClass[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -9349,13 +9349,13 @@ export namespace scheduling {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'PriorityClassList'
+			readonly kind!: 'PriorityClassList'
 
 			/**
 			 * Standard list metadata More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a scheduling.v1beta1.PriorityClassList object with the given unique name and description.
@@ -9395,7 +9395,7 @@ export namespace settings {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'settings.k8s.io/v1alpha1'
+			readonly apiVersion!: 'settings.k8s.io/v1alpha1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -9403,11 +9403,11 @@ export namespace settings {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'PodPreset'
+			readonly kind!: 'PodPreset'
 
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
-			readonly spec: types.settings.v1alpha1.PodPresetSpec
+			readonly spec!: types.settings.v1alpha1.PodPresetSpec
 
 			/**
 			 * Create a settings.v1alpha1.PodPreset object with the given unique name and description.
@@ -9439,12 +9439,12 @@ export namespace settings {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'settings.k8s.io/v1alpha1'
+			readonly apiVersion!: 'settings.k8s.io/v1alpha1'
 
 			/**
 			 * Items is a list of schema objects.
 			 */
-			readonly items: types.settings.v1alpha1.PodPreset[]
+			readonly items!: types.settings.v1alpha1.PodPreset[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -9452,13 +9452,13 @@ export namespace settings {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'PodPresetList'
+			readonly kind!: 'PodPresetList'
 
 			/**
 			 * Standard list metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a settings.v1alpha1.PodPresetList object with the given unique name and description.
@@ -9501,7 +9501,7 @@ export namespace storage {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'storage.k8s.io/v1'
+			readonly apiVersion!: 'storage.k8s.io/v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -9509,17 +9509,17 @@ export namespace storage {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'CSINode'
+			readonly kind!: 'CSINode'
 
 			/**
 			 * metadata.name must be the Kubernetes node name.
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * spec is the specification of CSINode
 			 */
-			readonly spec: types.storage.v1.CSINodeSpec
+			readonly spec!: types.storage.v1.CSINodeSpec
 
 			/**
 			 * Create a storage.v1.CSINode object with the given unique name and description.
@@ -9551,12 +9551,12 @@ export namespace storage {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'storage.k8s.io/v1'
+			readonly apiVersion!: 'storage.k8s.io/v1'
 
 			/**
 			 * items is the list of CSINode
 			 */
-			readonly items: types.storage.v1.CSINode[]
+			readonly items!: types.storage.v1.CSINode[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -9564,13 +9564,13 @@ export namespace storage {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'CSINodeList'
+			readonly kind!: 'CSINodeList'
 
 			/**
 			 * Standard list metadata More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a storage.v1.CSINodeList object with the given unique name and description.
@@ -9619,7 +9619,7 @@ export namespace storage {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'storage.k8s.io/v1'
+			readonly apiVersion!: 'storage.k8s.io/v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -9627,13 +9627,13 @@ export namespace storage {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'StorageClass'
+			readonly kind!: 'StorageClass'
 
 			/**
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Dynamically provisioned PersistentVolumes of this storage class are created with these
@@ -9651,7 +9651,7 @@ export namespace storage {
 			/**
 			 * Provisioner indicates the type of the provisioner.
 			 */
-			readonly provisioner: string
+			readonly provisioner!: string
 
 			/**
 			 * Dynamically provisioned PersistentVolumes of this storage class are created with this
@@ -9703,12 +9703,12 @@ export namespace storage {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'storage.k8s.io/v1'
+			readonly apiVersion!: 'storage.k8s.io/v1'
 
 			/**
 			 * Items is the list of StorageClasses
 			 */
-			readonly items: types.storage.v1.StorageClass[]
+			readonly items!: types.storage.v1.StorageClass[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -9716,13 +9716,13 @@ export namespace storage {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'StorageClassList'
+			readonly kind!: 'StorageClassList'
 
 			/**
 			 * Standard list metadata More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a storage.v1.StorageClassList object with the given unique name and description.
@@ -9757,7 +9757,7 @@ export namespace storage {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'storage.k8s.io/v1'
+			readonly apiVersion!: 'storage.k8s.io/v1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -9765,19 +9765,19 @@ export namespace storage {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'VolumeAttachment'
+			readonly kind!: 'VolumeAttachment'
 
 			/**
 			 * Standard object metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Specification of the desired attach/detach volume behavior. Populated by the Kubernetes
 			 * system.
 			 */
-			readonly spec: types.storage.v1.VolumeAttachmentSpec
+			readonly spec!: types.storage.v1.VolumeAttachmentSpec
 
 			/**
 			 * Create a storage.v1.VolumeAttachment object with the given unique name and description.
@@ -9809,12 +9809,12 @@ export namespace storage {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'storage.k8s.io/v1'
+			readonly apiVersion!: 'storage.k8s.io/v1'
 
 			/**
 			 * Items is the list of VolumeAttachments
 			 */
-			readonly items: types.storage.v1.VolumeAttachment[]
+			readonly items!: types.storage.v1.VolumeAttachment[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -9822,13 +9822,13 @@ export namespace storage {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'VolumeAttachmentList'
+			readonly kind!: 'VolumeAttachmentList'
 
 			/**
 			 * Standard list metadata More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a storage.v1.VolumeAttachmentList object with the given unique name and description.
@@ -9866,7 +9866,7 @@ export namespace storage {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'storage.k8s.io/v1alpha1'
+			readonly apiVersion!: 'storage.k8s.io/v1alpha1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -9874,19 +9874,19 @@ export namespace storage {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'VolumeAttachment'
+			readonly kind!: 'VolumeAttachment'
 
 			/**
 			 * Standard object metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Specification of the desired attach/detach volume behavior. Populated by the Kubernetes
 			 * system.
 			 */
-			readonly spec: types.storage.v1alpha1.VolumeAttachmentSpec
+			readonly spec!: types.storage.v1alpha1.VolumeAttachmentSpec
 
 			/**
 			 * Create a storage.v1alpha1.VolumeAttachment object with the given unique name and description.
@@ -9918,12 +9918,12 @@ export namespace storage {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'storage.k8s.io/v1alpha1'
+			readonly apiVersion!: 'storage.k8s.io/v1alpha1'
 
 			/**
 			 * Items is the list of VolumeAttachments
 			 */
-			readonly items: types.storage.v1alpha1.VolumeAttachment[]
+			readonly items!: types.storage.v1alpha1.VolumeAttachment[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -9931,13 +9931,13 @@ export namespace storage {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'VolumeAttachmentList'
+			readonly kind!: 'VolumeAttachmentList'
 
 			/**
 			 * Standard list metadata More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a storage.v1alpha1.VolumeAttachmentList object with the given unique name and description.
@@ -9981,7 +9981,7 @@ export namespace storage {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'storage.k8s.io/v1beta1'
+			readonly apiVersion!: 'storage.k8s.io/v1beta1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -9989,7 +9989,7 @@ export namespace storage {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'CSIDriver'
+			readonly kind!: 'CSIDriver'
 
 			/**
 			 * Standard object metadata. metadata.Name indicates the name of the CSI driver that this
@@ -9999,12 +9999,12 @@ export namespace storage {
 			 * More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Specification of the CSI Driver.
 			 */
-			readonly spec: types.storage.v1beta1.CSIDriverSpec
+			readonly spec!: types.storage.v1beta1.CSIDriverSpec
 
 			/**
 			 * Create a storage.v1beta1.CSIDriver object with the given unique name and description.
@@ -10036,12 +10036,12 @@ export namespace storage {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'storage.k8s.io/v1beta1'
+			readonly apiVersion!: 'storage.k8s.io/v1beta1'
 
 			/**
 			 * items is the list of CSIDriver
 			 */
-			readonly items: types.storage.v1beta1.CSIDriver[]
+			readonly items!: types.storage.v1beta1.CSIDriver[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -10049,13 +10049,13 @@ export namespace storage {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'CSIDriverList'
+			readonly kind!: 'CSIDriverList'
 
 			/**
 			 * Standard list metadata More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a storage.v1beta1.CSIDriverList object with the given unique name and description.
@@ -10095,7 +10095,7 @@ export namespace storage {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'storage.k8s.io/v1beta1'
+			readonly apiVersion!: 'storage.k8s.io/v1beta1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -10103,17 +10103,17 @@ export namespace storage {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'CSINode'
+			readonly kind!: 'CSINode'
 
 			/**
 			 * metadata.name must be the Kubernetes node name.
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * spec is the specification of CSINode
 			 */
-			readonly spec: types.storage.v1beta1.CSINodeSpec
+			readonly spec!: types.storage.v1beta1.CSINodeSpec
 
 			/**
 			 * Create a storage.v1beta1.CSINode object with the given unique name and description.
@@ -10145,12 +10145,12 @@ export namespace storage {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'storage.k8s.io/v1beta1'
+			readonly apiVersion!: 'storage.k8s.io/v1beta1'
 
 			/**
 			 * items is the list of CSINode
 			 */
-			readonly items: types.storage.v1beta1.CSINode[]
+			readonly items!: types.storage.v1beta1.CSINode[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -10158,13 +10158,13 @@ export namespace storage {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'CSINodeList'
+			readonly kind!: 'CSINodeList'
 
 			/**
 			 * Standard list metadata More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a storage.v1beta1.CSINodeList object with the given unique name and description.
@@ -10213,7 +10213,7 @@ export namespace storage {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'storage.k8s.io/v1beta1'
+			readonly apiVersion!: 'storage.k8s.io/v1beta1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -10221,13 +10221,13 @@ export namespace storage {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'StorageClass'
+			readonly kind!: 'StorageClass'
 
 			/**
 			 * Standard object's metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Dynamically provisioned PersistentVolumes of this storage class are created with these
@@ -10245,7 +10245,7 @@ export namespace storage {
 			/**
 			 * Provisioner indicates the type of the provisioner.
 			 */
-			readonly provisioner: string
+			readonly provisioner!: string
 
 			/**
 			 * Dynamically provisioned PersistentVolumes of this storage class are created with this
@@ -10297,12 +10297,12 @@ export namespace storage {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'storage.k8s.io/v1beta1'
+			readonly apiVersion!: 'storage.k8s.io/v1beta1'
 
 			/**
 			 * Items is the list of StorageClasses
 			 */
-			readonly items: types.storage.v1beta1.StorageClass[]
+			readonly items!: types.storage.v1beta1.StorageClass[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -10310,13 +10310,13 @@ export namespace storage {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'StorageClassList'
+			readonly kind!: 'StorageClassList'
 
 			/**
 			 * Standard list metadata More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a storage.v1beta1.StorageClassList object with the given unique name and description.
@@ -10351,7 +10351,7 @@ export namespace storage {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'storage.k8s.io/v1beta1'
+			readonly apiVersion!: 'storage.k8s.io/v1beta1'
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -10359,19 +10359,19 @@ export namespace storage {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'VolumeAttachment'
+			readonly kind!: 'VolumeAttachment'
 
 			/**
 			 * Standard object metadata. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ObjectMeta
+			readonly metadata!: types.meta.v1.ObjectMeta
 
 			/**
 			 * Specification of the desired attach/detach volume behavior. Populated by the Kubernetes
 			 * system.
 			 */
-			readonly spec: types.storage.v1beta1.VolumeAttachmentSpec
+			readonly spec!: types.storage.v1beta1.VolumeAttachmentSpec
 
 			/**
 			 * Create a storage.v1beta1.VolumeAttachment object with the given unique name and description.
@@ -10403,12 +10403,12 @@ export namespace storage {
 			 * values. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 			 */
-			readonly apiVersion: 'storage.k8s.io/v1beta1'
+			readonly apiVersion!: 'storage.k8s.io/v1beta1'
 
 			/**
 			 * Items is the list of VolumeAttachments
 			 */
-			readonly items: types.storage.v1beta1.VolumeAttachment[]
+			readonly items!: types.storage.v1beta1.VolumeAttachment[]
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -10416,13 +10416,13 @@ export namespace storage {
 			 * CamelCase. More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 			 */
-			readonly kind: 'VolumeAttachmentList'
+			readonly kind!: 'VolumeAttachmentList'
 
 			/**
 			 * Standard list metadata More info:
 			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 			 */
-			readonly metadata: types.meta.v1.ListMeta
+			readonly metadata!: types.meta.v1.ListMeta
 
 			/**
 			 * Create a storage.v1beta1.VolumeAttachmentList object with the given unique name and description.
