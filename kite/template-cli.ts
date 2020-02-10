@@ -188,7 +188,7 @@ function asConfig(opts: CliFlags, und: boolean): TemplateConfigSpec {
 export default async function templateCli(cfg?: TemplateConfig) {
 	try {
 		if (!cfg) {
-			const args = getArgsObject(new Set(['config', 'c']))
+			const args = getArgsObject(new Set(['config', 'c', 'y', 'yaml']))
 			cfg = canonicalizeOptions(args)
 		}
 		const out = await template(cfg)
