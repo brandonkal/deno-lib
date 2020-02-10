@@ -167,7 +167,7 @@ function asConfig(opts: CliFlags, und: boolean): TemplateConfigSpec {
 	if (envOpt) {
 		env = ['any']
 	}
-	const out = {
+	const out: TemplateConfigSpec = {
 		exec: asStr([opts.exec, opts.e], und),
 		reload: asBool([opts.reload, opts.r], und),
 		quiet: asBool([opts.quiet, opts.q], und),
@@ -176,7 +176,9 @@ function asConfig(opts: CliFlags, und: boolean): TemplateConfigSpec {
 		allowEnv: env,
 	}
 	if (!out.exec) {
-		opts.yaml = opts.yaml || opts.y || (opts._ && opts._[0])
+		out.yaml = opts.yaml || opts.y || (opts._ && opts._[0])
+	} else {
+		out.yaml = undefined
 	}
 	return out
 }
@@ -188,7 +190,7 @@ function asConfig(opts: CliFlags, und: boolean): TemplateConfigSpec {
 export default async function templateCli(cfg?: TemplateConfig) {
 	try {
 		if (!cfg) {
-			const args = getArgsObject(new Set(['config', 'c', 'y', 'yaml']))
+			const args = getArgsObject(new Set(['config', 'c']))
 			cfg = canonicalizeOptions(args)
 		}
 		const out = await template(cfg)
