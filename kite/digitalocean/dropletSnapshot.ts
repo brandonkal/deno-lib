@@ -56,8 +56,8 @@ export class DropletSnapshot extends kite.Resource {
 		inputs.name = args ? args.name : undefined
 		super(name, inputs)
 		this.setType(DropletSnapshot.__kiteType)
-		this.createdAt = `(( tf ${this.id()}.createdAt ))` as any /*out*/
-		this.minDiskSize = `(( tf ${this.id()}.minDiskSize | number ))` as any /*out*/
+		this.createdAt = `(( tf ${this.id()}.created_at ))` as any /*out*/
+		this.minDiskSize = `(( tf ${this.id()}.min_disk_size | number ))` as any /*out*/
 		this.regions = `(( tf ${this.id()}.regions ))` as any /*out*/
 		this.size = `(( tf ${this.id()}.size | number ))` as any /*out*/
 	}

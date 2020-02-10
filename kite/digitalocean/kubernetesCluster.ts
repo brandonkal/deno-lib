@@ -153,14 +153,14 @@ export class KubernetesCluster extends kite.Resource {
 		inputs.version = args ? args.version : undefined
 		super(name, inputs)
 		this.setType(KubernetesCluster.__kiteType)
-		this.clusterSubnet = `(( tf ${this.id()}.clusterSubnet ))` as any /*out*/
-		this.createdAt = `(( tf ${this.id()}.createdAt ))` as any /*out*/
+		this.clusterSubnet = `(( tf ${this.id()}.cluster_subnet ))` as any /*out*/
+		this.createdAt = `(( tf ${this.id()}.created_at ))` as any /*out*/
 		this.endpoint = `(( tf ${this.id()}.endpoint ))` as any /*out*/
-		this.ipv4Address = `(( tf ${this.id()}.ipv4Address ))` as any /*out*/
-		this.kubeConfigs = `(( tf ${this.id()}.kubeConfigs ))` as any /*out*/
-		this.serviceSubnet = `(( tf ${this.id()}.serviceSubnet ))` as any /*out*/
+		this.ipv4Address = `(( tf ${this.id()}.ipv4_address ))` as any /*out*/
+		this.kubeConfigs = `(( tf ${this.id()}.kube_config ))` as any /*out*/
+		this.serviceSubnet = `(( tf ${this.id()}.service_subnet ))` as any /*out*/
 		this.status = `(( tf ${this.id()}.status ))` as any /*out*/
-		this.updatedAt = `(( tf ${this.id()}.updatedAt ))` as any /*out*/
+		this.updatedAt = `(( tf ${this.id()}.updated_at ))` as any /*out*/
 	}
 	/**
 	 * Used to map camelCased properties to Terraform snake_case

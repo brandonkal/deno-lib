@@ -121,7 +121,7 @@ export class SpacesBucket extends kite.Resource {
 		inputs.region = args ? args.region : undefined
 		super(name, inputs)
 		this.setType(SpacesBucket.__kiteType)
-		this.bucketDomainName = `(( tf ${this.id()}.bucketDomainName ))` as any /*out*/
+		this.bucketDomainName = `(( tf ${this.id()}.bucket_domain_name ))` as any /*out*/
 		this.urn = `(( tf ${this.id()}.urn ))` as any /*out*/
 	}
 	/**

@@ -73,8 +73,8 @@ export class Firewall extends kite.Resource {
 		inputs.tags = args ? args.tags : undefined
 		super(name, inputs)
 		this.setType(Firewall.__kiteType)
-		this.createdAt = `(( tf ${this.id()}.createdAt ))` as any /*out*/
-		this.pendingChanges = `(( tf ${this.id()}.pendingChanges ))` as any /*out*/
+		this.createdAt = `(( tf ${this.id()}.created_at ))` as any /*out*/
+		this.pendingChanges = `(( tf ${this.id()}.pending_changes ))` as any /*out*/
 		this.status = `(( tf ${this.id()}.status ))` as any /*out*/
 	}
 	/**

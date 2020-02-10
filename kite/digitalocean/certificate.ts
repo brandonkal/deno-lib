@@ -78,8 +78,8 @@ export class Certificate extends kite.Resource {
 		inputs.type = args ? args.type : undefined
 		super(name, inputs)
 		this.setType(Certificate.__kiteType)
-		this.notAfter = `(( tf ${this.id()}.notAfter ))` as any /*out*/
-		this.sha1Fingerprint = `(( tf ${this.id()}.sha1Fingerprint ))` as any /*out*/
+		this.notAfter = `(( tf ${this.id()}.not_after ))` as any /*out*/
+		this.sha1Fingerprint = `(( tf ${this.id()}.sha1_fingerprint ))` as any /*out*/
 		this.state = `(( tf ${this.id()}.state ))` as any /*out*/
 	}
 	/**

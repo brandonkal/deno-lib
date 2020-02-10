@@ -170,15 +170,15 @@ export class Droplet extends kite.Resource {
 		inputs.volumeIds = args ? args.volumeIds : undefined
 		super(name, inputs)
 		this.setType(Droplet.__kiteType)
-		this.createdAt = `(( tf ${this.id()}.createdAt ))` as any /*out*/
+		this.createdAt = `(( tf ${this.id()}.created_at ))` as any /*out*/
 		this.disk = `(( tf ${this.id()}.disk | number ))` as any /*out*/
-		this.ipv4Address = `(( tf ${this.id()}.ipv4Address ))` as any /*out*/
-		this.ipv4AddressPrivate = `(( tf ${this.id()}.ipv4AddressPrivate ))` as any /*out*/
-		this.ipv6Address = `(( tf ${this.id()}.ipv6Address ))` as any /*out*/
+		this.ipv4Address = `(( tf ${this.id()}.ipv4_address ))` as any /*out*/
+		this.ipv4AddressPrivate = `(( tf ${this.id()}.ipv4_address_private ))` as any /*out*/
+		this.ipv6Address = `(( tf ${this.id()}.ipv6_address ))` as any /*out*/
 		this.locked = `(( tf ${this.id()}.locked | boolean ))` as any /*out*/
 		this.memory = `(( tf ${this.id()}.memory | number ))` as any /*out*/
-		this.priceHourly = `(( tf ${this.id()}.priceHourly | number ))` as any /*out*/
-		this.priceMonthly = `(( tf ${this.id()}.priceMonthly | number ))` as any /*out*/
+		this.priceHourly = `(( tf ${this.id()}.price_hourly | number ))` as any /*out*/
+		this.priceMonthly = `(( tf ${this.id()}.price_monthly | number ))` as any /*out*/
 		this.status = `(( tf ${this.id()}.status ))` as any /*out*/
 		this.urn = `(( tf ${this.id()}.urn ))` as any /*out*/
 		this.vcpus = `(( tf ${this.id()}.vcpus | number ))` as any /*out*/
