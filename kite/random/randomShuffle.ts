@@ -80,7 +80,7 @@ export class RandomShuffle extends kite.Resource {
 		inputs.seed = args ? args.seed : undefined
 		super(name, inputs)
 		this.setType(RandomShuffle.__kiteType)
-		this.results = `(( tf ${this.id()}.results ))` as any /*out*/
+		this.results = `(( tf ${this.id()}.result ))` as any /*out*/
 	}
 	/**
 	 * Used to map camelCased properties to Terraform snake_case

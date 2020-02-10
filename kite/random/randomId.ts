@@ -103,8 +103,8 @@ export class RandomId extends kite.Resource {
 		super(name, inputs)
 		this.setType(RandomId.__kiteType)
 		this.b64 = `(( tf ${this.id()}.b64 ))` as any /*out*/
-		this.b64Std = `(( tf ${this.id()}.b64Std ))` as any /*out*/
-		this.b64Url = `(( tf ${this.id()}.b64Url ))` as any /*out*/
+		this.b64Std = `(( tf ${this.id()}.b64_std ))` as any /*out*/
+		this.b64Url = `(( tf ${this.id()}.b64_url ))` as any /*out*/
 		this.dec = `(( tf ${this.id()}.dec ))` as any /*out*/
 		this.hex = `(( tf ${this.id()}.hex ))` as any /*out*/
 	}
