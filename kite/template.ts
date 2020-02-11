@@ -123,9 +123,9 @@ export default async function template(cfg: TemplateConfig): Promise<string> {
 	const { spec } = cfg
 	let yamlText: string
 	if (spec.exec) {
-		let cmd = ['deno', spec.exec]
+		let cmd = ['deno', 'run', spec.exec]
 		if (spec.args) {
-			cmd.push(...['-c', JSON.stringify(spec.args)])
+			cmd.push(...['-a', JSON.stringify(spec.args)])
 		}
 		if (!spec.quiet) console.error(`Executing ${spec.exec}`)
 		const p = Deno.run({
@@ -133,12 +133,12 @@ export default async function template(cfg: TemplateConfig): Promise<string> {
 			stderr: spec.quiet ? 'piped' : 'inherit',
 			stdout: 'piped',
 		})
+		const out = await p.output()
 		let s = await p.status()
 		if (!s.success) {
 			if (spec.quiet) console.error(await p.stderrOutput())
 			throw new TemplateError('Config program threw an Error')
 		}
-		const out = await p.output()
 		yamlText = new TextDecoder().decode(out)
 	} else if (spec.yaml) {
 		yamlText = spec.yaml
