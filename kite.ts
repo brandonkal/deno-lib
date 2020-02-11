@@ -311,14 +311,20 @@ export function make(fn: Function, opts?: MakeOpts): string {
 		throw new Error('Expected function for make')
 	}
 	reset()
-	// run user's function
-	if (main) {
-		const args = getArgsObject()
-		// TODO: canonalize
-		fn(args.a)
-	} else {
-		fn()
+	try {
+		// run user's function
+		if (main) {
+			const args = getArgsObject()
+			// TODO: canonalize
+			fn(args.a)
+		} else {
+			fn()
+		}
+	} catch (e) {
+		console.error(e)
+		Deno.exit(1)
 	}
+
 	let buf = [...globalThis.outBuffer]
 	// keep track of input to validate that transformers do not create new objects
 	const beforeLength = buf.length
