@@ -10,15 +10,13 @@
 
 import { yaml as yp } from './kite.ts'
 import { getArgsObject } from './args.ts'
-import * as yaml from 'https://deno.land/std/encoding/yaml.ts'
 
-export default function format(txt: string): string {
-	const o = yaml.parseAll(txt)
+export default function format(o: any): string {
 	return yp.print(o)
 }
 
 if (import.meta.main) {
-	const obj = getArgsObject()
+	const obj = getArgsObject(new Set(['f']))
 	if (!obj.f) {
 		console.error(`No input found. Supply as "-f -" or "-f '{"json":true}'"`)
 		Deno.exit(1)
