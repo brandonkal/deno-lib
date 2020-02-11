@@ -62,11 +62,14 @@ export function printYaml(
 			}
 			return (
 				prefix +
-				yaml.stringify(obj, {
-					schema: yaml.JSON_SCHEMA,
-					sortKeys: sortKeys,
-					skipInvalid: true,
-				})
+				yaml
+					.stringify(obj, {
+						schema: yaml.JSON_SCHEMA,
+						sortKeys: sortKeys,
+						skipInvalid: true,
+					})
+					.trimEnd() +
+				'\n'
 			)
 		})
 		.join('')
