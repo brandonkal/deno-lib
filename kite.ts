@@ -337,7 +337,6 @@ export function make(fn: Function, opts?: MakeOpts): string {
 	let tfBuffer: Resource[] = []
 	buf = buf.filter((res) => {
 		/* private */
-		//@ts-ignore
 		const skip = ((res as any).__type as string).startsWith('tf:')
 		if (skip) tfBuffer.push(res)
 		return !skip
@@ -347,7 +346,7 @@ export function make(fn: Function, opts?: MakeOpts): string {
 		buf.unshift(new TerraformJSON(tfBuffer))
 	}
 	// Convert buffer to add identifying comments
-	function genComments(res: Resource) {
+	function genComments(res: Resource): [string | undefined, Resource] {
 		let comment: string | undefined = undefined
 		// Calling uid() may not be safe if converted
 		if (typeof res.uid === 'function') {
