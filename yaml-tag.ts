@@ -9,7 +9,7 @@
  * @license MIT
  */
 
-import * as yaml from 'https://deno.land/std/encoding/yaml.ts'
+import * as YAML from 'https://deno.land/std/encoding/yaml.ts'
 import { Type } from 'https://deno.land/std/encoding/yaml/type.ts'
 import { Schema } from 'https://deno.land/std/encoding/yaml/schema.ts'
 import { execDedent } from './dedent.ts'
@@ -27,7 +27,7 @@ const undefinedType = new Type('tag:yaml.org,2002:js/undefined', {
 
 export const JSON_AND_UNDEFINED = new Schema({
 	explicit: [undefinedType],
-	include: [yaml.JSON_SCHEMA],
+	include: [YAML.JSON_SCHEMA],
 })
 
 /**
@@ -62,13 +62,11 @@ export function printYaml(
 			}
 			return (
 				prefix +
-				yaml
-					.stringify(obj, {
-						schema: yaml.JSON_SCHEMA,
-						sortKeys: sortKeys,
-						skipInvalid: true,
-					})
-					.trimEnd() +
+				YAML.stringify(obj, {
+					schema: YAML.JSON_SCHEMA,
+					sortKeys: sortKeys,
+					skipInvalid: true,
+				}).trimEnd() +
 				'\n'
 			)
 		})
@@ -107,7 +105,7 @@ function yamlString(item: unknown, indent: number) {
 		return 'null'
 	} else if (typeof item === 'object') {
 		if (indent === 0) {
-			return yaml.stringify(item as object, { schema: yaml.JSON_SCHEMA })
+			return YAML.stringify(item as object, { schema: YAML.JSON_SCHEMA })
 		}
 		return JSON.stringify(item)
 	} else if (typeof item === 'undefined') {
@@ -119,17 +117,55 @@ function yamlString(item: unknown, indent: number) {
 }
 
 /**
+ * yaml is a tagged template literal function for yaml string.
+ * y makes it easy to use YAML inside of JavaScript.
+ * Object interpolations are serialized to JSON first.
+ * @returns Single JavaScript Object
+ */
+export function y<T extends object>(
+	literals: TemplateStringsArray,
+	...expr: unknown[]
+): T {
+	const { strings } = execDedent(literals, expr)
+	const result = yamlfy(strings, ...expr)
+	//@ts-ignore -- YAML lib TS bug. parseAll expects options for 2nd param.
+	return YAML.parseAll(result, { schema: JSON_AND_UNDEFINED })[0] as T
+}
+
+/**
  * y is a tagged template literal function for yaml string.
  * y makes it easy to use YAML inside of JavaScript.
  * Object interpolations are serialized to JSON first.
  * @returns Array of YAML document JavaScript Objects
  */
-export function y<T extends object>(
+export function yaml<T extends object>(
 	literals: TemplateStringsArray,
 	...expr: unknown[]
 ): T[] {
 	const { strings } = execDedent(literals, expr)
 	const result = yamlfy(strings, ...expr)
 	//@ts-ignore -- YAML lib TS bug. parseAll expects options for 2nd param.
-	return yaml.parseAll(result, { schema: JSON_AND_UNDEFINED }) as T[]
+	return YAML.parseAll(result, { schema: JSON_AND_UNDEFINED }) as T[]
 }
+
+// export standard yaml module
+
+/**
+ * Serializes `object` as a YAML document.
+ *
+ * You can disable exceptions by setting the skipInvalid option to true.
+ */
+yaml.stringify = YAML.stringify
+/**
+ * Parses `content` as single YAML document.
+ *
+ * Returns a JavaScript object or throws `YAMLException` on error.
+ * By default, does not support regexps, functions and undefined. This method is safe for untrusted data.
+ *
+ */
+yaml.parse = YAML.parse
+/**
+ * Same as `parse()`, but understands multi-document sources.
+ * Applies iterator to each document if specified, or returns array of documents.
+ */
+yaml.parseAll = YAML.parseAll

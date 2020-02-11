@@ -2,10 +2,10 @@ import { test as it } from 'https://deno.land/std@v0.32.0/testing/mod.ts'
 import { assertEquals } from 'https://deno.land/std@v0.32.0/testing/asserts.ts'
 
 import { dedent } from './dedent.ts'
-import { y, printYaml, yamlfy } from './yaml-tag.ts'
+import { y, yaml, printYaml, yamlfy } from './yaml-tag.ts'
 
 it('injects boolean', () => {
-	assertEquals([{ 'is cool': true }], y`is cool: ${true}`)
+	assertEquals({ 'is cool': true }, y`is cool: ${true}`)
 })
 
 it('injects object', () => {
@@ -13,7 +13,7 @@ it('injects object', () => {
 		a: 1,
 		b: 2,
 	}
-	assertEquals([{ 'is cool': { a: 1, b: 2 } }], y`is cool: ${first}`)
+	assertEquals({ 'is cool': { a: 1, b: 2 } }, y`is cool: ${first}`)
 })
 
 it('parses multiple documents', () => {
@@ -23,7 +23,7 @@ it('parses multiple documents', () => {
 	}
 	assertEquals(
 		[{ 'is cool': { a: 1, b: 2 } }, { doc: 'second' }],
-		y`
+		yaml`
       ---
       is cool: ${first}
       ---
@@ -57,7 +57,7 @@ d: 4
 })
 
 it('handles Drone YAML', () => {
-	const text = y`
+	const text = yaml`
     ---
       kind: pipeline
       type: docker
@@ -104,7 +104,7 @@ it('handles kubernetes YAML', () => {
 		},
 	]
 
-	const yml = y`
+	const yml = yaml`
     ---
     apiVersion: traefik.containo.us/v1alpha1
     kind: IngressRoute
@@ -181,20 +181,35 @@ it('handles YAML with Tabs', () => {
 			affinity:
 			- node: k8s.io/failure-domain=us-east1,us-east2
 `
-	const desiredObject = [
-		{
-			pod: {
-				name: 'nginx',
-				labels: { app: 'nginx' },
-				containers: [
-					{
-						name: 'nginx',
-						image: 'nginx:latest',
-						affinity: [{ node: 'k8s.io/failure-domain=us-east1,us-east2' }],
-					},
-				],
-			},
+	const desiredObject = {
+		pod: {
+			name: 'nginx',
+			labels: { app: 'nginx' },
+			containers: [
+				{
+					name: 'nginx',
+					image: 'nginx:latest',
+					affinity: [{ node: 'k8s.io/failure-domain=us-east1,us-east2' }],
+				},
+			],
 		},
-	]
+	}
 	assertEquals(desiredObject, yml)
+})
+
+it('creates single map', () => {
+	const yml = yaml.stringify(y`
+	address-pools:
+		- name: default
+			protocol: layer2
+			addresses: [10.0.20.32-10.0.20.64]
+	`)
+	const expected = `\
+address-pools:
+  - name: default
+    protocol: layer2
+    addresses:
+      - 10.0.20.32-10.0.20.64
+`
+	assertEquals(expected, yml)
 })
