@@ -41,7 +41,7 @@ it('merges config from YAML', () => {
 		spec:
 		  allowEnv:
 		  - ENV_3
-    `
+		`
 	const out = getConfigFromYaml(yamlText, cfg)
 	const expected: TemplateConfig = {
 		apiVersion: 'kite.run/v1alpha1',
@@ -82,9 +82,8 @@ it('merges config from YAML', () => {
 		spec:
 		  allowEnv:
 		  - ENV_3
-		  `,
+		`,
 	]
-	console.log(JSON.stringify(out.docs))
 	assertEquals(expectedYaml, out.docs)
 	assertEquals([...out.toRemove], [0, 1, 3])
 })

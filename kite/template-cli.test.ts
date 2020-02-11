@@ -12,7 +12,6 @@ function xit(name: string, _fn: any) {
 /** mock function to parse args like template-cli */
 function parseArgs(argsArray: string[]) {
 	const args = getArgsObject(new Set(['config', 'c']), argsArray)
-	console.log(args)
 	return cOpts(args)
 }
 
