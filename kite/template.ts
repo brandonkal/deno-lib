@@ -179,7 +179,7 @@ export default async function template(cfg: TemplateConfig): Promise<string> {
 		.map((txt) => {
 			return substitutePlaceholders(txt, config.spec, state).trim()
 		})
-		.join('---\n')
+		.join('\n---\n')
 	const header = banner + config.metadata.name + '\n'
 	return header + addTopDashes(result) + '\n'
 }
