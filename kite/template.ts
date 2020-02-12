@@ -310,7 +310,6 @@ async function execTerraform(config: TemplateConfig, tfConfig: object) {
 	await fs.ensureDir(tfDir)
 	const cfgText = JSON.stringify(tfConfig, undefined, 2)
 	// Terraform is rather slow. So if the config has not changed, short-circuit.
-	// fs.exists(tfFile)
 	let currentContents: string
 	let willRun = true
 	if (!forceApply) {
@@ -326,6 +325,12 @@ async function execTerraform(config: TemplateConfig, tfConfig: object) {
 	}
 
 	const env = buildEnv(config.spec.allowEnv)
+	async function backup() {
+		try {
+			await Deno.remove(tfFile + '.bak')
+			fs.move(tfFile, tfFile + '.bak')
+		} catch (e) {}
+	}
 
 	if (willRun) {
 		await fs.writeFileStr(tfFile, cfgText)
@@ -350,6 +355,7 @@ async function execTerraform(config: TemplateConfig, tfConfig: object) {
 		let s = await init.status()
 		if (!s.success) {
 			if (quiet) console.error(filter.flush())
+			backup()
 			throw new TemplateError('Terraform init failed')
 		}
 
@@ -373,6 +379,7 @@ async function execTerraform(config: TemplateConfig, tfConfig: object) {
 		s = await apply.status()
 		if (!s.success) {
 			if (quiet) console.error(filter.flush())
+			backup()
 			throw new TemplateError('Terraform apply failed')
 		}
 	}
@@ -393,6 +400,9 @@ async function execTerraform(config: TemplateConfig, tfConfig: object) {
 		throw new TemplateError('Terraform show -json failed')
 	}
 	const json = new TextDecoder().decode(await show.output())
+	if (!config.spec.quiet) {
+		console.error() // log empty line before printing YAML output.
+	}
 	return JSON.parse(json) /* state */
 }
 
