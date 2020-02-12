@@ -174,6 +174,7 @@ function asConfig(opts: CliFlags, und: boolean): TemplateConfigSpec {
 		name: asStr([opts.name, opts.n], und),
 		preview: asBool([opts.preview, opts.p], und),
 		allowEnv: env,
+		args: opts.args,
 	}
 	if (!out.exec) {
 		out.yaml = opts.yaml || opts.y || (opts._ && opts._[0])
