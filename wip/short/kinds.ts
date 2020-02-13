@@ -10,7 +10,7 @@
 import { transform, valueMap, mapper, drop, Transformer } from './transform.ts'
 import * as expressions from './expressions.ts'
 import * as st from './interfaces.ts'
-import * as types from '../gen/types.ts'
+import * as types from '../../kubernetes/gen/types.ts'
 
 type AllAny<T> = { [P in keyof T]-?: any }
 

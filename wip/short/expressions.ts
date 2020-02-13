@@ -7,7 +7,7 @@
  */
 
 // Handle expressions for Koki short
-import * as types from '../gen/types.ts'
+import * as types from '../../kubernetes/gen/types.ts'
 import * as shorts from './interfaces.ts'
 
 type GoRet<T> = { res: T | undefined; err: Error | undefined }
