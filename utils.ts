@@ -105,3 +105,41 @@ export function notImplemented(name: string) {
 		throw new Error(`${name} is not implemented.`)
 	}
 }
+
+/**
+ * wait builds a promise that resolves after a certain time and a function to cancel the timer.
+ * @param sec the number of seconds to wait
+ * @param msg An object to return when the timer completes
+ * @param id An optional id to assign the setTimout to.
+ */
+export function wait<T>(
+	sec: number,
+	msg?: T,
+	id?: any
+): [Promise<T>, () => void] {
+	function makeResolver(resolve: (arg: any) => void) {
+		//prettier-ignore
+		id = setTimeout(() => resolve(msg), sec * 1000)
+	}
+	return [new Promise((rs) => makeResolver(rs)), () => clearTimeout(id)]
+}
+
+/**
+ * withTimeout returns a new promise that resolves when the promise resolves or the timeout occurs.
+ *
+ * NOTE: Deno has issues with inferring generics see https://github.com/denoland/deno/issues/3997.
+ * For now, just pass explicit generic parameters
+ * @param sec specify timeout in seconds
+ * @param promise a function that returns a promise. Be sure to call bind if it is a method.
+ * @param timoutMsg Specify an object to return if the timeout occurs
+ */
+export async function withTimeout<V, TO>(
+	sec: number,
+	promise: () => Promise<V>,
+	timoutMsg?: TO
+): Promise<V | TO> {
+	const [waiting, cancel] = wait(sec, timoutMsg)
+	const result = await Promise.race([promise(), waiting])
+	cancel()
+	return result as V | TO
+}
