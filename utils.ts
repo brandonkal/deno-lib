@@ -21,8 +21,7 @@ export function stripUndefined<T extends object>(obj: T): T {
 /**
  * Returns true if x is an object, false otherwise.
  */
-export function isObject(o: any): boolean {
-	const t = typeof o
+export function isObject(o: any): o is object {
 	return typeof o === 'object' && !Array.isArray(o) && !!o
 }
 
