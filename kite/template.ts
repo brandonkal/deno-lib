@@ -328,8 +328,10 @@ async function execTerraform(config: TemplateConfig, tfConfig: object) {
 	async function backup() {
 		try {
 			await Deno.remove(tfFile + '.bak')
-			fs.move(tfFile, tfFile + '.bak')
-		} catch (e) {}
+			await fs.move(tfFile, tfFile + '.bak')
+		} catch (e) {
+			console.error('Backup failure:', e.message || e)
+		}
 	}
 
 	if (willRun) {
@@ -355,7 +357,7 @@ async function execTerraform(config: TemplateConfig, tfConfig: object) {
 		let s = await init.status()
 		if (!s.success) {
 			if (quiet) console.error(filter.flush())
-			backup()
+			await backup()
 			throw new TemplateError('Terraform init failed')
 		}
 
@@ -379,7 +381,7 @@ async function execTerraform(config: TemplateConfig, tfConfig: object) {
 		s = await apply.status()
 		if (!s.success) {
 			if (quiet) console.error(filter.flush())
-			backup()
+			await backup()
 			throw new TemplateError('Terraform apply failed')
 		}
 	}
