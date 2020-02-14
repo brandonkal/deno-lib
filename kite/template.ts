@@ -14,7 +14,7 @@ import { sha256 } from 'https://deno.land/x/sha256/mod.ts'
 import * as yaml from 'https://deno.land/std@v0.32.0/encoding/yaml.ts'
 import * as base32 from 'https://deno.land/std@v0.32.0/encoding/base32.ts'
 
-import { dotProp, jsonItem, visitAll } from '../utils.ts'
+import { dotProp, jsonItem, visitAll, withTimeout } from '../utils.ts'
 import { merge, MergeObject } from '../merge.ts'
 import * as filter from './filter-terraform.ts'
 import * as rt from '../runtypes.ts'
@@ -113,6 +113,14 @@ export function configFromSpec(spec: any): TemplateConfig {
 
 /// Logic ///
 
+const timeoutMsg: Deno.ProcessStatus = {
+	success: false,
+	signal: 255,
+}
+function isTimeoutMessage(x: any) {
+	return x.success === false && x.signal === 255
+}
+
 /**
  * Takes input YAML as a string and executes Terraform if required.
  * The resulting state is then queried and combined with argument inputs.
@@ -123,6 +131,18 @@ export default async function template(cfg: TemplateConfig): Promise<string> {
 	const { spec } = cfg
 	let yamlText: string
 	if (spec.exec) {
+		// Fetch dependencies first so we can limit actual execution time.
+		const fp = Deno.run({
+			args: ['deno', 'fetch', spec.exec],
+			stderr: spec.quiet ? 'piped' : 'inherit',
+			stdout: 'null',
+		})
+		const fs = await fp.status()
+		if (!fs.success) {
+			if (spec.quiet) console.error(await fp.stderrOutput())
+			throw new TemplateError('Config program threw an Error during fetch')
+		}
+
 		let cmd = ['deno', 'run', spec.exec]
 		if (spec.args) {
 			cmd.push(...['-a', JSON.stringify(spec.args)])
@@ -133,13 +153,18 @@ export default async function template(cfg: TemplateConfig): Promise<string> {
 			stderr: spec.quiet ? 'piped' : 'inherit',
 			stdout: 'piped',
 		})
-		const out = await p.output()
+
+		const out = await withTimeout(15, p.output.bind(p), timeoutMsg)
+		if (isTimeoutMessage(out)) {
+			p.kill(6)
+			throw new TemplateError('Config program timed out.')
+		}
 		let s = await p.status()
 		if (!s.success) {
 			if (spec.quiet) console.error(await p.stderrOutput())
 			throw new TemplateError('Config program threw an Error')
 		}
-		yamlText = new TextDecoder().decode(out)
+		yamlText = new TextDecoder().decode(out as Uint8Array)
 	} else if (spec.yaml) {
 		yamlText = spec.yaml
 	} else {
