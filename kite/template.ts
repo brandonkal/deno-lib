@@ -334,6 +334,9 @@ async function execTerraform(config: TemplateConfig, tfConfig: object) {
 	const tfFile = path.join(tfDir + '/kite.tf.json')
 	await fs.ensureDir(tfDir)
 	const cfgText = JSON.stringify(tfConfig, undefined, 2)
+	if (cfgText.includes('local-exec')) {
+		throw new TemplateError('local-exec is not allowed on the Kite platform.')
+	}
 	// Terraform is rather slow. So if the config has not changed, short-circuit.
 	let currentContents: string
 	let willRun = true
