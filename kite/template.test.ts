@@ -14,7 +14,7 @@ it('merges config from YAML', () => {
 		kind: 'TemplateConfig',
 		metadata: {
 			name: 'test-yaml-merge',
-			_allowAnyEnv: true,
+			_allowEnv: true,
 		},
 		spec: {},
 	}
@@ -25,7 +25,7 @@ it('merges config from YAML', () => {
 		metadata:
 		  name: ignored
 		spec:
-		  allowEnv:
+		  env:
 		  - ENV_1
 		  - ENV_2
 		---
@@ -39,7 +39,7 @@ it('merges config from YAML', () => {
 		apiVersion: kite.run/v1alpha1
 		kind: TemplateConfig
 		spec:
-		  allowEnv:
+		  env:
 		  - ENV_3
 		`
 	const out = getConfigFromYaml(yamlText, cfg)
@@ -48,10 +48,10 @@ it('merges config from YAML', () => {
 		kind: 'TemplateConfig',
 		metadata: {
 			name: 'test-yaml-merge',
-			_allowAnyEnv: true,
+			_allowEnv: true,
 		},
 		spec: {
-			allowEnv: ['ENV_3'],
+			env: ['ENV_3'],
 			name: 'test-yaml-merge',
 		},
 	}
@@ -64,7 +64,7 @@ it('merges config from YAML', () => {
 		metadata:
 		  name: ignored
 		spec:
-		  allowEnv:
+		  env:
 		  - ENV_1
 		  - ENV_2
 		`,
@@ -80,7 +80,7 @@ it('merges config from YAML', () => {
 		apiVersion: kite.run/v1alpha1
 		kind: TemplateConfig
 		spec:
-		  allowEnv:
+		  env:
 		  - ENV_3
 		`,
 	]
@@ -94,9 +94,10 @@ it('does not allow additional envars', () => {
 		kind: 'TemplateConfig',
 		metadata: {
 			name: 'test-yaml-merge',
+			_allowEnv: ['API_KEY'],
 		},
 		spec: {
-			allowEnv: ['API_KEY'],
+			env: ['API_KEY'],
 		},
 	}
 	const yamlText = dedent`
@@ -106,9 +107,10 @@ it('does not allow additional envars', () => {
 		metadata:
 		  name: ignored
 		spec:
-		  allowEnv:
+		  env:
 		  - ENV_1
 		  - ENV_2
+		  - ENV_3: value
 		  - API_KEY
     `
 	const out = getConfigFromYaml(yamlText, cfg)
@@ -117,9 +119,10 @@ it('does not allow additional envars', () => {
 		kind: 'TemplateConfig',
 		metadata: {
 			name: 'test-yaml-merge',
+			_allowEnv: ['API_KEY'],
 		},
 		spec: {
-			allowEnv: ['API_KEY'],
+			env: [{ ENV_3: 'value' }, 'API_KEY'],
 			name: 'test-yaml-merge',
 		},
 	}
@@ -132,9 +135,10 @@ it('merges Terraform Config', () => {
 		kind: 'TemplateConfig',
 		metadata: {
 			name: 'test-yaml-merge',
+			_allowEnv: true,
 		},
 		spec: {
-			allowEnv: ['API_KEY'],
+			env: ['API_KEY'],
 			name: 'test-yaml-merge',
 		},
 	}

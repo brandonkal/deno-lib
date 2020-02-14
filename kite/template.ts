@@ -18,6 +18,7 @@ import { dotProp, jsonItem, visitAll, withTimeout } from '../utils.ts'
 import { merge, MergeObject } from '../merge.ts'
 import * as filter from './filter-terraform.ts'
 import * as rt from '../runtypes.ts'
+import { buildCleanCommand } from '../shellbox.ts'
 
 export class TemplateError extends Error {}
 
@@ -50,8 +51,12 @@ export interface TemplateConfigSpec {
 	yaml?: string
 	/** only render exec program. Do not Template */
 	preview?: boolean
-	/** a list of environment variables that can be read during templating. */
-	allowEnv?: string[]
+	/**
+	 * a list of environment variables that can be read during templating.
+	 * If an item is a simple string, it will be pulled from the environment.
+	 * If it is a mapping, the first item will be set in the execution environment.
+	 */
+	env?: (string | { [key: string]: string })[]
 }
 
 const rtTemplateConfigSpec = rt.Partial({
@@ -94,7 +99,7 @@ export interface TemplateConfig {
 		/** A unique name to use for storing Terraform state. Required if TerraformConfig exists. */
 		name?: string
 		/** This private parameter can only be set by the CLI. If true, env merges. */
-		_allowAnyEnv?: boolean
+		_allowEnv?: boolean | string[]
 	}
 	spec: TemplateConfigSpec
 }
@@ -174,6 +179,8 @@ export default async function template(cfg: TemplateConfig): Promise<string> {
 	let { tfConfig, config, docs, toRemove } = getConfigFromYaml(yamlText, cfg)
 	rtTemplateConfig.check(config)
 
+	const env = buildEnv(config.spec.env)
+
 	let state: any = {}
 	if (isTerraformConfig(tfConfig)) {
 		// asert name exists
@@ -196,13 +203,14 @@ export default async function template(cfg: TemplateConfig): Promise<string> {
 			}
 			return value
 		})
-		state = await execTerraform(config, tf)
+		state = await execTerraform(config, tf, env)
 	}
+	const allOps = ops(env)
 	// Now return the filtered result
 	const result = docs
 		.filter((_, i) => !toRemove.has(i))
 		.map((txt) => {
-			return substitutePlaceholders(txt, config.spec, state).trim()
+			return substitutePlaceholders(txt, config.spec, state, allOps).trim()
 		})
 		.join('\n---\n')
 	const header = banner + config.metadata.name + '\n'
@@ -243,13 +251,13 @@ export function getConfigFromYaml(yamlText: string, cfg: TemplateConfig) {
 	})
 	let config = {} as TemplateConfig
 	if (kiteConfigs.length) {
-		kiteConfigs.forEach((cfgN, i) => {
+		kiteConfigs.forEach((cfgN) => {
 			config = merge(config, cfgN)
 		})
 	}
 	// As a security measure, this private value can only come via CLI args
-	if (config?.metadata?._allowAnyEnv) {
-		delete config.metadata._allowAnyEnv
+	if (config?.metadata?._allowEnv) {
+		delete config.metadata._allowEnv
 	}
 	config = merge(config, cfg, templateConfigMergeObject(cfg))
 	let tfConfig: any = {}
@@ -287,10 +295,11 @@ function isTerraformConfig(p: any) {
 function substitutePlaceholders(
 	str: string,
 	spec: TemplateConfigSpec,
-	state: any
+	state: any,
+	/** The operation map */
+	allOps: Record<string, (a: any) => any>
 ): string {
 	parseCache.clear()
-	const allOps = ops(buildEnv(spec.allowEnv))
 	// match inside (( param ))
 	const out = str.replace(/['"]\(\((.*?)\)\)['"]/, (_, dslText) => {
 		let r = parseDSL(dslText, spec, state, allOps)
@@ -303,13 +312,20 @@ function substitutePlaceholders(
 }
 
 /** builds an environment based on allowed environment variables in config */
-function buildEnv(envars: string[] = []): Record<string, string> {
+function buildEnv(
+	envars: (string | Record<string, string>)[] = []
+): Record<string, string> {
 	const tfEnv: Record<string, string> = {}
 	if (envars && Array.isArray(envars)) {
 		envars.forEach((envar) => {
-			const evar = Deno.env(envar)
-			if (evar !== undefined) {
-				tfEnv[envar] = evar
+			let value: string | undefined
+			if (typeof envar === 'string') {
+				value = Deno.env(envar)
+			} else {
+				;[envar, value] = Object.entries(envar)[0]
+			}
+			if (value !== undefined && typeof envar === 'string') {
+				tfEnv[envar] = value
 			}
 		})
 	}
@@ -318,11 +334,17 @@ function buildEnv(envars: string[] = []): Record<string, string> {
 	return tfEnv
 }
 
+type StringRecord = Record<string, string>
+
 /**
  * execute Terraform as a process for given JSON and return state object.
  * @internal
  */
-async function execTerraform(config: TemplateConfig, tfConfig: object) {
+async function execTerraform(
+	config: TemplateConfig,
+	tfConfig: object,
+	env: StringRecord
+) {
 	const name = config.metadata.name!
 	const quiet = config.spec.quiet || false
 	const forceApply = config.spec.reload
@@ -352,7 +374,6 @@ async function execTerraform(config: TemplateConfig, tfConfig: object) {
 		}
 	}
 
-	const env = buildEnv(config.spec.allowEnv)
 	async function backup() {
 		try {
 			await Deno.remove(tfFile + '.bak')
@@ -389,18 +410,16 @@ async function execTerraform(config: TemplateConfig, tfConfig: object) {
 			throw new TemplateError('Terraform init failed')
 		}
 
+		const applyCmd = buildCleanCommand(
+			['terraform', 'apply', '-auto-approve', '-no-color', '-compact-warnings'],
+			env
+		)
+
 		const apply = Deno.run({
-			args: [
-				'terraform',
-				'apply',
-				'-auto-approve',
-				'-no-color',
-				'-compact-warnings',
-			],
+			args: applyCmd,
 			cwd: tfDir,
 			stderr: 'piped',
 			stdout: 'piped',
-			env,
 		})
 
 		filter.clear()
@@ -599,27 +618,42 @@ function parseDSL(
 }
 
 /**
- * Builds a config merge object where allowEnv is filtered
+ * Builds a config merge object where env is filtered.
+ * env is merged and then filtered by the contents of the
+ * private allowEnv key.
  */
 export function templateConfigMergeObject(
 	objectB: TemplateConfig
 ): MergeObject<TemplateConfig> {
+	const allowEnv = objectB.metadata._allowEnv
 	return {
 		spec: {
 			//@ts-ignore -- Deno is wrong here
-			allowEnv: (a, b) => {
-				if (objectB.metadata._allowAnyEnv) {
-					return a
-				}
-				if (a === undefined) {
-					if (Array.isArray(b)) {
-						return b
+			env: (a, b) => {
+				function getArray() {
+					if (a === undefined) {
+						if (Array.isArray(b)) {
+							return b
+						}
+						return []
+					} else if (b === undefined) {
+						return []
 					}
-					return []
-				} else if (b === undefined) {
-					return []
+					// merge and deduplicate
+					return Array.from(new Set([...a, ...b]))
 				}
-				return a.filter((v) => b.includes(v))
+				// filter result for allowEnv
+				return getArray().filter((item) => {
+					// string values access the environment. So we must filter them.
+					if (typeof item === 'string') {
+						if (!allowEnv) {
+							return false
+						} else if (Array.isArray(allowEnv)) {
+							return allowEnv.includes(item)
+						}
+					}
+					return true
+				})
 			},
 		},
 	}

@@ -16,6 +16,7 @@ import template, {
 } from './template.ts'
 import { getArgsObject } from '../args.ts'
 import { merge } from '../merge.ts'
+import * as YAML from 'https://deno.land/std/encoding/yaml.ts'
 
 const helpText = `\
 Kite™️ Template Tool by Brandon Kalinowski @brandonkal
@@ -83,15 +84,16 @@ Flags:
 // example CLI:
 // kite -e my-program.ts -n dev -a - -r -q
 
-export interface CliFlags extends Omit<TemplateConfigSpec, 'allowEnv'> {
+// Note: env should not be specified on CLI
+export interface CliFlags extends TemplateConfigSpec {
 	/** shorthand alias for exec */
 	e?: string
 	/** shorthand alias for help */
 	h?: boolean
 	/** pass config as TemplateConfig or shorthand object*/
-	config?: CliFlags
+	config?: Omit<CliFlags, 'allowEnv'>
 	/** shorthand for config */
-	c?: CliFlags
+	c?: Omit<CliFlags, 'allowEnv'>
 	/** shorthand for name */
 	n?: string
 	/** shorthand for quiet */
@@ -104,7 +106,11 @@ export interface CliFlags extends Omit<TemplateConfigSpec, 'allowEnv'> {
 	r?: boolean
 	/** args without a flag. Contains yaml if exec is not specified. */
 	_?: string[]
-	/** override allowEnv to accept boolean */
+	/**
+	 * Must be set by the CLI. If a boolean, any environment variable is allowed.
+	 * If set as a string, it will be parsed as YAML expecting a list of strings.
+	 * If set as a list of strings, only these variables can be read by the template.
+	 */
 	allowEnv?: boolean | string | string[]
 }
 
@@ -113,17 +119,24 @@ export function canonicalizeOptions(opts: CliFlags): TemplateConfig {
 		console.log(helpText)
 		Deno.exit()
 	}
+	let allowEnv = extractAllowEnv(opts)
+
 	let nestedConfig = opts.config || opts.c
 	let nestedConfigCanonical = {} as TemplateConfig
-	if (nestedConfig && !isTemplateConfig(nestedConfig)) {
-		nestedConfig = asConfig(nestedConfig, true)
-		nestedConfigCanonical = configFromSpec(nestedConfig)
+	if (nestedConfig) {
+		if (!isTemplateConfig(nestedConfig)) {
+			nestedConfig = asConfig(nestedConfig)
+			nestedConfigCanonical = configFromSpec(nestedConfig)
+		} else {
+			nestedConfigCanonical = configFromSpec(nestedConfig.spec)
+			// Sanitize metadata
+			nestedConfigCanonical.metadata.name = nestedConfig.metadata.name
+		}
 	}
-	const baseSpec = asConfig(opts, true)
+	const baseSpec = asConfig(opts)
 	const baseCfgCanonical = configFromSpec(baseSpec)
-	if (opts.allowEnv === true) {
-		baseCfgCanonical.metadata._allowAnyEnv = true
-	}
+	baseCfgCanonical.metadata._allowEnv = allowEnv
+
 	if (!nestedConfig) {
 		return baseCfgCanonical
 	}
@@ -132,6 +145,45 @@ export function canonicalizeOptions(opts: CliFlags): TemplateConfig {
 		baseCfgCanonical,
 		templateConfigMergeObject(baseCfgCanonical)
 	)
+}
+
+/** parse the allowEnv option from the CLI */
+function extractAllowEnv(opts: CliFlags) {
+	let allowEnv: boolean | string[] = false
+	if (opts.allowEnv !== undefined) {
+		if (opts.allowEnv === true || opts.allowEnv === 'true') {
+			allowEnv = true
+		} else if (opts.allowEnv === false || opts.allowEnv === 'false') {
+			allowEnv = false
+		} else if (typeof opts.allowEnv === 'string') {
+			const parsed = YAML.parse(opts.allowEnv)
+			if (!Array.isArray(parsed)) {
+				throw invalid()
+			}
+			assertStringArray(parsed)
+			allowEnv = parsed
+		} else if (Array.isArray(opts.allowEnv)) {
+			assertStringArray(opts.allowEnv)
+			allowEnv = opts.allowEnv
+		} else {
+			throw invalid()
+		}
+	}
+	return allowEnv
+
+	function assertStringArray(parsed: any[]) {
+		parsed.forEach((item) => {
+			if (typeof item !== 'string') {
+				throw invalid()
+			}
+		})
+	}
+
+	function invalid() {
+		return new Error(
+			'allowEnv option must be boolean | "true" | "false" |string (YAML array) | Array'
+		)
+	}
 }
 
 /** converts to boolean or undefined loosely */
@@ -156,24 +208,20 @@ function asStr(vals: unknown[], allowUndefined?: boolean): string | undefined {
 }
 
 /**
- * takes options and returns config. Set und to allow false values to be undefined.
+ * takes options and returns config. Set und to allow false values to disallow undefined.
  * This allows unset values to be undefined.
  */
-function asConfig(opts: CliFlags, und: boolean): TemplateConfigSpec {
+function asConfig(opts: CliFlags, und: boolean = true): TemplateConfigSpec {
 	if (typeof opts !== 'object') throw new TemplateError('Invalid config')
-	//@ts-ignore -- could be wrong
-	const envOpt = opts.allowEnv === true || opts.allowEnv === 'true'
-	let env = Array.isArray(opts.allowEnv) ? opts.allowEnv : []
-	if (envOpt) {
-		env = ['any']
-	}
+	const env = Array.isArray(opts.env) ? opts.env : []
+
 	const out: TemplateConfigSpec = {
 		exec: asStr([opts.exec, opts.e], und),
 		reload: asBool([opts.reload, opts.r], und),
 		quiet: asBool([opts.quiet, opts.q], und),
 		name: asStr([opts.name, opts.n], und),
 		preview: asBool([opts.preview, opts.p], und),
-		allowEnv: env,
+		env: env,
 		args: opts.args,
 	}
 	if (!out.exec) {
@@ -191,7 +239,7 @@ function asConfig(opts: CliFlags, und: boolean): TemplateConfigSpec {
 export default async function templateCli(cfg?: TemplateConfig) {
 	try {
 		if (!cfg) {
-			const args = getArgsObject(new Set(['config', 'c']))
+			const args = getArgsObject(new Set(['config', 'c', 'env']))
 			cfg = canonicalizeOptions(args)
 		}
 		const out = await template(cfg)

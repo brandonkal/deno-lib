@@ -25,9 +25,11 @@ it('returns expected format', () => {
 		kind: 'TemplateConfig',
 		metadata: {
 			name: undefined,
+			_allowEnv: false,
 		},
 		spec: {
-			allowEnv: [],
+			args: undefined,
+			env: [],
 			exec: 'https://test.ts',
 			yaml: undefined,
 			name: undefined,
@@ -43,7 +45,7 @@ it('merges in with config', () => {
 	let opts: CliFlags = {
 		e: 'https://test.ts',
 		c: {
-			allowEnv: ['API_KEY', 'CI'],
+			env: ['API_KEY', 'CI'],
 			reload: true, // not ignored
 			quiet: true, // ignored
 			name: 'ignored',
@@ -58,9 +60,11 @@ it('merges in with config', () => {
 		kind: 'TemplateConfig',
 		metadata: {
 			name: 'merged config',
+			_allowEnv: ['API_KEY', 'CI'],
 		},
 		spec: {
-			allowEnv: ['API_KEY', 'CI'],
+			args: undefined,
+			env: ['API_KEY', 'CI'],
 			exec: 'https://test.ts',
 			yaml: undefined,
 			name: 'merged config',
@@ -76,7 +80,7 @@ it('accepts any env if allowEnv=true', () => {
 	let opts: CliFlags = {
 		e: 'https://test.ts',
 		c: {
-			allowEnv: ['API_KEY', 'CI'],
+			env: ['API_KEY', 'CI'],
 			reload: true, // not ignored
 			quiet: true, // ignored
 			name: 'ignored',
@@ -92,11 +96,12 @@ it('accepts any env if allowEnv=true', () => {
 		kind: 'TemplateConfig',
 		metadata: {
 			name: 'merged config',
-			_allowAnyEnv: true,
+			_allowEnv: true,
 		},
 		spec: {
 			name: 'merged config',
-			allowEnv: ['API_KEY', 'CI'],
+			args: undefined,
+			env: ['API_KEY', 'CI'],
 			exec: 'https://test.ts',
 			yaml: undefined,
 			preview: false,
@@ -110,7 +115,7 @@ it('accepts any env if allowEnv=true', () => {
 it('denies all env if allowEnv=false', () => {
 	let opts: CliFlags = {
 		config: {
-			allowEnv: ['API_KEY', 'CI'],
+			env: ['API_KEY', 'CI'],
 		},
 		name: 'merged config',
 		allowEnv: false,
@@ -121,9 +126,11 @@ it('denies all env if allowEnv=false', () => {
 		kind: 'TemplateConfig',
 		metadata: {
 			name: 'merged config',
+			_allowEnv: false,
 		},
 		spec: {
-			allowEnv: [],
+			args: undefined,
+			env: [],
 			name: 'merged config',
 			exec: undefined,
 			yaml: undefined,
@@ -141,9 +148,10 @@ it('parses from CLI', () => {
 	const expected: TemplateConfig = {
 		apiVersion: 'kite.run/v1alpha1',
 		kind: 'TemplateConfig',
-		metadata: { name: 'production' },
+		metadata: { name: 'production', _allowEnv: false },
 		spec: {
-			allowEnv: [],
+			args: undefined,
+			env: [],
 			name: 'production',
 			exec: undefined,
 			yaml: undefined,
@@ -164,9 +172,10 @@ it('parses advanced from CLI', () => {
 	const expected: TemplateConfig = {
 		apiVersion: 'kite.run/v1alpha1',
 		kind: 'TemplateConfig',
-		metadata: { name: 'dev' },
+		metadata: { name: 'dev', _allowEnv: false },
 		spec: {
-			allowEnv: [],
+			args: undefined,
+			env: [],
 			name: 'dev',
 			exec: 'file.ts',
 			yaml: undefined,
@@ -209,9 +218,10 @@ it('parses YAML from CLI', () => {
 	const expected: TemplateConfig = {
 		apiVersion: 'kite.run/v1alpha1',
 		kind: 'TemplateConfig',
-		metadata: { name: 'tls-name' },
+		metadata: { name: 'tls-name', _allowEnv: false },
 		spec: {
-			allowEnv: [],
+			args: undefined,
+			env: [],
 			name: 'tls-name',
 			exec: undefined,
 			yaml: tlsYamlText,
