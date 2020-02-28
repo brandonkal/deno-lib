@@ -7,8 +7,14 @@
  */
 
 import * as keys from './karabiner/keys.ts'
+export { keys }
 
 export const nil = undefined
+
+/** stringify for error logs */
+function str(x: any) {
+	return JSON.stringify(x)
+}
 
 /** Represents all possible conditions or VarShorthand */
 export type ConditionOrShorthand = Condition | VarShorthand
@@ -35,15 +41,15 @@ export function rule(
 	others?: IManipulatorMod
 ): IManipulator {
 	if (!Array.isArray(from) || !from.length) {
-		throw new Error(`from rule is required for ${from}`)
+		throw new Error(`from rule is required for ${str(from)}`)
 	}
 	if (!Array.isArray(to) || !to.length) {
-		throw new Error(`to rule is required for ${to}`)
+		throw new Error(`to rule is required for ${str(to)}`)
 	}
 	let outConditions: Condition[] = []
 	if (conditions) {
 		if (!Array.isArray(conditions)) {
-			throw new Error(`Conditions must be an array. Got ${conditions}`)
+			throw new Error(`Conditions must be an array. Got ${str(conditions)}`)
 		}
 		// All conditions must have a type
 		outConditions = conditions.map((condition) => {
@@ -55,7 +61,9 @@ export function rule(
 				}
 			} else if (!condition.type) {
 				throw new Error(
-					`Condition is invalid. Expected [string, number] or valid type. Got ${condition}`
+					`Condition is invalid. Expected [string, number] or valid type. Got ${str(
+						condition
+					)}`
 				)
 			}
 			return condition
@@ -76,7 +84,7 @@ export function rule(
 				return genFromEvent(key)
 			}
 		} else if (!key || typeof key !== 'object') {
-			throw new Error(`Invalid key ${key}`)
+			throw new Error(`Invalid key ${str(key)}`)
 		}
 		return key
 	})
@@ -149,7 +157,7 @@ function genFromEvent(keyCodes: keys.Key[]): IFromEvent {
 		!keyCodes.length ||
 		keyCodes.some((key) => !keys.isValid(key))
 	) {
-		throw new Error(`Invalid from event ${keyCodes}`)
+		throw new Error(`Invalid from event ${str(keyCodes)}`)
 	}
 	let out: IFromEvent = {}
 	const optionalMods: keys.KeyCode[] = []
@@ -185,7 +193,7 @@ function genFromEvent(keyCodes: keys.Key[]): IFromEvent {
 			out = { ...out, ...keyObject(stdKey) }
 		} else {
 			throw new Error(
-				`A from rule requires a non-optional key but got ${keyCodes}`
+				`A from rule requires a non-optional key but got ${str(keyCodes)}`
 			)
 		}
 	}
