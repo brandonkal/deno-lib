@@ -71,23 +71,25 @@ export function rule(
 	}
 	const outFrom =
 		typeof from[0] !== 'string' ? from[0] : genFromEvent(from as keys.Key[])
-	const outTo = to.map((key) => {
-		if (Array.isArray(key)) {
-			if (isVarShorthand(key)) {
-				return {
-					set_variable: {
-						name: key[0],
-						value: key[1],
-					},
+	const outTo = to.map(
+		(key): IToEvent => {
+			if (Array.isArray(key)) {
+				if (isVarShorthand(key)) {
+					return {
+						set_variable: {
+							name: key[0],
+							value: key[1],
+						},
+					}
+				} else {
+					return genToEvent(key)
 				}
-			} else {
-				return genFromEvent(key)
+			} else if (!key || typeof key !== 'object') {
+				throw new Error(`Invalid key ${str(key)}`)
 			}
-		} else if (!key || typeof key !== 'object') {
-			throw new Error(`Invalid key ${str(key)}`)
+			return key
 		}
-		return key
-	})
+	)
 
 	return {
 		conditions: outConditions.length ? outConditions ?? undefined : undefined,
@@ -199,6 +201,58 @@ function genFromEvent(keyCodes: keys.Key[]): IFromEvent {
 	}
 	if (standardKeys.length > 1) {
 		out.simultaneous = standardKeys.map(keyObject)
+	} else if (standardKeys.length === 1) {
+		out = { ...out, ...keyObject(standardKeys[0]) }
+	}
+	return out
+}
+
+function genToEvent(keyCodes: keys.Key[]): IToEvent {
+	if (
+		!Array.isArray(keyCodes) ||
+		!keyCodes.length ||
+		keyCodes.some((key) => !(key.includes('?') || keys.isValid(key)))
+	) {
+		throw new Error(`Invalid to event ${str(keyCodes)}`)
+	}
+	let out: IToEvent = {}
+	const optionalMods: keys.KeyCode[] = []
+	const mods: keys.ToModifier[] = []
+	const standardKeys: keys.KeyCode[] = []
+	keyCodes.forEach((key) => {
+		if (keys.isToModifierKey(key)) {
+			mods.push(key)
+		} else if (keys.isKeyCode(key)) {
+			standardKeys.push(key)
+		} else {
+			throw new Error(
+				`Invalid key code for to event. Got ${str(key)} from ${str(keyCodes)}`
+			)
+		}
+	})
+	if (optionalMods.length || mods.length) {
+		if (mods.length) {
+			out.modifiers = mods
+		}
+	}
+	if (!standardKeys.length) {
+		// pop the last required modifier into key_code
+		if (out.modifiers?.length) {
+			const stdKey = mods.pop() as keys.KeyCode
+			if (!out.modifiers.length) {
+				out.modifiers = undefined
+			}
+			out = { ...out, ...keyObject(stdKey) }
+		} else {
+			throw new Error(
+				`A from rule requires a non-optional key but got ${str(keyCodes)}`
+			)
+		}
+	}
+	if (standardKeys.length > 1) {
+		throw new Error(
+			`To events can only have one standard key. Got ${standardKeys}`
+		)
 	} else if (standardKeys.length === 1) {
 		out = { ...out, ...keyObject(standardKeys[0]) }
 	}
@@ -393,7 +447,7 @@ export interface IToEvent {
 		value: number | string
 	}
 	mouse_keys?: IMouseKey
-	modifiers?: IModifiers
+	modifiers?: keys.ToModifier[]
 	/** Defaults to false. If true, do not send key_down until another key is pressed */
 	lazy?: boolean
 	/** Defaults true */
