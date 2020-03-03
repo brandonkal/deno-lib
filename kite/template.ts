@@ -311,6 +311,9 @@ function substitutePlaceholders(
 		if (r === undefined || r === 'undefined') {
 			throw new TemplateError(`${dslText} returned ${r}`)
 		}
+		if (typeof r === 'string') {
+			return r
+		}
 		return JSON.stringify(r)
 	})
 	return out
