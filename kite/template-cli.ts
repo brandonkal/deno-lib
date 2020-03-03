@@ -185,7 +185,7 @@ function extractAllowEnv(opts: CliFlags) {
 
 	function invalid() {
 		return new Error(
-			'allowEnv option must be boolean | "true" | "false" |string (YAML array) | Array'
+			'allowEnv option must be boolean | "true" | "false" | string (YAML array) | Array'
 		)
 	}
 }
@@ -217,6 +217,11 @@ function asStr(vals: unknown[], allowUndefined?: boolean): string | undefined {
  */
 function asConfig(opts: CliFlags, und: boolean = true): TemplateConfigSpec {
 	if (typeof opts !== 'object') throw new TemplateError('Invalid config')
+	if (opts.env && !Array.isArray(opts.env)) {
+		throw new TemplateError(
+			'Invalid env. Expected (Record<string, string> | string)[]'
+		)
+	}
 	const env = Array.isArray(opts.env) ? opts.env : []
 
 	const out: TemplateConfigSpec = {
@@ -247,6 +252,14 @@ export default async function templateCli(cfg?: TemplateConfig) {
 			cfg = canonicalizeOptions(args)
 		}
 		const out = await template(cfg)
+		if (!cfg.spec.quiet) {
+			let msg = `Kite Template complete`
+			if (cfg.spec.name) {
+				msg += ` for ${cfg.spec.name}`
+			}
+			msg += '!'
+			console.error(msg)
+		}
 		console.log(out.trimEnd())
 	} catch (err) {
 		if (err instanceof TemplateError) {
