@@ -45,7 +45,7 @@ it('merges in with config', () => {
 	let opts: CliFlags = {
 		e: 'https://test.ts',
 		c: {
-			env: ['API_KEY', 'CI'],
+			env: ['API_KEY', 'CI', 'NOT_OKAY'],
 			reload: true, // not ignored
 			quiet: true, // ignored
 			name: 'ignored',
