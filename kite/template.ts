@@ -16,6 +16,7 @@ import * as base32 from 'https://deno.land/std@v0.32.0/encoding/base32.ts'
 
 import { dotProp, jsonItem, visitAll, withTimeout } from '../utils.ts'
 import { merge, MergeObject } from '../merge.ts'
+import { hashObject } from '../hash-object.ts'
 import * as filter from './filter-terraform.ts'
 import * as rt from '../runtypes.ts'
 import { buildCleanCommand } from '../shellbox.ts'
@@ -175,6 +176,9 @@ export default async function template(cfg: TemplateConfig): Promise<string> {
 	} else {
 		throw new TemplateError('Either yaml or exec must be specified')
 	}
+	if (!spec.quiet) {
+		console.error(`Templating${spec.name ? ' ' + spec.name : '...'}`)
+	}
 
 	let { tfConfig, config, docs, toRemove } = getConfigFromYaml(yamlText, cfg)
 	rtTemplateConfig.check(config)
@@ -203,6 +207,7 @@ export default async function template(cfg: TemplateConfig): Promise<string> {
 			}
 			return value
 		})
+		if (!spec.quiet) console.error('Executing Terraform...')
 		state = await execTerraform(config, tf, env)
 	}
 	const allOps = ops(env)
@@ -311,6 +316,14 @@ function substitutePlaceholders(
 	return out
 }
 
+const envarNameRe = /^[a-zA-Z_]\w*$/
+
+function assertValidEnvarName(envar: string) {
+	if (!envar.match(envarNameRe)) {
+		throw new TemplateError(`Invalid envar name`)
+	}
+}
+
 /** builds an environment based on allowed environment variables in config */
 function buildEnv(
 	envars: (string | Record<string, string>)[] = []
@@ -320,11 +333,13 @@ function buildEnv(
 		envars.forEach((envar) => {
 			let value: string | undefined
 			if (typeof envar === 'string') {
+				assertValidEnvarName(envar)
 				value = Deno.env(envar)
 			} else {
 				;[envar, value] = Object.entries(envar)[0]
 			}
 			if (value !== undefined && typeof envar === 'string') {
+				assertValidEnvarName(envar)
 				tfEnv[envar] = value
 			}
 		})
@@ -354,6 +369,7 @@ async function execTerraform(
 	}
 	const tfDir = path.join(homeDir, '.kite', name)
 	const tfFile = path.join(tfDir + '/kite.tf.json')
+	const hashFile = path.join(tfDir + '/env.hash')
 	await fs.ensureDir(tfDir)
 	const cfgText = JSON.stringify(tfConfig, undefined, 2)
 	if (cfgText.includes('local-exec')) {
@@ -361,13 +377,21 @@ async function execTerraform(
 	}
 	// Terraform is rather slow. So if the config has not changed, short-circuit.
 	let currentContents: string
+	const envHash = await hashObject(env)
 	let willRun = true
 	if (!forceApply) {
 		if (await fs.exists(tfFile)) {
 			currentContents = await fs.readFileStr(tfFile)
 			if (cfgText === currentContents) {
-				willRun = false
-				if (!quiet) {
+				// Has the environment changed?
+				let lastHash = ''
+				if (await fs.exists(hashFile)) {
+					lastHash = await fs.readFileStr(hashFile)
+				}
+				if (lastHash === envHash) {
+					willRun = false
+				}
+				if (!quiet && !willRun) {
 					console.error('TerraformConfig unchanged. Skipping apply.')
 				}
 			}
@@ -375,9 +399,11 @@ async function execTerraform(
 	}
 
 	async function backup() {
+		const bak = tfFile + '.bak'
 		try {
-			await Deno.remove(tfFile + '.bak')
-			await fs.move(tfFile, tfFile + '.bak')
+			const exists = await fs.exists(bak)
+			if (exists) await Deno.remove(bak)
+			await fs.move(tfFile, bak)
 		} catch (e) {
 			console.error('Backup failure:', e.message || e)
 		}
@@ -385,6 +411,7 @@ async function execTerraform(
 
 	if (willRun) {
 		await fs.writeFileStr(tfFile, cfgText)
+		const hashPromise = fs.writeFileStr(hashFile, envHash)
 		// Ensure tf config exists
 		const tfConfigPath = path.join(homeDir, '.terraformrc')
 		const hasTF = await fs.exists(tfConfigPath)
@@ -412,7 +439,8 @@ async function execTerraform(
 
 		const applyCmd = buildCleanCommand(
 			['terraform', 'apply', '-auto-approve', '-no-color', '-compact-warnings'],
-			env
+			env,
+			tfDir
 		)
 
 		const apply = Deno.run({
@@ -431,6 +459,7 @@ async function execTerraform(
 			await backup()
 			throw new TemplateError('Terraform apply failed')
 		}
+		await hashPromise
 	}
 
 	// Now suck in the needed state
@@ -543,8 +572,8 @@ function ops(envars: Record<string, string | undefined>) {
 			const decoded = base32.decode(a)
 			return new TextDecoder().decode(decoded)
 		},
-		sha1sum: sha1,
-		sha256sum: sha256,
+		sha1sum: (a: string) => sha1(a, 'utf8', 'hex'),
+		sha256sum: (a: string) => sha256(a, 'utf8', 'hex'),
 		toJson: (a) => JSON.stringify(a),
 		arg: same, // Requires custom logic
 		tf: same, // custom logic
