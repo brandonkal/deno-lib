@@ -182,7 +182,7 @@ export default async function template(cfg: TemplateConfig): Promise<string> {
 
 	let { tfConfig, config, docs, toRemove } = getConfigFromYaml(yamlText, cfg)
 	rtTemplateConfig.check(config)
-
+	// note that config environment has been filtered by getConfigFromYaml
 	const env = buildEnv(config.spec.env)
 
 	let state: any = {}
@@ -306,7 +306,7 @@ function substitutePlaceholders(
 ): string {
 	parseCache.clear()
 	// match inside (( param ))
-	const out = str.replace(/['"]\(\((.*?)\)\)['"]/, (_, dslText) => {
+	const out = str.replace(/\(\((.+?)\)\)/, (_, dslText) => {
 		let r = parseDSL(dslText, spec, state, allOps)
 		if (r === undefined || r === 'undefined') {
 			throw new TemplateError(`${dslText} returned ${r}`)
