@@ -75,12 +75,18 @@ export class CustomResource extends kite.Resource {
 	 * Create a CustomResource resource with the given unique name, arguments, and options.
 	 *
 	 * @param name The _unique_ name of the resource.
-	 * @param args The arguments to use to populate this resource's properties.
+	 * @param desc The arguments to use to populate this resource's properties.
 	 * @param opts A bag of options that control this resource's behavior.
 	 */
-	constructor(name: string, args: CustomResourceArgs) {
-		super(name, args)
-		this.setType(`k8s:${args.apiVersion}:${args.kind}`)
+	constructor(name: string, desc: CustomResourceArgs) {
+		const props: any = { ...desc }
+		props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
+			name,
+		})
+		props.spec = (desc && desc.spec) || undefined
+		Object.assign(props.metadata, { name })
+		super(name, props)
+		this.setType(`k8s:${desc.apiVersion}:${desc.kind}`)
 	}
 }
 
