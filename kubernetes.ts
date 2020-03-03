@@ -80,11 +80,10 @@ export class CustomResource extends kite.Resource {
 	 */
 	constructor(name: string, desc: CustomResourceArgs) {
 		const props: any = { ...desc }
-		props.metadata = Object.assign({}, (desc && desc.metadata) || {})
 		props.spec = (desc && desc.spec) || undefined
-		if (!props.metadata.name) {
-			props.metadata.name = name
-		}
+		props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
+			name: props?.metadata?.name || name,
+		})
 		super(name, props)
 		this.setType(`k8s:${desc.apiVersion}:${desc.kind}`)
 	}
