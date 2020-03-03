@@ -233,8 +233,15 @@ export namespace helm {
 				...args,
 				kind: 'HelmChart',
 				apiVersion: 'helm.cattle.io/v1',
-				metadata: args.metadata || undefined,
+				metadata: args.metadata || { name },
 				spec: args.spec || undefined,
+			}
+			// Add implicit name
+			if (!props.metadata?.name) {
+				if (typeof props.metadata !== 'object') {
+					props.metadata = {}
+				}
+				props.metadata.name = name
 			}
 			if (!props.spec?.chart) {
 				throw new Error(`HelmChart ${name} is must specify a chart.`)
