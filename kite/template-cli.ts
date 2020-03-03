@@ -56,7 +56,7 @@ Usage:
 
 Examples:
   jo name=dev yaml=$(cat opts.yaml) | kite -c-
-  kite -e cluster.ts -n prod
+  kite -e cluster.ts -n prod -c "$(sops -d cfg.enc.yaml)"
 
 The config property accepts these options as well. CLI flags always override config set
 via the config parameter. These flags enable forcing defaults but remember that it is possible
@@ -115,9 +115,8 @@ export interface CliFlags extends TemplateConfigSpec {
 }
 
 export function canonicalizeOptions(opts: CliFlags): TemplateConfig {
-	if (opts.help || opts.h) {
-		console.log(helpText)
-		Deno.exit()
+	if (!Deno.args.length || opts.help || opts.h) {
+		showHelp()
 	}
 	let allowEnv = extractAllowEnv(opts)
 
@@ -145,6 +144,11 @@ export function canonicalizeOptions(opts: CliFlags): TemplateConfig {
 		baseCfgCanonical,
 		templateConfigMergeObject(baseCfgCanonical)
 	)
+}
+
+function showHelp() {
+	console.log(helpText)
+	Deno.exit()
 }
 
 /** parse the allowEnv option from the CLI */
