@@ -5,6 +5,8 @@
  * @license MIT
  */
 
+const envarNameRe = /^[a-zA-Z_]\w*$/
+
 /**
  * Builds a clean command using `env -i`.
  * Only provided environment variables will be available to the running command.
@@ -13,25 +15,40 @@
  * @param env Desired environment.
  * PATH and HOME from the parent process will automatically be set if not provided.
  */
-export function buildCleanCommand(cmd: string[], env: Record<string, string>) {
+export function buildCleanCommand(
+	cmd: string[],
+	env: Record<string, string>,
+	pwd?: string
+) {
 	let needsHome = true
 	let needsPath = true
+	let needsPwd = typeof pwd === 'string'
 	const envars = Object.entries(env).map(([key, value]) => {
+		if (!envarNameRe.exec(key)) {
+			throw new Error(`Invalid environment variable name: ${key}`)
+		}
 		if (key === 'PATH') needsPath = false
 		if (key === 'HOME') needsHome = false
-		return `${shellquote(key)}=${shellquote(value)}`
+		if (key === 'PWD' && pwd) {
+			needsPwd = false
+			return `PWD=${pwd}`
+		}
+		return `${key}=${value}`
 	})
 	if (needsHome) {
 		const home = Deno.env('HOME')
 		if (home) {
-			envars.push(`PATH=${shellquote(home)}`)
+			envars.push(`HOME=${home}`)
 		}
 	}
 	if (needsPath) {
 		const path = Deno.env('PATH')
 		if (path) {
-			envars.push(`PATH=${shellquote(path)}`)
+			envars.push(`PATH=${path}`)
 		}
+	}
+	if (needsPwd && pwd) {
+		envars.push(`PWD=${pwd}`)
 	}
 	const args = ['env', '-i', ...envars, ...cmd]
 	return args
