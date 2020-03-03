@@ -32,7 +32,6 @@ export namespace {{Group}} {
 				{{#Properties}}
 				props.{{Name}} = {{{DefaultValue}}};
 				{{/Properties}}
-				Object.assign(props.metadata, { name });
 
 				super(name, props);
 				this.setType(`k8s:{{Kind}}`)

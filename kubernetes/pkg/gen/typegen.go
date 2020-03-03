@@ -553,7 +553,11 @@ func createGroups(definitionsJSON map[string]interface{}) []*GroupConfig {
 							tsType = defaultValue
 						}
 					case "metadata":
-						defaultValue = "Object.assign({}, desc && desc.metadata || {}, { name })"
+						if tsType == "types.meta.v1.ListMeta" {
+							defaultValue = "desc?.metadata || {}"
+						} else {
+							defaultValue = "Object.assign({}, desc && desc.metadata || {}, { name: desc?.metadata?.name || name })"
+						}
 					}
 
 					return &Property{

@@ -53,10 +53,9 @@ export namespace admissionregistration {
 				props.apiVersion = 'admissionregistration.k8s.io/v1'
 				props.kind = 'MutatingWebhookConfiguration'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.webhooks = (desc && desc.webhooks) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:MutatingWebhookConfiguration`)
@@ -107,10 +106,7 @@ export namespace admissionregistration {
 				props.apiVersion = 'admissionregistration.k8s.io/v1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'MutatingWebhookConfigurationList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:MutatingWebhookConfigurationList`)
@@ -162,10 +158,9 @@ export namespace admissionregistration {
 				props.apiVersion = 'admissionregistration.k8s.io/v1'
 				props.kind = 'ValidatingWebhookConfiguration'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.webhooks = (desc && desc.webhooks) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:ValidatingWebhookConfiguration`)
@@ -216,10 +211,7 @@ export namespace admissionregistration {
 				props.apiVersion = 'admissionregistration.k8s.io/v1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'ValidatingWebhookConfigurationList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:ValidatingWebhookConfigurationList`)
@@ -278,10 +270,9 @@ export namespace admissionregistration {
 				props.apiVersion = 'admissionregistration.k8s.io/v1beta1'
 				props.kind = 'MutatingWebhookConfiguration'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.webhooks = (desc && desc.webhooks) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:MutatingWebhookConfiguration`)
@@ -332,10 +323,7 @@ export namespace admissionregistration {
 				props.apiVersion = 'admissionregistration.k8s.io/v1beta1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'MutatingWebhookConfigurationList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:MutatingWebhookConfigurationList`)
@@ -391,10 +379,9 @@ export namespace admissionregistration {
 				props.apiVersion = 'admissionregistration.k8s.io/v1beta1'
 				props.kind = 'ValidatingWebhookConfiguration'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.webhooks = (desc && desc.webhooks) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:ValidatingWebhookConfiguration`)
@@ -445,10 +432,7 @@ export namespace admissionregistration {
 				props.apiVersion = 'admissionregistration.k8s.io/v1beta1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'ValidatingWebhookConfigurationList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:ValidatingWebhookConfigurationList`)
@@ -501,10 +485,9 @@ export namespace apiextensions {
 				props.apiVersion = 'apiextensions.k8s.io/v1'
 				props.kind = 'CustomResourceDefinition'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:CustomResourceDefinition`)
@@ -551,10 +534,7 @@ export namespace apiextensions {
 				props.apiVersion = 'apiextensions.k8s.io/v1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'CustomResourceDefinitionList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:CustomResourceDefinitionList`)
@@ -608,10 +588,9 @@ export namespace apiextensions {
 				props.apiVersion = 'apiextensions.k8s.io/v1beta1'
 				props.kind = 'CustomResourceDefinition'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:CustomResourceDefinition`)
@@ -658,10 +637,7 @@ export namespace apiextensions {
 				props.apiVersion = 'apiextensions.k8s.io/v1beta1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'CustomResourceDefinitionList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:CustomResourceDefinitionList`)
@@ -710,10 +686,9 @@ export namespace apiregistration {
 				props.apiVersion = 'apiregistration.k8s.io/v1'
 				props.kind = 'APIService'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:APIService`)
@@ -754,10 +729,7 @@ export namespace apiregistration {
 				props.apiVersion = 'apiregistration.k8s.io/v1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'APIServiceList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:APIServiceList`)
@@ -807,10 +779,9 @@ export namespace apiregistration {
 				props.apiVersion = 'apiregistration.k8s.io/v1beta1'
 				props.kind = 'APIService'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:APIService`)
@@ -854,10 +825,7 @@ export namespace apiregistration {
 				props.apiVersion = 'apiregistration.k8s.io/v1beta1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'APIServiceList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:APIServiceList`)
@@ -923,10 +891,9 @@ export namespace apps {
 				props.data = (desc && desc.data) || undefined
 				props.kind = 'ControllerRevision'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.revision = (desc && desc.revision) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:ControllerRevision`)
@@ -974,10 +941,7 @@ export namespace apps {
 				props.apiVersion = 'apps/v1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'ControllerRevisionList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:ControllerRevisionList`)
@@ -1026,10 +990,9 @@ export namespace apps {
 				props.apiVersion = 'apps/v1'
 				props.kind = 'DaemonSet'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:DaemonSet`)
@@ -1077,10 +1040,7 @@ export namespace apps {
 				props.apiVersion = 'apps/v1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'DaemonSetList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:DaemonSetList`)
@@ -1127,10 +1087,9 @@ export namespace apps {
 				props.apiVersion = 'apps/v1'
 				props.kind = 'Deployment'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:Deployment`)
@@ -1177,10 +1136,7 @@ export namespace apps {
 				props.apiVersion = 'apps/v1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'DeploymentList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:DeploymentList`)
@@ -1230,10 +1186,9 @@ export namespace apps {
 				props.apiVersion = 'apps/v1'
 				props.kind = 'ReplicaSet'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:ReplicaSet`)
@@ -1282,10 +1237,7 @@ export namespace apps {
 				props.apiVersion = 'apps/v1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'ReplicaSetList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:ReplicaSetList`)
@@ -1333,10 +1285,9 @@ export namespace apps {
 				props.apiVersion = 'apps/v1'
 				props.kind = 'StatefulSet'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:StatefulSet`)
@@ -1377,10 +1328,7 @@ export namespace apps {
 				props.apiVersion = 'apps/v1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'StatefulSetList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:StatefulSetList`)
@@ -1447,10 +1395,9 @@ export namespace apps {
 				props.data = (desc && desc.data) || undefined
 				props.kind = 'ControllerRevision'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.revision = (desc && desc.revision) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:ControllerRevision`)
@@ -1501,10 +1448,7 @@ export namespace apps {
 				props.apiVersion = 'apps/v1beta1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'ControllerRevisionList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:ControllerRevisionList`)
@@ -1554,10 +1498,9 @@ export namespace apps {
 				props.apiVersion = 'apps/v1beta1'
 				props.kind = 'Deployment'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:Deployment`)
@@ -1604,10 +1547,7 @@ export namespace apps {
 				props.apiVersion = 'apps/v1beta1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'DeploymentList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:DeploymentList`)
@@ -1658,10 +1598,9 @@ export namespace apps {
 				props.apiVersion = 'apps/v1beta1'
 				props.kind = 'StatefulSet'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:StatefulSet`)
@@ -1702,10 +1641,7 @@ export namespace apps {
 				props.apiVersion = 'apps/v1beta1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'StatefulSetList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:StatefulSetList`)
@@ -1772,10 +1708,9 @@ export namespace apps {
 				props.data = (desc && desc.data) || undefined
 				props.kind = 'ControllerRevision'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.revision = (desc && desc.revision) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:ControllerRevision`)
@@ -1826,10 +1761,7 @@ export namespace apps {
 				props.apiVersion = 'apps/v1beta2'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'ControllerRevisionList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:ControllerRevisionList`)
@@ -1881,10 +1813,9 @@ export namespace apps {
 				props.apiVersion = 'apps/v1beta2'
 				props.kind = 'DaemonSet'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:DaemonSet`)
@@ -1932,10 +1863,7 @@ export namespace apps {
 				props.apiVersion = 'apps/v1beta2'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'DaemonSetList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:DaemonSetList`)
@@ -1985,10 +1913,9 @@ export namespace apps {
 				props.apiVersion = 'apps/v1beta2'
 				props.kind = 'Deployment'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:Deployment`)
@@ -2035,10 +1962,7 @@ export namespace apps {
 				props.apiVersion = 'apps/v1beta2'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'DeploymentList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:DeploymentList`)
@@ -2091,10 +2015,9 @@ export namespace apps {
 				props.apiVersion = 'apps/v1beta2'
 				props.kind = 'ReplicaSet'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:ReplicaSet`)
@@ -2143,10 +2066,7 @@ export namespace apps {
 				props.apiVersion = 'apps/v1beta2'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'ReplicaSetList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:ReplicaSetList`)
@@ -2197,10 +2117,9 @@ export namespace apps {
 				props.apiVersion = 'apps/v1beta2'
 				props.kind = 'StatefulSet'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:StatefulSet`)
@@ -2241,10 +2160,7 @@ export namespace apps {
 				props.apiVersion = 'apps/v1beta2'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'StatefulSetList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:StatefulSetList`)
@@ -2296,10 +2212,9 @@ export namespace auditregistration {
 				props.apiVersion = 'auditregistration.k8s.io/v1alpha1'
 				props.kind = 'AuditSink'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:AuditSink`)
@@ -2346,10 +2261,7 @@ export namespace auditregistration {
 				props.apiVersion = 'auditregistration.k8s.io/v1alpha1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'AuditSinkList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:AuditSinkList`)
@@ -2395,10 +2307,9 @@ export namespace authentication {
 				props.apiVersion = 'authentication.k8s.io/v1'
 				props.kind = 'TokenRequest'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:TokenRequest`)
@@ -2443,10 +2354,9 @@ export namespace authentication {
 				props.apiVersion = 'authentication.k8s.io/v1'
 				props.kind = 'TokenReview'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:TokenReview`)
@@ -2497,10 +2407,9 @@ export namespace authentication {
 				props.apiVersion = 'authentication.k8s.io/v1beta1'
 				props.kind = 'TokenReview'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:TokenReview`)
@@ -2555,10 +2464,9 @@ export namespace authorization {
 				props.apiVersion = 'authorization.k8s.io/v1'
 				props.kind = 'LocalSubjectAccessReview'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:LocalSubjectAccessReview`)
@@ -2607,10 +2515,9 @@ export namespace authorization {
 				props.apiVersion = 'authorization.k8s.io/v1'
 				props.kind = 'SelfSubjectAccessReview'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:SelfSubjectAccessReview`)
@@ -2664,10 +2571,9 @@ export namespace authorization {
 				props.apiVersion = 'authorization.k8s.io/v1'
 				props.kind = 'SelfSubjectRulesReview'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:SelfSubjectRulesReview`)
@@ -2714,10 +2620,9 @@ export namespace authorization {
 				props.apiVersion = 'authorization.k8s.io/v1'
 				props.kind = 'SubjectAccessReview'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:SubjectAccessReview`)
@@ -2770,10 +2675,9 @@ export namespace authorization {
 				props.apiVersion = 'authorization.k8s.io/v1beta1'
 				props.kind = 'LocalSubjectAccessReview'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:LocalSubjectAccessReview`)
@@ -2822,10 +2726,9 @@ export namespace authorization {
 				props.apiVersion = 'authorization.k8s.io/v1beta1'
 				props.kind = 'SelfSubjectAccessReview'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:SelfSubjectAccessReview`)
@@ -2879,10 +2782,9 @@ export namespace authorization {
 				props.apiVersion = 'authorization.k8s.io/v1beta1'
 				props.kind = 'SelfSubjectRulesReview'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:SelfSubjectRulesReview`)
@@ -2929,10 +2831,9 @@ export namespace authorization {
 				props.apiVersion = 'authorization.k8s.io/v1beta1'
 				props.kind = 'SubjectAccessReview'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:SubjectAccessReview`)
@@ -2989,10 +2890,9 @@ export namespace autoscaling {
 				props.apiVersion = 'autoscaling/v1'
 				props.kind = 'HorizontalPodAutoscaler'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:HorizontalPodAutoscaler`)
@@ -3042,10 +2942,7 @@ export namespace autoscaling {
 				props.apiVersion = 'autoscaling/v1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'HorizontalPodAutoscalerList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:HorizontalPodAutoscalerList`)
@@ -3102,10 +2999,9 @@ export namespace autoscaling {
 				props.apiVersion = 'autoscaling/v2beta1'
 				props.kind = 'HorizontalPodAutoscaler'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:HorizontalPodAutoscaler`)
@@ -3155,10 +3051,7 @@ export namespace autoscaling {
 				props.apiVersion = 'autoscaling/v2beta1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'HorizontalPodAutoscalerList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:HorizontalPodAutoscalerList`)
@@ -3215,10 +3108,9 @@ export namespace autoscaling {
 				props.apiVersion = 'autoscaling/v2beta2'
 				props.kind = 'HorizontalPodAutoscaler'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:HorizontalPodAutoscaler`)
@@ -3268,10 +3160,7 @@ export namespace autoscaling {
 				props.apiVersion = 'autoscaling/v2beta2'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'HorizontalPodAutoscalerList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:HorizontalPodAutoscalerList`)
@@ -3325,10 +3214,9 @@ export namespace batch {
 				props.apiVersion = 'batch/v1'
 				props.kind = 'Job'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:Job`)
@@ -3376,10 +3264,7 @@ export namespace batch {
 				props.apiVersion = 'batch/v1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'JobList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:JobList`)
@@ -3431,10 +3316,9 @@ export namespace batch {
 				props.apiVersion = 'batch/v1beta1'
 				props.kind = 'CronJob'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:CronJob`)
@@ -3482,10 +3366,7 @@ export namespace batch {
 				props.apiVersion = 'batch/v1beta1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'CronJobList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:CronJobList`)
@@ -3537,10 +3418,9 @@ export namespace batch {
 				props.apiVersion = 'batch/v2alpha1'
 				props.kind = 'CronJob'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:CronJob`)
@@ -3588,10 +3468,7 @@ export namespace batch {
 				props.apiVersion = 'batch/v2alpha1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'CronJobList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:CronJobList`)
@@ -3643,10 +3520,9 @@ export namespace certificates {
 				props.apiVersion = 'certificates.k8s.io/v1beta1'
 				props.kind = 'CertificateSigningRequest'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:CertificateSigningRequest`)
@@ -3690,10 +3566,7 @@ export namespace certificates {
 				props.apiVersion = 'certificates.k8s.io/v1beta1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'CertificateSigningRequestList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:CertificateSigningRequestList`)
@@ -3747,10 +3620,9 @@ export namespace coordination {
 				props.apiVersion = 'coordination.k8s.io/v1'
 				props.kind = 'Lease'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:Lease`)
@@ -3798,10 +3670,7 @@ export namespace coordination {
 				props.apiVersion = 'coordination.k8s.io/v1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'LeaseList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:LeaseList`)
@@ -3853,10 +3722,9 @@ export namespace coordination {
 				props.apiVersion = 'coordination.k8s.io/v1beta1'
 				props.kind = 'Lease'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:Lease`)
@@ -3904,10 +3772,7 @@ export namespace coordination {
 				props.apiVersion = 'coordination.k8s.io/v1beta1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'LeaseList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:LeaseList`)
@@ -3963,10 +3828,9 @@ export namespace core {
 				props.apiVersion = 'v1'
 				props.kind = 'Binding'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.target = (desc && desc.target) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:Binding`)
@@ -4027,9 +3891,8 @@ export namespace core {
 				props.data = (desc && desc.data) || undefined
 				props.kind = 'ConfigMap'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:ConfigMap`)
@@ -4077,10 +3940,7 @@ export namespace core {
 				props.apiVersion = 'v1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'ConfigMapList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:ConfigMapList`)
@@ -4144,10 +4004,9 @@ export namespace core {
 				props.apiVersion = 'v1'
 				props.kind = 'Endpoints'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.subsets = (desc && desc.subsets) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:Endpoints`)
@@ -4195,10 +4054,7 @@ export namespace core {
 				props.apiVersion = 'v1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'EndpointsList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:EndpointsList`)
@@ -4319,7 +4175,7 @@ export namespace core {
 				props.lastTimestamp = (desc && desc.lastTimestamp) || undefined
 				props.message = (desc && desc.message) || undefined
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.reason = (desc && desc.reason) || undefined
 				props.related = (desc && desc.related) || undefined
@@ -4329,7 +4185,6 @@ export namespace core {
 				props.series = (desc && desc.series) || undefined
 				props.source = (desc && desc.source) || undefined
 				props.type = (desc && desc.type) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:Event`)
@@ -4377,10 +4232,7 @@ export namespace core {
 				props.apiVersion = 'v1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'EventList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:EventList`)
@@ -4429,10 +4281,9 @@ export namespace core {
 				props.apiVersion = 'v1'
 				props.kind = 'LimitRange'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:LimitRange`)
@@ -4481,10 +4332,7 @@ export namespace core {
 				props.apiVersion = 'v1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'LimitRangeList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:LimitRangeList`)
@@ -4533,10 +4381,9 @@ export namespace core {
 				props.apiVersion = 'v1'
 				props.kind = 'Namespace'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:Namespace`)
@@ -4585,10 +4432,7 @@ export namespace core {
 				props.apiVersion = 'v1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'NamespaceList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:NamespaceList`)
@@ -4638,10 +4482,9 @@ export namespace core {
 				props.apiVersion = 'v1'
 				props.kind = 'Node'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:Node`)
@@ -4689,10 +4532,7 @@ export namespace core {
 				props.apiVersion = 'v1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'NodeList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:NodeList`)
@@ -4743,10 +4583,9 @@ export namespace core {
 				props.apiVersion = 'v1'
 				props.kind = 'PersistentVolume'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:PersistentVolume`)
@@ -4795,10 +4634,9 @@ export namespace core {
 				props.apiVersion = 'v1'
 				props.kind = 'PersistentVolumeClaim'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:PersistentVolumeClaim`)
@@ -4847,10 +4685,7 @@ export namespace core {
 				props.apiVersion = 'v1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'PersistentVolumeClaimList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:PersistentVolumeClaimList`)
@@ -4899,10 +4734,7 @@ export namespace core {
 				props.apiVersion = 'v1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'PersistentVolumeList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:PersistentVolumeList`)
@@ -4952,10 +4784,9 @@ export namespace core {
 				props.apiVersion = 'v1'
 				props.kind = 'Pod'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:Pod`)
@@ -5004,10 +4835,7 @@ export namespace core {
 				props.apiVersion = 'v1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'PodList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:PodList`)
@@ -5056,10 +4884,9 @@ export namespace core {
 				props.apiVersion = 'v1'
 				props.kind = 'PodTemplate'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.template = (desc && desc.template) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:PodTemplate`)
@@ -5107,10 +4934,7 @@ export namespace core {
 				props.apiVersion = 'v1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'PodTemplateList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:PodTemplateList`)
@@ -5161,10 +4985,9 @@ export namespace core {
 				props.apiVersion = 'v1'
 				props.kind = 'ReplicationController'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:ReplicationController`)
@@ -5213,10 +5036,7 @@ export namespace core {
 				props.apiVersion = 'v1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'ReplicationControllerList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:ReplicationControllerList`)
@@ -5265,10 +5085,9 @@ export namespace core {
 				props.apiVersion = 'v1'
 				props.kind = 'ResourceQuota'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:ResourceQuota`)
@@ -5317,10 +5136,7 @@ export namespace core {
 				props.apiVersion = 'v1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'ResourceQuotaList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:ResourceQuotaList`)
@@ -5385,11 +5201,10 @@ export namespace core {
 				props.data = (desc && desc.data) || undefined
 				props.kind = 'Secret'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.stringData = (desc && desc.stringData) || undefined
 				props.type = (desc && desc.type) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:Secret`)
@@ -5438,10 +5253,7 @@ export namespace core {
 				props.apiVersion = 'v1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'SecretList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:SecretList`)
@@ -5492,10 +5304,9 @@ export namespace core {
 				props.apiVersion = 'v1'
 				props.kind = 'Service'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:Service`)
@@ -5564,10 +5375,9 @@ export namespace core {
 				props.imagePullSecrets = (desc && desc.imagePullSecrets) || undefined
 				props.kind = 'ServiceAccount'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.secrets = (desc && desc.secrets) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:ServiceAccount`)
@@ -5616,10 +5426,7 @@ export namespace core {
 				props.apiVersion = 'v1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'ServiceAccountList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:ServiceAccountList`)
@@ -5667,10 +5474,7 @@ export namespace core {
 				props.apiVersion = 'v1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'ServiceList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:ServiceList`)
@@ -5743,10 +5547,9 @@ export namespace discovery {
 				props.endpoints = (desc && desc.endpoints) || undefined
 				props.kind = 'EndpointSlice'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.ports = (desc && desc.ports) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:EndpointSlice`)
@@ -5796,10 +5599,7 @@ export namespace discovery {
 				props.apiVersion = 'discovery.k8s.io/v1beta1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'EndpointSliceList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:EndpointSliceList`)
@@ -5926,7 +5726,7 @@ export namespace events {
 				props.eventTime = (desc && desc.eventTime) || undefined
 				props.kind = 'Event'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.note = (desc && desc.note) || undefined
 				props.reason = (desc && desc.reason) || undefined
@@ -5937,7 +5737,6 @@ export namespace events {
 				props.reportingInstance = (desc && desc.reportingInstance) || undefined
 				props.series = (desc && desc.series) || undefined
 				props.type = (desc && desc.type) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:Event`)
@@ -5985,10 +5784,7 @@ export namespace events {
 				props.apiVersion = 'events.k8s.io/v1beta1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'EventList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:EventList`)
@@ -6045,10 +5841,9 @@ export namespace extensions {
 				props.apiVersion = 'extensions/v1beta1'
 				props.kind = 'DaemonSet'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:DaemonSet`)
@@ -6096,10 +5891,7 @@ export namespace extensions {
 				props.apiVersion = 'extensions/v1beta1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'DaemonSetList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:DaemonSetList`)
@@ -6149,10 +5941,9 @@ export namespace extensions {
 				props.apiVersion = 'extensions/v1beta1'
 				props.kind = 'Deployment'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:Deployment`)
@@ -6199,10 +5990,7 @@ export namespace extensions {
 				props.apiVersion = 'extensions/v1beta1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'DeploymentList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:DeploymentList`)
@@ -6256,10 +6044,9 @@ export namespace extensions {
 				props.apiVersion = 'extensions/v1beta1'
 				props.kind = 'Ingress'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:Ingress`)
@@ -6307,10 +6094,7 @@ export namespace extensions {
 				props.apiVersion = 'extensions/v1beta1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'IngressList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:IngressList`)
@@ -6361,10 +6145,9 @@ export namespace extensions {
 				props.apiVersion = 'extensions/v1beta1'
 				props.kind = 'NetworkPolicy'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:NetworkPolicy`)
@@ -6418,10 +6201,7 @@ export namespace extensions {
 				props.apiVersion = 'extensions/v1beta1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'NetworkPolicyList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:NetworkPolicyList`)
@@ -6476,10 +6256,9 @@ export namespace extensions {
 				props.apiVersion = 'extensions/v1beta1'
 				props.kind = 'PodSecurityPolicy'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:PodSecurityPolicy`)
@@ -6533,10 +6312,7 @@ export namespace extensions {
 				props.apiVersion = 'extensions/v1beta1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'PodSecurityPolicyList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:PodSecurityPolicyList`)
@@ -6589,10 +6365,9 @@ export namespace extensions {
 				props.apiVersion = 'extensions/v1beta1'
 				props.kind = 'ReplicaSet'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:ReplicaSet`)
@@ -6641,10 +6416,7 @@ export namespace extensions {
 				props.apiVersion = 'extensions/v1beta1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'ReplicaSetList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:ReplicaSetList`)
@@ -6700,10 +6472,9 @@ export namespace flowcontrol {
 				props.apiVersion = 'flowcontrol.apiserver.k8s.io/v1alpha1'
 				props.kind = 'FlowSchema'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:FlowSchema`)
@@ -6754,10 +6525,7 @@ export namespace flowcontrol {
 				props.apiVersion = 'flowcontrol.apiserver.k8s.io/v1alpha1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'FlowSchemaList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:FlowSchemaList`)
@@ -6809,10 +6577,9 @@ export namespace flowcontrol {
 				props.apiVersion = 'flowcontrol.apiserver.k8s.io/v1alpha1'
 				props.kind = 'PriorityLevelConfiguration'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:PriorityLevelConfiguration`)
@@ -6863,10 +6630,7 @@ export namespace flowcontrol {
 				props.apiVersion = 'flowcontrol.apiserver.k8s.io/v1alpha1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'PriorityLevelConfigurationList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:PriorityLevelConfigurationList`)
@@ -6940,11 +6704,8 @@ export namespace meta {
 				props.details = (desc && desc.details) || undefined
 				props.kind = 'Status'
 				props.message = (desc && desc.message) || undefined
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
+				props.metadata = desc?.metadata || {}
 				props.reason = (desc && desc.reason) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:Status`)
@@ -6997,10 +6758,9 @@ export namespace networking {
 				props.apiVersion = 'networking.k8s.io/v1'
 				props.kind = 'NetworkPolicy'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:NetworkPolicy`)
@@ -7048,10 +6808,7 @@ export namespace networking {
 				props.apiVersion = 'networking.k8s.io/v1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'NetworkPolicyList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:NetworkPolicyList`)
@@ -7105,10 +6862,9 @@ export namespace networking {
 				props.apiVersion = 'networking.k8s.io/v1beta1'
 				props.kind = 'Ingress'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:Ingress`)
@@ -7156,10 +6912,7 @@ export namespace networking {
 				props.apiVersion = 'networking.k8s.io/v1beta1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'IngressList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:IngressList`)
@@ -7218,10 +6971,9 @@ export namespace node {
 				props.apiVersion = 'node.k8s.io/v1alpha1'
 				props.kind = 'RuntimeClass'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:RuntimeClass`)
@@ -7269,10 +7021,7 @@ export namespace node {
 				props.apiVersion = 'node.k8s.io/v1alpha1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'RuntimeClassList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:RuntimeClassList`)
@@ -7351,11 +7100,10 @@ export namespace node {
 				props.handler = (desc && desc.handler) || undefined
 				props.kind = 'RuntimeClass'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.overhead = (desc && desc.overhead) || undefined
 				props.scheduling = (desc && desc.scheduling) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:RuntimeClass`)
@@ -7403,10 +7151,7 @@ export namespace node {
 				props.apiVersion = 'node.k8s.io/v1beta1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'RuntimeClassList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:RuntimeClassList`)
@@ -7459,10 +7204,9 @@ export namespace policy {
 				props.apiVersion = 'policy/v1beta1'
 				props.kind = 'PodDisruptionBudget'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:PodDisruptionBudget`)
@@ -7506,10 +7250,7 @@ export namespace policy {
 				props.apiVersion = 'policy/v1beta1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'PodDisruptionBudgetList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:PodDisruptionBudgetList`)
@@ -7558,10 +7299,9 @@ export namespace policy {
 				props.apiVersion = 'policy/v1beta1'
 				props.kind = 'PodSecurityPolicy'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:PodSecurityPolicy`)
@@ -7612,10 +7352,7 @@ export namespace policy {
 				props.apiVersion = 'policy/v1beta1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'PodSecurityPolicyList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:PodSecurityPolicyList`)
@@ -7676,10 +7413,9 @@ export namespace rbac {
 				props.apiVersion = 'rbac.authorization.k8s.io/v1'
 				props.kind = 'ClusterRole'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.rules = (desc && desc.rules) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:ClusterRole`)
@@ -7733,11 +7469,10 @@ export namespace rbac {
 				props.apiVersion = 'rbac.authorization.k8s.io/v1'
 				props.kind = 'ClusterRoleBinding'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.roleRef = (desc && desc.roleRef) || undefined
 				props.subjects = (desc && desc.subjects) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:ClusterRoleBinding`)
@@ -7784,10 +7519,7 @@ export namespace rbac {
 				props.apiVersion = 'rbac.authorization.k8s.io/v1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'ClusterRoleBindingList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:ClusterRoleBindingList`)
@@ -7834,10 +7566,7 @@ export namespace rbac {
 				props.apiVersion = 'rbac.authorization.k8s.io/v1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'ClusterRoleList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:ClusterRoleList`)
@@ -7885,10 +7614,9 @@ export namespace rbac {
 				props.apiVersion = 'rbac.authorization.k8s.io/v1'
 				props.kind = 'Role'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.rules = (desc && desc.rules) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:Role`)
@@ -7944,11 +7672,10 @@ export namespace rbac {
 				props.apiVersion = 'rbac.authorization.k8s.io/v1'
 				props.kind = 'RoleBinding'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.roleRef = (desc && desc.roleRef) || undefined
 				props.subjects = (desc && desc.subjects) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:RoleBinding`)
@@ -7995,10 +7722,7 @@ export namespace rbac {
 				props.apiVersion = 'rbac.authorization.k8s.io/v1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'RoleBindingList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:RoleBindingList`)
@@ -8045,10 +7769,7 @@ export namespace rbac {
 				props.apiVersion = 'rbac.authorization.k8s.io/v1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'RoleList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:RoleList`)
@@ -8110,10 +7831,9 @@ export namespace rbac {
 				props.apiVersion = 'rbac.authorization.k8s.io/v1alpha1'
 				props.kind = 'ClusterRole'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.rules = (desc && desc.rules) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:ClusterRole`)
@@ -8170,11 +7890,10 @@ export namespace rbac {
 				props.apiVersion = 'rbac.authorization.k8s.io/v1alpha1'
 				props.kind = 'ClusterRoleBinding'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.roleRef = (desc && desc.roleRef) || undefined
 				props.subjects = (desc && desc.subjects) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:ClusterRoleBinding`)
@@ -8227,10 +7946,7 @@ export namespace rbac {
 				props.apiVersion = 'rbac.authorization.k8s.io/v1alpha1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'ClusterRoleBindingList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:ClusterRoleBindingList`)
@@ -8280,10 +7996,7 @@ export namespace rbac {
 				props.apiVersion = 'rbac.authorization.k8s.io/v1alpha1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'ClusterRoleList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:ClusterRoleList`)
@@ -8334,10 +8047,9 @@ export namespace rbac {
 				props.apiVersion = 'rbac.authorization.k8s.io/v1alpha1'
 				props.kind = 'Role'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.rules = (desc && desc.rules) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:Role`)
@@ -8396,11 +8108,10 @@ export namespace rbac {
 				props.apiVersion = 'rbac.authorization.k8s.io/v1alpha1'
 				props.kind = 'RoleBinding'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.roleRef = (desc && desc.roleRef) || undefined
 				props.subjects = (desc && desc.subjects) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:RoleBinding`)
@@ -8450,10 +8161,7 @@ export namespace rbac {
 				props.apiVersion = 'rbac.authorization.k8s.io/v1alpha1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'RoleBindingList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:RoleBindingList`)
@@ -8503,10 +8211,7 @@ export namespace rbac {
 				props.apiVersion = 'rbac.authorization.k8s.io/v1alpha1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'RoleList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:RoleList`)
@@ -8568,10 +8273,9 @@ export namespace rbac {
 				props.apiVersion = 'rbac.authorization.k8s.io/v1beta1'
 				props.kind = 'ClusterRole'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.rules = (desc && desc.rules) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:ClusterRole`)
@@ -8628,11 +8332,10 @@ export namespace rbac {
 				props.apiVersion = 'rbac.authorization.k8s.io/v1beta1'
 				props.kind = 'ClusterRoleBinding'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.roleRef = (desc && desc.roleRef) || undefined
 				props.subjects = (desc && desc.subjects) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:ClusterRoleBinding`)
@@ -8685,10 +8388,7 @@ export namespace rbac {
 				props.apiVersion = 'rbac.authorization.k8s.io/v1beta1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'ClusterRoleBindingList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:ClusterRoleBindingList`)
@@ -8738,10 +8438,7 @@ export namespace rbac {
 				props.apiVersion = 'rbac.authorization.k8s.io/v1beta1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'ClusterRoleList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:ClusterRoleList`)
@@ -8792,10 +8489,9 @@ export namespace rbac {
 				props.apiVersion = 'rbac.authorization.k8s.io/v1beta1'
 				props.kind = 'Role'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.rules = (desc && desc.rules) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:Role`)
@@ -8854,11 +8550,10 @@ export namespace rbac {
 				props.apiVersion = 'rbac.authorization.k8s.io/v1beta1'
 				props.kind = 'RoleBinding'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.roleRef = (desc && desc.roleRef) || undefined
 				props.subjects = (desc && desc.subjects) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:RoleBinding`)
@@ -8908,10 +8603,7 @@ export namespace rbac {
 				props.apiVersion = 'rbac.authorization.k8s.io/v1beta1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'RoleBindingList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:RoleBindingList`)
@@ -8961,10 +8653,7 @@ export namespace rbac {
 				props.apiVersion = 'rbac.authorization.k8s.io/v1beta1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'RoleList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:RoleList`)
@@ -9043,11 +8732,10 @@ export namespace scheduling {
 				props.globalDefault = (desc && desc.globalDefault) || undefined
 				props.kind = 'PriorityClass'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.preemptionPolicy = (desc && desc.preemptionPolicy) || undefined
 				props.value = (desc && desc.value) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:PriorityClass`)
@@ -9095,10 +8783,7 @@ export namespace scheduling {
 				props.apiVersion = 'scheduling.k8s.io/v1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'PriorityClassList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:PriorityClassList`)
@@ -9178,11 +8863,10 @@ export namespace scheduling {
 				props.globalDefault = (desc && desc.globalDefault) || undefined
 				props.kind = 'PriorityClass'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.preemptionPolicy = (desc && desc.preemptionPolicy) || undefined
 				props.value = (desc && desc.value) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:PriorityClass`)
@@ -9233,10 +8917,7 @@ export namespace scheduling {
 				props.apiVersion = 'scheduling.k8s.io/v1alpha1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'PriorityClassList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:PriorityClassList`)
@@ -9316,11 +8997,10 @@ export namespace scheduling {
 				props.globalDefault = (desc && desc.globalDefault) || undefined
 				props.kind = 'PriorityClass'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.preemptionPolicy = (desc && desc.preemptionPolicy) || undefined
 				props.value = (desc && desc.value) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:PriorityClass`)
@@ -9371,10 +9051,7 @@ export namespace scheduling {
 				props.apiVersion = 'scheduling.k8s.io/v1beta1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'PriorityClassList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:PriorityClassList`)
@@ -9420,10 +9097,9 @@ export namespace settings {
 				props.apiVersion = 'settings.k8s.io/v1alpha1'
 				props.kind = 'PodPreset'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:PodPreset`)
@@ -9471,10 +9147,7 @@ export namespace settings {
 				props.apiVersion = 'settings.k8s.io/v1alpha1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'PodPresetList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:PodPresetList`)
@@ -9532,10 +9205,9 @@ export namespace storage {
 				props.apiVersion = 'storage.k8s.io/v1'
 				props.kind = 'CSINode'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:CSINode`)
@@ -9583,10 +9255,7 @@ export namespace storage {
 				props.apiVersion = 'storage.k8s.io/v1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'CSINodeList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:CSINodeList`)
@@ -9680,14 +9349,13 @@ export namespace storage {
 				props.apiVersion = 'storage.k8s.io/v1'
 				props.kind = 'StorageClass'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.mountOptions = (desc && desc.mountOptions) || undefined
 				props.parameters = (desc && desc.parameters) || undefined
 				props.provisioner = (desc && desc.provisioner) || undefined
 				props.reclaimPolicy = (desc && desc.reclaimPolicy) || undefined
 				props.volumeBindingMode = (desc && desc.volumeBindingMode) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:StorageClass`)
@@ -9735,10 +9403,7 @@ export namespace storage {
 				props.apiVersion = 'storage.k8s.io/v1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'StorageClassList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:StorageClassList`)
@@ -9790,10 +9455,9 @@ export namespace storage {
 				props.apiVersion = 'storage.k8s.io/v1'
 				props.kind = 'VolumeAttachment'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:VolumeAttachment`)
@@ -9841,10 +9505,7 @@ export namespace storage {
 				props.apiVersion = 'storage.k8s.io/v1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'VolumeAttachmentList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:VolumeAttachmentList`)
@@ -9899,10 +9560,9 @@ export namespace storage {
 				props.apiVersion = 'storage.k8s.io/v1alpha1'
 				props.kind = 'VolumeAttachment'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:VolumeAttachment`)
@@ -9953,10 +9613,7 @@ export namespace storage {
 				props.apiVersion = 'storage.k8s.io/v1alpha1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'VolumeAttachmentList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:VolumeAttachmentList`)
@@ -10017,10 +9674,9 @@ export namespace storage {
 				props.apiVersion = 'storage.k8s.io/v1beta1'
 				props.kind = 'CSIDriver'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:CSIDriver`)
@@ -10068,10 +9724,7 @@ export namespace storage {
 				props.apiVersion = 'storage.k8s.io/v1beta1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'CSIDriverList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:CSIDriverList`)
@@ -10126,10 +9779,9 @@ export namespace storage {
 				props.apiVersion = 'storage.k8s.io/v1beta1'
 				props.kind = 'CSINode'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:CSINode`)
@@ -10177,10 +9829,7 @@ export namespace storage {
 				props.apiVersion = 'storage.k8s.io/v1beta1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'CSINodeList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:CSINodeList`)
@@ -10274,14 +9923,13 @@ export namespace storage {
 				props.apiVersion = 'storage.k8s.io/v1beta1'
 				props.kind = 'StorageClass'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.mountOptions = (desc && desc.mountOptions) || undefined
 				props.parameters = (desc && desc.parameters) || undefined
 				props.provisioner = (desc && desc.provisioner) || undefined
 				props.reclaimPolicy = (desc && desc.reclaimPolicy) || undefined
 				props.volumeBindingMode = (desc && desc.volumeBindingMode) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:StorageClass`)
@@ -10329,10 +9977,7 @@ export namespace storage {
 				props.apiVersion = 'storage.k8s.io/v1beta1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'StorageClassList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:StorageClassList`)
@@ -10384,10 +10029,9 @@ export namespace storage {
 				props.apiVersion = 'storage.k8s.io/v1beta1'
 				props.kind = 'VolumeAttachment'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
+					name: desc?.metadata?.name || name,
 				})
 				props.spec = (desc && desc.spec) || undefined
-				Object.assign(props.metadata, { name })
 
 				super(name, props)
 				this.setType(`k8s:VolumeAttachment`)
@@ -10438,10 +10082,7 @@ export namespace storage {
 				props.apiVersion = 'storage.k8s.io/v1beta1'
 				props.items = (desc && desc.items) || undefined
 				props.kind = 'VolumeAttachmentList'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name,
-				})
-				Object.assign(props.metadata, { name })
+				props.metadata = desc?.metadata || {}
 
 				super(name, props)
 				this.setType(`k8s:VolumeAttachmentList`)
