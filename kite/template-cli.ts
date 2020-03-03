@@ -234,7 +234,7 @@ function asConfig(opts: CliFlags, und: boolean = true): TemplateConfigSpec {
 		args: opts.args,
 	}
 	if (!out.exec) {
-		out.yaml = opts.yaml || opts.y || (opts._ && opts._[0])
+		out.yaml = opts.yaml || opts.y
 	} else {
 		out.yaml = undefined
 	}
