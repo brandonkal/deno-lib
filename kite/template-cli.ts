@@ -261,6 +261,15 @@ export default async function templateCli(cfg?: TemplateConfig) {
 			console.error(msg)
 		}
 		console.log(out.trimEnd())
+		let unreplacedPlaceholders = out.match(/\(\((.+?)\)\)/g)
+		if (unreplacedPlaceholders) {
+			const l = unreplacedPlaceholders.length
+			throw new TemplateError(
+				`Error: Output has ${l} placeholder${
+					l === 1 ? '' : 's'
+				} that failed to be replaced.`
+			)
+		}
 	} catch (err) {
 		if (err instanceof TemplateError) {
 			// No need for stack trace on expected errors
