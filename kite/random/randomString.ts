@@ -165,7 +165,7 @@ export class RandomString extends kite.Resource {
 		return {
 			terraform: {
 				required_providers: {
-					random: '~> 2.2.2',
+					random: '~> 2.2.1',
 				},
 			},
 			resource: {
