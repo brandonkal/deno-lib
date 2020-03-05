@@ -297,7 +297,7 @@ function isTerraformConfig(p: any) {
 	)
 }
 
-const placeholderRe = /\(\((.+?)\)\)/
+const placeholderRe = /\(\((.+?)\)\)/g
 
 /** removes placeholders using Terraform state values */
 function substitutePlaceholders(
