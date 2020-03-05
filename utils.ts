@@ -143,3 +143,11 @@ export async function withTimeout<V, TO>(
 	cancel()
 	return result as V | TO
 }
+
+/**
+ * A tagged template function that behaves like an untagged template literal.
+ * This is useful for syntax highlighting tagged templates. i.e. import as yaml.
+ */
+export function vanillaTag(literals: TemplateStringsArray, ...expr: unknown[]) {
+	return String.raw({ raw: literals } as any, ...expr)
+}
