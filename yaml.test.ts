@@ -213,3 +213,42 @@ address-pools:
 `
 	assertEquals(expected, yml)
 })
+
+it('yamlfies multiline strings', () => {
+	const long = dedent`\
+		This is line 1
+		This is line 2
+		This is line 3
+	`
+	const yml = yamlfy`\
+one: 1
+long: ${long}
+two: 2`
+	const expected = `\
+one: 1
+long: "This is line 1\\nThis is line 2\\nThis is line 3\\n"
+two: 2`
+	assertEquals(expected, yml)
+})
+
+it('works with multiline strings', () => {
+	const long = dedent`\
+		This is line 1
+		This is line 2
+		This is line 3
+	`
+	const yml = yaml.stringify(y`
+		one: 1
+		long: ${long}
+		two: 2
+	`)
+	const expected = `\
+one: 1
+long: |
+  This is line 1
+  This is line 2
+  This is line 3
+two: 2
+`
+	assertEquals(expected, yml)
+})

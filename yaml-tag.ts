@@ -90,17 +90,19 @@ export function yamlfy(
 		result += string
 		let indent = result.split('\n').pop()?.length || 0
 		if (i < expr.length) {
-			result += yamlString(expr[i], indent)
+			// quoted strings are required for newlines and special characters
+			// But we don't want strings quoted elsewhere.
+			result += yamlString(expr[i], indent, result.endsWith(': '))
 		}
 	})
 	return result.replace(/\t/g, '  ')
 }
 /** serializes item to a string form that can be inserted in YAML text */
-function yamlString(item: unknown, indent: number) {
+function yamlString(item: unknown, indent: number, shouldQuote: boolean) {
 	if (typeof item === 'boolean' || typeof item === 'number') {
 		return item.toString()
 	} else if (typeof item === 'string') {
-		return item
+		return shouldQuote ? JSON.stringify(item) : item
 	} else if (item === null) {
 		return 'null'
 	} else if (typeof item === 'object') {
