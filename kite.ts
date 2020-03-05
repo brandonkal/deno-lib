@@ -295,8 +295,8 @@ export function sortK8sYaml(a: string, b: string): number {
 }
 
 export namespace yaml {
-	export function print(out: any) {
-		return printYamlImpl(out, sortK8sYaml)
+	export function print(out: any, header = true) {
+		return printYamlImpl(out, sortK8sYaml, undefined, header)
 	}
 }
 

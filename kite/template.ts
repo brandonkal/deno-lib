@@ -11,7 +11,7 @@ import * as path from 'https://deno.land/std@v0.32.0/path/mod.ts'
 import { sha1 } from 'https://deno.land/x/sha1/mod.ts'
 import titleCase from 'https://deno.land/x/case/titleCase.ts'
 import { sha256 } from 'https://deno.land/x/sha256/mod.ts'
-import * as yaml from 'https://deno.land/std@v0.32.0/encoding/yaml.ts'
+import * as YAML from 'https://deno.land/std@v0.32.0/encoding/yaml.ts'
 import * as base32 from 'https://deno.land/std@v0.32.0/encoding/base32.ts'
 
 import { dotProp, jsonItem, visitAll, withTimeout } from '../utils.ts'
@@ -20,6 +20,7 @@ import { hashObject } from '../hash-object.ts'
 import * as filter from './filter-terraform.ts'
 import * as rt from '../runtypes.ts'
 import { buildCleanCommand } from '../shellbox.ts'
+import { yaml } from '../kite.ts'
 
 export class TemplateError extends Error {}
 
@@ -238,7 +239,7 @@ export function getConfigFromYaml(yamlText: string, cfg: TemplateConfig) {
 	})
 	const parsedDocs = docs.map((yamlDoc, i) => {
 		if (toRemove.has(i)) return {}
-		return yaml.parse(yamlDoc, { schema: yaml.JSON_SCHEMA }) as any
+		return YAML.parse(yamlDoc, { schema: YAML.JSON_SCHEMA }) as any
 	})
 	const kiteConfigs: TemplateConfig[] = []
 	const terraformConfigs: any[] = []
@@ -296,6 +297,8 @@ function isTerraformConfig(p: any) {
 	)
 }
 
+const placeholderRe = /\(\((.+?)\)\)/
+
 /** removes placeholders using Terraform state values */
 function substitutePlaceholders(
 	str: string,
@@ -304,18 +307,31 @@ function substitutePlaceholders(
 	/** The operation map */
 	allOps: Record<string, (a: any) => any>
 ): string {
+	let madeReplace = false
 	parseCache.clear()
 	// match inside (( param ))
-	const out = str.replace(/\(\((.+?)\)\)/, (_, dslText) => {
+	const out = str.replace(placeholderRe, (_, dslText) => {
 		let r = parseDSL(dslText, spec, state, allOps)
 		if (r === undefined || r === 'undefined') {
 			throw new TemplateError(`${dslText} returned ${r}`)
 		}
-		if (typeof r === 'string') {
-			return r
-		}
+		madeReplace = true
 		return JSON.stringify(r)
 	})
+	// If a replacement was made, we parse as YAML and reserialize.
+	// In this case, all comments are moved to the top.
+	if (madeReplace) {
+		const commentLines = out
+			.split('\n')
+			.map((l) => l.trimStart())
+			.filter((l) => l.startsWith('#'))
+		let header = ''
+		if (commentLines.length) {
+			header = commentLines.join('\n') + '\n'
+		}
+		const yml = yaml.print(YAML.parse(out), false)
+		return header + yml
+	}
 	return out
 }
 

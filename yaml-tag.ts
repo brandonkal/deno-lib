@@ -47,7 +47,8 @@ type SortFn = (a: string, b: string) => number
 export function printYaml(
 	input: any,
 	sortKeys: boolean | SortFn = true,
-	comments?: boolean
+	comments?: boolean,
+	header = true
 ): string {
 	let docs: any[] = input
 	if (!Array.isArray(input)) {
@@ -56,8 +57,8 @@ export function printYaml(
 	return docs
 		.map((doc) => {
 			let obj = stripUndefined(comments ? doc[1] : doc)
-			let prefix = '---\n'
-			if (comments && doc[0]) {
+			let prefix = header ? '' : '---\n'
+			if (comments && doc[0] && header) {
 				prefix += toComment(doc[0])
 			}
 			return (
