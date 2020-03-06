@@ -136,19 +136,23 @@ export namespace yaml {
 				}
 			}
 			objs.forEach((obj) => {
-				parsed.push(
-					...(parseAll(obj, transform, {
-						schema: JSON_SCHEMA,
-					}) as any[])
-				)
+				if (typeof obj !== 'string') {
+					parsed.push(obj)
+				} else {
+					parsed.push(
+						...(parseAll(obj, transform, {
+							schema: JSON_SCHEMA,
+						}) as any[])
+					)
+				}
 			})
 			kite.Resource.start(`k8s:yaml:Config:${name}`)
 			this.resources = []
-			parsed.forEach((item) => {
+			parsed.forEach((item, i) => {
 				const n = item?.metadata?.name || undefined
 				if (typeof n !== 'string') {
 					throw new Error(
-						`Invalid k8s metadata.name field. Got: ${n} for k8s:yaml.Config:${name}`
+						`Invalid k8s metadata.name field. Got: ${n} for k8s:yaml.Config:${name} (item ${i})`
 					)
 				}
 				this.resources.push(
