@@ -211,11 +211,6 @@ export namespace helm {
 		 */
 		targetNamespace?: string
 		/**
-		 * Specify chart values with similar syntax to helm --set.
-		 * Prefer valuesContent.
-		 */
-		set?: Record<string, string>
-		/**
 		 * Specify Helm Chart values.
 		 * The constructor will transform an object value into a YAML string.
 		 */
@@ -254,11 +249,6 @@ export namespace helm {
 			}
 			if (!props.spec?.chart) {
 				throw new Error(`HelmChart ${name} is must specify a chart.`)
-			}
-			if (!props.spec.valuesContent && !props.spec.set) {
-				throw new Error(
-					`HelmChart ${name} must specify either valuesContent or set. An empty object is valid.`
-				)
 			}
 			if (typeof props.spec.valuesContent !== 'string') {
 				props.spec.valuesContent = kite.yaml.print(props.spec.valuesContent)
