@@ -254,16 +254,15 @@ export default async function template(cfg: TemplateConfig): Promise<string> {
 						/^# urn/,
 						'#region (rendered HelmChart) urn'
 					)
-					accumulated.push(
-						top + manifest.replace(/^---/, '') + '\n#endregion'
-					)
+					accumulated.push(top + manifest.replace(/^---/, '') + '\n#endregion')
 				} else {
 					throw new TemplateError(
 						`Invalid HelmChart: "${chart}". Must contain "/"`
 					)
 				}
+			}
 		} else {
-			accumulated.push(doc)
+			accumulated.push(doc) // not HelmChart
 		}
 	}
 	const result = accumulated.join('\n---\n')
