@@ -22,6 +22,7 @@ import * as filter from './filter-terraform.ts'
 import * as rt from '../runtypes.ts'
 import { buildCleanCommand } from '../shellbox.ts'
 import { yaml } from '../kite.ts'
+import { addNamespace } from './namespaces.ts'
 
 export class TemplateError extends Error {}
 
@@ -257,7 +258,31 @@ export default async function template(
 						/^# urn/,
 						'#region (rendered HelmChart) urn'
 					)
-					accumulated.push(top + manifest.replace(/^---/, '') + '\n#endregion')
+					const chartResources = YAML.parseAll(manifest, undefined, {
+						schema: YAML.JSON_SCHEMA,
+					}) as any[]
+					const comments = manifest.split(/^---/).map(getComment)
+					if (comments.length > chartResources.length) {
+						// If this happens, something weird is going on.
+						throw new TemplateError(
+							`Unexpected HelmChart ${parsedDoc.metadata?.name} rendered with more comments blocks than resources (${comments.length} vs ${chartResources.length})`
+						)
+					}
+					let out: [string, any][] = []
+					chartResources.forEach((item, i) => {
+						out[i] = [comments[i], item]
+					})
+					out = out.filter((item) => {
+						return item[1]?.apiVersion && item[1]?.kind
+					})
+					const namespace = parsedDoc.spec.targetNamespace
+					if (namespace) {
+						out = out.map(([comment, item]) => {
+							return [comment, addNamespace(item, namespace)]
+						})
+					}
+					const result = yaml.print(out, false)
+					accumulated.push(top + result.replace(/^---/, '') + '\n#endregion')
 				} else {
 					throw new TemplateError(
 						`Invalid HelmChart: "${chart}". Must contain "/"`
