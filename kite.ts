@@ -314,9 +314,13 @@ export function make(fn: Function, opts?: MakeOpts): string {
 	try {
 		// run user's function
 		if (main) {
-			const args = getArgsObject()
-			// TODO: canonalize
-			fn(args.a)
+			const { a } = getArgsObject()
+			// We allow this on main for convenience (can share same YAML file with kite template CLI)
+			if ('args' in a) {
+				fn(a.args)
+			} else {
+				fn(a)
+			}
 		} else {
 			fn()
 		}
