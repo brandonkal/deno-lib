@@ -314,7 +314,7 @@ export function make(fn: Function, opts?: MakeOpts): string {
 	try {
 		// run user's function
 		if (main) {
-			const { a } = getArgsObject()
+			const { a = {} } = getArgsObject()
 			// We allow this on main for convenience (can share same YAML file with kite template CLI)
 			if ('args' in a) {
 				fn(a.args)
@@ -322,7 +322,7 @@ export function make(fn: Function, opts?: MakeOpts): string {
 				fn(a)
 			}
 		} else {
-			fn()
+			fn({})
 		}
 	} catch (e) {
 		console.error(e)
