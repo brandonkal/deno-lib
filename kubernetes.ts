@@ -254,6 +254,7 @@ export namespace helm {
 				props.spec.valuesContent = kite.yaml.print(props.spec.valuesContent)
 			}
 			super(name, props)
+			this.setType(`k8s:HelmChart`)
 		}
 	}
 }
