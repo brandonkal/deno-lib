@@ -137,6 +137,7 @@ export namespace yaml {
 			}
 			objs.forEach((obj) => {
 				if (typeof obj !== 'string') {
+					if (transform) transform(obj)
 					parsed.push(obj)
 				} else {
 					parsed.push(
