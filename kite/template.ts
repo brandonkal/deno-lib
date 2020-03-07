@@ -226,43 +226,42 @@ export default async function template(cfg: TemplateConfig): Promise<string> {
 			const parsedDoc = YAML.parse(doc, { schema: YAML.JSON_SCHEMA }) as any
 			if (isHelmChart(parsedDoc)) {
 				// render the helm chart
-				const repo = parsedDoc.spec.repo
-				if (repo && repo.includes('http')) {
-					const chart = parsedDoc.spec.chart
-					if (chart && chart.split('/').length === 2) {
-						if (
-							parsedDoc.spec.valuesContent &&
-							typeof parsedDoc.spec.valuesContent !== 'string'
-						) {
-							throw new TemplateError(
-								`Error: ${parsedDoc.metadata
-									.name!} Kite expects HelmChart.spec.valuesContent to by type (YAML) string.`
-							)
-						}
-						const [repoName] = chart.split('/')
-						await helmFetch(repoName, repo, spec.quiet)
-						const manifest = await helmTemplate({
-							chart,
-							releaseName: parsedDoc.metadata.name!,
-							version: parsedDoc.spec.version,
-							namespace: parsedDoc.spec.targetNamespace,
-							valuesContent: parsedDoc.spec.valuesContent as string,
-							quiet: spec.quiet,
-						})
-						let top = getComment(doc).replace(
-							/^# urn/,
-							'#region (rendered HelmChart) urn'
-						)
-						accumulated.push(
-							top + manifest.replace(/^---/, '') + '\n#endregion'
-						)
-					} else {
+				const chart = parsedDoc.spec.chart
+				if (chart && chart.split('/').length === 2) {
+					if (
+						parsedDoc.spec.valuesContent &&
+						typeof parsedDoc.spec.valuesContent !== 'string'
+					) {
 						throw new TemplateError(
-							`Invalid HelmChart: "${chart}". Must contain "/"`
+							`Error: ${parsedDoc.metadata
+								.name!} Kite expects HelmChart.spec.valuesContent to by type (YAML) string.`
 						)
 					}
+					const [repoName] = chart.split('/')
+					const repo = parsedDoc.spec.repo
+					if (repo && repo.startsWith('http')) {
+						await helmFetch(repoName, repo, spec.quiet)
+					}
+					const manifest = await helmTemplate({
+						chart,
+						releaseName: parsedDoc.metadata.name!,
+						version: parsedDoc.spec.version,
+						namespace: parsedDoc.spec.targetNamespace,
+						valuesContent: parsedDoc.spec.valuesContent as string,
+						quiet: spec.quiet,
+					})
+					let top = getComment(doc).replace(
+						/^# urn/,
+						'#region (rendered HelmChart) urn'
+					)
+					accumulated.push(
+						top + manifest.replace(/^---/, '') + '\n#endregion'
+					)
+				} else {
+					throw new TemplateError(
+						`Invalid HelmChart: "${chart}". Must contain "/"`
+					)
 				}
-			}
 		} else {
 			accumulated.push(doc)
 		}
