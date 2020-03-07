@@ -13,6 +13,7 @@ import titleCase from 'https://deno.land/x/case/titleCase.ts'
 import { sha256 } from 'https://deno.land/x/sha256/mod.ts'
 import * as YAML from 'https://deno.land/std@v0.32.0/encoding/yaml.ts'
 import * as base32 from 'https://deno.land/std@v0.32.0/encoding/base32.ts'
+import * as k8s from 'https://deno.land/x/lib/kubernetes.ts'
 
 import { dotProp, jsonItem, visitAll, withTimeout } from '../utils.ts'
 import { merge, MergeObject } from '../merge.ts'
@@ -213,14 +214,156 @@ export default async function template(cfg: TemplateConfig): Promise<string> {
 	}
 	const allOps = ops(env)
 	// Now return the filtered result
-	const result = docs
+	const filtered = docs
 		.filter((_, i) => !toRemove.has(i))
 		.map((txt) => {
 			return substitutePlaceholders(txt, config.spec, state, allOps).trim()
 		})
-		.join('\n---\n')
+	// We now need to template out any Helm Charts
+	const accumulated: string[] = []
+	for (const doc of filtered) {
+		if (doc.includes('HelmChart')) {
+			const parsedDoc = YAML.parse(doc, { schema: YAML.JSON_SCHEMA }) as any
+			if (isHelmChart(parsedDoc)) {
+				// render the helm chart
+				const repo = parsedDoc.spec.repo
+				if (repo && repo.includes('http')) {
+					const chart = parsedDoc.spec.chart
+					if (chart && chart.split('/').length === 2) {
+						if (
+							parsedDoc.spec.valuesContent &&
+							typeof parsedDoc.spec.valuesContent !== 'string'
+						) {
+							throw new TemplateError(
+								`Error: ${parsedDoc.metadata
+									.name!} Kite expects HelmChart.spec.valuesContent to by type (YAML) string.`
+							)
+						}
+						const [repoName] = chart.split('/')
+						await helmFetch(repoName, repo, spec.quiet)
+						const manifest = await helmTemplate({
+							chart,
+							releaseName: parsedDoc.metadata.name!,
+							version: parsedDoc.spec.version,
+							namespace: parsedDoc.spec.targetNamespace,
+							valuesContent: parsedDoc.spec.valuesContent as string,
+							quiet: spec.quiet,
+						})
+						let top = getComment(doc).replace(
+							/^# urn/,
+							'#region (rendered HelmChart) urn'
+						)
+						accumulated.push(
+							top + manifest.replace(/^---/, '') + '\n#endregion'
+						)
+					} else {
+						throw new TemplateError(
+							`Invalid HelmChart: "${chart}". Must contain "/"`
+						)
+					}
+				}
+			}
+		} else {
+			accumulated.push(doc)
+		}
+	}
+	const result = accumulated.join('\n---\n')
 	const header = banner + config.metadata.name + '\n'
 	return header + addTopDashes(result) + '\n'
+}
+
+interface helmOpts {
+	chart: string
+	releaseName: string
+	version?: string
+	namespace?: string
+	valuesContent?: string
+	quiet?: boolean
+}
+/**
+ * Execute helm template for the given values.
+ * Clean up after and cache the result for the hashed inputs.
+ */
+async function helmTemplate(opts: helmOpts) {
+	const { quiet = false } = opts
+	// option for hashing here. Though helm template isn't too slow...
+	const { chart, releaseName, version, namespace, valuesContent } = opts
+	if (!quiet) console.error(`Rendering the ${chart} helm chart`)
+	let cmd = ['helm', 'template', chart, '--name-template', releaseName]
+	if (valuesContent) {
+		cmd.push('--values', '-')
+	}
+	if (namespace) {
+		cmd.push('--namespace', namespace)
+	}
+	if (version) {
+		cmd.push('--version', version)
+	}
+	if (!quiet) console.error(`Executing: ${cmd.join(' ')}`)
+	const te = new TextEncoder()
+	const subp = Deno.run({
+		args: cmd,
+		stdout: 'piped',
+		stderr: 'piped',
+		stdin: 'piped',
+	})
+	filter.clear()
+	filter.stream(subp.stderr!, quiet)
+	if (valuesContent) {
+		// write values file direct to helm stdin
+		await subp.stdin?.write(te.encode(valuesContent))
+		subp.stdin?.close()
+	}
+	let s = await subp.status()
+	if (!s.success) {
+		if (quiet) console.error(filter.flush())
+		throw new TemplateError('helm repo add failed')
+	}
+	const out = new TextDecoder().decode(await Deno.readAll(subp.stdout!))
+	return out
+}
+
+async function helmFetch(repoName: string, repo: string, quiet = false) {
+	if (!quiet) console.error(`Adding the ${repoName} helm repo`)
+	// adds or updates the given repo
+	const pa = Deno.run({
+		args: ['helm', 'repo', 'add', repoName, repo],
+		stdout: 'piped',
+		stderr: 'piped',
+	})
+	filter.clear()
+	filter.stream(pa.stderr!, quiet)
+	filter.stream(pa.stdout!, quiet)
+	let s = await pa.status()
+	if (!s.success) {
+		if (quiet) console.error(filter.flush())
+		throw new TemplateError('helm repo add failed')
+	}
+}
+
+function isHelmChart(desc: any): desc is k8s.helm.Chart {
+	if (
+		desc &&
+		desc.apiVersion === 'helm.cattle.io/v1' &&
+		desc.kind === 'HelmChart' &&
+		desc.spec
+	) {
+		return true
+	}
+	return false
+}
+
+/** extract comments from YAML and move it to the top. */
+function getComment(doc: string) {
+	const commentLines = doc
+		.split('\n')
+		.map((l) => l.trimStart())
+		.filter((l) => l.startsWith('#'))
+	let header = ''
+	if (commentLines.length) {
+		header = commentLines.join('\n') + '\n'
+	}
+	return header
 }
 
 /**
@@ -321,14 +464,7 @@ function substitutePlaceholders(
 	// If a replacement was made, we parse as YAML and reserialize.
 	// In this case, all comments are moved to the top.
 	if (madeReplace) {
-		const commentLines = out
-			.split('\n')
-			.map((l) => l.trimStart())
-			.filter((l) => l.startsWith('#'))
-		let header = ''
-		if (commentLines.length) {
-			header = commentLines.join('\n') + '\n'
-		}
+		const header = getComment(out)
 		const yml = yaml.print(YAML.parse(out), false)
 		return header + yml
 	}
