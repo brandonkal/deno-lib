@@ -54,11 +54,11 @@ export function printYaml(
 	if (!Array.isArray(input)) {
 		docs = [input]
 	}
-	return docs
+	const txt = docs
 		.map((doc) => {
 			let obj = stripUndefined(comments ? doc[1] : doc)
-			let prefix = header ? '' : '---\n'
-			if (comments && doc[0] && header) {
+			let prefix = ''
+			if (comments && doc[0]) {
 				prefix += toComment(doc[0])
 			}
 			return (
@@ -67,11 +67,12 @@ export function printYaml(
 					schema: YAML.JSON_SCHEMA,
 					sortKeys: sortKeys,
 					skipInvalid: true,
-				}).trimEnd() +
-				'\n'
+				}).trimEnd()
 			)
 		})
-		.join('')
+		.join('\n---\n')
+
+	return header ? '---\n' : '' + txt
 }
 /** generate yaml comment */
 function toComment(str: string) {
