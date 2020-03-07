@@ -134,7 +134,10 @@ function isTimeoutMessage(x: any) {
  * The resulting state is then queried and combined with argument inputs.
  * The resulting YAML is returned without the Terraform Resource
  */
-export default async function template(cfg: TemplateConfig): Promise<string> {
+export default async function template(
+	cfg: TemplateConfig,
+	useHelm = true
+): Promise<string> {
 	cfg = rtTemplateConfig.check(cfg)
 	const { spec } = cfg
 	let yamlText: string
@@ -222,7 +225,7 @@ export default async function template(cfg: TemplateConfig): Promise<string> {
 	// We now need to template out any Helm Charts
 	const accumulated: string[] = []
 	for (const doc of filtered) {
-		if (doc.includes('HelmChart')) {
+		if (useHelm && doc.includes('HelmChart')) {
 			const parsedDoc = YAML.parse(doc, { schema: YAML.JSON_SCHEMA }) as any
 			if (isHelmChart(parsedDoc)) {
 				// render the helm chart

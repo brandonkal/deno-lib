@@ -75,7 +75,8 @@ Flags:
   --allowEnv        Allow reading environment variables during final templating.
                     The CLI only accepts a boolean value.
                     The KiteConfigSpec accepts a list of strings.
-                    If unset, the config list is ignored.
+										If unset, the config list is ignored.
+  --no-helm         Set to skip rendering HelmChart resources.
 
   -h, --help        Prints this help message
 `
@@ -91,9 +92,9 @@ export interface CliFlags extends TemplateConfigSpec {
 	/** shorthand alias for help */
 	h?: boolean
 	/** pass config as TemplateConfig or shorthand object*/
-	config?: Omit<CliFlags, 'allowEnv'>
+	config?: Omit<Omit<CliFlags, 'allowEnv'>, 'no-helm'>
 	/** shorthand for config */
-	c?: Omit<CliFlags, 'allowEnv'>
+	c?: Omit<Omit<CliFlags, 'allowEnv'>, 'no-helm'>
 	/** shorthand for name */
 	n?: string
 	/** shorthand for quiet */
@@ -112,6 +113,10 @@ export interface CliFlags extends TemplateConfigSpec {
 	 * If set as a list of strings, only these variables can be read by the template.
 	 */
 	allowEnv?: boolean | string | string[]
+	/**
+	 * Disable Helm Templating (useful if you prefer helm-controller in-cluster)
+	 */
+	helm?: boolean
 }
 
 export function canonicalizeOptions(opts: CliFlags): TemplateConfig {
@@ -247,11 +252,13 @@ function asConfig(opts: CliFlags, und: boolean = true): TemplateConfigSpec {
  */
 export default async function templateCli(cfg?: TemplateConfig) {
 	try {
+		let useHelm = true
 		if (!cfg) {
 			const args = getArgsObject(new Set(['config', 'c', 'env']))
+			if (args.helm === false) useHelm = false
 			cfg = canonicalizeOptions(args)
 		}
-		const out = await template(cfg)
+		const out = await template(cfg, useHelm)
 		if (!cfg.spec.quiet) {
 			let msg = `Kite Template complete`
 			if (cfg.spec.name) {
