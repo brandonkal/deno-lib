@@ -96,7 +96,7 @@ export function isNamespaced(x: unknown) {
  * @param x The Kubernetes Resource.
  * @param defaultNamespace The default namespace to add.
  */
-export function addNamespace<T extends unknown>(
+export function addNamespace<T extends Record<PropertyKey, any>>(
 	x: T,
 	defaultNamespace: string
 ): T {
@@ -105,7 +105,7 @@ export function addNamespace<T extends unknown>(
 			if (notNamespacedResources.includes(x.kind)) {
 				return x
 			}
-			x.metadata = { namespace: defaultNamespace }
+			;(x as any).metadata = { namespace: defaultNamespace }
 		}
 		if (!x.metadata?.namespace) {
 			if (notNamespacedResources.includes(x.kind)) {
