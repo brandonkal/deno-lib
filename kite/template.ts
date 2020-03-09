@@ -261,7 +261,8 @@ export default async function template(
 					const chartResources = YAML.parseAll(manifest, undefined, {
 						schema: YAML.JSON_SCHEMA,
 					}) as any[]
-					const comments = manifest.split(/^---/).map(getComment)
+					let comments = manifest.split(/^---/gm).map(getComment)
+					if (comments[0] === '') comments.shift()
 					if (comments.length > chartResources.length) {
 						// If this happens, something weird is going on.
 						throw new TemplateError(
