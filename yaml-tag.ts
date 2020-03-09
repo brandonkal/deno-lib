@@ -54,13 +54,19 @@ export function printYaml(
 	if (!Array.isArray(input)) {
 		docs = [input]
 	}
-	let out = header ? '---\n' : ''
+	let out = ''
 	for (const doc of docs) {
 		let obj: object = stripUndefined(
 			Array.isArray(doc) && comments ? doc[1] : doc
 		)
 		if (comments && Array.isArray(doc) && doc[0]) {
-			out += toComment(doc[0])
+			const cmt = toComment(doc[0])
+			// keep regions before new document start
+			if (cmt.startsWith('# endregion')) {
+				out.replace(/---\n$/, cmt + '---\n')
+			} else {
+				out += cmt
+			}
 		}
 		if (typeof obj === 'undefined') {
 			continue
@@ -74,7 +80,7 @@ export function printYaml(
 		// add join
 		out += '\n---\n'
 	}
-	return out.replace(/\n---\n$/, '')
+	return header ? '---\n' : '' + out.replace(/\n---\n$/, '')
 }
 /** generate yaml comment */
 function toComment(str: string) {
