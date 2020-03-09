@@ -20,7 +20,7 @@ import { getArgsObject } from './args.ts'
 import './kite/extended-string.ts'
 
 declare module globalThis {
-	let outBuffer: Resource[]
+	let outBuffer: (Resource | _Comment)[]
 	let stack: string[]
 	let registeredNames: Set<string>
 }
@@ -81,12 +81,14 @@ export class Resource {
 	 */
 	static start(name: string) {
 		globalThis.stack.push(name)
+		new _Comment(`region ${name}`)
 	}
 	/**
 	 * Call to inform the stack that a ComponentResource will not create any more Resources.
 	 */
 	static end() {
-		globalThis.stack.pop()
+		const name = globalThis.stack.pop()
+		new _Comment(`endregion ${name}`)
 	}
 
 	/** Get a unique identifier for this Resource */
@@ -133,6 +135,22 @@ export class Resource {
 			)
 		}
 	}
+}
+
+/**
+ * _Comment is a hidden Resource that creates a comment in the
+ * output YAML. It is useful for region comments.
+ */
+class _Comment {
+	comment: string
+	__type = 'kite:Comment'
+	constructor(text: string) {
+		this.comment = text
+		globalThis.outBuffer.push(this)
+	}
+}
+function is_Comment(x: any): x is _Comment {
+	return !!x && x.__type === 'kite:Comment' && x.comment
 }
 
 /**
@@ -335,7 +353,8 @@ export function make(fn: Function, opts?: MakeOpts): string {
 	if (post && post.length) {
 		post.forEach((transform) => {
 			if (typeof transform === 'function') {
-				buf = transform(buf)
+				// ignore if comment for now
+				buf = transform(buf as any)
 				if (beforeLength !== globalThis.outBuffer.length) {
 					throw new Error('Post-processors cannot create new resources')
 				}
@@ -346,6 +365,7 @@ export function make(fn: Function, opts?: MakeOpts): string {
 	}
 	let tfBuffer: Resource[] = []
 	buf = buf.filter((res) => {
+		if (is_Comment(res)) return true
 		/* private */
 		const skip = ((res as any).__type as string).startsWith('tf:')
 		if (skip) tfBuffer.push(res)
@@ -356,15 +376,23 @@ export function make(fn: Function, opts?: MakeOpts): string {
 		buf.unshift(new TerraformJSON(tfBuffer))
 	}
 	// Convert buffer to add identifying comments
-	function genComments(res: Resource): [string | undefined, Resource] {
+	function genComments(
+		res: Resource | _Comment
+	): [string | undefined, Resource | undefined] {
 		let comment: string | undefined = undefined
+		if (is_Comment(res)) {
+			return [res.comment, undefined]
+		}
 		// Calling uid() may not be safe if converted
 		if (typeof res.uid === 'function') {
 			comment = res.uid()
 		}
 		return [comment, res]
 	}
-	const out = json ? buf : buf.map(genComments)
+	function noComments(x: any[]): Resource[] {
+		return x.filter((item) => !is_Comment(item))
+	}
+	const out = json ? noComments(buf) : buf.map(genComments)
 	return json
 		? JSON.stringify(out, undefined, 2)
 		: printYamlImpl(out, sortK8sYaml, true)
