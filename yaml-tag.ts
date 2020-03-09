@@ -86,6 +86,10 @@ export function printYaml(
 }
 /** generate yaml comment */
 function toComment(str: string) {
+	str = str.trimEnd()
+	if (str.startsWith('#')) {
+		return str + '\n'
+	}
 	return '# ' + str + '\n'
 }
 
