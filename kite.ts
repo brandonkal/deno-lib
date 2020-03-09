@@ -313,8 +313,8 @@ export function sortK8sYaml(a: string, b: string): number {
 }
 
 export namespace yaml {
-	export function print(out: any, header = true) {
-		return printYamlImpl(out, sortK8sYaml, undefined, header)
+	export function print(out: any, header = true, comments?: boolean) {
+		return printYamlImpl(out, sortK8sYaml, comments, header)
 	}
 }
 

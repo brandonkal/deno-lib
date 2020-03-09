@@ -281,7 +281,7 @@ export default async function template(
 							return [comment, addNamespace(item, namespace)]
 						})
 					}
-					const result = yaml.print(out, false)
+					const result = yaml.print(out, false, true)
 					accumulated.push(top + result.replace(/^---/, '') + '\n#endregion')
 				} else {
 					throw new TemplateError(
