@@ -325,7 +325,7 @@ export class Service extends k8s.core.v1.Service {
 		}
 		const spec = {
 			...args.spec,
-			ports: ports,
+			ports: ports.length ? ports : undefined,
 			type: args.spec.type as string,
 		}
 
