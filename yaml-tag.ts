@@ -80,7 +80,9 @@ export function printYaml(
 		// add join
 		out += '\n---\n'
 	}
-	return header ? '---\n' : '' + out.replace(/\n---\n$/, '')
+	return header
+		? '---\n' + out.replace(/\n---\n$/, '')
+		: out.replace(/\n---\n$/, '')
 }
 /** generate yaml comment */
 function toComment(str: string) {
