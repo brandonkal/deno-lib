@@ -63,7 +63,7 @@ export function printYaml(
 			const cmt = toComment(doc[0])
 			// keep regions before new document start
 			if (cmt.startsWith('# endregion')) {
-				out.replace(/---\n$/, cmt + '---\n')
+				out = out.replace(/---\n$/, cmt + '---\n')
 			} else {
 				out += cmt
 			}
