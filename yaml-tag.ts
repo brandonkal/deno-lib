@@ -45,24 +45,27 @@ type SortFn = (a: string, b: string) => number
  * Only JSON schema is allowed and maps are sorted by default for deterministic results.
  */
 export function printYaml(
-	input: any,
+	input: unknown,
 	sortKeys: boolean | SortFn = true,
 	comments?: boolean,
 	header = true
 ): string {
-	let docs: any[] = input
+	let docs = input as unknown[]
 	if (!Array.isArray(input)) {
 		docs = [input]
 	}
 	let out = header ? '---\n' : ''
 	for (const doc of docs) {
-		let obj = stripUndefined(comments ? doc[1] : doc)
-		if (comments && doc[0]) {
+		let obj: object = stripUndefined(
+			Array.isArray(doc) && comments ? doc[1] : doc
+		)
+		if (comments && Array.isArray(doc) && doc[0]) {
 			out += toComment(doc[0])
 		}
 		if (typeof obj === 'undefined') {
 			continue
 		}
+
 		out += YAML.stringify(obj, {
 			schema: YAML.JSON_SCHEMA,
 			sortKeys: sortKeys,

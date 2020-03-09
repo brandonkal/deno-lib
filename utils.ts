@@ -11,6 +11,7 @@
  * Used by printYaml for more compact YAML text.
  */
 export function stripUndefined<T extends object>(obj: T): T {
+	if (typeof obj === 'undefined') return obj
 	Object.keys(obj).forEach((key) => {
 		if (obj[key] && typeof obj[key] === 'object') stripUndefined(obj[key])
 		else if (obj[key] === undefined) delete obj[key]
