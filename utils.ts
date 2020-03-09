@@ -43,13 +43,13 @@ export type Visitor = (item: jsonItem) => jsonItem
 export function visitAll(item: unknown, visitor: Visitor) {
 	if (item === null || item === undefined) {
 		return visitor(item)
-	} else if (isObject(item)) {
-		Object.entries(item).forEach(([key, value]) => {
-			item[key] = visitAll(value, visitor)
-		})
 	} else if (Array.isArray(item)) {
 		return item.map((v) => {
 			return visitAll(v, visitor)
+		})
+	} else if (isObject(item)) {
+		Object.entries(item).forEach(([key, value]) => {
+			item[key] = visitAll(value, visitor)
 		})
 	} else {
 		return visitor(item as string)
