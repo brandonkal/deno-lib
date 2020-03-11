@@ -58,9 +58,7 @@ export class Resource {
 		}
 		// Allow annotation inputs as numbers
 		if (desc.metadata?.annotations) {
-			desc.metadata.annotations = Object.entries(
-				desc.metadata.annotations
-			).forEach(([key, val]) => {
+			Object.entries(desc.metadata.annotations).forEach(([key, val]) => {
 				if (typeof val === 'number') {
 					desc.metadata.annotations[key] = String(val)
 				}
