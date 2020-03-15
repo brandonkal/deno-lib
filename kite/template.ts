@@ -243,7 +243,7 @@ export default async function template(
 					}
 					const [repoName] = chart.split('/')
 					const repo = parsedDoc.spec.repo
-					if (repo && repo.startsWith('http')) {
+					if (repo && repo.startsWith('http') && repoName !== 'stable') {
 						await helmFetch(repoName, repo, spec.quiet)
 					}
 					const helmParams = {
