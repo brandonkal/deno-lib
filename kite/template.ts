@@ -246,14 +246,24 @@ export default async function template(
 					if (repo && repo.startsWith('http')) {
 						await helmFetch(repoName, repo, spec.quiet)
 					}
-					const manifest = await helmTemplate({
+					const helmParams = {
 						chart,
 						releaseName: parsedDoc.metadata.name!,
 						version: parsedDoc.spec.version,
 						namespace: parsedDoc.spec.targetNamespace,
 						valuesContent: parsedDoc.spec.valuesContent as string,
 						quiet: spec.quiet,
-					})
+					}
+					let manifest = ''
+					const templateRun1 = await helmTemplate(helmParams)
+					if (templateRun1.stderr.includes('failed to download')) {
+						await helmRepoUpdate(spec.quiet)
+						const templateRun2 = await helmTemplate(helmParams)
+						if (templateRun2.err) throw templateRun2.err
+						manifest = templateRun2.out
+					} else {
+						manifest = templateRun1.out
+					}
 					let top = getComment(doc).replace(
 						/^# urn/,
 						'#region (rendered HelmChart) urn'
@@ -342,29 +352,77 @@ async function helmTemplate(opts: helmOpts) {
 		subp.stdin?.close()
 	}
 	let s = await subp.status()
+	let stderr = ''
 	if (!s.success) {
-		if (quiet) console.error(filter.flush())
-		throw new TemplateError('helm repo add failed')
+		stderr = filter.flush()
+		if (quiet) console.error(stderr)
+		return { out: '', stderr, err: new TemplateError('helm template failed') }
 	}
 	const out = new TextDecoder().decode(await Deno.readAll(subp.stdout!))
-	return out
+	return { out, stderr, err: undefined }
 }
 
 async function helmFetch(repoName: string, repo: string, quiet = false) {
-	if (!quiet) console.error(`Adding the ${repoName} helm repo`)
-	// adds or updates the given repo
-	const pa = Deno.run({
-		args: ['helm', 'repo', 'add', repoName, repo],
+	if (!quiet) console.error(`Checking for ${repoName} helm repo`)
+	let shouldFetch = true
+	try {
+		const check = Deno.run({
+			args: ['helm', 'repo', 'ls', '-o', 'json'],
+			stdout: 'piped',
+			stderr: 'piped',
+		})
+		filter.clear()
+		filter.stream(check.stderr!, quiet)
+		let cs = await check.status()
+		if (!cs.success) {
+			if (quiet) console.error(filter.flush())
+			throw new TemplateError('helm repo ls failed')
+		}
+		const out: { name: string; url: string }[] = JSON.parse(
+			new TextDecoder().decode(await Deno.readAll(check.stdout!))
+		)
+		const search = {
+			name: repoName,
+			url: repo,
+		}
+		if (out.includes(search)) shouldFetch = false
+	} catch (e) {
+		console.error('helm repo ls failed')
+		shouldFetch = true
+	}
+	if (shouldFetch) {
+		if (!quiet) console.error(`Adding the ${repoName} helm repo`)
+		// adds or updates the given repo
+		const pa = Deno.run({
+			args: ['helm', 'repo', 'add', repoName, repo],
+			stdout: 'piped',
+			stderr: 'piped',
+		})
+		filter.clear()
+		filter.stream(pa.stderr!, quiet)
+		filter.stream(pa.stdout!, quiet)
+		let s = await pa.status()
+		if (!s.success) {
+			if (quiet) console.error(filter.flush())
+			throw new TemplateError('helm repo add failed')
+		}
+	}
+}
+
+async function helmRepoUpdate(quiet = false) {
+	if (!quiet) console.error(`Updating helm repos`)
+	const update = Deno.run({
+		args: ['helm', 'repo', 'update'],
 		stdout: 'piped',
 		stderr: 'piped',
 	})
 	filter.clear()
-	filter.stream(pa.stderr!, quiet)
-	filter.stream(pa.stdout!, quiet)
-	let s = await pa.status()
-	if (!s.success) {
+	filter.stream(update.stdout!, quiet)
+	filter.stream(update.stderr!, quiet)
+	let cs = await update.status()
+	if (!cs.success) {
 		if (quiet) console.error(filter.flush())
-		throw new TemplateError('helm repo add failed')
+		throw new TemplateError('helm repo update failed')
 	}
 }
 
