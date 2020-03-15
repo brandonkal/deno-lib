@@ -345,7 +345,6 @@ async function helmTemplate(opts: helmOpts) {
 		stdin: 'piped',
 	})
 	filter.clear()
-	filter.stream(subp.stderr!, quiet)
 	if (valuesContent) {
 		// write values file direct to helm stdin
 		await subp.stdin?.write(te.encode(valuesContent))
@@ -354,11 +353,18 @@ async function helmTemplate(opts: helmOpts) {
 	let s = await subp.status()
 	let stderr = ''
 	if (!s.success) {
-		stderr = filter.flush()
-		if (quiet) console.error(stderr)
+		stderr = new TextDecoder().decode(await subp.stderrOutput())
+		console.error(stderr)
 		return { out: '', stderr, err: new TemplateError('helm template failed') }
 	}
 	const out = new TextDecoder().decode(await Deno.readAll(subp.stdout!))
+	if (out === '') {
+		return {
+			out,
+			stderr,
+			err: new TemplateError(`helm template returned empty `),
+		}
+	}
 	return { out, stderr, err: undefined }
 }
 
