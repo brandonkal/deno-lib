@@ -9,10 +9,10 @@
 		"moduleResolution": "node",
 		"resolveJsonModule": true,
 		"sourceMap": true,
-		"target": "esnext",
+		"target": "es2017",
 		"isolatedModules": false,
 		"strict": true,
-		"noImplicitAny": false,
+		"noImplicitAny": true,
 		"typeRoots": []
 	}
 }

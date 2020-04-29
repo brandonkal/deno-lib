@@ -164,8 +164,7 @@ spec:
   tls:
     secretName: whoami.example.com-cert
 ---
-document: 2
-`
+document: 2`
 	assertEquals(expectedString, printYaml(yml, true))
 })
 

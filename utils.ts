@@ -10,7 +10,7 @@
  * Does what it says on the tin.
  * Used by printYaml for more compact YAML text.
  */
-export function stripUndefined<T extends object>(obj: T): T {
+export function stripUndefined<T extends Record<string, any>>(obj: T): T {
 	if (typeof obj === 'undefined') return obj
 	Object.keys(obj).forEach((key) => {
 		if (obj[key] && typeof obj[key] === 'object') stripUndefined(obj[key])
@@ -41,7 +41,7 @@ export type Visitor = (item: jsonItem) => jsonItem
  * @param item An item to modify
  * @param visitor A function that updates primitives
  */
-export function visitAll(item: unknown, visitor: Visitor) {
+export function visitAll(item: unknown, visitor: Visitor): unknown {
 	if (item === null || item === undefined) {
 		return visitor(item)
 	} else if (Array.isArray(item)) {
