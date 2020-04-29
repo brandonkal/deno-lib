@@ -6,13 +6,13 @@
  * @license MIT
  */
 
-import * as fs from 'https://deno.land/std@v0.32.0/fs/mod.ts'
-import * as path from 'https://deno.land/std@v0.32.0/path/mod.ts'
+import * as fs from 'https://deno.land/std@v0.41.0/fs/mod.ts'
+import * as path from 'https://deno.land/std@v0.41.0/path/mod.ts'
 import { sha1 } from 'https://deno.land/x/sha1/mod.ts'
 import titleCase from 'https://deno.land/x/case/titleCase.ts'
 import { sha256 } from 'https://deno.land/x/sha256/mod.ts'
-import * as YAML from 'https://deno.land/std@v0.32.0/encoding/yaml.ts'
-import * as base32 from 'https://deno.land/std@v0.32.0/encoding/base32.ts'
+import * as YAML from 'https://deno.land/std@v0.41.0/encoding/yaml.ts'
+import * as base32 from 'https://deno.land/std@v0.41.0/encoding/base32.ts'
 import * as k8s from 'https://deno.land/x/lib/kubernetes.ts'
 
 import { dotProp, jsonItem, visitAll, withTimeout } from '../utils.ts'

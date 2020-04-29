@@ -97,11 +97,11 @@ class Helpers {
 	toJson = (a: string) => JSON.stringify(a)
 }
 
-function isFuture(str: string) {
-	return Boolean(RE.exec(str))
+function isFuture(str: String) {
+	return Boolean(RE.exec(str as string))
 }
 
-function appendOp(str: string, op: string) {
+function appendOp(str: String, op: string) {
 	return str.replace(/\s+}}$/, ` | ${op} }}`)
 }
 
@@ -109,78 +109,78 @@ const h = new Helpers()
 
 //// Implementation for extra String Methods ////
 
-String.prototype.int = function() {
+String.prototype.int = function () {
 	const k = 'int'
-	return isFuture(this) ? appendOp(this, k) : h[k](this)
+	return isFuture(this) ? appendOp(this, k) : h[k](this as string)
 }
-String.prototype.default = function(def: any) {
+String.prototype.default = function (def: any) {
 	const k = 'default'
 	return isFuture(this) ? appendOp(this, k) : h[k](this, def)
 }
-String.prototype.number = function() {
+String.prototype.number = function () {
 	const k = 'number'
-	return isFuture(this) ? appendOp(this, k) : h[k](this)
+	return isFuture(this) ? appendOp(this, k) : h[k](this as string)
 }
-String.prototype.trim = function() {
+String.prototype.trim = function () {
 	const k = 'trim'
-	return isFuture(this) ? appendOp(this, k) : h[k](this)
+	return isFuture(this) ? appendOp(this, k) : h[k](this as string)
 }
-String.prototype.upper = function() {
+String.prototype.upper = function () {
 	const k = 'upper'
-	return isFuture(this) ? appendOp(this, k) : h[k](this)
+	return isFuture(this) ? appendOp(this, k) : h[k](this as string)
 }
-String.prototype.lower = function() {
+String.prototype.lower = function () {
 	const k = 'lower'
-	return isFuture(this) ? appendOp(this, k) : h[k](this)
+	return isFuture(this) ? appendOp(this, k) : h[k](this as string)
 }
-String.prototype.title = function() {
+String.prototype.title = function () {
 	const k = 'title'
-	return isFuture(this) ? appendOp(this, k) : h[k](this)
+	return isFuture(this) ? appendOp(this, k) : h[k](this as string)
 }
-String.prototype.toString = function() {
+String.prototype.toString = function () {
 	const k = 'toString'
-	return isFuture(this) ? appendOp(this, k) : h[k](this)
+	return isFuture(this) ? appendOp(this, k) : h[k](this as string)
 }
-String.prototype.boolean = function() {
+String.prototype.boolean = function () {
 	const k = 'boolean'
-	return isFuture(this) ? appendOp(this, k) : h[k](this)
+	return isFuture(this) ? appendOp(this, k) : h[k](this as string)
 }
-String.prototype.b64enc = function() {
+String.prototype.b64enc = function () {
 	const k = 'b64enc'
-	return isFuture(this) ? appendOp(this, k) : h[k](this)
+	return isFuture(this) ? appendOp(this, k) : h[k](this as string)
 }
-String.prototype.b64dec = function() {
+String.prototype.b64dec = function () {
 	const k = 'b64dec'
-	return isFuture(this) ? appendOp(this, k) : h[k](this)
+	return isFuture(this) ? appendOp(this, k) : h[k](this as string)
 }
-String.prototype.b32enc = function() {
+String.prototype.b32enc = function () {
 	const k = 'b32enc'
-	return isFuture(this) ? appendOp(this, k) : h[k](this)
+	return isFuture(this) ? appendOp(this, k) : h[k](this as string)
 }
-String.prototype.b32dec = function() {
+String.prototype.b32dec = function () {
 	const k = 'b32dec'
-	return isFuture(this) ? appendOp(this, k) : h[k](this)
+	return isFuture(this) ? appendOp(this, k) : h[k](this as string)
 }
-String.prototype.sha1sum = function() {
+String.prototype.sha1sum = function () {
 	const k = 'sha1sum'
-	return isFuture(this) ? appendOp(this, k) : (h[k](this) as string)
+	return isFuture(this) ? appendOp(this, k) : (h[k](this as string) as string)
 }
-String.prototype.sha256sum = function() {
+String.prototype.sha256sum = function () {
 	const k = 'sha256sum'
-	return isFuture(this) ? appendOp(this, k) : (h[k](this) as string)
+	return isFuture(this) ? appendOp(this, k) : (h[k](this as string) as string)
 }
-String.prototype.toJson = function() {
+String.prototype.toJson = function () {
 	const k = 'toJson'
-	return isFuture(this) ? appendOp(this, k) : h[k](this)
+	return isFuture(this) ? appendOp(this, k) : h[k](this as string)
 }
 /// Intercepted Methods
 const _stdToLowerCase = String.prototype.toLowerCase
-String.prototype.toLowerCase = function() {
+String.prototype.toLowerCase = function () {
 	const k = 'lower'
 	return isFuture(this) ? appendOp(this, k) : _stdToLowerCase.call(this)
 }
 const _stdToUpperCase = String.prototype.toUpperCase
-String.prototype.toUpperCase = function() {
+String.prototype.toUpperCase = function () {
 	const k = 'upper'
 	return isFuture(this) ? appendOp(this, k) : _stdToUpperCase.call(this)
 }
