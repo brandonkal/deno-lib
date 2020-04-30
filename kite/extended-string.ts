@@ -62,7 +62,7 @@ const _stdTrim = String.prototype.trim
  * */
 class Helpers {
 	// default requires special logic
-	default = (a, b) => a || b
+	default = (a: any, b: any) => a || b
 	/**
 	 * parses as an int and throws if NaN
 	 */

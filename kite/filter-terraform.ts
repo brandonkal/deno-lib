@@ -6,7 +6,7 @@
  * @license MIT
  */
 
-import { lines } from 'https://raw.githubusercontent.com/johnsonjo4531/read_lines/v3.0.1/lines.ts'
+import { readLines } from 'https://deno.land/std@v0.41.0/io/bufio.ts'
 
 // Filter Sensitive values. Regex based on
 // https://github.com/cloudposse/tfmask/blob/7a4a942248c665b6a5c66f9c288fabe97550f43d/main.go
@@ -81,7 +81,10 @@ export function tFLine(line: string) {
 		let fourthQuote = match[9] // > or "
 		let postfix = match[10]
 
-		if (secretValuesRe.exec(property) || resourceRe.exec(currentResource)) {
+		if (
+			secretValuesRe.exec(property) ||
+			(currentResource && resourceRe.exec(currentResource))
+		) {
 			// The value inside the "..." or <...>
 			if (shouldHide(oldValue)) {
 				oldValue = MASKED
@@ -153,7 +156,7 @@ export async function streamIt(
 	r: Deno.ReadCloser,
 	action: (txt: string) => any
 ) {
-	for await (const line of lines(r)) {
+	for await (const line of readLines(r)) {
 		action(line)
 	}
 }

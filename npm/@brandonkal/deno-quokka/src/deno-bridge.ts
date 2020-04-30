@@ -1560,7 +1560,7 @@ export function resources(): ResourceMap {
  */
 type ProcessStdio = 'inherit' | 'piped' | 'null'
 export interface RunOptions {
-	args: string[]
+	cmd: string[]
 	cwd?: string
 	env?: {
 		[key: string]: string

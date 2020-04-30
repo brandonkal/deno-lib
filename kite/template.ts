@@ -124,6 +124,7 @@ export function configFromSpec(spec: any): TemplateConfig {
 
 const timeoutMsg: Deno.ProcessStatus = {
 	success: false,
+	code: 0,
 	signal: 255,
 }
 function isTimeoutMessage(x: any) {
@@ -145,7 +146,7 @@ export default async function template(
 	if (spec.exec) {
 		// Fetch dependencies first so we can limit actual execution time.
 		const fp = Deno.run({
-			args: ['deno', 'fetch', spec.exec],
+			cmd: ['deno', 'fetch', spec.exec],
 			stderr: spec.quiet ? 'piped' : 'inherit',
 			stdout: 'null',
 		})
@@ -161,7 +162,7 @@ export default async function template(
 		}
 		if (!spec.quiet) console.error(`Executing ${spec.exec}`)
 		const p = Deno.run({
-			args: cmd,
+			cmd,
 			stderr: spec.quiet ? 'piped' : 'inherit',
 			stdout: 'piped',
 		})
@@ -339,7 +340,7 @@ async function helmTemplate(opts: helmOpts) {
 	if (!quiet) console.error(`Executing: ${cmd.join(' ')}`)
 	const te = new TextEncoder()
 	const subp = Deno.run({
-		args: cmd,
+		cmd,
 		stdout: 'piped',
 		stderr: 'piped',
 		stdin: 'piped',
@@ -373,7 +374,7 @@ async function helmFetch(repoName: string, repo: string, quiet = false) {
 	let shouldFetch = true
 	try {
 		const check = Deno.run({
-			args: ['helm', 'repo', 'ls', '-o', 'json'],
+			cmd: ['helm', 'repo', 'ls', '-o', 'json'],
 			stdout: 'piped',
 			stderr: 'piped',
 		})
@@ -400,7 +401,7 @@ async function helmFetch(repoName: string, repo: string, quiet = false) {
 		if (!quiet) console.error(`Adding the ${repoName} helm repo`)
 		// adds or updates the given repo
 		const pa = Deno.run({
-			args: ['helm', 'repo', 'add', repoName, repo],
+			cmd: ['helm', 'repo', 'add', repoName, repo],
 			stdout: 'piped',
 			stderr: 'piped',
 		})
@@ -418,7 +419,7 @@ async function helmFetch(repoName: string, repo: string, quiet = false) {
 async function helmRepoUpdate(quiet = false) {
 	if (!quiet) console.error(`Updating helm repos`)
 	const update = Deno.run({
-		args: ['helm', 'repo', 'update'],
+		cmd: ['helm', 'repo', 'update'],
 		stdout: 'piped',
 		stderr: 'piped',
 	})
@@ -667,7 +668,7 @@ async function execTerraform(
 		}
 
 		const init = Deno.run({
-			args: ['terraform', 'init', '-no-color'],
+			cmd: ['terraform', 'init', '-no-color'],
 			cwd: tfDir,
 			stdout: 'piped',
 			stderr: 'piped',
@@ -690,7 +691,7 @@ async function execTerraform(
 		)
 
 		const apply = Deno.run({
-			args: applyCmd,
+			cmd: applyCmd,
 			cwd: tfDir,
 			stderr: 'piped',
 			stdout: 'piped',
@@ -710,7 +711,7 @@ async function execTerraform(
 
 	// Now suck in the needed state
 	const show = Deno.run({
-		args: ['terraform', 'show', '-json'],
+		cmd: ['terraform', 'show', '-json'],
 		stdout: 'piped',
 		stderr: 'piped',
 		cwd: tfDir,
