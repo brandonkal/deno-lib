@@ -6,13 +6,13 @@
  * @license MIT
  */
 
-import * as fs from 'https://deno.land/std@v0.41.0/fs/mod.ts'
-import * as path from 'https://deno.land/std@v0.41.0/path/mod.ts'
-import { sha1 } from 'https://deno.land/x/sha1/mod.ts'
-import titleCase from 'https://deno.land/x/case/titleCase.ts'
-import { sha256 } from 'https://deno.land/x/sha256/mod.ts'
-import * as YAML from 'https://deno.land/std@v0.41.0/encoding/yaml.ts'
-import * as base32 from 'https://deno.land/std@v0.41.0/encoding/base32.ts'
+import * as fs from 'https://deno.land/std@v0.51.0/fs/mod.ts'
+import * as path from 'https://deno.land/std@v0.51.0/path/mod.ts'
+import { sha1 } from 'https://deno.land/x/sha1@v1.0.3/mod.ts'
+import titleCase from 'https://deno.land/x/case@v2.0.0/titleCase.ts'
+import { sha256 } from 'https://deno.land/x/sha256@v1.0.2/mod.ts'
+import * as YAML from 'https://deno.land/std@v0.51.0/encoding/yaml.ts'
+import * as base32 from 'https://deno.land/std@v0.51.0/encoding/base32.ts'
 import * as k8s from 'https://deno.land/x/lib/kubernetes.ts'
 
 import { dotProp, jsonItem, visitAll, withTimeout } from '../utils.ts'
@@ -146,7 +146,7 @@ export default async function template(
 	if (spec.exec) {
 		// Fetch dependencies first so we can limit actual execution time.
 		const fp = Deno.run({
-			cmd: ['deno', 'fetch', spec.exec],
+			cmd: ['deno', 'cache', spec.exec],
 			stderr: spec.quiet ? 'piped' : 'inherit',
 			stdout: 'null',
 		})
@@ -581,7 +581,7 @@ function buildEnv(
 			let value: string | undefined
 			if (typeof envar === 'string') {
 				assertValidEnvarName(envar)
-				value = Deno.env(envar)
+				value = Deno.env.get(envar)
 			} else {
 				;[envar, value] = Object.entries(envar)[0]
 			}

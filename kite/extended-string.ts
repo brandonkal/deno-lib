@@ -10,10 +10,10 @@
  * toUppercase()
  */
 
-import { sha1 } from 'https://deno.land/x/sha1/mod.ts'
-import titleCase from 'https://deno.land/x/case/titleCase.ts'
-import { sha256 } from 'https://deno.land/x/sha256/mod.ts'
-import * as base32 from 'https://deno.land/std/encoding/base32.ts'
+import { sha1 } from 'https://deno.land/x/sha1@v1.0.3/mod.ts'
+import titleCase from 'https://deno.land/x/case@v2.0.0/titleCase.ts'
+import { sha256 } from 'https://deno.land/x/sha256@v1.0.2/mod.ts'
+import * as base32 from 'https://deno.land/std@v0.51.0/encoding/base32.ts'
 
 const RE = /^{{.*}}$/
 

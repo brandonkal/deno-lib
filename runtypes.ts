@@ -14,4 +14,4 @@
  * See https://github.com/brandonkal/runtypes
  */
 
-export * from 'https://raw.githubusercontent.com/brandonkal/runtypes/deno/src/index.ts'
+export * from 'https://raw.githubusercontent.com/brandonkal/runtypes/78d2832b257e44a2f528841830902f4075de0481/src/index.ts'

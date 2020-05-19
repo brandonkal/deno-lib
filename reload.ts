@@ -9,7 +9,7 @@ export default async function reload() {
 	const count = Deno.args[0]
 
 	const p = Deno.run({
-		args: ['git', 'diff', '--name-only', 'HEAD', `HEAD~${count}`],
+		cmd: ['git', 'diff', '--name-only', 'HEAD', `HEAD~${count}`],
 		stdout: 'piped',
 	})
 
@@ -34,7 +34,7 @@ export default async function reload() {
 	async function fetchFile(mod: string) {
 		const url = `https://deno.land/x/lib/${mod}`
 		const p = Deno.run({
-			args: ['deno', 'fetch', `-r=${url}`, url],
+			cmd: ['deno', 'cache', `-r=${url}`, url],
 		})
 		const s = await p.status()
 		if (!s.success) {

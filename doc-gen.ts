@@ -6,7 +6,7 @@
  * @license MIT
  */
 
-import * as fs from 'https://deno.land/x/std/fs/mod.ts'
+import * as fs from 'https://deno.land/std@v0.51.0/fs/mod.ts'
 
 const jsDocStartRe = /^\/\*\*/
 const jsDocMidRe = /^\s+\*\s/
@@ -38,7 +38,7 @@ export default async function genDoc(files: string[] = []) {
 			maxDepth: 1,
 			exts: ['ts', 'js', 'tsx'],
 		})) {
-			if (f.info.isFile()) collected.push(f.filename)
+			if (f.isFile) collected.push(f.path)
 		}
 	}
 	const filenames = collected.filter(
@@ -77,15 +77,15 @@ function parse(contents: string): ParsedTopDoc {
 	const lines = contents.split('\n')
 	let isOpen = false
 	let obj: ParsedTopDoc = {}
-	const buffer: [string, string][] = []
-	let lastKind: string
+	const buffer: [keyof ParsedTopDoc, string][] = []
+	let lastKind: keyof ParsedTopDoc
 	for (const line of lines) {
 		if (isOpen || jsDocStartRe.exec(line)) {
 			isOpen = true
 			let m
 			if ((m = kindsRe.exec(line))) {
-				buffer.push([m[1], m[2]])
-				lastKind = m[1]
+				buffer.push([m[1] as any, m[2]])
+				lastKind = m[1] as keyof ParsedTopDoc
 			} else if ((m = jsDocMidRe.exec(line))) {
 				const v = line.replace(jsDocMidRe, '').trim()
 				buffer.push([lastKind!, v])

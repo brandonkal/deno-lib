@@ -47,10 +47,10 @@ export function exit(code?: number): never {
  * the process. The environment object will only accept `string`s
  * as values.
  *
- *       const myEnv = Deno.env();
+ *       const myEnv = Deno.env.get();
  *       console.log(myEnv.SHELL);
  *       myEnv.TEST_VAR = "HELLO";
- *       const newEnv = Deno.env();
+ *       const newEnv = Deno.env.get();
  *       console.log(myEnv.TEST_VAR == newEnv.TEST_VAR);
  */
 // export function env(): {
@@ -59,10 +59,10 @@ export function exit(code?: number): never {
 /** Returns the value of an environment variable at invocation.
  * If the variable is not present, `undefined` will be returned.
  *
- *       const myEnv = Deno.env();
+ *       const myEnv = Deno.env.get();
  *       console.log(myEnv.SHELL);
  *       myEnv.TEST_VAR = "HELLO";
- *       const newEnv = Deno.env();
+ *       const newEnv = Deno.env.get();
  *       console.log(myEnv.TEST_VAR == newEnv.TEST_VAR);
  */
 export function env(key?: string): { [index: string]: string } {

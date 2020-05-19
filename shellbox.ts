@@ -36,13 +36,13 @@ export function buildCleanCommand(
 		return `${key}=${value}`
 	})
 	if (needsHome) {
-		const home = Deno.env('HOME')
+		const home = Deno.env.get('HOME')
 		if (home) {
 			envars.push(`HOME=${home}`)
 		}
 	}
 	if (needsPath) {
-		const path = Deno.env('PATH')
+		const path = Deno.env.get('PATH')
 		if (path) {
 			envars.push(`PATH=${path}`)
 		}

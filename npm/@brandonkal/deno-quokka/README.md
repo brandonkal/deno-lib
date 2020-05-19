@@ -5,30 +5,32 @@ It does this by injecting a mock Deno global module into your instrumented TypeS
 
 It should be used in combination with `babel-plugin-deno` which rewrites imports to use the cache directory.
 
-![Deno Quokka example with std/yaml](https://user-images.githubusercontent.com/4714862/72419175-2f72ad00-3774-11ea-950a-a20936b7fb95.png)
+![Deno Quokka example with std@v0.51.0/yaml](https://user-images.githubusercontent.com/4714862/72419175-2f72ad00-3774-11ea-950a-a20936b7fb95.png)
 
 ## Config
 
 Install Dependencies. We replace TypeScript compiler with Babel to strip types and rewrite imports:
+
 ```sh
 npm i @babel/core babel-plugin-deno @brandonkal/deno-quokka @babel/plugin-syntax-import-meta @babel/plugin-syntax-top-level-await @babel/plugin-transform-typescript @babel/preset-env @babel/register @babel/cli
 ```
 
 In your `~/.quokka/config.json file:
+
 ```json
 {
-  "pro": true,
-  "babel": {
-    "ts": true,
-    "presets": [["@babel/preset-env", { "targets": { "node": "current" } }]],
-    "plugins": [
-      "deno",
-      "@babel/plugin-syntax-import-meta",
-      "@babel/plugin-syntax-top-level-await",
-      ["@babel/plugin-transform-typescript", { "allowNamespaces": true }]
-    ]
-  },
-  "plugins": ["@brandonkal/deno-quokka"]
+	"pro": true,
+	"babel": {
+		"ts": true,
+		"presets": [["@babel/preset-env", { "targets": { "node": "current" } }]],
+		"plugins": [
+			"deno",
+			"@babel/plugin-syntax-import-meta",
+			"@babel/plugin-syntax-top-level-await",
+			["@babel/plugin-transform-typescript", { "allowNamespaces": true }]
+		]
+	},
+	"plugins": ["@brandonkal/deno-quokka"]
 }
 ```
 

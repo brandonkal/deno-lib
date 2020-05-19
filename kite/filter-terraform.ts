@@ -6,7 +6,7 @@
  * @license MIT
  */
 
-import { readLines } from 'https://deno.land/std@v0.41.0/io/bufio.ts'
+import { readLines } from 'https://deno.land/std@v0.51.0/io/bufio.ts'
 
 // Filter Sensitive values. Regex based on
 // https://github.com/cloudposse/tfmask/blob/7a4a942248c665b6a5c66f9c288fabe97550f43d/main.go
@@ -114,7 +114,7 @@ function shouldHide(oldValue: any) {
 /**
  * filters Terraform command output and logs it to stderr.
  */
-export function stream(r: Deno.ReadCloser, shouldLog: boolean) {
+export function stream(r: Deno.Reader & Deno.Closer, shouldLog: boolean) {
 	streamIt(r, (txt) => log(txt, shouldLog))
 }
 

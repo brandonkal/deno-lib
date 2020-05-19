@@ -6,8 +6,11 @@
  * @license MIT
  */
 
-import * as flags from 'https://deno.land/std/flags/mod.ts'
-import { parse, JSON_SCHEMA } from 'https://deno.land/std/encoding/yaml.ts'
+import * as flags from 'https://deno.land/std@v0.51.0/flags/mod.ts'
+import {
+	parse,
+	JSON_SCHEMA,
+} from 'https://deno.land/std@v0.51.0/encoding/yaml.ts'
 
 /**
  * If the value is '-' stdin is read and returned.
@@ -19,7 +22,7 @@ export function textOrStdIn(value: string) {
 		const buf = new Uint8Array(1024)
 		try {
 			const n = Deno.stdin.readSync(buf)
-			if (n === Deno.EOF) {
+			if (n === null) {
 				return undefined
 			} else {
 				return new TextDecoder().decode(buf.subarray(0, n))

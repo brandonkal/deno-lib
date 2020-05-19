@@ -6,7 +6,7 @@
  * @license MIT
  */
 
-import { sha256 } from 'https://deno.land/x/sha256/mod.ts'
+import { sha256 } from 'https://deno.land/x/sha256@v1.0.2/mod.ts'
 
 /** A JSON replacer that sorts keys recursively and removes type key when required. */
 export const replacer = (key: any, value: any) => {
