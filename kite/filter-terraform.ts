@@ -153,7 +153,7 @@ export function log(txt: string, shouldLog: boolean) {
  * This is useful for intercepting child process stdout and streaming the modified output.
  */
 export async function streamIt(
-	r: Deno.ReadCloser,
+	r: Deno.Reader & Deno.Closer,
 	action: (txt: string) => any
 ) {
 	for await (const line of readLines(r)) {

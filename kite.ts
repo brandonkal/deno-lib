@@ -176,7 +176,7 @@ function registerResource(name: string, desc: any, instance: Resource) {
 		delete desc.__number
 		// load all properties
 		Object.entries(desc).forEach(([key, val]) => {
-			instance[key] = val
+			;(instance as any)[key] = val
 		})
 		Object.defineProperty(instance, '__name', {
 			writable: false,
