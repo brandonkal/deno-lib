@@ -119,8 +119,12 @@ export interface CliFlags extends TemplateConfigSpec {
 	helm?: boolean
 }
 
-export function canonicalizeOptions(opts: CliFlags): TemplateConfig {
-	if (!Deno.args.length || opts.help || opts.h) {
+export function canonicalizeOptions(
+	opts: CliFlags,
+	test?: boolean
+): TemplateConfig {
+	const invalid = !Deno.args.length || test
+	if (!invalid || opts.help || opts.h) {
 		showHelp()
 	}
 	let allowEnv = extractAllowEnv(opts)

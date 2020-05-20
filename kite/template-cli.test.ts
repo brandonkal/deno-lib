@@ -1,8 +1,11 @@
 import { assertEquals } from 'https://deno.land/std@v0.51.0/testing/asserts.ts'
 const it = Deno.test
-import { canonicalizeOptions as cOpts, CliFlags } from './template-cli.ts'
+import { canonicalizeOptions, CliFlags } from './template-cli.ts'
 import { TemplateConfig } from './template.ts'
 import { getArgsObject } from '../args.ts'
+
+const TEST = true
+const cOpts = (opts: CliFlags) => canonicalizeOptions(opts, TEST)
 
 /** a function to skip a test */
 function xit(name: string, _fn: any) {
