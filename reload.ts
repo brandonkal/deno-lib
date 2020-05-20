@@ -34,7 +34,7 @@ export default async function reload() {
 	async function fetchFile(mod: string) {
 		const url = `https://deno.land/x/lib/${mod}`
 		const p = Deno.run({
-			cmd: ['deno', 'cache', `-r=${url}`, url],
+			cmd: ['deno', 'cache', '--unstable', `-r=${url}`, url],
 		})
 		const s = await p.status()
 		if (!s.success) {

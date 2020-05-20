@@ -146,7 +146,7 @@ export default async function template(
 	if (spec.exec) {
 		// Fetch dependencies first so we can limit actual execution time.
 		const fp = Deno.run({
-			cmd: ['deno', 'cache', spec.exec],
+			cmd: ['deno', 'cache', '--unstable', spec.exec],
 			stderr: spec.quiet ? 'piped' : 'inherit',
 			stdout: 'null',
 		})
@@ -156,7 +156,7 @@ export default async function template(
 			throw new TemplateError('Config program threw an Error during fetch')
 		}
 
-		let cmd = ['deno', 'run', spec.exec]
+		let cmd = ['deno', 'run', '--unstable', spec.exec]
 		if (spec.args) {
 			cmd.push(...['-a', JSON.stringify(spec.args)])
 		}
