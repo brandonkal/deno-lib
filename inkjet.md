@@ -5,7 +5,7 @@
 > Run tests for Deno
 
 ```sh
-deno test --unstable .
+deno test --unstable `fd test`
 ```
 
 ## update
@@ -14,7 +14,7 @@ deno test --unstable .
 
 ```bash
 for file in `$INKJET changed`; do
-  deno cache -r=https://deno.land/x/lib/${file} https://deno.land/x/lib/${file}
+  deno cache --unstable -r=https://deno.land/x/lib/${file} https://deno.land/x/lib/${file}
 done
 
 echo -n `git rev-parse HEAD` >| .git/last_push.txt
