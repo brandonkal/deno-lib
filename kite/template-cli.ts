@@ -123,8 +123,8 @@ export function canonicalizeOptions(
 	opts: CliFlags,
 	test?: boolean
 ): TemplateConfig {
-	const invalid = !Deno.args.length || test
-	if (!invalid || opts.help || opts.h) {
+	const invalid = Deno.args.length == 0 && !test
+	if (invalid || opts.help || opts.h) {
 		showHelp()
 	}
 	let allowEnv = extractAllowEnv(opts)
