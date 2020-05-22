@@ -1335,838 +1335,6 @@ export namespace apps {
 			}
 		}
 	}
-
-	export namespace v1beta1 {
-		/**
-		 * ControllerRevision implements an immutable snapshot of state data. Clients are responsible
-		 * for serializing and deserializing the objects that contain their internal state. Once a
-		 * ControllerRevision has been successfully created, it can not be updated. The API Server will
-		 * fail validation of all requests that attempt to mutate the Data field. ControllerRevisions
-		 * may, however, be deleted. Note that, due to its use by both the DaemonSet and StatefulSet
-		 * controllers for update and rollback, this object is beta. However, it may be subject to name
-		 * and representation changes in future releases, and clients should not depend on its
-		 * stability. It is primarily for internal use by controllers.
-		 *
-		 * @deprecated apps/v1beta1/ControllerRevision is deprecated by apps/v1/ControllerRevision and
-		 * not supported by Kubernetes v1.16+ clusters.
-		 */
-		export class ControllerRevision extends kite.Resource {
-			/**
-			 * APIVersion defines the versioned schema of this representation of an object. Servers should
-			 * convert recognized schemas to the latest internal value, and may reject unrecognized
-			 * values. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
-			 */
-			readonly apiVersion!: 'apps/v1beta1'
-
-			/**
-			 * Data is the serialized representation of the state.
-			 */
-			readonly data?: object
-
-			/**
-			 * Kind is a string value representing the REST resource this object represents. Servers may
-			 * infer this from the endpoint the client submits requests to. Cannot be updated. In
-			 * CamelCase. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-			 */
-			readonly kind!: 'ControllerRevision'
-
-			/**
-			 * Standard object's metadata. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
-			 */
-			readonly metadata!: types.meta.v1.ObjectMeta
-
-			/**
-			 * Revision indicates the revision of the state represented by Data.
-			 */
-			readonly revision!: number
-
-			/**
-			 * Create a apps.v1beta1.ControllerRevision object with the given unique name and description.
-			 *
-			 * @param name The _unique_ name of the resource. Will configure metadata.name by default.
-			 * @param desc The description to use to populate this object's properties.
-			 */
-			constructor(name: string, desc: types.apps.v1beta1.ControllerRevision) {
-				const props: any = {}
-				props.apiVersion = 'apps/v1beta1'
-				props.data = (desc && desc.data) || undefined
-				props.kind = 'ControllerRevision'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name: desc?.metadata?.name || name,
-				})
-				props.revision = (desc && desc.revision) || undefined
-
-				super(name, props)
-				this.setType(`k8s:ControllerRevision`)
-			}
-		}
-		/**
-		 * ControllerRevisionList is a resource containing a list of ControllerRevision objects.
-		 */
-		export class ControllerRevisionList extends kite.Resource {
-			/**
-			 * APIVersion defines the versioned schema of this representation of an object. Servers should
-			 * convert recognized schemas to the latest internal value, and may reject unrecognized
-			 * values. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
-			 */
-			readonly apiVersion!: 'apps/v1beta1'
-
-			/**
-			 * Items is the list of ControllerRevisions
-			 */
-			readonly items!: types.apps.v1beta1.ControllerRevision[]
-
-			/**
-			 * Kind is a string value representing the REST resource this object represents. Servers may
-			 * infer this from the endpoint the client submits requests to. Cannot be updated. In
-			 * CamelCase. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-			 */
-			readonly kind!: 'ControllerRevisionList'
-
-			/**
-			 * More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
-			 */
-			readonly metadata!: types.meta.v1.ListMeta
-
-			/**
-			 * Create a apps.v1beta1.ControllerRevisionList object with the given unique name and description.
-			 *
-			 * @param name The _unique_ name of the resource. Will configure metadata.name by default.
-			 * @param desc The description to use to populate this object's properties.
-			 */
-			constructor(
-				name: string,
-				desc: types.apps.v1beta1.ControllerRevisionList
-			) {
-				const props: any = {}
-				props.apiVersion = 'apps/v1beta1'
-				props.items = (desc && desc.items) || undefined
-				props.kind = 'ControllerRevisionList'
-				props.metadata = desc?.metadata || {}
-
-				super(name, props)
-				this.setType(`k8s:ControllerRevisionList`)
-			}
-		}
-		/**
-		 * Deployment enables declarative updates for Pods and ReplicaSets.
-		 *
-		 * @deprecated apps/v1beta1/Deployment is deprecated by apps/v1/Deployment and not supported by
-		 * Kubernetes v1.16+ clusters.
-		 */
-		export class Deployment extends kite.Resource {
-			/**
-			 * APIVersion defines the versioned schema of this representation of an object. Servers should
-			 * convert recognized schemas to the latest internal value, and may reject unrecognized
-			 * values. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
-			 */
-			readonly apiVersion!: 'apps/v1beta1'
-
-			/**
-			 * Kind is a string value representing the REST resource this object represents. Servers may
-			 * infer this from the endpoint the client submits requests to. Cannot be updated. In
-			 * CamelCase. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-			 */
-			readonly kind!: 'Deployment'
-
-			/**
-			 * Standard object metadata.
-			 */
-			readonly metadata!: types.meta.v1.ObjectMeta
-
-			/**
-			 * Specification of the desired behavior of the Deployment.
-			 */
-			readonly spec!: types.apps.v1beta1.DeploymentSpec
-
-			/**
-			 * Create a apps.v1beta1.Deployment object with the given unique name and description.
-			 *
-			 * @param name The _unique_ name of the resource. Will configure metadata.name by default.
-			 * @param desc The description to use to populate this object's properties.
-			 */
-			constructor(name: string, desc: types.apps.v1beta1.Deployment) {
-				const props: any = {}
-				props.apiVersion = 'apps/v1beta1'
-				props.kind = 'Deployment'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name: desc?.metadata?.name || name,
-				})
-				props.spec = (desc && desc.spec) || undefined
-
-				super(name, props)
-				this.setType(`k8s:Deployment`)
-			}
-		}
-		/**
-		 * DeploymentList is a list of Deployments.
-		 */
-		export class DeploymentList extends kite.Resource {
-			/**
-			 * APIVersion defines the versioned schema of this representation of an object. Servers should
-			 * convert recognized schemas to the latest internal value, and may reject unrecognized
-			 * values. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
-			 */
-			readonly apiVersion!: 'apps/v1beta1'
-
-			/**
-			 * Items is the list of Deployments.
-			 */
-			readonly items!: types.apps.v1beta1.Deployment[]
-
-			/**
-			 * Kind is a string value representing the REST resource this object represents. Servers may
-			 * infer this from the endpoint the client submits requests to. Cannot be updated. In
-			 * CamelCase. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-			 */
-			readonly kind!: 'DeploymentList'
-
-			/**
-			 * Standard list metadata.
-			 */
-			readonly metadata!: types.meta.v1.ListMeta
-
-			/**
-			 * Create a apps.v1beta1.DeploymentList object with the given unique name and description.
-			 *
-			 * @param name The _unique_ name of the resource. Will configure metadata.name by default.
-			 * @param desc The description to use to populate this object's properties.
-			 */
-			constructor(name: string, desc: types.apps.v1beta1.DeploymentList) {
-				const props: any = {}
-				props.apiVersion = 'apps/v1beta1'
-				props.items = (desc && desc.items) || undefined
-				props.kind = 'DeploymentList'
-				props.metadata = desc?.metadata || {}
-
-				super(name, props)
-				this.setType(`k8s:DeploymentList`)
-			}
-		}
-		/**
-		 * StatefulSet represents a set of pods with consistent identities. Identities are defined as:
-		 *  - Network: A single stable DNS and hostname.
-		 *  - Storage: As many VolumeClaims as requested.
-		 * The StatefulSet guarantees that a given network identity will always map to the same storage
-		 * identity.
-		 *
-		 * @deprecated apps/v1beta1/StatefulSet is deprecated by apps/v1/StatefulSet and not supported
-		 * by Kubernetes v1.16+ clusters.
-		 */
-		export class StatefulSet extends kite.Resource {
-			/**
-			 * APIVersion defines the versioned schema of this representation of an object. Servers should
-			 * convert recognized schemas to the latest internal value, and may reject unrecognized
-			 * values. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
-			 */
-			readonly apiVersion!: 'apps/v1beta1'
-
-			/**
-			 * Kind is a string value representing the REST resource this object represents. Servers may
-			 * infer this from the endpoint the client submits requests to. Cannot be updated. In
-			 * CamelCase. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-			 */
-			readonly kind!: 'StatefulSet'
-
-			readonly metadata!: types.meta.v1.ObjectMeta
-
-			/**
-			 * Spec defines the desired identities of pods in this set.
-			 */
-			readonly spec!: types.apps.v1beta1.StatefulSetSpec
-
-			/**
-			 * Create a apps.v1beta1.StatefulSet object with the given unique name and description.
-			 *
-			 * @param name The _unique_ name of the resource. Will configure metadata.name by default.
-			 * @param desc The description to use to populate this object's properties.
-			 */
-			constructor(name: string, desc: types.apps.v1beta1.StatefulSet) {
-				const props: any = {}
-				props.apiVersion = 'apps/v1beta1'
-				props.kind = 'StatefulSet'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name: desc?.metadata?.name || name,
-				})
-				props.spec = (desc && desc.spec) || undefined
-
-				super(name, props)
-				this.setType(`k8s:StatefulSet`)
-			}
-		}
-		/**
-		 * StatefulSetList is a collection of StatefulSets.
-		 */
-		export class StatefulSetList extends kite.Resource {
-			/**
-			 * APIVersion defines the versioned schema of this representation of an object. Servers should
-			 * convert recognized schemas to the latest internal value, and may reject unrecognized
-			 * values. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
-			 */
-			readonly apiVersion!: 'apps/v1beta1'
-
-			readonly items!: types.apps.v1beta1.StatefulSet[]
-
-			/**
-			 * Kind is a string value representing the REST resource this object represents. Servers may
-			 * infer this from the endpoint the client submits requests to. Cannot be updated. In
-			 * CamelCase. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-			 */
-			readonly kind!: 'StatefulSetList'
-
-			readonly metadata!: types.meta.v1.ListMeta
-
-			/**
-			 * Create a apps.v1beta1.StatefulSetList object with the given unique name and description.
-			 *
-			 * @param name The _unique_ name of the resource. Will configure metadata.name by default.
-			 * @param desc The description to use to populate this object's properties.
-			 */
-			constructor(name: string, desc: types.apps.v1beta1.StatefulSetList) {
-				const props: any = {}
-				props.apiVersion = 'apps/v1beta1'
-				props.items = (desc && desc.items) || undefined
-				props.kind = 'StatefulSetList'
-				props.metadata = desc?.metadata || {}
-
-				super(name, props)
-				this.setType(`k8s:StatefulSetList`)
-			}
-		}
-	}
-
-	export namespace v1beta2 {
-		/**
-		 * ControllerRevision implements an immutable snapshot of state data. Clients are responsible
-		 * for serializing and deserializing the objects that contain their internal state. Once a
-		 * ControllerRevision has been successfully created, it can not be updated. The API Server will
-		 * fail validation of all requests that attempt to mutate the Data field. ControllerRevisions
-		 * may, however, be deleted. Note that, due to its use by both the DaemonSet and StatefulSet
-		 * controllers for update and rollback, this object is beta. However, it may be subject to name
-		 * and representation changes in future releases, and clients should not depend on its
-		 * stability. It is primarily for internal use by controllers.
-		 *
-		 * @deprecated apps/v1beta2/ControllerRevision is deprecated by apps/v1/ControllerRevision and
-		 * not supported by Kubernetes v1.16+ clusters.
-		 */
-		export class ControllerRevision extends kite.Resource {
-			/**
-			 * APIVersion defines the versioned schema of this representation of an object. Servers should
-			 * convert recognized schemas to the latest internal value, and may reject unrecognized
-			 * values. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
-			 */
-			readonly apiVersion!: 'apps/v1beta2'
-
-			/**
-			 * Data is the serialized representation of the state.
-			 */
-			readonly data?: object
-
-			/**
-			 * Kind is a string value representing the REST resource this object represents. Servers may
-			 * infer this from the endpoint the client submits requests to. Cannot be updated. In
-			 * CamelCase. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-			 */
-			readonly kind!: 'ControllerRevision'
-
-			/**
-			 * Standard object's metadata. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
-			 */
-			readonly metadata!: types.meta.v1.ObjectMeta
-
-			/**
-			 * Revision indicates the revision of the state represented by Data.
-			 */
-			readonly revision!: number
-
-			/**
-			 * Create a apps.v1beta2.ControllerRevision object with the given unique name and description.
-			 *
-			 * @param name The _unique_ name of the resource. Will configure metadata.name by default.
-			 * @param desc The description to use to populate this object's properties.
-			 */
-			constructor(name: string, desc: types.apps.v1beta2.ControllerRevision) {
-				const props: any = {}
-				props.apiVersion = 'apps/v1beta2'
-				props.data = (desc && desc.data) || undefined
-				props.kind = 'ControllerRevision'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name: desc?.metadata?.name || name,
-				})
-				props.revision = (desc && desc.revision) || undefined
-
-				super(name, props)
-				this.setType(`k8s:ControllerRevision`)
-			}
-		}
-		/**
-		 * ControllerRevisionList is a resource containing a list of ControllerRevision objects.
-		 */
-		export class ControllerRevisionList extends kite.Resource {
-			/**
-			 * APIVersion defines the versioned schema of this representation of an object. Servers should
-			 * convert recognized schemas to the latest internal value, and may reject unrecognized
-			 * values. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
-			 */
-			readonly apiVersion!: 'apps/v1beta2'
-
-			/**
-			 * Items is the list of ControllerRevisions
-			 */
-			readonly items!: types.apps.v1beta2.ControllerRevision[]
-
-			/**
-			 * Kind is a string value representing the REST resource this object represents. Servers may
-			 * infer this from the endpoint the client submits requests to. Cannot be updated. In
-			 * CamelCase. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-			 */
-			readonly kind!: 'ControllerRevisionList'
-
-			/**
-			 * More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
-			 */
-			readonly metadata!: types.meta.v1.ListMeta
-
-			/**
-			 * Create a apps.v1beta2.ControllerRevisionList object with the given unique name and description.
-			 *
-			 * @param name The _unique_ name of the resource. Will configure metadata.name by default.
-			 * @param desc The description to use to populate this object's properties.
-			 */
-			constructor(
-				name: string,
-				desc: types.apps.v1beta2.ControllerRevisionList
-			) {
-				const props: any = {}
-				props.apiVersion = 'apps/v1beta2'
-				props.items = (desc && desc.items) || undefined
-				props.kind = 'ControllerRevisionList'
-				props.metadata = desc?.metadata || {}
-
-				super(name, props)
-				this.setType(`k8s:ControllerRevisionList`)
-			}
-		}
-		/**
-		 * DaemonSet represents the configuration of a daemon set.
-		 *
-		 * @deprecated apps/v1beta2/DaemonSet is deprecated by apps/v1/DaemonSet and not supported by
-		 * Kubernetes v1.16+ clusters.
-		 */
-		export class DaemonSet extends kite.Resource {
-			/**
-			 * APIVersion defines the versioned schema of this representation of an object. Servers should
-			 * convert recognized schemas to the latest internal value, and may reject unrecognized
-			 * values. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
-			 */
-			readonly apiVersion!: 'apps/v1beta2'
-
-			/**
-			 * Kind is a string value representing the REST resource this object represents. Servers may
-			 * infer this from the endpoint the client submits requests to. Cannot be updated. In
-			 * CamelCase. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-			 */
-			readonly kind!: 'DaemonSet'
-
-			/**
-			 * Standard object's metadata. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
-			 */
-			readonly metadata!: types.meta.v1.ObjectMeta
-
-			/**
-			 * The desired behavior of this daemon set. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
-			 */
-			readonly spec!: types.apps.v1beta2.DaemonSetSpec
-
-			/**
-			 * Create a apps.v1beta2.DaemonSet object with the given unique name and description.
-			 *
-			 * @param name The _unique_ name of the resource. Will configure metadata.name by default.
-			 * @param desc The description to use to populate this object's properties.
-			 */
-			constructor(name: string, desc: types.apps.v1beta2.DaemonSet) {
-				const props: any = {}
-				props.apiVersion = 'apps/v1beta2'
-				props.kind = 'DaemonSet'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name: desc?.metadata?.name || name,
-				})
-				props.spec = (desc && desc.spec) || undefined
-
-				super(name, props)
-				this.setType(`k8s:DaemonSet`)
-			}
-		}
-		/**
-		 * DaemonSetList is a collection of daemon sets.
-		 */
-		export class DaemonSetList extends kite.Resource {
-			/**
-			 * APIVersion defines the versioned schema of this representation of an object. Servers should
-			 * convert recognized schemas to the latest internal value, and may reject unrecognized
-			 * values. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
-			 */
-			readonly apiVersion!: 'apps/v1beta2'
-
-			/**
-			 * A list of daemon sets.
-			 */
-			readonly items!: types.apps.v1beta2.DaemonSet[]
-
-			/**
-			 * Kind is a string value representing the REST resource this object represents. Servers may
-			 * infer this from the endpoint the client submits requests to. Cannot be updated. In
-			 * CamelCase. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-			 */
-			readonly kind!: 'DaemonSetList'
-
-			/**
-			 * Standard list metadata. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
-			 */
-			readonly metadata!: types.meta.v1.ListMeta
-
-			/**
-			 * Create a apps.v1beta2.DaemonSetList object with the given unique name and description.
-			 *
-			 * @param name The _unique_ name of the resource. Will configure metadata.name by default.
-			 * @param desc The description to use to populate this object's properties.
-			 */
-			constructor(name: string, desc: types.apps.v1beta2.DaemonSetList) {
-				const props: any = {}
-				props.apiVersion = 'apps/v1beta2'
-				props.items = (desc && desc.items) || undefined
-				props.kind = 'DaemonSetList'
-				props.metadata = desc?.metadata || {}
-
-				super(name, props)
-				this.setType(`k8s:DaemonSetList`)
-			}
-		}
-		/**
-		 * Deployment enables declarative updates for Pods and ReplicaSets.
-		 *
-		 * @deprecated apps/v1beta2/Deployment is deprecated by apps/v1/Deployment and not supported by
-		 * Kubernetes v1.16+ clusters.
-		 */
-		export class Deployment extends kite.Resource {
-			/**
-			 * APIVersion defines the versioned schema of this representation of an object. Servers should
-			 * convert recognized schemas to the latest internal value, and may reject unrecognized
-			 * values. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
-			 */
-			readonly apiVersion!: 'apps/v1beta2'
-
-			/**
-			 * Kind is a string value representing the REST resource this object represents. Servers may
-			 * infer this from the endpoint the client submits requests to. Cannot be updated. In
-			 * CamelCase. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-			 */
-			readonly kind!: 'Deployment'
-
-			/**
-			 * Standard object metadata.
-			 */
-			readonly metadata!: types.meta.v1.ObjectMeta
-
-			/**
-			 * Specification of the desired behavior of the Deployment.
-			 */
-			readonly spec!: types.apps.v1beta2.DeploymentSpec
-
-			/**
-			 * Create a apps.v1beta2.Deployment object with the given unique name and description.
-			 *
-			 * @param name The _unique_ name of the resource. Will configure metadata.name by default.
-			 * @param desc The description to use to populate this object's properties.
-			 */
-			constructor(name: string, desc: types.apps.v1beta2.Deployment) {
-				const props: any = {}
-				props.apiVersion = 'apps/v1beta2'
-				props.kind = 'Deployment'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name: desc?.metadata?.name || name,
-				})
-				props.spec = (desc && desc.spec) || undefined
-
-				super(name, props)
-				this.setType(`k8s:Deployment`)
-			}
-		}
-		/**
-		 * DeploymentList is a list of Deployments.
-		 */
-		export class DeploymentList extends kite.Resource {
-			/**
-			 * APIVersion defines the versioned schema of this representation of an object. Servers should
-			 * convert recognized schemas to the latest internal value, and may reject unrecognized
-			 * values. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
-			 */
-			readonly apiVersion!: 'apps/v1beta2'
-
-			/**
-			 * Items is the list of Deployments.
-			 */
-			readonly items!: types.apps.v1beta2.Deployment[]
-
-			/**
-			 * Kind is a string value representing the REST resource this object represents. Servers may
-			 * infer this from the endpoint the client submits requests to. Cannot be updated. In
-			 * CamelCase. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-			 */
-			readonly kind!: 'DeploymentList'
-
-			/**
-			 * Standard list metadata.
-			 */
-			readonly metadata!: types.meta.v1.ListMeta
-
-			/**
-			 * Create a apps.v1beta2.DeploymentList object with the given unique name and description.
-			 *
-			 * @param name The _unique_ name of the resource. Will configure metadata.name by default.
-			 * @param desc The description to use to populate this object's properties.
-			 */
-			constructor(name: string, desc: types.apps.v1beta2.DeploymentList) {
-				const props: any = {}
-				props.apiVersion = 'apps/v1beta2'
-				props.items = (desc && desc.items) || undefined
-				props.kind = 'DeploymentList'
-				props.metadata = desc?.metadata || {}
-
-				super(name, props)
-				this.setType(`k8s:DeploymentList`)
-			}
-		}
-		/**
-		 * ReplicaSet ensures that a specified number of pod replicas are running at any given time.
-		 *
-		 * @deprecated apps/v1beta2/ReplicaSet is deprecated by apps/v1/ReplicaSet and not supported by
-		 * Kubernetes v1.16+ clusters.
-		 */
-		export class ReplicaSet extends kite.Resource {
-			/**
-			 * APIVersion defines the versioned schema of this representation of an object. Servers should
-			 * convert recognized schemas to the latest internal value, and may reject unrecognized
-			 * values. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
-			 */
-			readonly apiVersion!: 'apps/v1beta2'
-
-			/**
-			 * Kind is a string value representing the REST resource this object represents. Servers may
-			 * infer this from the endpoint the client submits requests to. Cannot be updated. In
-			 * CamelCase. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-			 */
-			readonly kind!: 'ReplicaSet'
-
-			/**
-			 * If the Labels of a ReplicaSet are empty, they are defaulted to be the same as the Pod(s)
-			 * that the ReplicaSet manages. Standard object's metadata. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
-			 */
-			readonly metadata!: types.meta.v1.ObjectMeta
-
-			/**
-			 * Spec defines the specification of the desired behavior of the ReplicaSet. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
-			 */
-			readonly spec!: types.apps.v1beta2.ReplicaSetSpec
-
-			/**
-			 * Create a apps.v1beta2.ReplicaSet object with the given unique name and description.
-			 *
-			 * @param name The _unique_ name of the resource. Will configure metadata.name by default.
-			 * @param desc The description to use to populate this object's properties.
-			 */
-			constructor(name: string, desc: types.apps.v1beta2.ReplicaSet) {
-				const props: any = {}
-				props.apiVersion = 'apps/v1beta2'
-				props.kind = 'ReplicaSet'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name: desc?.metadata?.name || name,
-				})
-				props.spec = (desc && desc.spec) || undefined
-
-				super(name, props)
-				this.setType(`k8s:ReplicaSet`)
-			}
-		}
-		/**
-		 * ReplicaSetList is a collection of ReplicaSets.
-		 */
-		export class ReplicaSetList extends kite.Resource {
-			/**
-			 * APIVersion defines the versioned schema of this representation of an object. Servers should
-			 * convert recognized schemas to the latest internal value, and may reject unrecognized
-			 * values. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
-			 */
-			readonly apiVersion!: 'apps/v1beta2'
-
-			/**
-			 * List of ReplicaSets. More info:
-			 * https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller
-			 */
-			readonly items!: types.apps.v1beta2.ReplicaSet[]
-
-			/**
-			 * Kind is a string value representing the REST resource this object represents. Servers may
-			 * infer this from the endpoint the client submits requests to. Cannot be updated. In
-			 * CamelCase. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-			 */
-			readonly kind!: 'ReplicaSetList'
-
-			/**
-			 * Standard list metadata. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-			 */
-			readonly metadata!: types.meta.v1.ListMeta
-
-			/**
-			 * Create a apps.v1beta2.ReplicaSetList object with the given unique name and description.
-			 *
-			 * @param name The _unique_ name of the resource. Will configure metadata.name by default.
-			 * @param desc The description to use to populate this object's properties.
-			 */
-			constructor(name: string, desc: types.apps.v1beta2.ReplicaSetList) {
-				const props: any = {}
-				props.apiVersion = 'apps/v1beta2'
-				props.items = (desc && desc.items) || undefined
-				props.kind = 'ReplicaSetList'
-				props.metadata = desc?.metadata || {}
-
-				super(name, props)
-				this.setType(`k8s:ReplicaSetList`)
-			}
-		}
-		/**
-		 * StatefulSet represents a set of pods with consistent identities. Identities are defined as:
-		 *  - Network: A single stable DNS and hostname.
-		 *  - Storage: As many VolumeClaims as requested.
-		 * The StatefulSet guarantees that a given network identity will always map to the same storage
-		 * identity.
-		 *
-		 * @deprecated apps/v1beta2/StatefulSet is deprecated by apps/v1/StatefulSet and not supported
-		 * by Kubernetes v1.16+ clusters.
-		 */
-		export class StatefulSet extends kite.Resource {
-			/**
-			 * APIVersion defines the versioned schema of this representation of an object. Servers should
-			 * convert recognized schemas to the latest internal value, and may reject unrecognized
-			 * values. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
-			 */
-			readonly apiVersion!: 'apps/v1beta2'
-
-			/**
-			 * Kind is a string value representing the REST resource this object represents. Servers may
-			 * infer this from the endpoint the client submits requests to. Cannot be updated. In
-			 * CamelCase. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-			 */
-			readonly kind!: 'StatefulSet'
-
-			readonly metadata!: types.meta.v1.ObjectMeta
-
-			/**
-			 * Spec defines the desired identities of pods in this set.
-			 */
-			readonly spec!: types.apps.v1beta2.StatefulSetSpec
-
-			/**
-			 * Create a apps.v1beta2.StatefulSet object with the given unique name and description.
-			 *
-			 * @param name The _unique_ name of the resource. Will configure metadata.name by default.
-			 * @param desc The description to use to populate this object's properties.
-			 */
-			constructor(name: string, desc: types.apps.v1beta2.StatefulSet) {
-				const props: any = {}
-				props.apiVersion = 'apps/v1beta2'
-				props.kind = 'StatefulSet'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name: desc?.metadata?.name || name,
-				})
-				props.spec = (desc && desc.spec) || undefined
-
-				super(name, props)
-				this.setType(`k8s:StatefulSet`)
-			}
-		}
-		/**
-		 * StatefulSetList is a collection of StatefulSets.
-		 */
-		export class StatefulSetList extends kite.Resource {
-			/**
-			 * APIVersion defines the versioned schema of this representation of an object. Servers should
-			 * convert recognized schemas to the latest internal value, and may reject unrecognized
-			 * values. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
-			 */
-			readonly apiVersion!: 'apps/v1beta2'
-
-			readonly items!: types.apps.v1beta2.StatefulSet[]
-
-			/**
-			 * Kind is a string value representing the REST resource this object represents. Servers may
-			 * infer this from the endpoint the client submits requests to. Cannot be updated. In
-			 * CamelCase. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-			 */
-			readonly kind!: 'StatefulSetList'
-
-			readonly metadata!: types.meta.v1.ListMeta
-
-			/**
-			 * Create a apps.v1beta2.StatefulSetList object with the given unique name and description.
-			 *
-			 * @param name The _unique_ name of the resource. Will configure metadata.name by default.
-			 * @param desc The description to use to populate this object's properties.
-			 */
-			constructor(name: string, desc: types.apps.v1beta2.StatefulSetList) {
-				const props: any = {}
-				props.apiVersion = 'apps/v1beta2'
-				props.items = (desc && desc.items) || undefined
-				props.kind = 'StatefulSetList'
-				props.metadata = desc?.metadata || {}
-
-				super(name, props)
-				this.setType(`k8s:StatefulSetList`)
-			}
-		}
-	}
 }
 
 export namespace auditregistration {
@@ -3865,6 +3033,14 @@ export namespace core {
 			readonly data?: { [key: string]: string }
 
 			/**
+			 * Immutable, if set to true, ensures that data stored in the ConfigMap cannot be updated
+			 * (only object metadata can be modified). If not set to true, the field can be modified at
+			 * any time. Defaulted to nil. This is an alpha field enabled by ImmutableEphemeralVolumes
+			 * feature gate.
+			 */
+			readonly immutable?: boolean
+
+			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
 			 * infer this from the endpoint the client submits requests to. Cannot be updated. In
 			 * CamelCase. More info:
@@ -3889,6 +3065,7 @@ export namespace core {
 				props.apiVersion = 'v1'
 				props.binaryData = (desc && desc.binaryData) || undefined
 				props.data = (desc && desc.data) || undefined
+				props.immutable = (desc && desc.immutable) || undefined
 				props.kind = 'ConfigMap'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
 					name: desc?.metadata?.name || name,
@@ -5164,6 +4341,14 @@ export namespace core {
 			readonly data?: object
 
 			/**
+			 * Immutable, if set to true, ensures that data stored in the Secret cannot be updated (only
+			 * object metadata can be modified). If not set to true, the field can be modified at any
+			 * time. Defaulted to nil. This is an alpha field enabled by ImmutableEphemeralVolumes feature
+			 * gate.
+			 */
+			readonly immutable?: boolean
+
+			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
 			 * infer this from the endpoint the client submits requests to. Cannot be updated. In
 			 * CamelCase. More info:
@@ -5199,6 +4384,7 @@ export namespace core {
 				const props: any = {}
 				props.apiVersion = 'v1'
 				props.data = (desc && desc.data) || undefined
+				props.immutable = (desc && desc.immutable) || undefined
 				props.kind = 'Secret'
 				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
 					name: desc?.metadata?.name || name,
@@ -5796,207 +4982,6 @@ export namespace events {
 export namespace extensions {
 	export namespace v1beta1 {
 		/**
-		 * DaemonSet represents the configuration of a daemon set.
-		 *
-		 * @deprecated extensions/v1beta1/DaemonSet is deprecated by apps/v1/DaemonSet and not supported
-		 * by Kubernetes v1.16+ clusters.
-		 */
-		export class DaemonSet extends kite.Resource {
-			/**
-			 * APIVersion defines the versioned schema of this representation of an object. Servers should
-			 * convert recognized schemas to the latest internal value, and may reject unrecognized
-			 * values. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
-			 */
-			readonly apiVersion!: 'extensions/v1beta1'
-
-			/**
-			 * Kind is a string value representing the REST resource this object represents. Servers may
-			 * infer this from the endpoint the client submits requests to. Cannot be updated. In
-			 * CamelCase. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-			 */
-			readonly kind!: 'DaemonSet'
-
-			/**
-			 * Standard object's metadata. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
-			 */
-			readonly metadata!: types.meta.v1.ObjectMeta
-
-			/**
-			 * The desired behavior of this daemon set. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
-			 */
-			readonly spec!: types.extensions.v1beta1.DaemonSetSpec
-
-			/**
-			 * Create a extensions.v1beta1.DaemonSet object with the given unique name and description.
-			 *
-			 * @param name The _unique_ name of the resource. Will configure metadata.name by default.
-			 * @param desc The description to use to populate this object's properties.
-			 */
-			constructor(name: string, desc: types.extensions.v1beta1.DaemonSet) {
-				const props: any = {}
-				props.apiVersion = 'extensions/v1beta1'
-				props.kind = 'DaemonSet'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name: desc?.metadata?.name || name,
-				})
-				props.spec = (desc && desc.spec) || undefined
-
-				super(name, props)
-				this.setType(`k8s:DaemonSet`)
-			}
-		}
-		/**
-		 * DaemonSetList is a collection of daemon sets.
-		 */
-		export class DaemonSetList extends kite.Resource {
-			/**
-			 * APIVersion defines the versioned schema of this representation of an object. Servers should
-			 * convert recognized schemas to the latest internal value, and may reject unrecognized
-			 * values. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
-			 */
-			readonly apiVersion!: 'extensions/v1beta1'
-
-			/**
-			 * A list of daemon sets.
-			 */
-			readonly items!: types.extensions.v1beta1.DaemonSet[]
-
-			/**
-			 * Kind is a string value representing the REST resource this object represents. Servers may
-			 * infer this from the endpoint the client submits requests to. Cannot be updated. In
-			 * CamelCase. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-			 */
-			readonly kind!: 'DaemonSetList'
-
-			/**
-			 * Standard list metadata. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
-			 */
-			readonly metadata!: types.meta.v1.ListMeta
-
-			/**
-			 * Create a extensions.v1beta1.DaemonSetList object with the given unique name and description.
-			 *
-			 * @param name The _unique_ name of the resource. Will configure metadata.name by default.
-			 * @param desc The description to use to populate this object's properties.
-			 */
-			constructor(name: string, desc: types.extensions.v1beta1.DaemonSetList) {
-				const props: any = {}
-				props.apiVersion = 'extensions/v1beta1'
-				props.items = (desc && desc.items) || undefined
-				props.kind = 'DaemonSetList'
-				props.metadata = desc?.metadata || {}
-
-				super(name, props)
-				this.setType(`k8s:DaemonSetList`)
-			}
-		}
-		/**
-		 * Deployment enables declarative updates for Pods and ReplicaSets.
-		 *
-		 * @deprecated extensions/v1beta1/Deployment is deprecated by apps/v1/Deployment and not
-		 * supported by Kubernetes v1.16+ clusters.
-		 */
-		export class Deployment extends kite.Resource {
-			/**
-			 * APIVersion defines the versioned schema of this representation of an object. Servers should
-			 * convert recognized schemas to the latest internal value, and may reject unrecognized
-			 * values. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
-			 */
-			readonly apiVersion!: 'extensions/v1beta1'
-
-			/**
-			 * Kind is a string value representing the REST resource this object represents. Servers may
-			 * infer this from the endpoint the client submits requests to. Cannot be updated. In
-			 * CamelCase. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-			 */
-			readonly kind!: 'Deployment'
-
-			/**
-			 * Standard object metadata.
-			 */
-			readonly metadata!: types.meta.v1.ObjectMeta
-
-			/**
-			 * Specification of the desired behavior of the Deployment.
-			 */
-			readonly spec!: types.extensions.v1beta1.DeploymentSpec
-
-			/**
-			 * Create a extensions.v1beta1.Deployment object with the given unique name and description.
-			 *
-			 * @param name The _unique_ name of the resource. Will configure metadata.name by default.
-			 * @param desc The description to use to populate this object's properties.
-			 */
-			constructor(name: string, desc: types.extensions.v1beta1.Deployment) {
-				const props: any = {}
-				props.apiVersion = 'extensions/v1beta1'
-				props.kind = 'Deployment'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name: desc?.metadata?.name || name,
-				})
-				props.spec = (desc && desc.spec) || undefined
-
-				super(name, props)
-				this.setType(`k8s:Deployment`)
-			}
-		}
-		/**
-		 * DeploymentList is a list of Deployments.
-		 */
-		export class DeploymentList extends kite.Resource {
-			/**
-			 * APIVersion defines the versioned schema of this representation of an object. Servers should
-			 * convert recognized schemas to the latest internal value, and may reject unrecognized
-			 * values. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
-			 */
-			readonly apiVersion!: 'extensions/v1beta1'
-
-			/**
-			 * Items is the list of Deployments.
-			 */
-			readonly items!: types.extensions.v1beta1.Deployment[]
-
-			/**
-			 * Kind is a string value representing the REST resource this object represents. Servers may
-			 * infer this from the endpoint the client submits requests to. Cannot be updated. In
-			 * CamelCase. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-			 */
-			readonly kind!: 'DeploymentList'
-
-			/**
-			 * Standard list metadata.
-			 */
-			readonly metadata!: types.meta.v1.ListMeta
-
-			/**
-			 * Create a extensions.v1beta1.DeploymentList object with the given unique name and description.
-			 *
-			 * @param name The _unique_ name of the resource. Will configure metadata.name by default.
-			 * @param desc The description to use to populate this object's properties.
-			 */
-			constructor(name: string, desc: types.extensions.v1beta1.DeploymentList) {
-				const props: any = {}
-				props.apiVersion = 'extensions/v1beta1'
-				props.items = (desc && desc.items) || undefined
-				props.kind = 'DeploymentList'
-				props.metadata = desc?.metadata || {}
-
-				super(name, props)
-				this.setType(`k8s:DeploymentList`)
-			}
-		}
-		/**
 		 * Ingress is a collection of rules that allow inbound connections to reach the endpoints
 		 * defined by a backend. An Ingress can be configured to give services externally-reachable
 		 * urls, load balance traffic, terminate SSL, offer name based virtual hosting etc.
@@ -6098,328 +5083,6 @@ export namespace extensions {
 
 				super(name, props)
 				this.setType(`k8s:IngressList`)
-			}
-		}
-		/**
-		 * NetworkPolicy describes what network traffic is allowed for a set of Pods
-		 *
-		 * @deprecated extensions/v1beta1/NetworkPolicy is deprecated by networking/v1/NetworkPolicy and
-		 * not supported by Kubernetes v1.16+ clusters.
-		 */
-		export class NetworkPolicy extends kite.Resource {
-			/**
-			 * APIVersion defines the versioned schema of this representation of an object. Servers should
-			 * convert recognized schemas to the latest internal value, and may reject unrecognized
-			 * values. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
-			 */
-			readonly apiVersion!: 'extensions/v1beta1'
-
-			/**
-			 * Kind is a string value representing the REST resource this object represents. Servers may
-			 * infer this from the endpoint the client submits requests to. Cannot be updated. In
-			 * CamelCase. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-			 */
-			readonly kind!: 'NetworkPolicy'
-
-			/**
-			 * Standard object's metadata. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
-			 */
-			readonly metadata!: types.meta.v1.ObjectMeta
-
-			/**
-			 * Specification of the desired behavior for this NetworkPolicy.
-			 */
-			readonly spec!: types.extensions.v1beta1.NetworkPolicySpec
-
-			/**
-			 * Create a extensions.v1beta1.NetworkPolicy object with the given unique name and description.
-			 *
-			 * @param name The _unique_ name of the resource. Will configure metadata.name by default.
-			 * @param desc The description to use to populate this object's properties.
-			 */
-			constructor(name: string, desc: types.extensions.v1beta1.NetworkPolicy) {
-				const props: any = {}
-				props.apiVersion = 'extensions/v1beta1'
-				props.kind = 'NetworkPolicy'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name: desc?.metadata?.name || name,
-				})
-				props.spec = (desc && desc.spec) || undefined
-
-				super(name, props)
-				this.setType(`k8s:NetworkPolicy`)
-			}
-		}
-		/**
-		 * Network Policy List is a list of NetworkPolicy objects.
-		 *
-		 * @deprecated extensions/v1beta1/NetworkPolicyList is deprecated by
-		 * networking/v1/NetworkPolicyList and not supported by Kubernetes v1.16+ clusters.
-		 */
-		export class NetworkPolicyList extends kite.Resource {
-			/**
-			 * APIVersion defines the versioned schema of this representation of an object. Servers should
-			 * convert recognized schemas to the latest internal value, and may reject unrecognized
-			 * values. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
-			 */
-			readonly apiVersion!: 'extensions/v1beta1'
-
-			/**
-			 * Items is a list of schema objects.
-			 */
-			readonly items!: types.extensions.v1beta1.NetworkPolicy[]
-
-			/**
-			 * Kind is a string value representing the REST resource this object represents. Servers may
-			 * infer this from the endpoint the client submits requests to. Cannot be updated. In
-			 * CamelCase. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-			 */
-			readonly kind!: 'NetworkPolicyList'
-
-			/**
-			 * Standard list metadata. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
-			 */
-			readonly metadata!: types.meta.v1.ListMeta
-
-			/**
-			 * Create a extensions.v1beta1.NetworkPolicyList object with the given unique name and description.
-			 *
-			 * @param name The _unique_ name of the resource. Will configure metadata.name by default.
-			 * @param desc The description to use to populate this object's properties.
-			 */
-			constructor(
-				name: string,
-				desc: types.extensions.v1beta1.NetworkPolicyList
-			) {
-				const props: any = {}
-				props.apiVersion = 'extensions/v1beta1'
-				props.items = (desc && desc.items) || undefined
-				props.kind = 'NetworkPolicyList'
-				props.metadata = desc?.metadata || {}
-
-				super(name, props)
-				this.setType(`k8s:NetworkPolicyList`)
-			}
-		}
-		/**
-		 * PodSecurityPolicy governs the ability to make requests that affect the Security Context that
-		 * will be applied to a pod and container.
-		 *
-		 * @deprecated extensions/v1beta1/PodSecurityPolicy is deprecated by
-		 * policy/v1beta1/PodSecurityPolicy and not supported by Kubernetes v1.16+ clusters.
-		 */
-		export class PodSecurityPolicy extends kite.Resource {
-			/**
-			 * APIVersion defines the versioned schema of this representation of an object. Servers should
-			 * convert recognized schemas to the latest internal value, and may reject unrecognized
-			 * values. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
-			 */
-			readonly apiVersion!: 'extensions/v1beta1'
-
-			/**
-			 * Kind is a string value representing the REST resource this object represents. Servers may
-			 * infer this from the endpoint the client submits requests to. Cannot be updated. In
-			 * CamelCase. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-			 */
-			readonly kind!: 'PodSecurityPolicy'
-
-			/**
-			 * Standard object's metadata. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
-			 */
-			readonly metadata!: types.meta.v1.ObjectMeta
-
-			/**
-			 * spec defines the policy enforced.
-			 */
-			readonly spec!: types.extensions.v1beta1.PodSecurityPolicySpec
-
-			/**
-			 * Create a extensions.v1beta1.PodSecurityPolicy object with the given unique name and description.
-			 *
-			 * @param name The _unique_ name of the resource. Will configure metadata.name by default.
-			 * @param desc The description to use to populate this object's properties.
-			 */
-			constructor(
-				name: string,
-				desc: types.extensions.v1beta1.PodSecurityPolicy
-			) {
-				const props: any = {}
-				props.apiVersion = 'extensions/v1beta1'
-				props.kind = 'PodSecurityPolicy'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name: desc?.metadata?.name || name,
-				})
-				props.spec = (desc && desc.spec) || undefined
-
-				super(name, props)
-				this.setType(`k8s:PodSecurityPolicy`)
-			}
-		}
-		/**
-		 * PodSecurityPolicyList is a list of PodSecurityPolicy objects.
-		 *
-		 * @deprecated extensions/v1beta1/PodSecurityPolicyList is deprecated by
-		 * policy/v1beta1/PodSecurityPolicyList and not supported by Kubernetes v1.16+ clusters.
-		 */
-		export class PodSecurityPolicyList extends kite.Resource {
-			/**
-			 * APIVersion defines the versioned schema of this representation of an object. Servers should
-			 * convert recognized schemas to the latest internal value, and may reject unrecognized
-			 * values. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
-			 */
-			readonly apiVersion!: 'extensions/v1beta1'
-
-			/**
-			 * items is a list of schema objects.
-			 */
-			readonly items!: types.extensions.v1beta1.PodSecurityPolicy[]
-
-			/**
-			 * Kind is a string value representing the REST resource this object represents. Servers may
-			 * infer this from the endpoint the client submits requests to. Cannot be updated. In
-			 * CamelCase. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-			 */
-			readonly kind!: 'PodSecurityPolicyList'
-
-			/**
-			 * Standard list metadata. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
-			 */
-			readonly metadata!: types.meta.v1.ListMeta
-
-			/**
-			 * Create a extensions.v1beta1.PodSecurityPolicyList object with the given unique name and description.
-			 *
-			 * @param name The _unique_ name of the resource. Will configure metadata.name by default.
-			 * @param desc The description to use to populate this object's properties.
-			 */
-			constructor(
-				name: string,
-				desc: types.extensions.v1beta1.PodSecurityPolicyList
-			) {
-				const props: any = {}
-				props.apiVersion = 'extensions/v1beta1'
-				props.items = (desc && desc.items) || undefined
-				props.kind = 'PodSecurityPolicyList'
-				props.metadata = desc?.metadata || {}
-
-				super(name, props)
-				this.setType(`k8s:PodSecurityPolicyList`)
-			}
-		}
-		/**
-		 * ReplicaSet ensures that a specified number of pod replicas are running at any given time.
-		 *
-		 * @deprecated extensions/v1beta1/ReplicaSet is deprecated by apps/v1/ReplicaSet and not
-		 * supported by Kubernetes v1.16+ clusters.
-		 */
-		export class ReplicaSet extends kite.Resource {
-			/**
-			 * APIVersion defines the versioned schema of this representation of an object. Servers should
-			 * convert recognized schemas to the latest internal value, and may reject unrecognized
-			 * values. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
-			 */
-			readonly apiVersion!: 'extensions/v1beta1'
-
-			/**
-			 * Kind is a string value representing the REST resource this object represents. Servers may
-			 * infer this from the endpoint the client submits requests to. Cannot be updated. In
-			 * CamelCase. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-			 */
-			readonly kind!: 'ReplicaSet'
-
-			/**
-			 * If the Labels of a ReplicaSet are empty, they are defaulted to be the same as the Pod(s)
-			 * that the ReplicaSet manages. Standard object's metadata. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
-			 */
-			readonly metadata!: types.meta.v1.ObjectMeta
-
-			/**
-			 * Spec defines the specification of the desired behavior of the ReplicaSet. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
-			 */
-			readonly spec!: types.extensions.v1beta1.ReplicaSetSpec
-
-			/**
-			 * Create a extensions.v1beta1.ReplicaSet object with the given unique name and description.
-			 *
-			 * @param name The _unique_ name of the resource. Will configure metadata.name by default.
-			 * @param desc The description to use to populate this object's properties.
-			 */
-			constructor(name: string, desc: types.extensions.v1beta1.ReplicaSet) {
-				const props: any = {}
-				props.apiVersion = 'extensions/v1beta1'
-				props.kind = 'ReplicaSet'
-				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
-					name: desc?.metadata?.name || name,
-				})
-				props.spec = (desc && desc.spec) || undefined
-
-				super(name, props)
-				this.setType(`k8s:ReplicaSet`)
-			}
-		}
-		/**
-		 * ReplicaSetList is a collection of ReplicaSets.
-		 */
-		export class ReplicaSetList extends kite.Resource {
-			/**
-			 * APIVersion defines the versioned schema of this representation of an object. Servers should
-			 * convert recognized schemas to the latest internal value, and may reject unrecognized
-			 * values. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
-			 */
-			readonly apiVersion!: 'extensions/v1beta1'
-
-			/**
-			 * List of ReplicaSets. More info:
-			 * https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller
-			 */
-			readonly items!: types.extensions.v1beta1.ReplicaSet[]
-
-			/**
-			 * Kind is a string value representing the REST resource this object represents. Servers may
-			 * infer this from the endpoint the client submits requests to. Cannot be updated. In
-			 * CamelCase. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-			 */
-			readonly kind!: 'ReplicaSetList'
-
-			/**
-			 * Standard list metadata. More info:
-			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-			 */
-			readonly metadata!: types.meta.v1.ListMeta
-
-			/**
-			 * Create a extensions.v1beta1.ReplicaSetList object with the given unique name and description.
-			 *
-			 * @param name The _unique_ name of the resource. Will configure metadata.name by default.
-			 * @param desc The description to use to populate this object's properties.
-			 */
-			constructor(name: string, desc: types.extensions.v1beta1.ReplicaSetList) {
-				const props: any = {}
-				props.apiVersion = 'extensions/v1beta1'
-				props.items = (desc && desc.items) || undefined
-				props.kind = 'ReplicaSetList'
-				props.metadata = desc?.metadata || {}
-
-				super(name, props)
-				this.setType(`k8s:ReplicaSetList`)
 			}
 		}
 	}
@@ -6868,6 +5531,111 @@ export namespace networking {
 
 				super(name, props)
 				this.setType(`k8s:Ingress`)
+			}
+		}
+		/**
+		 * IngressClass represents the class of the Ingress, referenced by the Ingress Spec. The
+		 * `ingressclass.kubernetes.io/is-default-class` annotation can be used to indicate that an
+		 * IngressClass should be considered default. When a single IngressClass resource has this
+		 * annotation set to true, new Ingress resources without a class specified will be assigned this
+		 * default class.
+		 */
+		export class IngressClass extends kite.Resource {
+			/**
+			 * APIVersion defines the versioned schema of this representation of an object. Servers should
+			 * convert recognized schemas to the latest internal value, and may reject unrecognized
+			 * values. More info:
+			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+			 */
+			readonly apiVersion!: 'networking.k8s.io/v1beta1'
+
+			/**
+			 * Kind is a string value representing the REST resource this object represents. Servers may
+			 * infer this from the endpoint the client submits requests to. Cannot be updated. In
+			 * CamelCase. More info:
+			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+			 */
+			readonly kind!: 'IngressClass'
+
+			/**
+			 * Standard object's metadata. More info:
+			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+			 */
+			readonly metadata!: types.meta.v1.ObjectMeta
+
+			/**
+			 * Spec is the desired state of the IngressClass. More info:
+			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+			 */
+			readonly spec!: types.networking.v1beta1.IngressClassSpec
+
+			/**
+			 * Create a networking.v1beta1.IngressClass object with the given unique name and description.
+			 *
+			 * @param name The _unique_ name of the resource. Will configure metadata.name by default.
+			 * @param desc The description to use to populate this object's properties.
+			 */
+			constructor(name: string, desc: types.networking.v1beta1.IngressClass) {
+				const props: any = {}
+				props.apiVersion = 'networking.k8s.io/v1beta1'
+				props.kind = 'IngressClass'
+				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
+					name: desc?.metadata?.name || name,
+				})
+				props.spec = (desc && desc.spec) || undefined
+
+				super(name, props)
+				this.setType(`k8s:IngressClass`)
+			}
+		}
+		/**
+		 * IngressClassList is a collection of IngressClasses.
+		 */
+		export class IngressClassList extends kite.Resource {
+			/**
+			 * APIVersion defines the versioned schema of this representation of an object. Servers should
+			 * convert recognized schemas to the latest internal value, and may reject unrecognized
+			 * values. More info:
+			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+			 */
+			readonly apiVersion!: 'networking.k8s.io/v1beta1'
+
+			/**
+			 * Items is the list of IngressClasses.
+			 */
+			readonly items!: types.networking.v1beta1.IngressClass[]
+
+			/**
+			 * Kind is a string value representing the REST resource this object represents. Servers may
+			 * infer this from the endpoint the client submits requests to. Cannot be updated. In
+			 * CamelCase. More info:
+			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+			 */
+			readonly kind!: 'IngressClassList'
+
+			/**
+			 * Standard list metadata.
+			 */
+			readonly metadata!: types.meta.v1.ListMeta
+
+			/**
+			 * Create a networking.v1beta1.IngressClassList object with the given unique name and description.
+			 *
+			 * @param name The _unique_ name of the resource. Will configure metadata.name by default.
+			 * @param desc The description to use to populate this object's properties.
+			 */
+			constructor(
+				name: string,
+				desc: types.networking.v1beta1.IngressClassList
+			) {
+				const props: any = {}
+				props.apiVersion = 'networking.k8s.io/v1beta1'
+				props.items = (desc && desc.items) || undefined
+				props.kind = 'IngressClassList'
+				props.metadata = desc?.metadata || {}
+
+				super(name, props)
+				this.setType(`k8s:IngressClassList`)
 			}
 		}
 		/**
@@ -9158,6 +7926,111 @@ export namespace settings {
 
 export namespace storage {
 	export namespace v1 {
+		/**
+		 * CSIDriver captures information about a Container Storage Interface (CSI) volume driver
+		 * deployed on the cluster. Kubernetes attach detach controller uses this object to determine
+		 * whether attach is required. Kubelet uses this object to determine whether pod information
+		 * needs to be passed on mount. CSIDriver objects are non-namespaced.
+		 */
+		export class CSIDriver extends kite.Resource {
+			/**
+			 * APIVersion defines the versioned schema of this representation of an object. Servers should
+			 * convert recognized schemas to the latest internal value, and may reject unrecognized
+			 * values. More info:
+			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+			 */
+			readonly apiVersion!: 'storage.k8s.io/v1'
+
+			/**
+			 * Kind is a string value representing the REST resource this object represents. Servers may
+			 * infer this from the endpoint the client submits requests to. Cannot be updated. In
+			 * CamelCase. More info:
+			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+			 */
+			readonly kind!: 'CSIDriver'
+
+			/**
+			 * Standard object metadata. metadata.Name indicates the name of the CSI driver that this
+			 * object refers to; it MUST be the same name returned by the CSI GetPluginName() call for
+			 * that driver. The driver name must be 63 characters or less, beginning and ending with an
+			 * alphanumeric character ([a-z0-9A-Z]) with dashes (-), dots (.), and alphanumerics between.
+			 * More info:
+			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+			 */
+			readonly metadata!: types.meta.v1.ObjectMeta
+
+			/**
+			 * Specification of the CSI Driver.
+			 */
+			readonly spec!: types.storage.v1.CSIDriverSpec
+
+			/**
+			 * Create a storage.v1.CSIDriver object with the given unique name and description.
+			 *
+			 * @param name The _unique_ name of the resource. Will configure metadata.name by default.
+			 * @param desc The description to use to populate this object's properties.
+			 */
+			constructor(name: string, desc: types.storage.v1.CSIDriver) {
+				const props: any = {}
+				props.apiVersion = 'storage.k8s.io/v1'
+				props.kind = 'CSIDriver'
+				props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
+					name: desc?.metadata?.name || name,
+				})
+				props.spec = (desc && desc.spec) || undefined
+
+				super(name, props)
+				this.setType(`k8s:CSIDriver`)
+			}
+		}
+		/**
+		 * CSIDriverList is a collection of CSIDriver objects.
+		 */
+		export class CSIDriverList extends kite.Resource {
+			/**
+			 * APIVersion defines the versioned schema of this representation of an object. Servers should
+			 * convert recognized schemas to the latest internal value, and may reject unrecognized
+			 * values. More info:
+			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+			 */
+			readonly apiVersion!: 'storage.k8s.io/v1'
+
+			/**
+			 * items is the list of CSIDriver
+			 */
+			readonly items!: types.storage.v1.CSIDriver[]
+
+			/**
+			 * Kind is a string value representing the REST resource this object represents. Servers may
+			 * infer this from the endpoint the client submits requests to. Cannot be updated. In
+			 * CamelCase. More info:
+			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+			 */
+			readonly kind!: 'CSIDriverList'
+
+			/**
+			 * Standard list metadata More info:
+			 * https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+			 */
+			readonly metadata!: types.meta.v1.ListMeta
+
+			/**
+			 * Create a storage.v1.CSIDriverList object with the given unique name and description.
+			 *
+			 * @param name The _unique_ name of the resource. Will configure metadata.name by default.
+			 * @param desc The description to use to populate this object's properties.
+			 */
+			constructor(name: string, desc: types.storage.v1.CSIDriverList) {
+				const props: any = {}
+				props.apiVersion = 'storage.k8s.io/v1'
+				props.items = (desc && desc.items) || undefined
+				props.kind = 'CSIDriverList'
+				props.metadata = desc?.metadata || {}
+
+				super(name, props)
+				this.setType(`k8s:CSIDriverList`)
+			}
+		}
 		/**
 		 * CSINode holds information about all CSI drivers installed on a node. CSI drivers do not need
 		 * to create the CSINode object directly. As long as they use the node-driver-registrar sidecar

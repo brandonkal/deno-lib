@@ -1,7 +1,7 @@
 .PHONY: all gen
 .DEFAULT_GOAL := gen
 
-KUBE_VERSION    ?= v1.17.0
+KUBE_VERSION    ?= v1.18.2
 SWAGGER_URL     ?= https://github.com/kubernetes/kubernetes/raw/${KUBE_VERSION}/api/openapi-spec/swagger.json
 OPENAPI_DIR     := pkg/gen/openapi-specs
 OPENAPI_FILE    := ${OPENAPI_DIR}/swagger-${KUBE_VERSION}.json
