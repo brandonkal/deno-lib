@@ -258,7 +258,7 @@ export default async function templateCli(cfg?: TemplateConfig) {
 	try {
 		let useHelm = true
 		if (!cfg) {
-			const args = getArgsObject(new Set(['config', 'c', 'env']))
+			const args = getArgsObject(new Set(['config', 'c']))
 			if (args.helm === false) useHelm = false
 			cfg = canonicalizeOptions(args)
 		}

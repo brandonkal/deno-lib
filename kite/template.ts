@@ -153,7 +153,7 @@ export default async function template(
 		const fs = await fp.status()
 		if (!fs.success) {
 			if (spec.quiet) console.error(await fp.stderrOutput())
-			throw new TemplateError('Config program threw an Error during fetch')
+			throw new TemplateError('Config program threw an Error during cache')
 		}
 
 		let cmd = ['deno', 'run', '--unstable', spec.exec]
@@ -551,7 +551,20 @@ function substitutePlaceholders(
 			throw new TemplateError(`${dslText} returned ${r}`)
 		}
 		madeReplace = true
-		return JSON.stringify(r)
+		const stringified = JSON.stringify(r)
+		// remove quotes if not required in YAML
+		if (
+			stringified.startsWith('"') &&
+			stringified.endsWith('"') &&
+			stringified !== '"true"' &&
+			stringified !== '"false"'
+		) {
+			let before = stringified.replace(/^"/, '').replace(/"$/, '')
+			if (before === r) {
+				return r
+			}
+		}
+		return stringified
 	})
 	// If a replacement was made, we parse as YAML and reserialize.
 	// In this case, all comments are moved to the top.
