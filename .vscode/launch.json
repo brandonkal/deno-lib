@@ -5,12 +5,53 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
+			"name": "Deno",
+			"type": "node",
+			"request": "launch",
+			"cwd": "${workspaceFolder}",
+			"runtimeExecutable": "deno",
+			"runtimeArgs": [
+				"run",
+				"--inspect-brk",
+				"-A",
+				"--unstable",
+				"${file}",
+				"-c",
+				"env: [ONE]"
+			],
+			"port": 9229
+		},
+		{
 			"type": "node",
 			"request": "launch",
 			"name": "Debug",
 			"skipFiles": ["<node_internals>/**"],
 			"program": "${workspaceFolder}/npm/register.js",
 			"args": ["${file}"]
+		},
+		{
+			"name": "Deno goto",
+			"type": "node",
+			"request": "launch",
+			"cwd": "${workspaceFolder}",
+			"runtimeExecutable": "deno",
+			"runtimeArgs": [
+				"run",
+				"--inspect-brk",
+				"--unstable",
+				"--allow-run",
+				"--allow-env",
+				"--allow-read=$HOME/.kite,$HOME/.terraformrc,$HOME/.terraform.d",
+				"--allow-write=$HOME/.kite,$HOME/.terraformrc,$HOME/.terraform.d",
+				"/home/brandon/deno-lib/kite/template-cli.ts",
+				"-e",
+				"/home/brandon/goto/deploy.ts",
+				"-c",
+				"env: [DRONE_REPO_OWNER]",
+				"--allowEnv"
+			],
+			"env": { "DRONE_REPO_OWNER": "brandonkal" },
+			"port": 9229
 		}
 	]
 }
