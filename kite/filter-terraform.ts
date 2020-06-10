@@ -6,7 +6,7 @@
  * @license MIT
  */
 
-import { readLines } from 'https://deno.land/std@v0.51.0/io/bufio.ts'
+import { readLines } from 'https://deno.land/std@0.56.0/io/bufio.ts'
 
 // Filter Sensitive values. Regex based on
 // https://github.com/cloudposse/tfmask/blob/7a4a942248c665b6a5c66f9c288fabe97550f43d/main.go

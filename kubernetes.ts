@@ -8,7 +8,7 @@
 import {
 	parseAll,
 	JSON_SCHEMA,
-} from 'https://deno.land/std@v0.51.0/encoding/yaml.ts'
+} from 'https://deno.land/std@0.56.0/encoding/yaml.ts'
 import * as kite from './kite.ts'
 import { meta } from './kubernetes/gen/types.ts'
 

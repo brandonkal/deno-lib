@@ -5,7 +5,7 @@ It does this by injecting a mock Deno global module into your instrumented TypeS
 
 It should be used in combination with `babel-plugin-deno` which rewrites imports to use the cache directory.
 
-![Deno Quokka example with std@v0.51.0/yaml](https://user-images.githubusercontent.com/4714862/72419175-2f72ad00-3774-11ea-950a-a20936b7fb95.png)
+![Deno Quokka example with std@0.56.0/yaml](https://user-images.githubusercontent.com/4714862/72419175-2f72ad00-3774-11ea-950a-a20936b7fb95.png)
 
 ## Config
 
