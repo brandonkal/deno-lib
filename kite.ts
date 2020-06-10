@@ -252,12 +252,12 @@ function reset() {
 export type Transformer = <Res extends Resource>(objs: Res[]) => Res[]
 
 interface MakeOpts {
-	/** Set to true if provided function should be called with Deno arguments */
-	main?: boolean
 	/** An array of transforming functions. */
 	post?: Transformer[]
 	/** Set to true to receive JSON.stringify output rather than YAML. Note that sort order is not deterministic. */
 	json?: boolean
+	/** Specify args to pass to function. Leave undefined to use program arguments behaviour by default. */
+	args?: any
 }
 
 const sortedK8s = [
@@ -322,14 +322,14 @@ export namespace yaml {
  * An optional second argument is supported to post-process the generated config array before printing.
  */
 export function make(fn: Function, opts?: MakeOpts): string {
-	const { main, post, json } = opts || {}
+	const { args, post, json } = opts || {}
 	if (typeof fn !== 'function') {
 		throw new Error('Expected function for make')
 	}
 	reset()
 	try {
 		// run user's function
-		if (main) {
+		if (args === undefined) {
 			const { a = {} } = getArgsObject()
 			// We allow this on main for convenience (can share same YAML file with kite template CLI)
 			if ('args' in a) {
@@ -338,7 +338,7 @@ export function make(fn: Function, opts?: MakeOpts): string {
 				fn(a)
 			}
 		} else {
-			fn({})
+			fn(args)
 		}
 	} catch (e) {
 		console.error(e)
@@ -410,9 +410,6 @@ export function make(fn: Function, opts?: MakeOpts): string {
  */
 export async function out(fn: Function, opts?: MakeOpts) {
 	await start()
-	if (opts === undefined) {
-		opts = { main: true }
-	}
 	log(make(fn, opts))
 }
 
