@@ -177,7 +177,7 @@ export interface Step extends StepBase {
 }
 
 interface StepKube extends Step {
-	resources: k8sResourceRequirements
+	resources?: k8sResourceRequirements
 }
 
 type platformOS =
