@@ -39,7 +39,7 @@ const banner = `\
  * specified by flags overriding anything set on args.
  */
 export interface TemplateConfigSpec {
-	/** a string representing the Kite program to execute. Cannot be specified if yaml is set. */
+	/** a string representing the Kite™️ program to execute. Cannot be specified if yaml is set. */
 	exec?: string
 	/** display help text for CLI usage */
 	help?: boolean
@@ -239,7 +239,7 @@ export default async function template(
 					) {
 						throw new TemplateError(
 							`Error: ${parsedDoc.metadata
-								.name!} Kite expects HelmChart.spec.valuesContent to by type (YAML) string.`
+								.name!} Kite™️ expects HelmChart.spec.valuesContent to by type (YAML) string.`
 						)
 					}
 					const [repoName] = chart.split('/')
@@ -633,7 +633,7 @@ async function execTerraform(
 	await fs.ensureDir(tfDir)
 	const cfgText = JSON.stringify(tfConfig, undefined, 2)
 	if (cfgText.includes('local-exec')) {
-		throw new TemplateError('local-exec is not allowed on the Kite platform.')
+		throw new TemplateError('local-exec is not allowed on the Kite™️ platform.')
 	}
 	// Terraform is rather slow. So if the config has not changed, short-circuit.
 	let currentContents: string

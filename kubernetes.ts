@@ -48,7 +48,7 @@ export interface CustomResourceArgs {
 /**
  * CustomResource represents an instance of a CustomResourceDefinition (CRD). For example, the
  * CoreOS Prometheus operator exposes a CRD `monitoring.coreos.com/ServiceMonitor`; To
- * instantiate this as a Kite resource, call `new CustomResource`, passing the
+ * instantiate this as a Kite™️ resource, call `new CustomResource`, passing the
  * `ServiceMonitor` resource definition as an argument.
  */
 export class CustomResource extends kite.Resource {

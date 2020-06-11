@@ -1,7 +1,7 @@
 /**
  * @file function.ts
  * @author Brandon Kalinowski
- * @description Kite Support for OpenFaaS Functions.
+ * @description Kite™️ Support for OpenFaaS Functions.
  * @copyright 2020 Brandon Kalinowski
  * @license MIT
  */
