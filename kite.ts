@@ -346,16 +346,11 @@ export function make(fn: Function, opts?: MakeOpts): string {
 	}
 
 	let buf = [...globalThis.outBuffer]
-	// keep track of input to validate that transformers do not create new objects
-	const beforeLength = buf.length
 	if (post && post.length) {
 		post.forEach((transform) => {
 			if (typeof transform === 'function') {
 				// ignore if comment for now
 				buf = transform(buf as any)
-				if (beforeLength !== globalThis.outBuffer.length) {
-					throw new Error('Post-processors cannot create new resources')
-				}
 			} else {
 				throw new Error('Expected transformer to be a function')
 			}
