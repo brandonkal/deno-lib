@@ -1,12 +1,52 @@
 /**
- * @file kite/drone/types.ts
+ * @file drone.ts
  * @author Brandon Kalinowski
  * @description TypeScript types for Drone CI configuration.
  * @copyright 2020 Brandon Kalinowski
  * @license MIT
  */
 
-// This file was generated initally generated with json-schema-to-typescript and then heavily modified.
+import * as kite from './kite.ts'
+
+/**
+ * Optional
+ * @desc From `T` make a set of properties by key `K` become optional
+ * @example
+ *    type Props = {
+ *      name: string;
+ *      age: number;
+ *      visible: boolean;
+ *    };
+ *
+ *    // Expect: { name?: string; age?: number; visible?: boolean; }
+ *    type Props = Optional<Props>;
+ *
+ *    // Expect: { name: string; age?: number; visible?: boolean; }
+ *    type Props = Optional<Props, 'age' | 'visible'>;
+ */
+export type Optional<T extends object, K extends keyof T = keyof T> = Omit<
+	T,
+	K
+> &
+	Partial<Pick<T, K>>
+
+/**
+ * DronePipeline defines the steps to run a continuous integration build process.
+ */
+export class Pipeline extends kite.Resource {
+	constructor(
+		name: string,
+		desc: Optional<KubePipeline, 'kind' | 'type' | 'name'>
+	) {
+		desc.kind = desc.kind || 'pipeline'
+		desc.type = desc.type || 'kubernetes'
+		desc.name = desc.name || name
+		super(name, desc)
+		this.setType('drone:KubePipeline')
+	}
+}
+
+// Types: This file was generated initally generated with json-schema-to-typescript and then heavily modified.
 
 /// Conditions
 export interface Conditions {
@@ -246,7 +286,7 @@ export type droneTypes =
 /**
  * The actual export
  */
-export interface Pipeline {
+export interface IPipeline {
 	kind: 'pipeline'
 	name: string
 	image_pull_secrets?: string[]
@@ -261,7 +301,7 @@ export interface Pipeline {
 	services?: Service[]
 }
 
-export interface DockerPipeline extends Pipeline {
+export interface DockerPipeline extends IPipeline {
 	type: 'docker'
 	workspace?: { path: string }
 	services?: Service[]
@@ -272,7 +312,7 @@ export interface DockerPipeline extends Pipeline {
 	node?: Record<string, string>
 }
 
-export interface KubePipeline extends Pipeline {
+export interface KubePipeline extends IPipeline {
 	type: 'kubernetes'
 	/**
 	 * Use the metadata section to provide uniquely identify pipeline resources.
@@ -290,12 +330,12 @@ export interface KubePipeline extends Pipeline {
 }
 
 // exc has node: Record<string, string>
-export interface ExecPipeline extends Pipeline {
+export interface ExecPipeline extends IPipeline {
 	type: 'exec'
 	node?: Record<string, string>
 }
 
-export interface SSHPipeline extends Pipeline {
+export interface SSHPipeline extends IPipeline {
 	type: 'ssh'
 	server: {
 		host: StringOrSecret
@@ -305,7 +345,7 @@ export interface SSHPipeline extends Pipeline {
 	}
 }
 
-export interface DOPipeline extends Pipeline {
+export interface DOPipeline extends IPipeline {
 	type: 'digitalocean'
 	server: {
 		image: string
@@ -316,7 +356,7 @@ export interface DOPipeline extends Pipeline {
 	token: StringOrSecret
 }
 
-export interface MacPipeline extends Pipeline {
+export interface MacPipeline extends IPipeline {
 	type: 'macstadium'
 }
 
