@@ -160,7 +160,7 @@ export default async function template(
 		if (spec.args) {
 			cmd.push(...['-a', JSON.stringify(spec.args)])
 		}
-		if (!spec.quiet) console.error(`Executing ${spec.exec}`)
+		if (!spec.quiet) console.error(`# Executing ${spec.exec}`)
 		const p = Deno.run({
 			cmd,
 			stderr: spec.quiet ? 'piped' : 'inherit',
@@ -184,7 +184,7 @@ export default async function template(
 		throw new TemplateError('Either yaml or exec must be specified')
 	}
 	if (!spec.quiet) {
-		console.error(`Templating${spec.name ? ' ' + spec.name : '...'}`)
+		console.error(`# Templating${spec.name ? ' ' + spec.name : '...'}`)
 	}
 
 	let { tfConfig, config, docs, toRemove } = getConfigFromYaml(yamlText, cfg)
@@ -214,7 +214,7 @@ export default async function template(
 			}
 			return value
 		})
-		if (!spec.quiet) console.error('Executing Terraform...')
+		if (!spec.quiet) console.error('# Executing Terraform...')
 		state = await execTerraform(config, tf, env)
 	}
 	const allOps = ops(env)

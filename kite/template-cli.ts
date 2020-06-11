@@ -264,7 +264,7 @@ export default async function templateCli(cfg?: TemplateConfig) {
 		}
 		const out = await template(cfg, useHelm)
 		if (!cfg.spec.quiet) {
-			let msg = `Kite™️ Template complete`
+			let msg = `# Kite™️ Template complete`
 			if (cfg.spec.name) {
 				msg += ` for ${cfg.spec.name}`
 			}
