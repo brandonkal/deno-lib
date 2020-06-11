@@ -59,10 +59,16 @@ export function getArgsObject(
 		let value = textOrStdIn(rawValue)
 		if (value !== undefined) {
 			if (isYaml(key, value)) {
-				parsedArgs[key] = parse(value, { schema: JSON_SCHEMA }) as object
-			} else {
-				parsedArgs[key] = value
+				try {
+					value = parse(value, { schema: JSON_SCHEMA }) as any
+				} catch (err) {
+					// ignore failure if we inferred possible YAML key
+					if (!yamlKeys) {
+						throw err
+					}
+				}
 			}
+			parsedArgs[key] = value
 		}
 	})
 	return parsedArgs
