@@ -320,6 +320,8 @@ export namespace yaml {
  * make takes a config generation function and returns a string.
  * Pass it a module default export and console.log the output.
  * An optional second argument is supported to post-process the generated config array before printing.
+ *
+ * If the function has a transform static function, it will automatically be executed as the last post transformer.
  */
 export function make(fn: Function, opts?: MakeOpts): string {
 	const { args, post, json } = opts || {}
@@ -343,6 +345,9 @@ export function make(fn: Function, opts?: MakeOpts): string {
 	} catch (e) {
 		console.error(e)
 		Deno.exit(1)
+	}
+	if (typeof (fn as any).transform === 'function') {
+		post?.push((fn as any).transform)
 	}
 
 	let buf = [...globalThis.outBuffer]
