@@ -20,7 +20,7 @@ export class FFunction extends kite.Resource {
 			...desc,
 			name: desc.name || name,
 			handler: desc.handler || `./${name}`,
-			image: desc.image || `(( env DRONE_REPO_OWNER ))/${name}`,
+			image: desc.image || `\${DRONE_REPO_OWNER}/${name}`,
 		}
 		super(name, args)
 		this.setType('faas:function')
