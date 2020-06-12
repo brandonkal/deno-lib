@@ -290,9 +290,9 @@ export default async function templateCli(cfg?: TemplateConfig) {
 				throw err
 			} else {
 				console.error(err)
-				Deno.exit(1)
 			}
 		}
+		Deno.exit(1)
 	}
 }
 
