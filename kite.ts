@@ -322,6 +322,7 @@ export namespace yaml {
  * An optional second argument is supported to post-process the generated config array before printing.
  *
  * If the function has a transform static function, it will automatically be executed as the last post transformer.
+ * @throws if transform functions throw
  */
 export function make(fn: Function, opts?: MakeOpts): string {
 	const { args, post, json } = opts || {}
@@ -346,9 +347,6 @@ export function make(fn: Function, opts?: MakeOpts): string {
 		console.error(e)
 		Deno.exit(1)
 	}
-	if (typeof (fn as any).transform === 'function') {
-		post?.push((fn as any).transform)
-	}
 
 	let buf = [...globalThis.outBuffer]
 	if (post && post.length) {
@@ -361,6 +359,10 @@ export function make(fn: Function, opts?: MakeOpts): string {
 			}
 		})
 	}
+	if (typeof (fn as any).transform === 'function') {
+		buf = (fn as any).transform(buf)
+	}
+
 	let tfBuffer: Resource[] = []
 	buf = buf.filter((res) => {
 		if (is_Comment(res)) return true
