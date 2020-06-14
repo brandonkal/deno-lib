@@ -183,11 +183,16 @@ export default async function template(
 	} else {
 		throw new TemplateError('Either yaml or exec must be specified')
 	}
+
 	if (!spec.quiet) {
 		console.error(`# Templating${spec.name ? ' ' + spec.name : '...'}`)
 	}
 
 	let { tfConfig, config, docs, toRemove } = getConfigFromYaml(yamlText, cfg)
+	const header = banner + config.metadata.name + '\n'
+	if (cfg.spec.preview) {
+		return `# (preview) ` + header + yamlText
+	}
 	rtTemplateConfig.check(config)
 	// note that config environment has been filtered by getConfigFromYaml
 	const env = buildEnv(config.spec.env)
@@ -306,7 +311,6 @@ export default async function template(
 		}
 	}
 	const result = accumulated.join('\n---\n')
-	const header = banner + config.metadata.name + '\n'
 	return header + addTopDashes(result) + '\n'
 }
 
