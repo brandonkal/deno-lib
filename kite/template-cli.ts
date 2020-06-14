@@ -275,10 +275,13 @@ export default async function templateCli(cfg?: TemplateConfig) {
 		let unreplacedPlaceholders = out.match(/\(\((.+?)\)\)/g)
 		if (unreplacedPlaceholders) {
 			const l = unreplacedPlaceholders.length
+			const middle = `has ${l} placeholder${l === 1 ? '' : 's'} that`
 
 			const msg = `# ${
-				cfg.spec.preview ? 'Warning: Preview output' : 'Error: Output'
-			} has ${l} placeholder${l === 1 ? '' : 's'} that failed to be replaced.`
+				cfg.spec.preview
+					? `Warning: Preview output ${middle} were not replaced.`
+					: `Error: Output ${middle} failed to be replaced.`
+			}`
 			if (cfg.spec.preview) {
 				console.error(msg)
 			} else {
