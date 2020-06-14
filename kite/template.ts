@@ -538,6 +538,38 @@ function isTerraformConfig(p: any) {
 
 const placeholderRe = /\(\((.+?)\)\)/g
 
+const yamlSpecials = [
+	'-',
+	'%',
+	'!',
+	'&',
+	'*',
+	' ',
+	'?',
+	'{',
+	'[',
+	']',
+	'}',
+	',',
+	'#',
+	'|',
+	'>',
+	'@',
+	'`',
+	'"',
+	"'",
+]
+
+/** Test if string requires quotes per YAML rules */
+function mustQuote(str: string) {
+	// http://blogs.perl.org/users/tinita/2018/03/strings-in-yaml---to-quote-or-not-to-quote.html
+	return (
+		yamlSpecials.includes(str.charAt(0)) ||
+		str.includes(': ') ||
+		str.includes(' #')
+	)
+}
+
 /** removes placeholders using Terraform state values */
 function substitutePlaceholders(
 	str: string,
@@ -563,9 +595,11 @@ function substitutePlaceholders(
 			stringified !== '"true"' &&
 			stringified !== '"false"'
 		) {
-			let before = stringified.replace(/^"/, '').replace(/"$/, '')
-			if (before === r) {
-				return r
+			let unquoted = stringified.replace(/^"/, '').replace(/"$/, '')
+			if (unquoted === r) {
+				if (!mustQuote(unquoted)) {
+					return r
+				}
 			}
 		}
 		return stringified
