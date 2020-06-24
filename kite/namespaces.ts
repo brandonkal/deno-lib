@@ -87,7 +87,7 @@ export const apiResources = [
 ]
 
 export const namespacedKinds = apiResources
-	.filter((r) => r.namespaced === false)
+	.filter((r) => r.namespaced === true)
 	.map((r) => r.kind)
 
 /** returns whether a resource is a known namespaced Kubernetes resources. */
