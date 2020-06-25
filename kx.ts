@@ -294,7 +294,7 @@ export class Deployment extends k8s.apps.v1.Deployment {
 		}
 		const serviceSpec = {
 			...desc,
-			ports: newPorts || ports,
+			ports: newPorts.length ? newPorts : ports,
 			selector: this.spec.selector.matchLabels,
 			type: desc?.type || undefined,
 		}
