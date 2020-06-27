@@ -332,14 +332,14 @@ async function helmTemplate(opts: helmOpts) {
 	const { chart, releaseName, version, namespace, valuesContent } = opts
 	if (!quiet) console.error(`Rendering the ${chart} helm chart`)
 	let cmd = ['helm', 'template', chart, '--name-template', releaseName]
-	if (valuesContent) {
-		cmd.push('--values', '-')
-	}
 	if (namespace) {
 		cmd.push('--namespace', namespace)
 	}
 	if (version) {
 		cmd.push('--version', version)
+	}
+	if (valuesContent) {
+		cmd.push('--values', '-')
 	}
 	if (!quiet) console.error(`Executing: ${cmd.join(' ')}`)
 	const te = new TextEncoder()
