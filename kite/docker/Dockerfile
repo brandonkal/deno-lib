@@ -1,4 +1,4 @@
-FROM hayd/alpine-deno:1.0.5
+FROM hayd/alpine-deno:1.1.1
 
 EXPOSE 8080
 
@@ -20,4 +20,9 @@ RUN deno cache --unstable \
 
 ENV PATH="/home/deno/.deno/bin:${PATH}"
 
-ENTRYPOINT ["kite"]
+# Server layer
+COPY server.ts .
+RUN deno cache --unstable server.ts
+
+# ENTRYPOINT ["kite"] // not for server
+CMD ["run", "--unstable", "--allow-run", "--allow-env", "--allow-read", "--allow-write", "--allow-net", "server.ts"]
