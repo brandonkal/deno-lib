@@ -152,3 +152,15 @@ export async function withTimeout<V, TO>(
 export function vanillaTag(literals: TemplateStringsArray, ...expr: unknown[]) {
 	return String.raw({ raw: literals } as any, ...expr)
 }
+
+/**
+ * Locate the user's home directory.
+ * Requires `--allow-env`
+ */
+export function homedir() {
+	return (
+		Deno.env.get('HOME') ||
+		Deno.env.get('HOMEPATH') ||
+		Deno.env.get('USERPROFILE')
+	)
+}

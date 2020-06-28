@@ -15,7 +15,7 @@ import * as YAML from 'https://deno.land/std@0.56.0/encoding/yaml.ts'
 import * as base32 from 'https://deno.land/std@0.56.0/encoding/base32.ts'
 import * as k8s from 'https://deno.land/x/lib/kubernetes.ts'
 
-import { dotProp, jsonItem, visitAll, withTimeout } from '../utils.ts'
+import { dotProp, jsonItem, visitAll, withTimeout, homedir } from '../utils.ts'
 import { merge, MergeObject } from '../merge.ts'
 import { hashObject } from '../hash-object.ts'
 import * as filter from './filter-terraform.ts'
@@ -132,9 +132,9 @@ function isTimeoutMessage(x: any) {
 }
 
 /**
- * Takes input YAML as a string and executes Terraform if required.
+ * Takes input YAML as a string and executes Terraform and Helm if required.
  * The resulting state is then queried and combined with argument inputs.
- * The resulting YAML is returned without the Terraform Resource
+ * The resulting YAML is returned without the Terraform Resource and Helm charts rendered.
  */
 export default async function template(
 	cfg: TemplateConfig,
@@ -661,11 +661,11 @@ async function execTerraform(
 	const name = config.metadata.name!
 	const quiet = config.spec.quiet || false
 	const forceApply = config.spec.reload
-	const homeDir = Deno.dir('home')
-	if (!homeDir) {
+	const home = homedir()
+	if (!home) {
 		throw new TemplateError('Could not locate home directory')
 	}
-	const tfDir = path.join(homeDir, '.kite', name)
+	const tfDir = path.join(home, '.kite', name)
 	const tfFile = path.join(tfDir + '/kite.tf.json')
 	const hashFile = path.join(tfDir + '/env.hash')
 	await fs.ensureDir(tfDir)
@@ -711,7 +711,7 @@ async function execTerraform(
 		await fs.writeFileStr(tfFile, cfgText)
 		const hashPromise = fs.writeFileStr(hashFile, envHash)
 		// Ensure tf config exists
-		const tfConfigPath = path.join(homeDir, '.terraformrc')
+		const tfConfigPath = path.join(home, '.terraformrc')
 		const hasTF = await fs.exists(tfConfigPath)
 		if (!hasTF) {
 			const tfConfig = `plugin_cache_dir = "$HOME/.terraform.d/plugin-cache"\ndisable_checkpoint = true\n`
