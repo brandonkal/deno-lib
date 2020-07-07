@@ -49,7 +49,7 @@ export async function fetchRetry(
 	input: string | Request | URL,
 	init?: RequestInit,
 	retryOpts: RetryOptions = { delay: 4000, times: 5 }
-) {
+): Promise<Response> {
 	const fn = async () => {
 		return fetch(input, init).then((res) => {
 			if (needsRetry(res)) {
@@ -63,10 +63,11 @@ export async function fetchRetry(
 			'If retryOpts is specified, both delay and times must be declared.'
 		)
 	}
-	retryAsync(fn, retryOpts).then((res) => {
-		if (!res.ok) {
+	return retryAsync(fn, retryOpts).then((res) => {
+		if (res.ok === false) {
 			throw res
 		}
+		return res
 	})
 }
 
