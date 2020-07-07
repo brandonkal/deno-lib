@@ -13,6 +13,7 @@ deno test --unstable `fd test`
 > Update the Deno cache. Run after pushing changes.
 
 ```bash
+set -e
 for file in `$INKJET changed`; do
   deno cache --unstable -r=https://deno.land/x/lib/${file} https://deno.land/x/lib/${file}
 done
