@@ -356,13 +356,19 @@ func makeTypescriptType(resourceType, propName string, prop map[string]interface
 			if additionalProperties, exists := prop["additionalProperties"]; exists {
 				mapType := additionalProperties.(map[string]interface{})
 				if ktype, exists := mapType["type"]; exists && len(mapType) == 1 {
-					return fmt.Sprintf("{[key: %s]: %s}", ktype, ktype)
+					if ktype == "string" {
+						return "Dictionary<string, string>"
+					}
+					return fmt.Sprintf("{[key: %s]: %s}", ktype, ktype) // doesn't happen
 				}
+			} else if tstr == "string" && resourceType == "io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta" && propName == "namespace" {
+				// Special case: `.metadata.namespace` should either take a string or a namespace object
+				// itself.
+				return "string | core.v1.Namespace"
 			}
-		} else if tstr == "string" && resourceType == "io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta" && propName == "namespace" {
-			// Special case: `.metadata.namespace` should either take a string or a namespace object
-			// itself.
-			return "string | core.v1.Namespace"
+		}
+		if tstr == "object" {
+			return "Dictionary<string, unknown>" // doesn't happen
 		}
 		return tstr
 	}
@@ -376,7 +382,7 @@ func makeTypescriptType(resourceType, propName string, prop map[string]interface
 	case intOrString:
 		ref = "number | string"
 	case v1Fields, v1FieldsV1, rawExtension:
-		ref = object
+		ref = "Dictionary<string, unknown>"
 	case v1Time, v1MicroTime:
 		// TODO: Automatically deserialized with `DateConstructor`.
 		ref = stringT
@@ -558,6 +564,11 @@ func createGroups(definitionsJSON map[string]interface{}) []*GroupConfig {
 						} else {
 							defaultValue = "Object.assign({}, desc && desc.metadata || {}, { name: desc?.metadata?.name || name })"
 						}
+					}
+
+					// We know secrets only accept strings
+					if propName == "data" && d.gvk.Kind == "Secret" {
+						tsType = "Dictionary<string, string>"
 					}
 
 					return &Property{

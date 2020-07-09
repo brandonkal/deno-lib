@@ -80,16 +80,5 @@ func NodeJSClient(
 		return "", "", err
 	}
 
-	// We make some modifications for safer TypeScript type checking
-	var dict = "Dictionary<string, string>"
-	apits = strings.Replace(apits, "{ [key: string]: string }", dict, -1)
-	typests = strings.Replace(typests, "{ [key: string]: string }", dict, -1)
-
-	apits = strings.Replace(apits, "data?: object", "data?: Dictionary<string, string>", -1)
-	typests = strings.Replace(typests, "data?: object", "data?: Dictionary<string, string>", -1)
-
-	apits = strings.Replace(apits, ": object", ": Dictionary<string, any>", -1)
-	typests = strings.Replace(typests, ": object", ": Dictionary<string, any>", -1)
-
 	return typests, apits, nil
 }

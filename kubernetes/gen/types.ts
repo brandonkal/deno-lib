@@ -1546,9 +1546,9 @@ export namespace apiextensions {
 			 */
 			default?: any
 
-			definitions?: Dictionary<string, any>
+			definitions?: Dictionary<string, unknown>
 
-			dependencies?: Dictionary<string, any>
+			dependencies?: Dictionary<string, unknown>
 
 			description?: string
 
@@ -1625,9 +1625,9 @@ export namespace apiextensions {
 
 			pattern?: string
 
-			patternProperties?: Dictionary<string, any>
+			patternProperties?: Dictionary<string, unknown>
 
-			properties?: Dictionary<string, any>
+			properties?: Dictionary<string, unknown>
 
 			required?: string[]
 
@@ -2247,9 +2247,9 @@ export namespace apiextensions {
 			 */
 			default?: any
 
-			definitions?: Dictionary<string, any>
+			definitions?: Dictionary<string, unknown>
 
-			dependencies?: Dictionary<string, any>
+			dependencies?: Dictionary<string, unknown>
 
 			description?: string
 
@@ -2326,9 +2326,9 @@ export namespace apiextensions {
 
 			pattern?: string
 
-			patternProperties?: Dictionary<string, any>
+			patternProperties?: Dictionary<string, unknown>
 
-			properties?: Dictionary<string, any>
+			properties?: Dictionary<string, unknown>
 
 			required?: string[]
 
@@ -2871,7 +2871,7 @@ export namespace apps {
 			/**
 			 * Data is the serialized representation of the state.
 			 */
-			data?: Dictionary<string, string>
+			data?: Dictionary<string, unknown>
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3978,7 +3978,7 @@ export namespace authentication {
 			/**
 			 * Any additional information provided by the authenticator.
 			 */
-			extra?: Dictionary<string, any>
+			extra?: Dictionary<string, unknown>
 
 			/**
 			 * The names of groups this user is a part of.
@@ -4059,7 +4059,7 @@ export namespace authentication {
 			/**
 			 * Any additional information provided by the authenticator.
 			 */
-			extra?: Dictionary<string, any>
+			extra?: Dictionary<string, unknown>
 
 			/**
 			 * The names of groups this user is a part of.
@@ -4387,7 +4387,7 @@ export namespace authorization {
 			 * Extra corresponds to the user.Info.GetExtra() method from the authenticator.  Since that is
 			 * input to the authorizer it needs a reflection here.
 			 */
-			extra?: Dictionary<string, any>
+			extra?: Dictionary<string, unknown>
 
 			/**
 			 * Groups is the groups you're testing for.
@@ -4722,7 +4722,7 @@ export namespace authorization {
 			 * Extra corresponds to the user.Info.GetExtra() method from the authenticator.  Since that is
 			 * input to the authorizer it needs a reflection here.
 			 */
-			extra?: Dictionary<string, any>
+			extra?: Dictionary<string, unknown>
 
 			/**
 			 * Groups is the groups you're testing for.
@@ -6266,7 +6266,7 @@ export namespace certificates {
 			/**
 			 * Extra information about the requesting user. See user.Info interface for details.
 			 */
-			extra?: Dictionary<string, any>
+			extra?: Dictionary<string, unknown>
 
 			/**
 			 * Group information about the requesting user. See user.Info interface for details.
@@ -6786,7 +6786,7 @@ export namespace core {
 			/**
 			 * Attributes of the volume to publish.
 			 */
-			volumeAttributes?: { [key: string]: string }
+			volumeAttributes?: Dictionary<string, string>
 		}
 
 		/**
@@ -6822,7 +6822,7 @@ export namespace core {
 			 * VolumeAttributes stores driver-specific properties that are passed to the CSI driver.
 			 * Consult your driver's documentation for supported values.
 			 */
-			volumeAttributes?: { [key: string]: string }
+			volumeAttributes?: Dictionary<string, string>
 		}
 
 		/**
@@ -7034,7 +7034,7 @@ export namespace core {
 			 * stored in BinaryData must not overlap with the ones in the Data field, this is enforced
 			 * during validation process. Using this field will require 1.10+ apiserver and kubelet.
 			 */
-			binaryData?: Dictionary<string, any>
+			binaryData?: Dictionary<string, unknown>
 
 			/**
 			 * Data contains the configuration data. Each key must consist of alphanumeric characters,
@@ -7042,7 +7042,7 @@ export namespace core {
 			 * keys stored in Data must not overlap with the keys in the BinaryData field, this is
 			 * enforced during validation process.
 			 */
-			data?: { [key: string]: string }
+			data?: Dictionary<string, string>
 
 			/**
 			 * Immutable, if set to true, ensures that data stored in the ConfigMap cannot be updated
@@ -8312,7 +8312,7 @@ export namespace core {
 			/**
 			 * Optional: Extra command options if any.
 			 */
-			options?: { [key: string]: string }
+			options?: Dictionary<string, string>
 
 			/**
 			 * Optional: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in
@@ -8347,7 +8347,7 @@ export namespace core {
 			/**
 			 * Optional: Extra command options if any.
 			 */
-			options?: { [key: string]: string }
+			options?: Dictionary<string, string>
 
 			/**
 			 * Optional: Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in
@@ -8840,30 +8840,30 @@ export namespace core {
 			/**
 			 * Default resource requirement limit value by resource name if resource limit is omitted.
 			 */
-			default?: Dictionary<string, any>
+			default?: Dictionary<string, unknown>
 
 			/**
 			 * DefaultRequest is the default resource requirement request value by resource name if
 			 * resource request is omitted.
 			 */
-			defaultRequest?: Dictionary<string, any>
+			defaultRequest?: Dictionary<string, unknown>
 
 			/**
 			 * Max usage constraints on this kind by resource name.
 			 */
-			max?: Dictionary<string, any>
+			max?: Dictionary<string, unknown>
 
 			/**
 			 * MaxLimitRequestRatio if specified, the named resource must have a request and limit that
 			 * are both non-zero where limit divided by request is less than or equal to the enumerated
 			 * value; this represents the max burst for the named resource.
 			 */
-			maxLimitRequestRatio?: Dictionary<string, any>
+			maxLimitRequestRatio?: Dictionary<string, unknown>
 
 			/**
 			 * Min usage constraints on this kind by resource name.
 			 */
-			min?: Dictionary<string, any>
+			min?: Dictionary<string, unknown>
 		}
 
 		/**
@@ -9770,7 +9770,7 @@ export namespace core {
 			 * A description of the persistent volume's resources and capacity. More info:
 			 * https://kubernetes.io/docs/concepts/storage/persistent-volumes#capacity
 			 */
-			capacity?: Dictionary<string, any>
+			capacity?: Dictionary<string, unknown>
 
 			/**
 			 * CephFS represents a Ceph FS mount on the host that shares a pod's lifetime
@@ -10387,7 +10387,7 @@ export namespace core {
 			 * must match a node's labels for the pod to be scheduled on that node. More info:
 			 * https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
 			 */
-			nodeSelector?: { [key: string]: string }
+			nodeSelector?: Dictionary<string, string>
 
 			/**
 			 * Overhead represents the resource overhead associated with running a pod for a given
@@ -10401,7 +10401,7 @@ export namespace core {
 			 * alpha-level as of Kubernetes v1.16, and is only honored by servers that enable the
 			 * PodOverhead feature.
 			 */
-			overhead?: Dictionary<string, any>
+			overhead?: Dictionary<string, unknown>
 
 			/**
 			 * PreemptionPolicy is the Policy for preempting pods with lower priority. One of Never,
@@ -11003,7 +11003,7 @@ export namespace core {
 			 * defaulted to labels on Pod template. More info:
 			 * https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors
 			 */
-			selector?: { [key: string]: string }
+			selector?: Dictionary<string, string>
 
 			/**
 			 * Template is the object that describes the pod that will be created if insufficient replicas
@@ -11115,7 +11115,7 @@ export namespace core {
 			 * hard is the set of desired hard limits for each named resource. More info:
 			 * https://kubernetes.io/docs/concepts/policy/resource-quotas/
 			 */
-			hard?: Dictionary<string, any>
+			hard?: Dictionary<string, unknown>
 
 			/**
 			 * scopeSelector is also a collection of filters like scopes that must match each object
@@ -11140,7 +11140,7 @@ export namespace core {
 			 * Limits describes the maximum amount of compute resources allowed. More info:
 			 * https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
 			 */
-			limits?: Dictionary<string, any>
+			limits?: Dictionary<string, unknown>
 
 			/**
 			 * Requests describes the minimum amount of compute resources required. If Requests is omitted
@@ -11148,7 +11148,7 @@ export namespace core {
 			 * implementation-defined value. More info:
 			 * https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
 			 */
-			requests?: Dictionary<string, any>
+			requests?: Dictionary<string, unknown>
 		}
 
 		/**
@@ -11379,7 +11379,7 @@ export namespace core {
 			 * write-only convenience method. All keys and values are merged into the data field on write,
 			 * overwriting any existing values. It is never output when reading from the API.
 			 */
-			stringData?: { [key: string]: string }
+			stringData?: Dictionary<string, string>
 
 			/**
 			 * Used to facilitate programmatic handling of secret data.
@@ -11973,7 +11973,7 @@ export namespace core {
 			 * LoadBalancer. Ignored if type is ExternalName. More info:
 			 * https://kubernetes.io/docs/concepts/services-networking/service/
 			 */
-			selector?: { [key: string]: string }
+			selector?: Dictionary<string, string>
 
 			/**
 			 * Supports "ClientIP" and "None". Used to maintain session affinity. Enable client IP based
@@ -12675,7 +12675,7 @@ export namespace discovery {
 			 * * topology.kubernetes.io/region: the value indicates the region where the
 			 *   endpoint is located. This should match the corresponding node label.
 			 */
-			topology?: { [key: string]: string }
+			topology?: Dictionary<string, string>
 		}
 
 		/**
@@ -14081,7 +14081,7 @@ export namespace meta {
 			 * equivalent to an element of matchExpressions, whose key field is "key", the operator is
 			 * "In", and the values array contains only "value". The requirements are ANDed.
 			 */
-			matchLabels?: { [key: string]: string }
+			matchLabels?: Dictionary<string, string>
 		}
 
 		/**
@@ -14174,7 +14174,7 @@ export namespace meta {
 			/**
 			 * FieldsV1 holds the first JSON version format as described in the "FieldsV1" type.
 			 */
-			fieldsV1?: Dictionary<string, any>
+			fieldsV1?: Dictionary<string, unknown>
 
 			/**
 			 * Manager is an identifier of the workflow managing these fields.
@@ -14209,7 +14209,7 @@ export namespace meta {
 			 * be preserved when modifying objects. More info:
 			 * http://kubernetes.io/docs/user-guide/annotations
 			 */
-			annotations?: { [key: string]: string }
+			annotations?: Dictionary<string, string>
 
 			/**
 			 * The name of the cluster which the object belongs to. This is used to distinguish resources
@@ -14299,7 +14299,7 @@ export namespace meta {
 			 * select) objects. May match selectors of replication controllers and services. More info:
 			 * http://kubernetes.io/docs/user-guide/labels
 			 */
-			labels?: { [key: string]: string }
+			labels?: Dictionary<string, string>
 
 			/**
 			 * ManagedFields maps workflow-id and version to the set of fields that are managed by that
@@ -14328,7 +14328,7 @@ export namespace meta {
 			 * Must be a DNS_LABEL. Cannot be updated. More info:
 			 * http://kubernetes.io/docs/user-guide/namespaces
 			 */
-			namespace?: string | core.v1.Namespace
+			namespace?: string
 
 			/**
 			 * List of objects depended by this object. If ALL objects in the list have been deleted, this
@@ -14588,7 +14588,7 @@ export namespace meta {
 			 *  * If Type is Error: *Status is recommended; other types may make sense
 			 *    depending on context.
 			 */
-			object: Dictionary<string, any>
+			object: Dictionary<string, unknown>
 
 			type: string
 		}
@@ -15185,7 +15185,7 @@ export namespace node {
 			/**
 			 * PodFixed represents the fixed resource overhead associated with running a pod.
 			 */
-			podFixed?: Dictionary<string, any>
+			podFixed?: Dictionary<string, unknown>
 		}
 
 		/**
@@ -15313,7 +15313,7 @@ export namespace node {
 			 * RuntimeClass nodeSelector is merged with a pod's existing nodeSelector. Any conflicts will
 			 * cause the pod to be rejected in admission.
 			 */
-			nodeSelector?: { [key: string]: string }
+			nodeSelector?: Dictionary<string, string>
 
 			/**
 			 * tolerations are appended (excluding duplicates) to pods running with this RuntimeClass
@@ -15331,7 +15331,7 @@ export namespace node {
 			/**
 			 * PodFixed represents the fixed resource overhead associated with running a pod.
 			 */
-			podFixed?: Dictionary<string, any>
+			podFixed?: Dictionary<string, unknown>
 		}
 
 		/**
@@ -15445,7 +15445,7 @@ export namespace node {
 			 * RuntimeClass nodeSelector is merged with a pod's existing nodeSelector. Any conflicts will
 			 * cause the pod to be rejected in admission.
 			 */
-			nodeSelector?: { [key: string]: string }
+			nodeSelector?: Dictionary<string, string>
 
 			/**
 			 * tolerations are appended (excluding duplicates) to pods running with this RuntimeClass
@@ -18121,7 +18121,7 @@ export namespace storage {
 			 * Parameters holds the parameters for the provisioner that should create volumes of this
 			 * storage class.
 			 */
-			parameters?: { [key: string]: string }
+			parameters?: Dictionary<string, string>
 
 			/**
 			 * Dynamically provisioned PersistentVolumes of this storage class are created with this
@@ -18794,7 +18794,7 @@ export namespace storage {
 			 * Parameters holds the parameters for the provisioner that should create volumes of this
 			 * storage class.
 			 */
-			parameters?: { [key: string]: string }
+			parameters?: Dictionary<string, string>
 
 			/**
 			 * Dynamically provisioned PersistentVolumes of this storage class are created with this

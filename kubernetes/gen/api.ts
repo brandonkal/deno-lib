@@ -859,7 +859,7 @@ export namespace apps {
 			/**
 			 * Data is the serialized representation of the state.
 			 */
-			data?: Dictionary<string, string>
+			data?: Dictionary<string, unknown>
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3023,7 +3023,7 @@ export namespace core {
 			 * stored in BinaryData must not overlap with the ones in the Data field, this is enforced
 			 * during validation process. Using this field will require 1.10+ apiserver and kubelet.
 			 */
-			binaryData?: Dictionary<string, any>
+			binaryData?: Dictionary<string, unknown>
 
 			/**
 			 * Data contains the configuration data. Each key must consist of alphanumeric characters,
@@ -3031,7 +3031,7 @@ export namespace core {
 			 * keys stored in Data must not overlap with the keys in the BinaryData field, this is
 			 * enforced during validation process.
 			 */
-			data?: { [key: string]: string }
+			data?: Dictionary<string, string>
 
 			/**
 			 * Immutable, if set to true, ensures that data stored in the ConfigMap cannot be updated
@@ -4368,7 +4368,7 @@ export namespace core {
 			 * write-only convenience method. All keys and values are merged into the data field on write,
 			 * overwriting any existing values. It is never output when reading from the API.
 			 */
-			stringData?: { [key: string]: string }
+			stringData?: Dictionary<string, string>
 
 			/**
 			 * Used to facilitate programmatic handling of secret data.
@@ -8189,7 +8189,7 @@ export namespace storage {
 			 * Parameters holds the parameters for the provisioner that should create volumes of this
 			 * storage class.
 			 */
-			parameters?: { [key: string]: string }
+			parameters?: Dictionary<string, string>
 
 			/**
 			 * Provisioner indicates the type of the provisioner.
@@ -8763,7 +8763,7 @@ export namespace storage {
 			 * Parameters holds the parameters for the provisioner that should create volumes of this
 			 * storage class.
 			 */
-			parameters?: { [key: string]: string }
+			parameters?: Dictionary<string, string>
 
 			/**
 			 * Provisioner indicates the type of the provisioner.
