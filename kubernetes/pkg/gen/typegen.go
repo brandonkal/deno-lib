@@ -28,7 +28,7 @@ import (
 )
 
 const (
-	object  = "object"
+	object  = "object" // overridden in nodejs.go
 	stringT = "string"
 )
 

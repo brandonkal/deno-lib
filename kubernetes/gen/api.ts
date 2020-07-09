@@ -4,6 +4,7 @@
 
 import * as types from './types.ts'
 import * as kite from '../../kite.ts'
+type Dictionary<K extends string, T> = { [P in K]?: T }
 
 export namespace admissionregistration {
 	export namespace v1 {
@@ -858,7 +859,7 @@ export namespace apps {
 			/**
 			 * Data is the serialized representation of the state.
 			 */
-			data?: object
+			data?: Dictionary<string, string>
 
 			/**
 			 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -3022,7 +3023,7 @@ export namespace core {
 			 * stored in BinaryData must not overlap with the ones in the Data field, this is enforced
 			 * during validation process. Using this field will require 1.10+ apiserver and kubelet.
 			 */
-			binaryData?: object
+			binaryData?: Dictionary<string, any>
 
 			/**
 			 * Data contains the configuration data. Each key must consist of alphanumeric characters,
@@ -4338,7 +4339,7 @@ export namespace core {
 			 * arbitrary (possibly non-string) data value here. Described in
 			 * https://tools.ietf.org/html/rfc4648#section-4
 			 */
-			data?: object
+			data?: Dictionary<string, string>
 
 			/**
 			 * Immutable, if set to true, ensures that data stored in the Secret cannot be updated (only
