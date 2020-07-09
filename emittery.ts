@@ -208,10 +208,7 @@ class Emittery {
 	emitter.emit('🐶', '🍖'); // log => '🍖'
 	```
 	*/
-	on(
-		eventNames: EventNames,
-		listener: (eventData?: unknown) => void
-	): () => void {
+	on(eventNames: EventNames, listener: (eventData?: any) => void): () => void {
 		assertListener(listener)
 
 		eventNames = Array.isArray(eventNames) ? eventNames : [eventNames]
@@ -250,7 +247,7 @@ class Emittery {
 	})();
 	```
 	*/
-	off(eventNames: EventNames, listener: (eventData?: unknown) => void): void {
+	off(eventNames: EventNames, listener: (eventData?: any) => void): void {
 		assertListener(listener)
 
 		eventNames = Array.isArray(eventNames) ? eventNames : [eventNames]
@@ -394,7 +391,7 @@ class Emittery {
 
 	@returns A promise that resolves when all the event listeners are done. *Done* meaning executed if synchronous or resolved when an async/promise-returning function. You usually wouldn't want to wait for this, but you could for example catch possible errors. If any of the listeners throw/reject, the returned promise will be rejected with the error, but the other listeners will not be affected.
 	*/
-	async emit(eventName: EventName, eventData?: unknown): Promise<void> {
+	async emit(eventName: EventName, eventData?: any): Promise<void> {
 		assertEventName(eventName)
 
 		enqueueProducers(this, eventName, eventData)
@@ -428,7 +425,7 @@ class Emittery {
 
 	@returns A promise that resolves when all the event listeners are done.
 	*/
-	async emitSerial(eventName: EventName, eventData?: unknown): Promise<void> {
+	async emitSerial(eventName: EventName, eventData?: any): Promise<void> {
 		assertEventName(eventName)
 
 		const listeners = getListeners(this, eventName)
@@ -458,7 +455,7 @@ class Emittery {
 	@returns A method to unsubscribe.
 	*/
 	onAny(
-		listener: (eventName: EventName, eventData?: unknown) => unknown
+		listener: (eventName: EventName, eventData?: any) => unknown
 	): () => void {
 		assertListener(listener)
 		anyMap.get(this).add(listener)
@@ -473,7 +470,7 @@ class Emittery {
 	/**
 	Remove an `onAny` subscription.
 	*/
-	offAny(listener: (eventName: EventName, eventData?: unknown) => void): void {
+	offAny(listener: (eventName: EventName, eventData?: any) => void): void {
 		assertListener(listener)
 		this.emit(listenerRemoved, { listener })
 		anyMap.get(this).delete(listener)
