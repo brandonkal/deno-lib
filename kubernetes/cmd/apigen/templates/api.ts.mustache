@@ -16,7 +16,7 @@ export namespace {{Group}} {
 		export class {{Kind}} extends kite.Resource {
 			{{#Properties}}
 			{{{Comment}}}
-			readonly {{Name}}{{^Required}}?{{/Required}}{{#Required}}!{{/Required}}: {{{Type}}};
+			{{Name}}{{^Required}}?{{/Required}}{{#Required}}!{{/Required}}: {{{Type}}};
 
 			{{/Properties}}
 
