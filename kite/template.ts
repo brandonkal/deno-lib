@@ -167,7 +167,7 @@ export default async function template(
 			stdout: 'piped',
 		})
 
-		const out = await withTimeout(15, p.output.bind(p), timeoutMsg)
+		const out = await withTimeout(15e3, p.output.bind(p), timeoutMsg)
 		if (isTimeoutMessage(out)) {
 			p.kill(6)
 			throw new TemplateError('Config program timed out.')
