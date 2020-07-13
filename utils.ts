@@ -171,3 +171,10 @@ export function homedir() {
 		Deno.env.get('USERPROFILE')
 	)
 }
+
+/** stringify item to string  */
+export function asString(data: any) {
+	let errStr = String(data)
+	if (errStr === '[object Object]') errStr = JSON.stringify(data)
+	return errStr
+}
