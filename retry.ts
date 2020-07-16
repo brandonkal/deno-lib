@@ -5,7 +5,7 @@
  * @license MIT
  */
 
-import { delay as wait } from 'https://deno.land/std@0.60.0/async/delay.ts'
+import { delay as wait } from 'https://deno.land/std@0.61.0/async/delay.ts'
 
 /**
  * Retry an async function until it does not throw an exception.

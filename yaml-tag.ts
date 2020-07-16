@@ -9,9 +9,9 @@
  * @license MIT
  */
 
-import * as YAML from 'https://deno.land/std@0.56.0/encoding/yaml.ts'
-import { Type } from 'https://deno.land/std@0.56.0/encoding/_yaml/type.ts'
-import { Schema } from 'https://deno.land/std@0.56.0/encoding/_yaml/schema.ts'
+import * as YAML from 'https://deno.land/std@0.61.0/encoding/yaml.ts'
+import { Type } from 'https://deno.land/std@0.61.0/encoding/_yaml/type.ts'
+import { Schema } from 'https://deno.land/std@0.61.0/encoding/_yaml/schema.ts'
 import { execDedent } from './dedent.ts'
 import { stripUndefined } from './utils.ts'
 

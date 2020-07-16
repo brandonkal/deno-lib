@@ -1,4 +1,4 @@
-import { assertEquals } from 'https://deno.land/std@0.56.0/testing/asserts.ts'
+import { assertEquals } from 'https://deno.land/std@0.61.0/testing/asserts.ts'
 const it = Deno.test
 import { canonicalizeOptions, CliFlags } from './template-cli.ts'
 import { TemplateConfig } from './template.ts'

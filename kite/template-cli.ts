@@ -16,7 +16,7 @@ import template, {
 } from './template.ts'
 import { getArgsObject } from '../args.ts'
 import { merge } from '../merge.ts'
-import * as YAML from 'https://deno.land/std@0.56.0/encoding/yaml.ts'
+import * as YAML from 'https://deno.land/std@0.61.0/encoding/yaml.ts'
 
 const helpText = `\
 Kite™️ Template Tool by Brandon Kalinowski @brandonkal

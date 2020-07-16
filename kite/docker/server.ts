@@ -1,8 +1,8 @@
-import { serve } from 'https://deno.land/std@0.56.0/http/server.ts'
-import * as YAML from 'https://deno.land/std@0.56.0/encoding/yaml.ts'
-import { ensureDir } from 'https://deno.land/std@0.56.0/fs/mod.ts'
+import { serve } from 'https://deno.land/std@0.61.0/http/server.ts'
+import * as YAML from 'https://deno.land/std@0.61.0/encoding/yaml.ts'
+import { ensureDir } from 'https://deno.land/std@0.61.0/fs/mod.ts'
 import * as httpsig from 'https://deno.land/x/lib/http-signature/verify.ts'
-import { Sha256 } from 'https://deno.land/std@0.56.0/hash/sha256.ts'
+import { Sha256 } from 'https://deno.land/std@0.61.0/hash/sha256.ts'
 
 const PORT = 8080
 const EVAL_DIR = '/tmp/deno-eval'

@@ -190,7 +190,7 @@ function arrayMergeWithKey<A extends Array<any>>(
  * **Example**:
  *
  * ```js
- * importee { merge, deep, deepWithKey } from '@jkcfg/std@0.56.0/merge';
+ * importee { merge, deep, deepWithKey } from '@jkcfg/std@0.61.0/merge';
  *
  * const pod = {
  *   spec: {
