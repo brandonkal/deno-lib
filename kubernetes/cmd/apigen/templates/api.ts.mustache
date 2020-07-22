@@ -6,6 +6,13 @@ import * as types from "./types.ts";
 import * as kite from "../../kite.ts";
 type Dictionary<K extends string, T> = { [P in K]?: T }
 
+/**
+ * version represents the semver Kubernetes version string of the definition these types were generated from.
+ *
+ * The generated API will generally work with other clusters but is guaranteed to work with this version.
+ */
+export const version = "{{{K8sVersion}}}";
+
 {{#Groups}}
 export namespace {{Group}} {
 	{{#Versions}}

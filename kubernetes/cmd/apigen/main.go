@@ -21,6 +21,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"strings"
 
 	"github.com/brandonkal/deno-lib/kubernetes/pkg/gen"
 )
@@ -40,9 +41,11 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	k8sVersion := strings.Replace(os.Args[2], "v", "", 1)
+	data["k8sVersion"] = k8sVersion
 
-	templateDir := os.Args[2]
-	outdir := os.Args[3]
+	templateDir := os.Args[3]
+	outdir := os.Args[4]
 
 	writeNodeJSClient(data, outdir, templateDir)
 }

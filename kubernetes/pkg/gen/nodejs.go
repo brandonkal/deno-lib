@@ -34,6 +34,7 @@ func NodeJSClient(
 	swagger map[string]interface{}, templateDir string,
 ) (typests, apits string, err error) {
 	definitions := swagger["definitions"].(map[string]interface{})
+	k8sVersion := swagger["k8sVersion"].(string)
 
 	groupsSlice := createGroups(definitions)
 	typests, err = mustache.RenderFile(fmt.Sprintf("%s/types.ts.mustache", templateDir),
@@ -74,7 +75,8 @@ func NodeJSClient(
 
 	apits, err = mustache.RenderFile(fmt.Sprintf("%s/api.ts.mustache", templateDir),
 		map[string]interface{}{
-			"Groups": filteredApi,
+			"Groups":     filteredApi,
+			"K8sVersion": k8sVersion,
 		})
 	if err != nil {
 		return "", "", err
