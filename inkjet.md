@@ -1,6 +1,6 @@
 # Inkjet Commands
 
-## test//\_default
+## test//default
 
 > Run tests for Deno
 
