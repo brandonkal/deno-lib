@@ -623,8 +623,8 @@ func createGroups(definitionsJSON map[string]interface{}) []*GroupConfig {
 			_, hasMeta := props["metadata"]
 			if apiVersionExists {
 				typeGuard = fmt.Sprintf(`
-    export function is%s(o: any): o is %s {
-      return o.apiVersion == "%s" && o.kind == "%s";
+    export function is%s(o: unknown): o is %s {
+      return isObject(o) && o.apiVersion == "%s" && o.kind == "%s";
     }`, d.gvk.Kind, d.gvk.Kind, defaultGroupVersion, d.gvk.Kind)
 			}
 

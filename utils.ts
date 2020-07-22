@@ -22,7 +22,7 @@ export function stripUndefined<T extends Record<string, any>>(obj: T): T {
 /**
  * Returns true if x is an object, false otherwise.
  */
-export function isObject(o: any): o is Record<string | symbol, any> {
+export function isObject(o: unknown): o is Record<string | symbol, any> {
 	return typeof o === 'object' && !Array.isArray(o) && !!o
 }
 
