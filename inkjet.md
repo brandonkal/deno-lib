@@ -15,7 +15,7 @@ deno test --unstable `fd test`
 ```bash
 set -e
 for file in `$INKJET changed`; do
-  deno cache --unstable -r=https://deno.land/x/lib/${file} https://deno.land/x/lib/${file}
+  deno cache --unstable -r=https://x.kite.run/lib/${file} https://x.kite.run/lib/${file}
 done
 
 echo -n `git rev-parse HEAD` >| .git/last_push.txt

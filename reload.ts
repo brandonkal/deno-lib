@@ -32,7 +32,7 @@ export default async function reload() {
 	console.error(files.join('\n'))
 
 	async function fetchFile(mod: string) {
-		const url = `https://deno.land/x/lib/${mod}`
+		const url = `https://x.kite.run/lib/${mod}`
 		const p = Deno.run({
 			cmd: ['deno', 'cache', '--unstable', `-r=${url}`, url],
 		})

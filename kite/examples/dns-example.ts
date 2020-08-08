@@ -1,6 +1,6 @@
 import * as digitalocean from '../digitalocean/mod.ts'
 import * as kite from '../../kite.ts'
-import * as rt from 'https://deno.land/x/lib/runtypes.ts'
+import * as rt from 'https://x.kite.run/lib/runtypes.ts'
 
 const Config = rt.Record({
 	domain: rt.String,

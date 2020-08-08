@@ -13,7 +13,7 @@ import titleCase from 'https://deno.land/x/case@v2.0.0/titleCase.ts'
 import { sha256 } from 'https://deno.land/x/sha256@v1.0.2/mod.ts'
 import * as YAML from 'https://deno.land/std@0.61.0/encoding/yaml.ts'
 import * as base32 from 'https://deno.land/std@0.61.0/encoding/base32.ts'
-import * as k8s from 'https://deno.land/x/lib/kubernetes.ts'
+import * as k8s from 'https://x.kite.run/lib/kubernetes.ts'
 
 import { dotProp, jsonItem, visitAll, withTimeout, homedir } from '../utils.ts'
 import { merge, MergeObject } from '../merge.ts'

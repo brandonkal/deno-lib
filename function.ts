@@ -6,7 +6,7 @@
  * @license MIT
  */
 
-import * as kite from 'https://deno.land/x/lib/kite.ts'
+import * as kite from './kite.ts'
 
 /**
  * FFunction is an OpenFaaS function definition. It describes how to build and deploy a function microservice.
