@@ -34,3 +34,11 @@ if [ "$current" != "$last" ]; then
   echo $files
 fi
 ```
+
+## checkall//c
+
+> Typecheck all files by caching them
+
+```sh
+deno cache --unstable `fd -e ts`
+```
