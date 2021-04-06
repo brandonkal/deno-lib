@@ -6,10 +6,11 @@
  * @description Chainable Promise Proxy utility.
  * Proxymise allows for method and property chaining without need for intermediate
  * then() or await for cleaner and simpler code.
+ * @see https://github.com/kozhevnikov/proxymise
  * @license MIT
  */
 
-export function proxymise(target) {
+export function proxymise(target: any) {
 	if (typeof target === 'object') {
 		const proxy = () => target
 		//@ts-ignore
@@ -20,35 +21,34 @@ export function proxymise(target) {
 }
 
 const handler = {
-	// construct(target, argumentsList) {
-	//   if (target.__proxy__) target = target();
-	//   return proxymise(Reflect.construct(target, argumentsList));
-	// },
-
-	get(target, property, receiver) {
+	get(target: any, property: any, receiver: any): any {
 		if (target.__proxy__) target = target()
 		if (
 			property !== 'then' &&
 			property !== 'catch' &&
 			typeof target.then === 'function'
 		) {
-			return proxymise(target.then((value) => get(value, property, receiver)))
+			return proxymise(
+				target.then((value: any) => get(value, property, receiver))
+			)
 		}
 		return proxymise(get(target, property, receiver))
 	},
 
-	apply(target, thisArg, argumentsList) {
+	apply(target: any, thisArg: any, argumentsList: any): any {
 		if (target.__proxy__) target = target()
 		if (typeof target.then === 'function') {
 			return proxymise(
-				target.then((value) => Reflect.apply(value, thisArg, argumentsList))
+				target.then((value: any) =>
+					Reflect.apply(value, thisArg, argumentsList)
+				)
 			)
 		}
 		return proxymise(Reflect.apply(target, thisArg, argumentsList))
 	},
 }
 
-const get = (target, property, receiver) => {
+const get = (target: any, property: any, receiver: any) => {
 	const value =
 		typeof target === 'object'
 			? Reflect.get(target, property, receiver)

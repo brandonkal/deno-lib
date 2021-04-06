@@ -43,14 +43,14 @@ export function deepResolve<T>(
 		return _callback(null, object)
 	}
 
-	return new Promise(function(presolve, reject) {
-		var callback = function(err, res) {
+	return new Promise(function (presolve, reject) {
+		var callback = function (err: any, res: any) {
 			if (err) {
 				reject(err)
 			} else {
 				presolve(res)
 			}
-			_callback(err, res)
+			_callback!(err, res)
 		}
 
 		// If it is a promise, wait for it to resolve.
@@ -68,8 +68,9 @@ export function deepResolve<T>(
 		}
 
 		// Build a list of promises and promise-like structures to wait for.
-		var remains = []
-		Object.keys(object).forEach(function(key) {
+		let remains: any[] = []
+		Object.keys(object).forEach(function (key) {
+			//@ts-ignore crazy any
 			var item = object[key]
 			if (isPromise(item) || isObject(item)) {
 				remains.push(key)
@@ -82,8 +83,9 @@ export function deepResolve<T>(
 		}
 
 		// Otherwise, loop through the list.
-		var pending = remains.length
-		remains.forEach(function(key) {
+		let pending = remains.length
+		remains.forEach(function (key) {
+			//@ts-ignore -- crazy any
 			var item = object[key]
 
 			// Promises and queries must be checked again upon success
@@ -99,17 +101,17 @@ export function deepResolve<T>(
 
 		// All the check to be restarted so we
 		// can return promises from promises.
-		function checkAgain(err, res) {
+		function checkAgain(err: any, res: any) {
 			if (err) return callback(err, undefined)
 			deepResolve(res, callback)
 		}
 
 		// Promises need to call the restart the check,
 		// so we use this to allow them to swap out fn.
-		function doneHandler(key, fn) {
-			return function(err, result) {
+		function doneHandler(key: any, fn: Function) {
+			return function (err: any, result: any) {
 				if (err) return callback(err, undefined)
-
+				//@ts-ignore crazy any
 				object[key] = result
 				if (--pending === 0) {
 					fn(null, object)

@@ -64,8 +64,8 @@ const $SELF =
  * @returns {Object}
  */
 const makeCyclic = (object: any, query: any) => {
-	const start = (obj) =>
-		Object.keys(obj).reduce((acc, key) => {
+	const start = (obj: typeof object): any =>
+		Object.keys(obj).reduce((acc: any, key) => {
 			const value = obj[key]
 			if (value === query) {
 				obj[key] = object
@@ -88,12 +88,14 @@ const PromiseMap = (promises: PromiseLike<any>[], functor: Fn) =>
 /**
  * Resolve a flat object's promises.
  */
-const ResolveObject = (obj: object): object =>
-	Promise.all(
+const ResolveObject = (obj: Record<string, any>): Record<string, any> => {
+	// can possibly type as https://stackoverflow.com/questions/48944552/typescript-how-to-unwrap-remove-promise-from-a-type/48945362#48945362
+	return Promise.all(
 		Object.keys(obj).map((key) =>
 			Promise.resolve(obj[key]).then((val) => (obj[key] = val))
 		)
 	).then((_) => obj)
+}
 
 /**
  * Recursively resolves deep objects with nested promises.
@@ -102,7 +104,7 @@ const ResolveObject = (obj: object): object =>
  */
 export const PromiseObject = <T>(obj: MVP<T>): Promise<T> => {
 	let shouldReplaceSelf = false
-	const ResolveDeepObject = (record) =>
+	const ResolveDeepObject = (record: any): any =>
 		Promise.resolve(record).then((resolvedObject) => {
 			if (Array.isArray(resolvedObject)) {
 				// Promise and map every item to recursively deep resolve.
@@ -126,7 +128,7 @@ export const PromiseObject = <T>(obj: MVP<T>): Promise<T> => {
 			}
 			return resolvedObject
 		})
-	return ResolveDeepObject(obj).then((record) => {
+	return ResolveDeepObject(obj).then((record: any) => {
 		// Replace $SELF with reference to obj
 		if (shouldReplaceSelf) makeCyclic(record, $SELF)
 		return record

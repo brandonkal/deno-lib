@@ -115,7 +115,7 @@ function iterator(instance: any, eventNames?: EventNames) {
 					return this.next()
 				}
 
-				await new Promise((resolve) => {
+				await new Promise<void>((resolve) => {
 					flush = resolve
 				})
 

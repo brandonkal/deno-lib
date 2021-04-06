@@ -690,7 +690,7 @@ async function execTerraform(
 					willRun = false
 				}
 				if (!quiet && !willRun) {
-					console.error('TerraformConfig unchanged. Skipping apply.')
+					console.error('# TerraformConfig unchanged. Skipping apply.')
 				}
 			}
 		}

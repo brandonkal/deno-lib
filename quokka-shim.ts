@@ -7,11 +7,11 @@
  * @license MIT
  */
 
-export function it(name, fn) {
+export function it(name: string, fn: Function) {
 	console.log(`===${name}===`)
 	fn()
 }
-export function assertEquals(left, right) {
+export function assertEquals(left: any, right: any) {
 	if (left === right) {
 		console.log('Values Match')
 	} else {
