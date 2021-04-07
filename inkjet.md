@@ -21,6 +21,14 @@ done
 echo -n `git rev-parse HEAD` >| .git/last_push.txt
 ```
 
+## cache (file)
+
+> Update a single file in the Deno cache
+
+```sh
+deno cache --unstable -r=https://x.kite.run/lib/${file} https://x.kite.run/lib/${file}
+```
+
 ## changed
 
 > Show changed TypeScript/JavaScript modules
