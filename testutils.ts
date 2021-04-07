@@ -15,7 +15,7 @@ export function describe(desc: string, fn: Function) {
 	console.log(desc)
 	fn()
 }
-export { fail } from 'https://deno.land/std/testing/asserts.ts'
+export { fail } from 'https://deno.land/std@0.92.0/testing/asserts.ts'
 export const it = Deno.test
 export { expect } from 'https://raw.githubusercontent.com/brandonkal/expect/b457497332ba2197835f4eacef3e95dac569ee8d/expect.ts'
 import * as m from 'https://raw.githubusercontent.com/brandonkal/expect/b457497332ba2197835f4eacef3e95dac569ee8d/mock.ts'

@@ -1,8 +1,8 @@
-import { assertEquals } from 'https://deno.land/std@0.61.0/testing/asserts.ts'
+import { assertEquals } from 'https://deno.land/std@0.92.0/testing/asserts.ts'
 import {
 	delay as wait,
 	delay,
-} from 'https://deno.land/std@0.61.0/async/delay.ts'
+} from 'https://deno.land/std@0.92.0/async/delay.ts'
 import { Emittery } from './emittery.ts'
 const emitter = new Emittery()
 

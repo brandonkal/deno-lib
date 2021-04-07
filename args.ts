@@ -6,11 +6,11 @@
  * @license MIT
  */
 
-import * as flags from 'https://deno.land/std@0.61.0/flags/mod.ts'
+import * as flags from 'https://deno.land/std@0.92.0/flags/mod.ts'
 import {
 	parse,
 	JSON_SCHEMA,
-} from 'https://deno.land/std@0.61.0/encoding/yaml.ts'
+} from 'https://deno.land/std@0.92.0/encoding/yaml.ts'
 
 /**
  * If the value is '-' stdin is read and returned.

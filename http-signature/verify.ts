@@ -7,8 +7,8 @@
  * @license MIT
  */
 
-import { HmacSha256 } from 'https://deno.land/std@0.61.0/hash/sha256.ts'
-import { encode } from 'https://deno.land/std@0.61.0/encoding/base64.ts'
+import { HmacSha256 } from 'https://deno.land/std@0.92.0/hash/sha256.ts'
+import { encode } from 'https://deno.land/std@0.92.0/encoding/base64.ts'
 
 /////
 interface parseOptions {
