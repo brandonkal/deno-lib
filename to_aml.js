@@ -1,6 +1,9 @@
 /**
  * @file to_aml.js
+ * @author Brandon Kalinowski (@brandonkal)
+ * @copyright 2021 Brandon Kalinowski. All Rights Reserved.
  * @description Converts JSON structure to ArchieML text string.
+ * @license Contact for license
  */
 //@ts-nocheck -- this code works.
 

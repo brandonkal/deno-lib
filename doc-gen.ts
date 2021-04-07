@@ -46,7 +46,7 @@ export default async function genDoc(files: string[] = []) {
 	)
 	const fileContents = await Promise.all(
 		filenames.map((fn) => {
-			return fs.readFileStr(fn)
+			return Deno.readTextFile(fn)
 		})
 	)
 	const metadata = fileContents.map(parse)

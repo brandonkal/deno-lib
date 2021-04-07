@@ -1,10 +1,12 @@
 /**
  * @file archieml.js
- * @copyright 2020 Brandon Kalinowski
+ * @copyright 2021 Brandon Kalinowski
  * Based on the Apache 2.0 licensed archieml-js parser:
  * @copyright 2015 The New York Times Company
  * Structure inspired by John Resig's HTML parser
  * http://ejohn.org/blog/pure-javascript-html-parser/
+ * @description Parse a string of text as ArchieML.
+ * @license Apache 2.0
  */
 //@ts-nocheck -- this code works.
 

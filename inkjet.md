@@ -50,3 +50,11 @@ fi
 ```sh
 deno cache --unstable `fd -e ts`
 ```
+
+## index
+
+> Generate Readme index from TypeScript files
+
+```
+deno --unstable run --allow-read doc-gen.ts -m
+```

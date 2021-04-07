@@ -20,9 +20,21 @@ After the Deno team decided to break import URLs, the canonical import domain ca
 
 ## Included Utilities
 
+### abort-iterator.ts
+
+Creates an iterator that is abortable. Based on the npm package by the same name
+
+### archieml.js
+
+Parse a string of text as ArchieML.
+
 ### args.ts
 
 Utilities for parsing CLI arguments.
+
+### debug.ts
+
+Debugging utility for Deno. Ported from the npm package by the same name.
 
 ### dedent.ts
 
@@ -31,20 +43,44 @@ It is used by yaml-tag.ts and has tests to ensure consistency with a whitespace-
 
 ### doc-gen.ts
 
-Parse File-level JSDoc from a folder of TS/JS files for document generation.
+Parse File-level JSDoc from a folder of TS/JS files for document generation
+
+### drone.ts
+
+TypeScript types for Drone CI configuration.
+
+### emittery.ts
+
+Simple and modern async event emitter
+Ported from the node module@0.7.1
+
+### function.ts
+
+Kite™️ Support for OpenFaaS Functions.
 
 ### go.ts
 
 Simplified async error handling in TypeScript.
 
+### hash-object.ts
+
+Take a JavaScript object and compute a sha256 hash of it for comparison.
+
 ### http-cache-semantics.ts
 
-Parses Cache-Control and other headers. Helps building correct HTTP caches and proxies. Ported from the npm package by the same name.
+Parses Cache-Control and other headers. Helps building correct HTTP caches and proxies.
+Ported from the npm package by the same name. Code optained via the BSD-2 license. See attribution below.
+
+### karabiner.ts
+
+A library and DSL to generate karabiner.json config. Can result in a 30x line reduction.
+
+1. Call rule()
+2. Call out()
 
 ### kite.ts
 
-Kite™️ is a Simplified Config Generation Library.
-
+Kite™️ is a Simplified Config Generation Library
 Ground Rules:
 
 1. No async code. Ever.
@@ -65,26 +101,40 @@ kx is a simplified Kubernetes Config SDK for Kite.
 
 ### magic-string.js
 
-Manipulate strings like a wizard.
-
+Manipulate strings like a wizard
 NOTE: This is the ES bundle with the sourcemap-codec import corrected.
 Source is available at
 https://cdn.jsdelivr.net/npm/magic-string@0.25.6/dist/magic-string.es.js
 
+### md5-apache.ts
+
+A port of npm/apache-md5 for use with htpasswd.
+Portions of this work were obtained via the MIT License. Copyright (c) Gevorg Harutyunyan.
+
 ### merge.ts
 
 Provides generic object merging functions. Useful for config generation.
+Portions of this work were obtained via the Apache 2.0 License.
+That original work is Copyright 2020, jk authors.
 
 ### proxymise.ts
 
-Chainable Promise Proxy utility. Proxymise allows for method and property chaining without need for intermediate then() or await for cleaner and simpler code.
+Chainable Promise Proxy utility.
+Proxymise allows for method and property chaining without need for intermediate
+then() or await for cleaner and simpler code.
+@see https://github.com/kozhevnikov/proxymise
 
 ### quokka-shim.ts
 
 A shim for test functions when running Deno code.
-Consider using @brandonkal/deno-quokka and babel-plugin-deno npm packages for a more robust debugging experience.
+Consider using @brandonkal/deno-quokka and babel-plugin-deno npm packages for
+a more robust debugging experience.
 
-### resolve-object
+### reload.ts
+
+CLI to reload Deno files as required. Pass number of commits to have the files reloaded.
+
+### resolve-object.ts
 
 Recursively resolve any promises in an object to form a resulting JSON structure.
 
@@ -92,27 +142,41 @@ Recursively resolve any promises in an object to form a resulting JSON structure
 
 Recursively resolve any promises in an object to form a resulting JSON structure.
 
+### retry.ts
+
+Retry an async function for exponential backoff. With a retryFetch implementation.
+
 ### runtypes.ts
 
 A Deno port of the great RunTypes library. Use TypeScript in the runtime.
+Port introduces loose conversion. This means a check() call may
+modify if a property required.
+Primitives should be assigned to themselves.
+"false" | "true" > boolean
+"null" > null
+"42" > 42
+See https://github.com/brandonkal/runtypes
 
-Port introduces loose conversion. This means a check() call may modifies if required.
+### shellbox.ts
 
-- Primitives should be assigned to themselves.
-- "false" | "true" > boolean
-- "null" > null
-- "42" > 42
-- See https://github.com/brandonkal/runtypes
+Utilities to sandbox subprocess commands
 
 ### sourcemap-codec.ts
 
 Encode/decode sourcemap mappings
 
+### testutils.ts
+
+Utilities for testing. Replicates expect from Jest.
+
+### to_aml.js
+
+Converts JSON structure to ArchieML text string.
+
 ### unraw.ts
 
 Undo `String.raw`.
-
-Convert raw escape sequences to their respective characters
+Convert raw escape sequences to their respective characters.
 
 ### utils.ts
 
@@ -120,20 +184,17 @@ A collection of useful small functions in one location.
 
 ### yaml-formatter.ts
 
-Parses YAML or JSON input and prints out YAML documents with a stable object sort. Ideal for converting JSON to YAML. Useful as a lightweight CLI or as a formatting function.
+Parses YAML or JSON input and prints out YAML documents with a stable object sort.
+Ideal for converting JSON to YAML.
+Useful as a lightweight CLI or as a formatting function.
 
 ### yaml-tag.ts
 
 Write YAML within TypeScript programs for cleaner and more concise code.
-
 This module provides the following exports:
 
 - y (yaml text tagged template function)
 - printYaml (JS Object Array to YAML multi-document text)
-
-### testutils.ts
-
-Utilities for testing. Replicates expect and mocks out functions such as describe from Jest. Useful for porting Node libraries.
 
 ## Others
 
