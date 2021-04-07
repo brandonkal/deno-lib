@@ -131,6 +131,10 @@ This module provides the following exports:
 - y (yaml text tagged template function)
 - printYaml (JS Object Array to YAML multi-document text)
 
+### testutils.ts
+
+Utilities for testing. Replicates expect and mocks out functions such as describe from Jest. Useful for porting Node libraries.
+
 ## Others
 
 ### @brandonkal/deno-quokka
