@@ -6,7 +6,7 @@
  * @license MIT
  */
 
-import { sha256 } from "https://x.kite.run/sha256@v1.0.2/mod.ts";
+import { sha256 } from 'https://deno.land/x/sha256@v1.0.2/mod.ts'
 
 /** A JSON replacer that sorts keys recursively and removes type key when required. */
 export const replacer = (key: any, value: any) => {
@@ -14,16 +14,16 @@ export const replacer = (key: any, value: any) => {
 		return Object.keys(value)
 			.sort()
 			.reduce((sorted, key) => {
-				(sorted as any)[key] = value[key];
-				return sorted;
-			}, {});
+				;(sorted as any)[key] = value[key]
+				return sorted
+			}, {})
 	}
-	return value;
-};
+	return value
+}
 
 /** print deterministic JSON string specifically for karabiner */
 export function orderedJSONString(obj: any) {
-	return JSON.stringify(obj, replacer).trimEnd();
+	return JSON.stringify(obj, replacer).trimEnd()
 }
 
 /**
@@ -31,6 +31,6 @@ export function orderedJSONString(obj: any) {
  * @param obj
  */
 export async function hashObject(obj: any): Promise<string> {
-	const str = orderedJSONString(obj);
-	return sha256(str, "utf8", "hex") as string;
+	const str = orderedJSONString(obj)
+	return sha256(str, 'utf8', 'hex') as string
 }
