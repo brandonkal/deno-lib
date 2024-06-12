@@ -7,16 +7,16 @@
  */
 
 import template, {
-	TemplateError,
-	TemplateConfigSpec,
-	TemplateConfig,
-	isTemplateConfig,
 	configFromSpec,
+	isTemplateConfig,
+	TemplateConfig,
 	templateConfigMergeObject,
-} from './template.ts'
-import { getArgsObject } from '../args.ts'
-import { merge } from '../merge.ts'
-import * as YAML from 'https://deno.land/std@0.92.0/encoding/yaml.ts'
+	TemplateConfigSpec,
+	TemplateError,
+} from "./template.ts";
+import { getArgsObject } from "../args.ts";
+import { merge } from "../merge.ts";
+import * as YAML from "https://deno.land/std@0.92.0/encoding/yaml.ts";
 
 const helpText = `\
 Kite™️ Template Tool by Brandon Kalinowski @brandonkal
@@ -79,7 +79,7 @@ Flags:
   --no-helm         Set to skip rendering HelmChart resources.
 
   -h, --help        Prints this help message
-`
+`;
 
 // examples POST http kite.ts.com { exec: my-program-url.ts, name: dev, args: yamlObj }
 // example CLI:
@@ -88,136 +88,136 @@ Flags:
 // Note: env should not be specified on CLI
 export interface CliFlags extends TemplateConfigSpec {
 	/** shorthand alias for exec */
-	e?: string
+	e?: string;
 	/** shorthand alias for help */
-	h?: boolean
+	h?: boolean;
 	/** pass config as TemplateConfig or shorthand object*/
-	config?: Omit<Omit<CliFlags, 'allowEnv'>, 'no-helm'>
+	config?: Omit<Omit<CliFlags, "allowEnv">, "no-helm">;
 	/** shorthand for config */
-	c?: Omit<Omit<CliFlags, 'allowEnv'>, 'no-helm'>
+	c?: Omit<Omit<CliFlags, "allowEnv">, "no-helm">;
 	/** shorthand for name */
-	n?: string
+	n?: string;
 	/** shorthand for quiet */
-	q?: boolean
+	q?: boolean;
 	/** shorthand for preview */
-	p?: boolean
+	p?: boolean;
 	/** shorthand for yaml */
-	y?: string
+	y?: string;
 	/** shorthand to force reload of Terraform state */
-	r?: boolean
+	r?: boolean;
 	/** args without a flag. Contains yaml if exec is not specified. */
-	_?: string[]
+	_?: string[];
 	/**
 	 * Must be set by the CLI. If a boolean, any environment variable is allowed.
 	 * If set as a string, it will be parsed as YAML expecting a list of strings.
 	 * If set as a list of strings, only these variables can be read by the template.
 	 */
-	allowEnv?: boolean | string | string[]
+	allowEnv?: boolean | string | string[];
 	/**
 	 * Disable Helm Templating (useful if you prefer helm-controller in-cluster)
 	 */
-	helm?: boolean
+	helm?: boolean;
 }
 
 export function canonicalizeOptions(
 	opts: CliFlags,
-	test?: boolean
+	test?: boolean,
 ): TemplateConfig {
-	const invalid = Deno.args.length == 0 && !test
+	const invalid = Deno.args.length == 0 && !test;
 	if (invalid || opts.help || opts.h) {
-		showHelp()
+		showHelp();
 	}
-	let allowEnv = extractAllowEnv(opts)
+	const allowEnv = extractAllowEnv(opts);
 
-	let nestedConfig = opts.config || opts.c
-	let nestedConfigCanonical = {} as TemplateConfig
+	let nestedConfig = opts.config || opts.c;
+	let nestedConfigCanonical = {} as TemplateConfig;
 	if (nestedConfig) {
 		if (!isTemplateConfig(nestedConfig)) {
-			nestedConfig = asConfig(nestedConfig)
-			nestedConfigCanonical = configFromSpec(nestedConfig)
+			nestedConfig = asConfig(nestedConfig);
+			nestedConfigCanonical = configFromSpec(nestedConfig);
 		} else {
-			nestedConfigCanonical = configFromSpec(nestedConfig.spec)
+			nestedConfigCanonical = configFromSpec(nestedConfig.spec);
 			// Sanitize metadata
-			nestedConfigCanonical.metadata.name = nestedConfig.metadata.name
+			nestedConfigCanonical.metadata.name = nestedConfig.metadata.name;
 		}
 	}
-	const baseSpec = asConfig(opts)
-	const baseCfgCanonical = configFromSpec(baseSpec)
-	baseCfgCanonical.metadata._allowEnv = allowEnv
+	const baseSpec = asConfig(opts);
+	const baseCfgCanonical = configFromSpec(baseSpec);
+	baseCfgCanonical.metadata._allowEnv = allowEnv;
 
 	if (!nestedConfig) {
-		return baseCfgCanonical
+		return baseCfgCanonical;
 	}
 	return merge(
 		nestedConfigCanonical,
 		baseCfgCanonical,
-		templateConfigMergeObject(baseCfgCanonical)
-	)
+		templateConfigMergeObject(baseCfgCanonical),
+	);
 }
 
 function showHelp() {
-	console.log(helpText)
-	Deno.exit()
+	console.log(helpText);
+	Deno.exit();
 }
 
 /** parse the allowEnv option from the CLI */
 function extractAllowEnv(opts: CliFlags) {
-	let allowEnv: boolean | string[] = false
+	let allowEnv: boolean | string[] = false;
 	if (opts.allowEnv !== undefined) {
-		if (opts.allowEnv === true || opts.allowEnv === 'true') {
-			allowEnv = true
-		} else if (opts.allowEnv === false || opts.allowEnv === 'false') {
-			allowEnv = false
-		} else if (typeof opts.allowEnv === 'string') {
-			const parsed = YAML.parse(opts.allowEnv)
+		if (opts.allowEnv === true || opts.allowEnv === "true") {
+			allowEnv = true;
+		} else if (opts.allowEnv === false || opts.allowEnv === "false") {
+			allowEnv = false;
+		} else if (typeof opts.allowEnv === "string") {
+			const parsed = YAML.parse(opts.allowEnv);
 			if (!Array.isArray(parsed)) {
-				throw invalid()
+				throw invalid();
 			}
-			assertStringArray(parsed)
-			allowEnv = parsed
+			assertStringArray(parsed);
+			allowEnv = parsed;
 		} else if (Array.isArray(opts.allowEnv)) {
-			assertStringArray(opts.allowEnv)
-			allowEnv = opts.allowEnv
+			assertStringArray(opts.allowEnv);
+			allowEnv = opts.allowEnv;
 		} else {
-			throw invalid()
+			throw invalid();
 		}
 	}
-	return allowEnv
+	return allowEnv;
 
-	function assertStringArray(parsed: any[]) {
+	function assertStringArray(parsed: unknown[]) {
 		parsed.forEach((item) => {
-			if (typeof item !== 'string') {
-				throw invalid()
+			if (typeof item !== "string") {
+				throw invalid();
 			}
-		})
+		});
 	}
 
 	function invalid() {
 		return new Error(
-			'allowEnv option must be boolean | "true" | "false" | string (YAML array) | Array'
-		)
+			'allowEnv option must be boolean | "true" | "false" | string (YAML array) | Array',
+		);
 	}
 }
 
 /** converts to boolean or undefined loosely */
 function asBool(
 	vals: unknown[],
-	allowUndefined?: boolean
+	allowUndefined?: boolean,
 ): boolean | undefined {
-	let x = vals.find((v) => v != null)
-	if (x == null) x = vals[vals.length - 1]
-	if (x === 'false') return false
-	if (x === 'true') return true
-	if (x === undefined && allowUndefined) return x
-	return Boolean(x)
+	let x = vals.find((v) => v != null);
+	if (x == null) x = vals[vals.length - 1];
+	if (x === "false") return false;
+	if (x === "true") return true;
+	if (x === undefined && allowUndefined) return x;
+	return Boolean(x);
 }
 
 /** converts to string or undefined loosely */
 function asStr(vals: unknown[], allowUndefined?: boolean): string | undefined {
-	let x = vals.find((v) => v != null)
-	if (x == null) x = vals[vals.length - 1]
-	if ((x == null || x === '') && allowUndefined) return undefined
-	return String(x)
+	let x = vals.find((v) => v != null);
+	if (x == null) x = vals[vals.length - 1];
+	if ((x == null || x === "") && allowUndefined) return undefined;
+	return String(x);
 }
 
 /**
@@ -225,13 +225,13 @@ function asStr(vals: unknown[], allowUndefined?: boolean): string | undefined {
  * This allows unset values to be undefined.
  */
 function asConfig(opts: CliFlags, und: boolean = true): TemplateConfigSpec {
-	if (typeof opts !== 'object') throw new TemplateError('Invalid config')
+	if (typeof opts !== "object") throw new TemplateError("Invalid config");
 	if (opts.env && !Array.isArray(opts.env)) {
 		throw new TemplateError(
-			'Invalid env. Expected (Record<string, string> | string)[]'
-		)
+			"Invalid env. Expected (Record<string, string> | string)[]",
+		);
 	}
-	const env = Array.isArray(opts.env) ? opts.env : []
+	const env = Array.isArray(opts.env) ? opts.env : [];
 
 	const out: TemplateConfigSpec = {
 		exec: asStr([opts.exec, opts.e], und),
@@ -241,13 +241,13 @@ function asConfig(opts: CliFlags, und: boolean = true): TemplateConfigSpec {
 		preview: asBool([opts.preview, opts.p], und),
 		env: env,
 		args: opts.args,
-	}
+	};
 	if (!out.exec) {
-		out.yaml = opts.yaml || opts.y
+		out.yaml = opts.yaml || opts.y;
 	} else {
-		out.yaml = undefined
+		out.yaml = undefined;
 	}
-	return out
+	return out;
 }
 
 /**
@@ -256,51 +256,51 @@ function asConfig(opts: CliFlags, und: boolean = true): TemplateConfigSpec {
  */
 export default async function templateCli(cfg?: TemplateConfig) {
 	try {
-		let useHelm = true
+		let useHelm = true;
 		if (!cfg) {
-			const args = getArgsObject(new Set(['config', 'c']))
-			if (args.helm === false) useHelm = false
-			cfg = canonicalizeOptions(args)
+			const args = getArgsObject(new Set(["config", "c"]));
+			if (args.helm === false) useHelm = false;
+			cfg = canonicalizeOptions(args);
 		}
-		const out = await template(cfg, useHelm)
+		const out = await template(cfg, useHelm);
 		if (!cfg.spec.quiet) {
-			let msg = `# Kite™️ Template complete`
+			let msg = `# Kite™️ Template complete`;
 			if (cfg.spec.name) {
-				msg += ` for ${cfg.spec.name}`
+				msg += ` for ${cfg.spec.name}`;
 			}
-			msg += '!'
-			console.error(msg)
+			msg += "!";
+			console.error(msg);
 		}
-		console.log(out.trimEnd())
-		let unreplacedPlaceholders = out.match(/\(\((.+?)\)\)/g)
+		console.log(out.trimEnd());
+		const unreplacedPlaceholders = out.match(/\(\((.+?)\)\)/g);
 		if (unreplacedPlaceholders) {
-			const l = unreplacedPlaceholders.length
-			const middle = `has ${l} placeholder${l === 1 ? '' : 's'} that`
+			const l = unreplacedPlaceholders.length;
+			const middle = `has ${l} placeholder${l === 1 ? "" : "s"} that`;
 
 			const msg = `# ${
 				cfg.spec.preview
 					? `Warning: Preview output ${middle} were not replaced.`
 					: `Error: Output ${middle} failed to be replaced.`
-			}`
+			}`;
 			if (cfg.spec.preview) {
-				console.error(msg)
+				console.error(msg);
 			} else {
-				throw new TemplateError(msg)
+				throw new TemplateError(msg);
 			}
 		}
 	} catch (err) {
 		if (err instanceof TemplateError) {
 			// No need for stack trace on expected errors
-			console.error(err.message)
+			console.error(err.message);
 		} else {
 			if (!import.meta.main) {
-				throw err
+				throw err;
 			} else {
-				console.error(err)
+				console.error(err);
 			}
 		}
-		Deno.exit(1)
+		Deno.exit(1);
 	}
 }
 
-if (import.meta.main) templateCli()
+if (import.meta.main) templateCli();

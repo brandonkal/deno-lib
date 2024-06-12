@@ -1,48 +1,48 @@
-import { assertEquals } from 'https://deno.land/std@0.92.0/testing/asserts.ts'
-const it = Deno.test
+import { assertEquals } from "https://deno.land/std@0.224.0/assert/mod.ts";
+const it = Deno.test;
 
-import { dedent } from './dedent.ts'
-import { y, yaml, printYaml, yamlfy } from './yaml-tag.ts'
+import { dedent } from "./dedent.ts";
+import { printYaml, y, yaml, yamlfy } from "./yaml-tag.ts";
 
-it('injects boolean', () => {
-	assertEquals({ 'is cool': true }, y`is cool: ${true}`)
-})
+it("injects boolean", () => {
+	assertEquals({ "is cool": true }, y`is cool: ${true}`);
+});
 
-it('injects object', () => {
+it("injects object", () => {
 	const first = {
 		a: 1,
 		b: 2,
-	}
-	assertEquals({ 'is cool': { a: 1, b: 2 } }, y`is cool: ${first}`)
-})
+	};
+	assertEquals({ "is cool": { a: 1, b: 2 } }, y`is cool: ${first}`);
+});
 
-it('parses multiple documents', () => {
+it("parses multiple documents", () => {
 	const first = {
 		a: 1,
 		b: 2,
-	}
+	};
 	assertEquals(
-		[{ 'is cool': { a: 1, b: 2 } }, { doc: 'second' }],
+		[{ "is cool": { a: 1, b: 2 } }, { doc: "second" }],
 		yaml`
       ---
       is cool: ${first}
       ---
       doc: second
-    `
-	)
-})
+    `,
+	);
+});
 
-it('merges maps', () => {
+it("merges maps", () => {
 	const first = {
 		a: 1,
 		b: 2,
-	}
+	};
 	const text = yamlfy`
 ---
 ${first}
 c: 3
 d: 4
-`
+`;
 	assertEquals(
 		dedent`
     ---
@@ -52,11 +52,11 @@ d: 4
     c: 3
     d: 4
     `,
-		text
-	)
-})
+		text,
+	);
+});
 
-it('handles Drone YAML', () => {
+it("handles Drone YAML", () => {
 	const text = yaml`
     ---
       kind: pipeline
@@ -73,25 +73,29 @@ it('handles Drone YAML', () => {
         commands:
         - go build
         - go test
-  `
+  `;
 	const expected = [
 		{
-			kind: 'pipeline',
-			type: 'docker',
-			name: 'default',
+			kind: "pipeline",
+			type: "docker",
+			name: "default",
 		},
 		{
 			clone: { disable: true },
 			steps: [
-				{ name: 'build', image: 'golang', commands: ['go build', 'go test'] },
+				{
+					name: "build",
+					image: "golang",
+					commands: ["go build", "go test"],
+				},
 			],
 		},
-	]
-	assertEquals(expected, text)
-})
+	];
+	assertEquals(expected, text);
+});
 
-it('handles kubernetes YAML', () => {
-	const svcName = 'whoami'
+it("handles kubernetes YAML", () => {
+	const svcName = "whoami";
 
 	const serviceList = [
 		{
@@ -102,7 +106,7 @@ it('handles kubernetes YAML', () => {
 			port: 80,
 			name: svcName,
 		},
-	]
+	];
 
 	const yml = yaml`
     ---
@@ -120,31 +124,31 @@ it('handles kubernetes YAML', () => {
         secretName: whoami.example.com-cert
     ---
     document: 2
-`
+`;
 	assertEquals(
 		[
 			{
-				apiVersion: 'traefik.containo.us/v1alpha1',
-				kind: 'IngressRoute',
+				apiVersion: "traefik.containo.us/v1alpha1",
+				kind: "IngressRoute",
 				metadata: false,
 				spec: {
-					entryPoints: ['websecure'],
+					entryPoints: ["websecure"],
 					routes: [
 						{
-							match: 'Host(`whoami.example.com`)',
-							kind: 'Rule',
+							match: "Host(`whoami.example.com`)",
+							kind: "Rule",
 							services: serviceList,
 						},
 					],
 					tls: {
-						secretName: 'whoami.example.com-cert',
+						secretName: "whoami.example.com-cert",
 					},
 				},
 			},
 			{ document: 2 },
 		],
-		yml
-	)
+		yml,
+	);
 	const expectedString = `\
 ---
 apiVersion: traefik.containo.us/v1alpha1
@@ -164,11 +168,11 @@ spec:
   tls:
     secretName: whoami.example.com-cert
 ---
-document: 2`
-	assertEquals(expectedString, printYaml(yml, true))
-})
+document: 2`;
+	assertEquals(expectedString, printYaml(yml, true));
+});
 
-it('handles YAML with Tabs', () => {
+it("handles YAML with Tabs", () => {
 	const yml = y`
 	pod:
 		name: nginx
@@ -179,68 +183,70 @@ it('handles YAML with Tabs', () => {
 			image: nginx:latest
 			affinity:
 			- node: k8s.io/failure-domain=us-east1,us-east2
-`
+`;
 	const desiredObject = {
 		pod: {
-			name: 'nginx',
-			labels: { app: 'nginx' },
+			name: "nginx",
+			labels: { app: "nginx" },
 			containers: [
 				{
-					name: 'nginx',
-					image: 'nginx:latest',
-					affinity: [{ node: 'k8s.io/failure-domain=us-east1,us-east2' }],
+					name: "nginx",
+					image: "nginx:latest",
+					affinity: [{
+						node: "k8s.io/failure-domain=us-east1,us-east2",
+					}],
 				},
 			],
 		},
-	}
-	assertEquals(desiredObject, yml)
-})
+	};
+	assertEquals(desiredObject, yml);
+});
 
-it('creates single map', () => {
+it("creates single map", () => {
 	const yml = yaml.stringify(y`
 	address-pools:
 		- name: default
 			protocol: layer2
 			addresses: [10.0.20.32-10.0.20.64]
-	`)
+	`);
 	const expected = `\
 address-pools:
   - name: default
     protocol: layer2
     addresses:
       - 10.0.20.32-10.0.20.64
-`
-	assertEquals(expected, yml)
-})
+`;
+	assertEquals(expected, yml);
+});
 
-it('yamlfies multiline strings', () => {
+it("yamlfies multiline strings", () => {
 	const long = dedent`\
 		This is line 1
 		This is line 2
 		This is line 3
-	`
+	`;
 	const yml = yamlfy`\
 one: 1
 long: ${long}
-two: 2`
+two: 2`;
 	const expected = `\
 one: 1
 long: "This is line 1\\nThis is line 2\\nThis is line 3\\n"
-two: 2`
-	assertEquals(expected, yml)
-})
+two: 2`;
+	assertEquals(expected, yml);
+});
 
-it('works with multiline strings', () => {
+it("works with multiline strings", () => {
 	const long = dedent`\
 		This is line 1
 		This is line 2
 		This is line 3
-	`
+	`;
 	const yml = yaml.stringify(y`
 		one: 1
 		long: ${long}
 		two: 2
-	`)
+	`);
 	const expected = `\
 one: 1
 long: |
@@ -248,6 +254,6 @@ long: |
   This is line 2
   This is line 3
 two: 2
-`
-	assertEquals(expected, yml)
-})
+`;
+	assertEquals(expected, yml);
+});

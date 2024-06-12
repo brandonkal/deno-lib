@@ -1,31 +1,31 @@
-import { assertEquals } from 'https://deno.land/std@0.92.0/testing/asserts.ts'
-const it = Deno.test
-import { canonicalizeOptions, CliFlags } from './template-cli.ts'
-import { TemplateConfig } from './template.ts'
-import { getArgsObject } from '../args.ts'
+import { assertEquals } from "https://deno.land/std@0.224.0/assert/mod.ts";
+const it = Deno.test;
+import { canonicalizeOptions, CliFlags } from "./template-cli.ts";
+import { TemplateConfig } from "./template.ts";
+import { getArgsObject } from "../args.ts";
 
-const TEST = true
-const cOpts = (opts: CliFlags) => canonicalizeOptions(opts, TEST)
+const TEST = true;
+const cOpts = (opts: CliFlags) => canonicalizeOptions(opts, TEST);
 
 /** a function to skip a test */
 function xit(name: string, _fn: any) {
-	console.log('Skipping:', name)
+	console.log("Skipping:", name);
 }
 
 /** mock function to parse args like template-cli */
 function parseArgs(argsArray: string[]) {
-	const args = getArgsObject(new Set(['config', 'c']), argsArray)
-	return cOpts(args)
+	const args = getArgsObject(new Set(["config", "c"]), argsArray);
+	return cOpts(args);
 }
 
-it('returns expected format', () => {
-	let opts: CliFlags = {
-		e: 'https://test.ts',
-	}
-	let out = cOpts(opts)
+it("returns expected format", () => {
+	const opts: CliFlags = {
+		e: "https://test.ts",
+	};
+	const out = cOpts(opts);
 	const expected: TemplateConfig = {
-		apiVersion: 'kite.run/v1alpha1',
-		kind: 'TemplateConfig',
+		apiVersion: "kite.run/v1alpha1",
+		kind: "TemplateConfig",
 		metadata: {
 			name: undefined,
 			_allowEnv: false,
@@ -33,162 +33,162 @@ it('returns expected format', () => {
 		spec: {
 			args: undefined,
 			env: [],
-			exec: 'https://test.ts',
+			exec: "https://test.ts",
 			yaml: undefined,
 			name: undefined,
 			preview: undefined,
 			quiet: undefined,
 			reload: undefined,
 		},
-	}
-	assertEquals(expected, out)
-})
+	};
+	assertEquals(expected, out);
+});
 
-it('merges in with config', () => {
+it("merges in with config", () => {
 	let opts: CliFlags = {
-		e: 'https://test.ts',
+		e: "https://test.ts",
 		c: {
-			env: ['API_KEY', 'CI', 'NOT_OKAY'],
+			env: ["API_KEY", "CI", "NOT_OKAY"],
 			reload: true, // not ignored
 			quiet: true, // ignored
-			name: 'ignored',
+			name: "ignored",
 		},
-		name: 'merged config',
+		name: "merged config",
 		quiet: false,
-		allowEnv: ['API_KEY', 'CI'],
-	}
-	let out = cOpts(opts)
+		allowEnv: ["API_KEY", "CI"],
+	};
+	let out = cOpts(opts);
 	const expected: TemplateConfig = {
-		apiVersion: 'kite.run/v1alpha1',
-		kind: 'TemplateConfig',
+		apiVersion: "kite.run/v1alpha1",
+		kind: "TemplateConfig",
 		metadata: {
-			name: 'merged config',
-			_allowEnv: ['API_KEY', 'CI'],
+			name: "merged config",
+			_allowEnv: ["API_KEY", "CI"],
 		},
 		spec: {
 			args: undefined,
-			env: ['API_KEY', 'CI'],
-			exec: 'https://test.ts',
+			env: ["API_KEY", "CI"],
+			exec: "https://test.ts",
 			yaml: undefined,
-			name: 'merged config',
+			name: "merged config",
 			preview: undefined,
 			quiet: false,
 			reload: true,
 		},
-	}
-	assertEquals(expected, out)
-})
+	};
+	assertEquals(expected, out);
+});
 
-it('accepts any env if allowEnv=true', () => {
+it("accepts any env if allowEnv=true", () => {
 	let opts: CliFlags = {
-		e: 'https://test.ts',
+		e: "https://test.ts",
 		c: {
-			env: ['API_KEY', 'CI'],
+			env: ["API_KEY", "CI"],
 			reload: true, // not ignored
 			quiet: true, // ignored
-			name: 'ignored',
+			name: "ignored",
 		},
-		name: 'merged config',
+		name: "merged config",
 		preview: false,
 		quiet: undefined,
 		allowEnv: true,
-	}
-	let out = cOpts(opts)
+	};
+	let out = cOpts(opts);
 	const expected: TemplateConfig = {
-		apiVersion: 'kite.run/v1alpha1',
-		kind: 'TemplateConfig',
+		apiVersion: "kite.run/v1alpha1",
+		kind: "TemplateConfig",
 		metadata: {
-			name: 'merged config',
+			name: "merged config",
 			_allowEnv: true,
 		},
 		spec: {
-			name: 'merged config',
+			name: "merged config",
 			args: undefined,
-			env: ['API_KEY', 'CI'],
-			exec: 'https://test.ts',
+			env: ["API_KEY", "CI"],
+			exec: "https://test.ts",
 			yaml: undefined,
 			preview: false,
 			quiet: true,
 			reload: true,
 		},
-	}
-	assertEquals(expected, out)
-})
+	};
+	assertEquals(expected, out);
+});
 
-it('denies all env if allowEnv=false', () => {
+it("denies all env if allowEnv=false", () => {
 	let opts: CliFlags = {
 		config: {
-			env: ['API_KEY', 'CI'],
+			env: ["API_KEY", "CI"],
 		},
-		name: 'merged config',
+		name: "merged config",
 		allowEnv: false,
-	}
-	let out = cOpts(opts)
+	};
+	let out = cOpts(opts);
 	const expected: TemplateConfig = {
-		apiVersion: 'kite.run/v1alpha1',
-		kind: 'TemplateConfig',
+		apiVersion: "kite.run/v1alpha1",
+		kind: "TemplateConfig",
 		metadata: {
-			name: 'merged config',
+			name: "merged config",
 			_allowEnv: false,
 		},
 		spec: {
 			args: undefined,
 			env: [],
-			name: 'merged config',
+			name: "merged config",
 			exec: undefined,
 			yaml: undefined,
 			preview: undefined,
 			quiet: undefined,
 			reload: undefined,
 		},
-	}
-	assertEquals(expected, out)
-})
+	};
+	assertEquals(expected, out);
+});
 
-it('parses from CLI', () => {
-	const parsed = parseArgs(['-c', 'name: production'])
+it("parses from CLI", () => {
+	const parsed = parseArgs(["-c", "name: production"]);
 	// -e my-program.ts -n dev -a - -r -q
 	const expected: TemplateConfig = {
-		apiVersion: 'kite.run/v1alpha1',
-		kind: 'TemplateConfig',
-		metadata: { name: 'production', _allowEnv: false },
+		apiVersion: "kite.run/v1alpha1",
+		kind: "TemplateConfig",
+		metadata: { name: "production", _allowEnv: false },
 		spec: {
 			args: undefined,
 			env: [],
-			name: 'production',
+			name: "production",
 			exec: undefined,
 			yaml: undefined,
 			preview: undefined,
 			quiet: undefined,
 			reload: undefined,
 		},
-	}
-	assertEquals(expected, parsed)
-})
+	};
+	assertEquals(expected, parsed);
+});
 
-it('parses advanced from CLI', () => {
+it("parses advanced from CLI", () => {
 	const parsed = parseArgs([
-		'-c',
+		"-c",
 		'{"name":"dev","exec":"file.ts","allowEnv":["API_KEY"]}',
-	])
+	]);
 	// -e my-program.ts -n dev -a - -r -q
 	const expected: TemplateConfig = {
-		apiVersion: 'kite.run/v1alpha1',
-		kind: 'TemplateConfig',
-		metadata: { name: 'dev', _allowEnv: false },
+		apiVersion: "kite.run/v1alpha1",
+		kind: "TemplateConfig",
+		metadata: { name: "dev", _allowEnv: false },
 		spec: {
 			args: undefined,
 			env: [],
-			name: 'dev',
-			exec: 'file.ts',
+			name: "dev",
+			exec: "file.ts",
 			yaml: undefined,
 			preview: undefined,
 			quiet: undefined,
 			reload: undefined,
 		},
-	}
-	assertEquals(expected, parsed)
-})
+	};
+	assertEquals(expected, parsed);
+});
 
 const tlsYamlText = `\
 # File Generated by the Kite™️ Config Generation tool by @brandonkal.
@@ -202,36 +202,36 @@ spec:
       test:
         algorithm: ECDSA
         ecdsa_curve: P256
-`
+`;
 
-it('keeps YAML in canon output', () => {
+it("keeps YAML in canon output", () => {
 	const parsedArgs = {
 		_: [],
 		y: tlsYamlText,
-		n: 'tls-test',
-	}
-	const out = cOpts(parsedArgs)
-	assertEquals('string', typeof out.spec.yaml)
-	assertEquals(tlsYamlText, out.spec.yaml)
-})
+		n: "tls-test",
+	};
+	const out = cOpts(parsedArgs);
+	assertEquals("string", typeof out.spec.yaml);
+	assertEquals(tlsYamlText, out.spec.yaml);
+});
 
-it('parses YAML from CLI', () => {
-	const parsed = parseArgs(['-y', tlsYamlText, '-n', 'tls-name'])
+it("parses YAML from CLI", () => {
+	const parsed = parseArgs(["-y", tlsYamlText, "-n", "tls-name"]);
 	// -e my-program.ts -n dev -a - -r -q
 	const expected: TemplateConfig = {
-		apiVersion: 'kite.run/v1alpha1',
-		kind: 'TemplateConfig',
-		metadata: { name: 'tls-name', _allowEnv: false },
+		apiVersion: "kite.run/v1alpha1",
+		kind: "TemplateConfig",
+		metadata: { name: "tls-name", _allowEnv: false },
 		spec: {
 			args: undefined,
 			env: [],
-			name: 'tls-name',
+			name: "tls-name",
 			exec: undefined,
 			yaml: tlsYamlText,
 			preview: undefined,
 			quiet: undefined,
 			reload: undefined,
 		},
-	}
-	assertEquals(expected, parsed)
-})
+	};
+	assertEquals(expected, parsed);
+});
