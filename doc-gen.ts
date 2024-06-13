@@ -1,30 +1,30 @@
 /**
  * @file doc-gen.ts
- * @copyright 2020 Brandon Kalinowski (@brandonkal)
+ * @copyright 2024 Brandon Kalinowski (@brandonkal)
  * @description
  * Parse File-level JSDoc from a folder of TS/JS files for document generation
  * @license MIT
  */
 
-import * as fs from 'https://deno.land/std@0.92.0/fs/mod.ts'
+import * as fs from "https://deno.land/std@0.224.0/fs/mod.ts";
 
-const jsDocStartRe = /^\/\*\*/
-const jsDocMidRe = /^\s+\*\s/
-const jsDocEndRe = /\*\//
+const jsDocStartRe = /^\/\*\*/;
+const jsDocMidRe = /^\s+\*\s/;
+const jsDocEndRe = /\*\//;
 
-const kindsRe = /\* @(file|author|copyright|description|license|version)(.*)/
+const kindsRe = /\* @(file|author|copyright|description|license|version)(.*)/;
 
 interface ParsedTopDoc {
-	file?: string
-	author?: string
-	copyright?: string
-	description?: string
-	license?: string
-	version?: string
+	file?: string;
+	author?: string;
+	copyright?: string;
+	description?: string;
+	license?: string;
+	version?: string;
 }
 
 function log(o: any) {
-	console.log(JSON.stringify(o, undefined, 2))
+	console.log(JSON.stringify(o, undefined, 2));
 }
 
 /**
@@ -32,108 +32,110 @@ function log(o: any) {
  * @throws
  */
 export default async function genDoc(files: string[] = []) {
-	const collected = files
+	const collected = files;
 	if (!files.length) {
-		for await (const f of fs.walk(Deno.cwd(), {
-			maxDepth: 1,
-			exts: ['ts', 'js', 'tsx'],
-		})) {
-			if (f.isFile) collected.push(f.path)
+		for await (
+			const f of fs.walk(Deno.cwd(), {
+				maxDepth: 1,
+				exts: ["ts", "js", "tsx"],
+			})
+		) {
+			if (f.isFile) collected.push(f.path);
 		}
 	}
 	const filenames = collected.filter(
-		(f) => !f.match(/(\.d\.ts$)|(test\.(ts|tsx|js|jsx))/)
-	)
+		(f) => !f.match(/(\.d\.ts$)|(test\.(ts|tsx|js|jsx))/),
+	);
 	const fileContents = await Promise.all(
 		filenames.map((fn) => {
-			return Deno.readTextFile(fn)
-		})
-	)
-	const metadata = fileContents.map(parse)
+			return Deno.readTextFile(fn);
+		}),
+	);
+	const metadata = fileContents.map(parse);
 	filenames.forEach((name, i) => {
 		if (!isValid(metadata[i])) {
 			throw new Error(
 				`Invalid top JSDoc header for file: ${name}\n` +
-					`Required properties are file,copyright,description,license. author is optional.`
-			)
+					`Required properties are file,copyright,description,license. author is optional.`,
+			);
 		}
-	})
+	});
 	return metadata.sort((a, b) => {
-		const f = [a.file, b.file].sort()
-		if (a.file === b.file) return 0
-		if (f[0] === a.file) return -1
-		return 1
-	})
+		const f = [a.file, b.file].sort();
+		if (a.file === b.file) return 0;
+		if (f[0] === a.file) return -1;
+		return 1;
+	});
 }
 
 function isValid(obj: any): obj is ParsedTopDoc {
-	if (!obj) return false
-	if (obj.file && obj.description && obj.copyright) return true
-	return false
+	if (!obj) return false;
+	if (obj.file && obj.description && obj.copyright) return true;
+	return false;
 }
 
 /** parses text contents line-by-line for the top JSDoc comment */
 function parse(contents: string): ParsedTopDoc {
-	const lines = contents.split('\n')
-	let isOpen = false
-	let obj: ParsedTopDoc = {}
-	const buffer: [keyof ParsedTopDoc, string][] = []
-	let lastKind: keyof ParsedTopDoc
+	const lines = contents.split("\n");
+	let isOpen = false;
+	const obj: ParsedTopDoc = {};
+	const buffer: [keyof ParsedTopDoc, string][] = [];
+	let lastKind: keyof ParsedTopDoc;
 	for (const line of lines) {
 		if (isOpen || jsDocStartRe.exec(line)) {
-			isOpen = true
-			let m
+			isOpen = true;
+			let m;
 			if ((m = kindsRe.exec(line))) {
-				buffer.push([m[1] as any, m[2]])
-				lastKind = m[1] as keyof ParsedTopDoc
+				buffer.push([m[1] as any, m[2]]);
+				lastKind = m[1] as keyof ParsedTopDoc;
 			} else if ((m = jsDocMidRe.exec(line))) {
-				const v = line.replace(jsDocMidRe, '').trim()
-				buffer.push([lastKind!, v])
+				const v = line.replace(jsDocMidRe, "").trim();
+				buffer.push([lastKind!, v]);
 			}
 			if (line.match(jsDocEndRe)) {
-				break
+				break;
 			}
 		}
 	}
 	if (!buffer.length) {
-		return {}
+		return {};
 	}
 	buffer.forEach(([kind, txt]) => {
 		if (!obj[kind]) {
-			obj[kind] = txt.trim()
+			obj[kind] = txt.trim();
 		} else {
-			obj[kind] = obj[kind] + '\n' + txt.trim()
+			obj[kind] = obj[kind] + "\n" + txt.trim();
 		}
-	})
-	return obj
+	});
+	return obj;
 }
 
 /** toMarkdown generates a markdown list with file and description */
 function toMarkdown(list: ParsedTopDoc[]): string {
-	let out: string[] = []
+	let out: string[] = [];
 	out = list.map((doc) => {
-		return `### ${doc.file}\n\n${doc.description}\n`
-	})
-	return out.join('\n')
+		return `### ${doc.file}\n\n${doc.description}\n`;
+	});
+	return out.join("\n");
 }
 
 if (import.meta.main) {
 	try {
-		let files = Deno.args
-		let shouldMarkdown = false
-		if (files.includes('-m')) {
-			files = files.filter((file) => file !== '-m')
-			shouldMarkdown = true
+		let files = Deno.args;
+		let shouldMarkdown = false;
+		if (files.includes("-m")) {
+			files = files.filter((file) => file !== "-m");
+			shouldMarkdown = true;
 		}
-		const docs = await genDoc(files)
+		const docs = await genDoc(files);
 		if (shouldMarkdown) {
-			const md = toMarkdown(docs)
-			console.log(md)
+			const md = toMarkdown(docs);
+			console.log(md);
 		} else {
-			log(docs)
+			log(docs);
 		}
 	} catch (e) {
-		console.error(e.message)
-		Deno.exit(1)
+		console.error(e.message);
+		Deno.exit(1);
 	}
 }

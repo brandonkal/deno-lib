@@ -1,18 +1,19 @@
+// deno-lint-ignore-file no-explicit-any no-namespace
 /**
  * @file kubernetes.ts
- * @copyright 2020 Brandon Kalinowski (@brandonkal). All rights reserved.
+ * @copyright 2024 Brandon Kalinowski (@brandonkal). All rights reserved.
  * @description Kubernetes Config Generation Library
  * Refer to kite.ts for more info.
  */
 
 import {
-	parseAll,
 	JSON_SCHEMA,
-} from 'https://deno.land/std@0.92.0/encoding/yaml.ts'
-import * as kite from './kite.ts'
-import { meta } from './kubernetes/gen/types.ts'
+	parseAll,
+} from "https://deno.land/std@0.224.0/yaml/mod.ts";
+import * as kite from "./kite.ts";
+import { meta } from "./kubernetes/gen/types.ts";
 
-export * from './kubernetes/gen/api.ts'
+export * from "./kubernetes/gen/api.ts";
 
 /**
  * CustomResourceArgs represents a resource definition we'd use to create an instance of a
@@ -27,7 +28,7 @@ export interface CustomResourceArgs {
 	 * values. More info:
 	 * https://git.k8s.io/community/contributors/devel/api-conventions.md#resources
 	 */
-	apiVersion: string
+	apiVersion: string;
 
 	/**
 	 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -35,14 +36,14 @@ export interface CustomResourceArgs {
 	 * CamelCase. More info:
 	 * https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
 	 */
-	kind: string
+	kind: string;
 
 	/**
 	 * Standard object metadata; More info:
 	 * https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata.
 	 */
-	metadata?: meta.v1.ObjectMeta
-	[othersFields: string]: any
+	metadata?: meta.v1.ObjectMeta;
+	[othersFields: string]: any;
 }
 
 /**
@@ -58,7 +59,7 @@ export class CustomResource extends kite.Resource {
 	 * values. More info:
 	 * https://git.k8s.io/community/contributors/devel/api-conventions.md#resources
 	 */
-	readonly apiVersion!: string
+	readonly apiVersion!: string;
 
 	/**
 	 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -66,13 +67,13 @@ export class CustomResource extends kite.Resource {
 	 * CamelCase. More info:
 	 * https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
 	 */
-	readonly kind!: string
+	readonly kind!: string;
 
 	/**
 	 * Standard object metadata; More info:
 	 * https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata.
 	 */
-	readonly metadata!: meta.v1.ObjectMeta
+	readonly metadata!: meta.v1.ObjectMeta;
 
 	/**
 	 * Create a CustomResource resource with the given unique name, arguments, and options.
@@ -82,19 +83,19 @@ export class CustomResource extends kite.Resource {
 	 * @param opts A bag of options that control this resource's behavior.
 	 */
 	constructor(name: string, desc: CustomResourceArgs) {
-		const props: any = { ...desc }
-		props.spec = (desc && desc.spec) || undefined
+		const props: any = { ...desc };
+		props.spec = (desc && desc.spec) || undefined;
 		props.metadata = Object.assign({}, (desc && desc.metadata) || {}, {
 			name: props?.metadata?.name || name,
-		})
-		super(name, props)
-		this.setType(`k8s:${desc.apiVersion}:${desc.kind}`)
+		});
+		super(name, props);
+		this.setType(`k8s:${desc.apiVersion}:${desc.kind}`);
 	}
 }
 
 interface YamlArgs {
 	/** A set of YAML strings or JavaScript objects representing resources. */
-	yaml: string[] | object[] | string
+	yaml: string[] | object[] | string;
 	/**
 	 * A set of transformations to apply to the resources before registering.
 	 * @example
@@ -108,7 +109,7 @@ interface YamlArgs {
 	 * ]
 	 * ```
 	 */
-	transformations?: ((o: any, name?: string) => void)[]
+	transformations?: ((o: any, name?: string) => void)[];
 }
 
 export namespace yaml {
@@ -120,50 +121,52 @@ export namespace yaml {
 		/**
 		 * The set of Resources created by the Config
 		 */
-		resources: kite.Resource[]
+		resources: kite.Resource[];
 
 		constructor(name: string, desc: YamlArgs | string) {
-			let objs: any[] = []
-			let parsed: any[] = []
-			if (typeof desc === 'string') {
-				objs = [desc]
-			} else if (desc.yaml && typeof desc.yaml === 'string') {
-				objs = [desc.yaml]
-			} else if (desc.yaml && Array.isArray(desc.yaml) && desc.yaml.length) {
-				objs = desc.yaml
+			let objs: any[] = [];
+			const parsed: any[] = [];
+			if (typeof desc === "string") {
+				objs = [desc];
+			} else if (desc.yaml && typeof desc.yaml === "string") {
+				objs = [desc.yaml];
+			} else if (
+				desc.yaml && Array.isArray(desc.yaml) && desc.yaml.length
+			) {
+				objs = desc.yaml;
 			}
-			let transform: ((obj: any) => void) | undefined
-			if (typeof desc !== 'string' && desc.transformations?.length) {
+			let transform: ((obj: any) => void) | undefined;
+			if (typeof desc !== "string" && desc.transformations?.length) {
 				transform = (obj: any) => {
-					desc.transformations!.forEach((fn) => fn(obj, name))
-				}
+					desc.transformations!.forEach((fn) => fn(obj, name));
+				};
 			}
 			objs.forEach((obj) => {
-				if (typeof obj !== 'string') {
-					if (transform) transform(obj)
-					parsed.push(obj)
+				if (typeof obj !== "string") {
+					if (transform) transform(obj);
+					parsed.push(obj);
 				} else {
 					parsed.push(
-						...(parseAll(obj, transform, {
+						...(parseAll(obj, transform!, {
 							schema: JSON_SCHEMA,
-						}) as any[])
-					)
+						})! as any[]),
+					);
 				}
-			})
-			kite.Resource.start(`k8s:yaml:Config:${name}`)
-			this.resources = []
+			});
+			kite.Resource.start(`k8s:yaml:Config:${name}`);
+			this.resources = [];
 			parsed.forEach((item, i) => {
-				const n = item?.metadata?.name || undefined
-				if (typeof n !== 'string') {
+				const n = item?.metadata?.name || undefined;
+				if (typeof n !== "string") {
 					throw new Error(
-						`Invalid k8s metadata.name field. Got: ${n} for k8s:yaml.Config:${name} (item ${i})`
-					)
+						`Invalid k8s metadata.name field. Got: ${n} for k8s:yaml.Config:${name} (item ${i})`,
+					);
 				}
 				this.resources.push(
-					new kite.Resource(n, { ...item, __type: 'k8s:yaml' })
-				)
-			})
-			kite.Resource.end()
+					new kite.Resource(n, { ...item, __type: "k8s:yaml" }),
+				);
+			});
+			kite.Resource.end();
 		}
 	}
 }
@@ -176,7 +179,7 @@ export namespace helm {
 		 * values. More info:
 		 * https://git.k8s.io/community/contributors/devel/api-conventions.md#resources
 		 */
-		apiVersion?: 'helm.cattle.io/v1'
+		apiVersion?: "helm.cattle.io/v1";
 
 		/**
 		 * Kind is a string value representing the REST resource this object represents. Servers may
@@ -184,45 +187,45 @@ export namespace helm {
 		 * CamelCase. More info:
 		 * https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
 		 */
-		kind?: 'HelmChart'
+		kind?: "HelmChart";
 
 		/**
 		 * Standard object metadata; More info:
 		 * https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata.
 		 */
-		metadata?: meta.v1.ObjectMeta
+		metadata?: meta.v1.ObjectMeta;
 		/**
 		 * Specify the HelmChart spec
 		 */
-		spec: IChartSpec
+		spec: IChartSpec;
 	}
 
 	export interface IChartSpec {
 		/**
 		 * Specify the chart name
 		 */
-		chart: string
+		chart: string;
 		/**
 		 * Specify the Chart repo. Should be a URL or "stable".
 		 */
-		repo?: string
+		repo?: string;
 		/**
 		 * Specify the Chart version. If unspecified, latest is used.
 		 */
-		version?: string
+		version?: string;
 		/**
 		 * Set the namespace the chart resources should be deployed into
 		 */
-		targetNamespace?: string
+		targetNamespace?: string;
 		/**
 		 * Specify Helm Chart values.
 		 * The constructor will transform an object value into a YAML string.
 		 */
-		valuesContent?: string | Record<string, any>
+		valuesContent?: string | Record<string, unknown>;
 		/**
 		 * Optionally specify a helmVersion to use to deploy the chart.
 		 */
-		helmVersion?: string
+		helmVersion?: string;
 	}
 
 	/**
@@ -231,34 +234,36 @@ export namespace helm {
 	 * @see https://github.com/rancher/helm-controller
 	 */
 	export class Chart extends kite.Resource implements IChart {
-		kind!: 'HelmChart'
-		apiVersion!: 'helm.cattle.io/v1'
-		metadata!: meta.v1.ObjectMeta
-		spec!: IChartSpec
+		kind!: "HelmChart";
+		apiVersion!: "helm.cattle.io/v1";
+		metadata!: meta.v1.ObjectMeta;
+		spec!: IChartSpec;
 
 		constructor(name: string, args: IChart) {
 			const props: IChart = {
 				...args,
-				kind: 'HelmChart',
-				apiVersion: 'helm.cattle.io/v1',
+				kind: "HelmChart",
+				apiVersion: "helm.cattle.io/v1",
 				metadata: args.metadata || { name },
 				spec: args.spec || undefined,
-			}
+			};
 			// Add implicit name
 			if (!props.metadata?.name) {
-				if (typeof props.metadata !== 'object') {
-					props.metadata = {}
+				if (typeof props.metadata !== "object") {
+					props.metadata = {};
 				}
-				props.metadata.name = name
+				props.metadata.name = name;
 			}
 			if (!props.spec?.chart) {
-				throw new Error(`HelmChart ${name} is must specify a chart.`)
+				throw new Error(`HelmChart ${name} is must specify a chart.`);
 			}
-			if (typeof props.spec.valuesContent !== 'string') {
-				props.spec.valuesContent = kite.yaml.print(props.spec.valuesContent)
+			if (typeof props.spec.valuesContent !== "string") {
+				props.spec.valuesContent = kite.yaml.print(
+					props.spec.valuesContent,
+				);
 			}
-			super(name, props)
-			this.setType(`k8s:HelmChart`)
+			super(name, props);
+			this.setType(`k8s:HelmChart`);
 		}
 	}
 }

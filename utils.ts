@@ -2,7 +2,7 @@
  * @file utils.ts
  * @author Brandon Kalinowski
  * @description A collection of useful small functions in one location.
- * @copyright 2020 Brandon Kalinowski
+ * @copyright 2024 Brandon Kalinowski
  * @license MIT
  */
 
@@ -11,29 +11,29 @@
  * Used by printYaml for more compact YAML text.
  */
 export function stripUndefined<T extends Record<string, any>>(obj: T): T {
-	if (typeof obj === 'undefined') return obj
+	if (typeof obj === "undefined") return obj;
 	Object.keys(obj).forEach((key) => {
-		if (obj[key] && typeof obj[key] === 'object') stripUndefined(obj[key])
-		else if (obj[key] === undefined) delete obj[key]
-	})
-	return obj
+		if (obj[key] && typeof obj[key] === "object") stripUndefined(obj[key]);
+		else if (obj[key] === undefined) delete obj[key];
+	});
+	return obj;
 }
 
 /**
  * Returns true if x is an object, false otherwise.
  */
 export function isObject(o: unknown): o is Record<string | symbol, any> {
-	return typeof o === 'object' && !Array.isArray(o) && !!o
+	return typeof o === "object" && !Array.isArray(o) && !!o;
 }
 
 /**
  * An primitive item that can be encoded as JSON or undefined (not object)
  */
-export type jsonItem = string | number | null | undefined | boolean
+export type jsonItem = string | number | null | undefined | boolean;
 /**
  * Visitor is a function that performs a modification on a visited object value.
  */
-export type Visitor = (item: jsonItem) => jsonItem
+export type Visitor = (item: jsonItem) => jsonItem;
 
 /**
  * visitAll recursively visits all values of an object and
@@ -43,19 +43,19 @@ export type Visitor = (item: jsonItem) => jsonItem
  */
 export function visitAll(item: unknown, visitor: Visitor): unknown {
 	if (item === null || item === undefined) {
-		return visitor(item)
+		return visitor(item);
 	} else if (Array.isArray(item)) {
 		return item.map((v) => {
-			return visitAll(v, visitor)
-		})
+			return visitAll(v, visitor);
+		});
 	} else if (isObject(item)) {
 		Object.entries(item).forEach(([key, value]) => {
-			item[key] = visitAll(value, visitor)
-		})
+			item[key] = visitAll(value, visitor);
+		});
 	} else {
-		return visitor(item as string)
+		return visitor(item as string);
 	}
-	return item
+	return item;
 }
 
 /**
@@ -67,21 +67,21 @@ export function visitAll(item: unknown, visitor: Visitor): unknown {
 export function dotProp(
 	object: any,
 	path: string | string[],
-	defaultValue?: any
+	defaultValue?: any,
 ) {
 	if (!isObject(object)) {
-		throw new TypeError(`Expected object but got ${object}`)
+		throw new TypeError(`Expected object but got ${object}`);
 	}
-	const pathArray = typeof path === 'string' ? path.split('.') : path
+	const pathArray = typeof path === "string" ? path.split(".") : path;
 	if (pathArray.length === 0) {
-		return
+		return;
 	}
 	for (let i = 0; i < pathArray.length; i++) {
 		if (!Object.prototype.propertyIsEnumerable.call(object, pathArray[i])) {
-			return defaultValue
+			return defaultValue;
 		}
 
-		object = object[pathArray[i]]
+		object = object[pathArray[i]];
 
 		if (object === undefined || object === null) {
 			// `object` is either `undefined` or `null` so we want to stop the loop, and
@@ -90,12 +90,12 @@ export function dotProp(
 			// it would return `null` if `object` is `null`
 			// but we want `get({foo: null}, 'foo.bar')` to equal `undefined`, or the supplied value, not `null`
 			if (i !== pathArray.length - 1) {
-				return defaultValue
+				return defaultValue;
 			}
-			break
+			break;
 		}
 	}
-	return object
+	return object;
 }
 
 /**
@@ -103,8 +103,8 @@ export function dotProp(
  */
 export function notImplemented(name: string) {
 	return (..._: any[]) => {
-		throw new Error(`${name} is not implemented.`)
-	}
+		throw new Error(`${name} is not implemented.`);
+	};
 }
 
 /**
@@ -117,18 +117,18 @@ export function wait<T>(
 	time: number,
 	msg?: T,
 	reject = false,
-	id?: any
+	id?: any,
 ): [Promise<T>, () => void] {
 	function makeResolver(action: (arg: any) => void) {
 		//prettier-ignore
-		id = setTimeout(() => action(msg), time)
+		id = setTimeout(() => action(msg), time);
 	}
 	return [
 		new Promise((resolver, rejecter) =>
 			makeResolver(reject ? rejecter : resolver)
 		),
 		() => clearTimeout(id),
-	]
+	];
 }
 
 /**
@@ -144,12 +144,12 @@ export async function withTimeout<V, TO>(
 	ms: number,
 	promise: () => Promise<V>,
 	timoutMsg?: TO,
-	rejectOnTimeout = false
+	rejectOnTimeout = false,
 ): Promise<V | TO> {
-	const [waiting, cancel] = wait(ms, timoutMsg, rejectOnTimeout)
-	const result = await Promise.race([promise(), waiting])
-	cancel()
-	return result as V | TO
+	const [waiting, cancel] = wait(ms, timoutMsg, rejectOnTimeout);
+	const result = await Promise.race([promise(), waiting]);
+	cancel();
+	return result as V | TO;
 }
 
 /**
@@ -157,7 +157,7 @@ export async function withTimeout<V, TO>(
  * This is useful for syntax highlighting tagged templates. i.e. import as yaml.
  */
 export function vanillaTag(literals: TemplateStringsArray, ...expr: unknown[]) {
-	return String.raw({ raw: literals } as any, ...expr)
+	return String.raw({ raw: literals } as any, ...expr);
 }
 
 /**
@@ -166,15 +166,15 @@ export function vanillaTag(literals: TemplateStringsArray, ...expr: unknown[]) {
  */
 export function homedir() {
 	return (
-		Deno.env.get('HOME') ||
-		Deno.env.get('HOMEPATH') ||
-		Deno.env.get('USERPROFILE')
-	)
+		Deno.env.get("HOME") ||
+		Deno.env.get("HOMEPATH") ||
+		Deno.env.get("USERPROFILE")
+	);
 }
 
 /** stringify item to string  */
 export function asString(data: any) {
-	let errStr = String(data)
-	if (errStr === '[object Object]') errStr = JSON.stringify(data)
-	return errStr
+	let errStr = String(data);
+	if (errStr === "[object Object]") errStr = JSON.stringify(data);
+	return errStr;
 }

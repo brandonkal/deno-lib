@@ -1,16 +1,14 @@
+// deno-lint-ignore-file no-explicit-any
 /**
  * @file args.ts
  * @author Brandon Kalinowski
- * @copyright 2020 Brandon Kalinowski
+ * @copyright 2024 Brandon Kalinowski
  * @description Utilities for parsing CLI arguments.
  * @license MIT
  */
 
-import * as flags from 'https://deno.land/std@0.92.0/flags/mod.ts'
-import {
-	parse,
-	JSON_SCHEMA,
-} from 'https://deno.land/std@0.92.0/encoding/yaml.ts'
+import * as flags from "https://deno.land/std@0.224.0/flags/mod.ts";
+import { JSON_SCHEMA, parse } from "https://deno.land/std@0.224.0/yaml/mod.ts";
 
 /**
  * If the value is '-' stdin is read and returned.
@@ -18,23 +16,23 @@ import {
  * Otherwise the value is returned.
  */
 export function textOrStdIn(value: string) {
-	if (value === '-') {
-		const buf = new Uint8Array(1024)
+	if (value === "-") {
+		const buf = new Uint8Array(1024);
 		try {
-			const n = Deno.stdin.readSync(buf)
+			const n = Deno.stdin.readSync(buf);
 			if (n === null) {
-				return undefined
+				return undefined;
 			} else {
-				return new TextDecoder().decode(buf.subarray(0, n))
+				return new TextDecoder().decode(buf.subarray(0, n));
 			}
-		} catch (e) {
-			return undefined
+		} catch (_e) {
+			return undefined;
 		}
 	}
-	return value
+	return value;
 }
 
-export const looksLikeYamlRe = /(" *?:)|(: )/
+export const looksLikeYamlRe = /(" *?:)|(: )/;
 
 /**
  * getArgsObject is a helper utility like flags.parse().
@@ -44,32 +42,32 @@ export const looksLikeYamlRe = /(" *?:)|(: )/
  */
 export function getArgsObject(
 	yamlKeys?: Set<string>,
-	argsArray?: string[]
+	argsArray?: string[],
 ): Record<string, any> {
 	const isYaml = yamlKeys
 		? (key: string, _: string) => {
-				return yamlKeys.has(key)
-		  }
+			return yamlKeys.has(key);
+		}
 		: (_: string, value: string) => {
-				return !!looksLikeYamlRe.exec(value)
-		  }
-	const rawArgs = flags.parse(argsArray || Deno.args)
-	const parsedArgs: any = {}
+			return !!looksLikeYamlRe.exec(value);
+		};
+	const rawArgs = flags.parse(argsArray || Deno.args);
+	const parsedArgs: any = {};
 	Object.entries(rawArgs).forEach(([key, rawValue]) => {
-		let value = textOrStdIn(rawValue)
+		let value = textOrStdIn(rawValue);
 		if (value !== undefined) {
 			if (isYaml(key, value)) {
 				try {
-					value = parse(value, { schema: JSON_SCHEMA }) as any
+					value = parse(value, { schema: JSON_SCHEMA }) as string;
 				} catch (err) {
 					// ignore failure if we inferred possible YAML key
 					if (!yamlKeys) {
-						throw err
+						throw err;
 					}
 				}
 			}
-			parsedArgs[key] = value
+			parsedArgs[key] = value;
 		}
-	})
-	return parsedArgs
+	});
+	return parsedArgs;
 }

@@ -38,7 +38,7 @@ const scopePattern = new RegExp(
  */
 export function load(input, options = { comments: false }) {
 	/** @type {object} */
-	let data = {}
+	const data = {}
 	let scope = data
 	/** @typedef {Object} StackScope
 	 * @property {'simple' | 'complex' | 'freeform'} arrayType

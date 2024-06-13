@@ -2,27 +2,27 @@
  * A little utility to generate the object for namespaces.ts
  */
 async function main() {
-	const p = Deno.run({
-		cmd: ['kubectl', 'api-resources', '--no-headers=true'],
-		stdout: 'piped',
-		stderr: 'inherit',
-	})
-	let s = await p.status()
-	if (!s.success) {
-		console.log('ERROR')
-		Deno.exit(s.code)
+	const p = new Deno.Command("kubectl", {
+		args: ["api-resources", "--no-headers=true"],
+		stdin: "piped",
+		stderr: "inherit",
+	});
+	const o = await p.output();
+	if (!o.success) {
+		console.log("ERROR");
+		Deno.exit(o.code);
 	}
-	const txt = new TextDecoder().decode(await p.output())
+	const txt = new TextDecoder().decode(o.stdout);
 	const parsed = txt
-		.split('\n')
+		.split("\n")
 		.map((l) => {
-			const parts = l.split(/\s+/)
+			const parts = l.split(/\s+/);
 			return {
 				kind: parts.pop(),
-				namespaced: parts.pop() === 'true' ? true : false,
-			}
+				namespaced: parts.pop() === "true" ? true : false,
+			};
 		})
-		.filter((p) => p.kind)
-	console.log(JSON.stringify(parsed))
+		.filter((p) => p.kind);
+	console.log(JSON.stringify(parsed));
 }
-main()
+main();

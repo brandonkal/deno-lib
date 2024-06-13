@@ -1,7 +1,7 @@
 /**
  * @file yaml-tag.ts
  * @author Brandon Kalinowski
- * @copyright 2020 Brandon Kalinowski
+ * @copyright 2024 Brandon Kalinowski
  * @description Write YAML within TypeScript programs for cleaner and more concise code.
  * This module provides the following exports:
  * - y (yaml text tagged template function)
@@ -9,26 +9,26 @@
  * @license MIT
  */
 
-import * as YAML from 'https://deno.land/std@0.92.0/encoding/yaml.ts'
-import { Type } from 'https://deno.land/std@0.92.0/encoding/_yaml/type.ts'
-import { Schema } from 'https://deno.land/std@0.92.0/encoding/_yaml/schema.ts'
-import { execDedent } from './dedent.ts'
-import { stripUndefined } from './utils.ts'
+import * as YAML from "https://deno.land/std@0.224.0/yaml/mod.ts";
+import { Type } from "https://deno.land/std@0.224.0/yaml/type.ts";
+import { Schema } from "https://deno.land/std@0.224.0/yaml/schema.ts";
+import { execDedent } from "./dedent.ts";
+import { stripUndefined } from "./utils.ts";
 
-const undefinedType = new Type('tag:yaml.org,2002:js/undefined', {
-	kind: 'scalar',
+const undefinedType = new Type("tag:yaml.org,2002:js/undefined", {
+	kind: "scalar",
 	resolve: () => true,
 	construct: () => undefined,
 	predicate: function isUndefined(object) {
-		return typeof object === 'undefined'
+		return typeof object === "undefined";
 	},
-	represent: () => '',
-})
+	represent: () => "",
+});
 
 export const JSON_AND_UNDEFINED = new Schema({
 	explicit: [undefinedType],
 	include: [YAML.JSON_SCHEMA],
-})
+});
 
 /**
  * If true, sort keys when dumping YAML in ascending, ASCII character order.
@@ -37,7 +37,7 @@ export const JSON_AND_UNDEFINED = new Schema({
  * if first argument is less than second argument, zero if they're equal
  * and a positive value otherwise.
  */
-type SortFn = (a: string, b: string) => number
+type SortFn = (a: string, b: string) => number;
 
 /**
  * Stringifies a JavaScript object to YAML.
@@ -48,49 +48,49 @@ export function printYaml(
 	input: unknown,
 	sortKeys: boolean | SortFn = true,
 	comments?: boolean,
-	header = true
+	header = true,
 ): string {
-	let docs = input as unknown[]
+	let docs = input as unknown[];
 	if (!Array.isArray(input)) {
-		docs = [input]
+		docs = [input];
 	}
-	let out = ''
+	let out = "";
 	for (const doc of docs) {
-		let obj: object = stripUndefined(
-			Array.isArray(doc) && comments ? doc[1] : doc
-		)
+		const obj: object = stripUndefined(
+			Array.isArray(doc) && comments ? doc[1] : doc,
+		);
 		if (comments && Array.isArray(doc) && doc[0]) {
-			const cmt = toComment(doc[0])
+			const cmt = toComment(doc[0]);
 			// keep regions before new document start
-			if (cmt.startsWith('# endregion')) {
-				out = out.replace(/---\n$/, cmt + '---\n')
+			if (cmt.startsWith("# endregion")) {
+				out = out.replace(/---\n$/, cmt + "---\n");
 			} else {
-				out += cmt
+				out += cmt;
 			}
 		}
-		if (typeof obj === 'undefined') {
-			continue
+		if (typeof obj === "undefined") {
+			continue;
 		}
 
 		out += YAML.stringify(obj, {
 			schema: YAML.JSON_SCHEMA,
 			sortKeys: sortKeys,
 			skipInvalid: true,
-		}).trimEnd()
+		}).trimEnd();
 		// add join
-		out += '\n---\n'
+		out += "\n---\n";
 	}
 	return header
-		? '---\n' + out.replace(/\n---\n$/, '')
-		: out.replace(/\n---\n$/, '')
+		? "---\n" + out.replace(/\n---\n$/, "")
+		: out.replace(/\n---\n$/, "");
 }
 /** generate yaml comment */
 function toComment(str: string) {
-	str = str.trimEnd()
-	if (str.startsWith('#')) {
-		return str + '\n'
+	str = str.trimEnd();
+	if (str.startsWith("#")) {
+		return str + "\n";
 	}
-	return '# ' + str + '\n'
+	return "# " + str + "\n";
 }
 
 /**
@@ -101,36 +101,36 @@ export function yamlfy(
 	strings: string[] | TemplateStringsArray,
 	...expr: unknown[]
 ) {
-	let result = ''
+	let result = "";
 	strings.forEach((string, i) => {
-		result += string
-		let indent = result.split('\n').pop()?.length || 0
+		result += string;
+		const indent = result.split("\n").pop()?.length || 0;
 		if (i < expr.length) {
 			// quoted strings are required for newlines and special characters
 			// But we don't want strings quoted elsewhere.
-			result += yamlString(expr[i], indent, result.endsWith(': '))
+			result += yamlString(expr[i], indent, result.endsWith(": "));
 		}
-	})
-	return result.replace(/\t/g, '  ')
+	});
+	return result.replace(/\t/g, "  ");
 }
 /** serializes item to a string form that can be inserted in YAML text */
 function yamlString(item: unknown, indent: number, shouldQuote: boolean) {
-	if (typeof item === 'boolean' || typeof item === 'number') {
-		return item.toString()
-	} else if (typeof item === 'string') {
-		return shouldQuote ? JSON.stringify(item) : item
+	if (typeof item === "boolean" || typeof item === "number") {
+		return item.toString();
+	} else if (typeof item === "string") {
+		return shouldQuote ? JSON.stringify(item) : item;
 	} else if (item === null) {
-		return 'null'
-	} else if (typeof item === 'object') {
+		return "null";
+	} else if (typeof item === "object") {
 		if (indent === 0) {
-			return YAML.stringify(item as object, { schema: YAML.JSON_SCHEMA })
+			return YAML.stringify(item as object, { schema: YAML.JSON_SCHEMA });
 		}
-		return JSON.stringify(item)
-	} else if (typeof item === 'undefined') {
+		return JSON.stringify(item);
+	} else if (typeof item === "undefined") {
 		// we load with undefined supported. Otherwise YAML will interpret as null.
-		return '!!js/undefined'
+		return "!!js/undefined";
 	} else {
-		throw new Error('Invalid YAML input:' + item)
+		throw new Error("Invalid YAML input:" + item);
 	}
 }
 
@@ -144,10 +144,10 @@ export function y<T extends object>(
 	literals: TemplateStringsArray,
 	...expr: unknown[]
 ): T {
-	const { strings } = execDedent(literals, expr)
-	const result = yamlfy(strings, ...expr)
+	const { strings } = execDedent(literals, expr);
+	const result = yamlfy(strings, ...expr);
 	//@ts-ignore -- YAML lib TS bug. parseAll expects options for 2nd param.
-	return YAML.parseAll(result, { schema: JSON_AND_UNDEFINED })[0] as T
+	return YAML.parseAll(result, { schema: JSON_AND_UNDEFINED })[0] as T;
 }
 
 /**
@@ -160,10 +160,10 @@ export function yaml<T extends object>(
 	literals: TemplateStringsArray,
 	...expr: unknown[]
 ): T[] {
-	const { strings } = execDedent(literals, expr)
-	const result = yamlfy(strings, ...expr)
+	const { strings } = execDedent(literals, expr);
+	const result = yamlfy(strings, ...expr);
 	//@ts-ignore -- YAML lib TS bug. parseAll expects options for 2nd param.
-	return YAML.parseAll(result, { schema: JSON_AND_UNDEFINED }) as T[]
+	return YAML.parseAll(result, { schema: JSON_AND_UNDEFINED }) as T[];
 }
 
 // export standard yaml module
@@ -173,17 +173,16 @@ export function yaml<T extends object>(
  *
  * You can disable exceptions by setting the skipInvalid option to true.
  */
-yaml.stringify = YAML.stringify
+yaml.stringify = YAML.stringify;
 /**
  * Parses `content` as single YAML document.
  *
  * Returns a JavaScript object or throws `YAMLException` on error.
  * By default, does not support regexps, functions and undefined. This method is safe for untrusted data.
- *
  */
-yaml.parse = YAML.parse
+yaml.parse = YAML.parse;
 /**
  * Same as `parse()`, but understands multi-document sources.
  * Applies iterator to each document if specified, or returns array of documents.
  */
-yaml.parseAll = YAML.parseAll
+yaml.parseAll = YAML.parseAll;

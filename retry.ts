@@ -1,11 +1,11 @@
 /**
  * @file retry.ts
  * @description Retry an async function for exponential backoff. With a retryFetch implementation.
- * @copyright 2020 Brandon Kalinowski (brandonkal)
+ * @copyright 2024 Brandon Kalinowski (brandonkal)
  * @license MIT
  */
 
-import { delay as wait } from 'https://deno.land/std@0.92.0/async/delay.ts'
+import { delay as wait } from "https://deno.land/std@0.224.0/async/delay.ts";
 
 /**
  * Retry an async function until it does not throw an exception.
@@ -15,22 +15,22 @@ import { delay as wait } from 'https://deno.land/std@0.92.0/async/delay.ts'
  */
 export async function retryAsync<T>(
 	fn: () => Promise<T>,
-	opts: RetryOptions
+	opts: RetryOptions,
 ): Promise<T> {
 	try {
-		return await fn()
+		return await fn();
 	} catch (err) {
 		if (opts.times > 1) {
-			await wait(opts.delay)
-			opts.times -= 1
-			return await retryAsync(fn, opts)
+			await wait(opts.delay);
+			opts.times -= 1;
+			return await retryAsync(fn, opts);
 		}
-		throw err
+		throw err;
 	}
 }
 
 function needsRetry(res: Response): boolean {
-	return 500 <= res.status && res.status < 600 && res.status !== 501
+	return 500 <= res.status && res.status < 600 && res.status !== 501;
 }
 
 /**
@@ -48,27 +48,27 @@ function needsRetry(res: Response): boolean {
 export async function fetchRetry(
 	input: string | Request | URL,
 	init?: RequestInit,
-	retryOpts: RetryOptions = { delay: 4000, times: 5 }
+	retryOpts: RetryOptions = { delay: 4000, times: 5 },
 ): Promise<Response> {
 	const fn = async () => {
 		return fetch(input, init).then((res) => {
 			if (needsRetry(res)) {
-				throw res
+				throw res;
 			}
-			return res
-		})
-	}
+			return res;
+		});
+	};
 	if (!retryOpts.delay || !retryOpts.times) {
 		throw new TypeError(
-			'If retryOpts is specified, both delay and times must be declared.'
-		)
+			"If retryOpts is specified, both delay and times must be declared.",
+		);
 	}
 	return retryAsync(fn, retryOpts).then((res) => {
 		if (res.ok === false) {
-			throw res
+			throw res;
 		}
-		return res
-	})
+		return res;
+	});
 }
 
 /**
@@ -77,6 +77,6 @@ export async function fetchRetry(
  *  - delay: number of miliseconds between each attempt.
  */
 export interface RetryOptions {
-	times: number // maximum number of attempts. if fn is still throwing execption afect maxtry attempts, an exepction is thrown
-	delay: number //number of miliseconds between each attempt.
+	times: number; // maximum number of attempts. if fn is still throwing execption afect maxtry attempts, an exepction is thrown
+	delay: number; //number of miliseconds between each attempt.
 }
