@@ -14,4 +14,4 @@
  * See https://github.com/brandonkal/runtypes
  */
 
-export * from 'https://raw.githubusercontent.com/brandonkal/runtypes/38ead646e0b0b86d5e4c6c8d05b8e3c9ff764bc4/src/index.ts'
+export * from "https://raw.githubusercontent.com/brandonkal/runtypes/e4824aae4a3700080048a5e3833e94a2203d1f12/src/index.ts";

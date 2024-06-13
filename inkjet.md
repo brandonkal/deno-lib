@@ -15,10 +15,21 @@ deno test `fd test`
 ```bash
 set -e
 for file in `$INKJET changed`; do
-  deno cache --unstable -r=https://x.kite.run/lib/${file} https://x.kite.run/lib/${file}
+  deno cache -r=https://x.kite.run/lib/${file} https://x.kite.run/lib/${file}
 done
 
 echo -n `git rev-parse HEAD` >| .git/last_push.txt
+```
+
+## all
+
+> Cache all files
+
+```bash
+files=`fd --extension ts --extension js -E wip -E npm`
+for file in $files; do
+  deno cache -r https://x.kite.run/lib/${file}
+done
 ```
 
 ## cache (file)
@@ -26,7 +37,7 @@ echo -n `git rev-parse HEAD` >| .git/last_push.txt
 > Update a single file in the Deno cache
 
 ```sh
-deno cache --unstable -r=https://x.kite.run/lib/${file} https://x.kite.run/lib/${file}
+deno cache -r=https://x.kite.run/lib/${file} https://x.kite.run/lib/${file}
 ```
 
 ## changed
@@ -48,7 +59,7 @@ fi
 > Typecheck all files by caching them
 
 ```sh
-deno cache --unstable `fd -e ts`
+deno cache `fd -e ts -E wip -E npm`
 ```
 
 ## index
@@ -56,5 +67,5 @@ deno cache --unstable `fd -e ts`
 > Generate Readme index from TypeScript files
 
 ```
-deno --unstable run --allow-read doc-gen.ts -m
+deno run --allow-read doc-gen.ts -m
 ```
