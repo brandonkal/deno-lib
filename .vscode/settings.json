@@ -1,6 +1,6 @@
 {
 	"deno.enable": true,
-	"deno.unstable": true,
+	"deno.unstable": false,
 	"runOnSave.commands": [
 		// {
 		//   "command": "deno fmt ${file} && node ${file}",

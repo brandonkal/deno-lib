@@ -5,30 +5,20 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "Deno",
-			"type": "node",
-			"request": "launch",
-			"cwd": "${workspaceFolder}",
-			"runtimeExecutable": "deno",
-			"runtimeArgs": [
-				"run",
-				"--inspect-brk",
-				"-A",
-				"--unstable",
-				"${file}",
-				"-c",
-				"env: [ONE]"
-			],
-			"port": 9229
-		},
-		{
-			"type": "node",
-			"request": "launch",
-			"name": "Debug",
-			"skipFiles": ["<node_internals>/**"],
-			"program": "${workspaceFolder}/npm/register.js",
-			"args": ["${file}"]
-		},
+            "request": "launch",
+            "name": "Deno",
+            "type": "node",
+            "cwd": "${workspaceFolder}",
+            "env": {},
+            "runtimeExecutable": "/opt/homebrew/bin/deno",
+            "runtimeArgs": [
+                "run",
+                "--inspect-wait",
+                "--allow-all",
+				"${file}"
+            ],
+            "attachSimplePort": 9229
+        },
 		{
 			"name": "Deno goto",
 			"type": "node",
@@ -38,7 +28,6 @@
 			"runtimeArgs": [
 				"run",
 				"--inspect-brk",
-				"--unstable",
 				"--allow-run",
 				"--allow-env",
 				"--allow-read=$HOME/.kite,$HOME/.terraformrc,$HOME/.terraform.d",
