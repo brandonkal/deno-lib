@@ -1,7 +1,7 @@
 /**
  * @file kite.ts
  * @author Brandon Kalinowski
- * @copyright 2020 Brandon Kalinowski (@brandonkal)
+ * @copyright 2020-2024 Brandon Kalinowski (@brandonkal)
  * @description Kite™️ is a Simplified Config Generation Library
  *
  * Ground Rules:
@@ -19,9 +19,8 @@ import { isObject, stripUndefined } from "./utils.ts";
 import { merge } from "./merge.ts";
 import { getArgsObject } from "./args.ts";
 import "./kite/extended-string.ts";
-import singleton from "https://deno.land/x/singleton@v1.1.0/mod.ts";
 
-export const state = singleton(() => {
+export function initState() {
 	const outBuffer: (Resource | _Comment)[] = [];
 	const stack: string[] = [];
 	const registeredNames: Set<string> = new Set();
@@ -30,7 +29,9 @@ export const state = singleton(() => {
 		stack,
 		registeredNames,
 	};
-});
+}
+
+const state = initState()!;
 
 /**
  * A kite.Resource is the base class that all generated config objects should extend.
@@ -82,14 +83,14 @@ export class Resource {
 	 * When it is done, it calls Resource.end()
 	 */
 	static start(name: string) {
-		state.getInstance().stack.push(name);
+		state.stack.push(name);
 		new _Comment(`region ${name}`);
 	}
 	/**
 	 * Call to inform the stack that a ComponentResource will not create any more Resources.
 	 */
 	static end() {
-		const name = state.getInstance().stack.pop();
+		const name = state.stack.pop();
 		new _Comment(`endregion ${name}`);
 	}
 
@@ -149,7 +150,7 @@ class _Comment {
 	__type = "kite:Comment";
 	constructor(text: string) {
 		this.comment = text;
-		state.getInstance().outBuffer.push(this);
+		state.outBuffer.push(this);
 	}
 }
 function is_Comment(x: any): x is _Comment {
@@ -165,11 +166,11 @@ function registerResource(name: string, desc: any, instance: Resource) {
 			instance.setType(desc.__type);
 			delete desc.__type;
 		}
-		if (state.getInstance().stack.length) {
+		if (state.stack.length) {
 			Object.defineProperty(instance, "__parents", {
 				writable: false,
 				enumerable: false,
-				value: [...state.getInstance().stack],
+				value: [...state.stack],
 			});
 		}
 		if (!(instance as any).__type /* private */) {
@@ -188,20 +189,20 @@ function registerResource(name: string, desc: any, instance: Resource) {
 			enumerable: false,
 			value: name,
 		});
-		state.getInstance().outBuffer.push(instance);
-		const number = state.getInstance().outBuffer.length;
+		state.outBuffer.push(instance);
+		const number = state.outBuffer.length;
 		Object.defineProperty(instance, "__number", {
 			writable: false,
 			enumerable: false,
 			value: number,
 		});
 		const id = instance.uid(true);
-		if (state.getInstance().registeredNames.has(id)) {
+		if (state.registeredNames.has(id)) {
 			throw new Error(
 				"Duplicate names are not allowed for this resource type",
 			);
 		}
-		state.getInstance().registeredNames.add(id);
+		state.registeredNames.add(id);
 		return number;
 	} catch (e) {
 		throw new Error(`Unable to resolve resource inputs for ${name}: ${e}`);
@@ -248,8 +249,8 @@ export function log(config: string, includeHeader = true) {
  * clear state
  */
 function reset() {
-	state.getInstance().outBuffer = [];
-	state.getInstance().registeredNames.clear();
+	state.outBuffer = [];
+	state.registeredNames.clear();
 }
 
 /**
@@ -357,7 +358,7 @@ export function make(fn: Function, opts?: MakeOpts): string {
 		Deno.exit(1);
 	}
 
-	let buf = [...state.getInstance().outBuffer];
+	let buf = [...state.outBuffer];
 	if (post && post.length) {
 		post.forEach((transform) => {
 			if (typeof transform === "function") {
