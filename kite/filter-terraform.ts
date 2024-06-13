@@ -6,7 +6,7 @@
  * @license MIT
  */
 
-import { readLines } from "https://deno.land/std@0.92.0/io/bufio.ts";
+import { TextLineStream } from "jsr:@std/streams/text-line-stream";
 
 // Filter Sensitive values. Regex based on
 // https://github.com/cloudposse/tfmask/blob/7a4a942248c665b6a5c66f9c288fabe97550f43d/main.go
@@ -39,7 +39,7 @@ suggested below.`.split("\n");
 const reIsUpWarning = new RegExp(`^(${upWarningLines.join("|")})`);
 
 /** Terraform stdout provides useful information, but we want it filtered */
-export function tFLine(line: string) {
+function tFLine(line: string): string {
 	// const refreshingState = /Refreshing state\.\.\..*$/gm
 	// make the text more concise
 	if (line === upWarningLines[0]) {
@@ -65,22 +65,22 @@ export function tFLine(line: string) {
 	}
 
 	if ((match = planStatusLineRe.exec(line)) /*?*/) {
-		let resource = match[1]; //?
-		let id = match[3];
+		const resource = match[1]; //?
+		const id = match[3];
 		if (resourceRe.exec(resource)) {
 			return line.replace(id, MASKED);
 		}
 	} else if ((match = planLineRe.exec(line))) {
-		let leadingWhitespace = match[1];
-		let property = match[2]; // something like `stage.0.action.0.configuration.OAuthToken`
-		let trailingWhitespace = match[3];
-		let firstQuote = match[4]; // < or "
+		const leadingWhitespace = match[1];
+		const property = match[2]; // something like `stage.0.action.0.configuration.OAuthToken`
+		const trailingWhitespace = match[3];
+		const firstQuote = match[4]; // < or "
 		let oldValue = match[5];
-		let secondQuote = match[6]; // > or "
-		let thirdQuote = match[7]; // < or "
+		const secondQuote = match[6]; // > or "
+		const thirdQuote = match[7]; // < or "
 		let newValue = match[8];
-		let fourthQuote = match[9]; // > or "
-		let postfix = match[10];
+		const fourthQuote = match[9]; // > or "
+		const postfix = match[10];
 
 		if (
 			secretValuesRe.exec(property) ||
@@ -104,7 +104,7 @@ export function tFLine(line: string) {
 	return line.trim();
 }
 
-function shouldHide(oldValue: any) {
+function shouldHide(oldValue: unknown) {
 	return (
 		oldValue !== "sensitive" &&
 		oldValue !== "computed" &&
@@ -115,8 +115,16 @@ function shouldHide(oldValue: any) {
 /**
  * filters Terraform command output and logs it to stderr.
  */
-export function stream(r: Deno.Reader & Deno.Closer, shouldLog: boolean) {
-	streamIt(r, (txt) => log(txt, shouldLog));
+export async function stream(
+	r: ReadableStream<Uint8Array>,
+	shouldLog: boolean,
+) {
+	const lineStream = r.pipeThrough(new TextDecoderStream()).pipeThrough(
+		new TextLineStream(),
+	);
+	for await (const line of lineStream) {
+		log(line, shouldLog);
+	}
 }
 
 const buffer = new Set<string>();
@@ -140,24 +148,11 @@ export function clear() {
 /**
  * filters Terraform command output and logs it to stderr.
  */
-export function log(txt: string, shouldLog: boolean) {
+function log(txt: string, shouldLog: boolean) {
 	const out = tFLine(txt);
 	if (!shouldLog) {
 		if (out) console.error(out);
 	} else {
 		buffer.add(out);
-	}
-}
-
-/**
- * streamIt is an async iterator that performs an action on a received line.
- * This is useful for intercepting child process stdout and streaming the modified output.
- */
-export async function streamIt(
-	r: Deno.Reader & Deno.Closer,
-	action: (txt: string) => any,
-) {
-	for await (const line of readLines(r)) {
-		action(line);
 	}
 }

@@ -346,34 +346,34 @@ async function helmTemplate(opts: helmOpts) {
 	// option for hashing here. Though helm template isn't too slow...
 	const { chart, releaseName, version, namespace, valuesContent } = opts;
 	if (!quiet) console.error(`Rendering the ${chart} helm chart`);
-	const cmd = ["helm", "template", chart, "--name-template", releaseName];
+	const cmdArgs = ["template", chart, "--name-template", releaseName];
 	if (namespace) {
-		cmd.push("--namespace", namespace);
+		cmdArgs.push("--namespace", namespace);
 	}
 	if (version) {
-		cmd.push("--version", version);
+		cmdArgs.push("--version", version);
 	}
 	if (valuesContent) {
-		cmd.push("--values", "-");
+		cmdArgs.push("--values", "-");
 	}
-	if (!quiet) console.error(`Executing: ${cmd.join(" ")}`);
+	if (!quiet) console.error(`Executing: ${cmdArgs.join(" ")}`);
 	const te = new TextEncoder();
-	const subp = Deno.run({
-		cmd,
+	const subp = new Deno.Command("helm", {
+		args: cmdArgs,
 		stdout: "piped",
 		stderr: "piped",
 		stdin: "piped",
-	});
+	}).spawn();
 	filter.clear();
 	if (valuesContent) {
 		// write values file direct to helm stdin
-		await subp.stdin?.write(te.encode(valuesContent));
-		subp.stdin?.close();
+		subp.stdin.getWriter().write(te.encode(valuesContent));
+		subp.stdin.close();
 	}
-	const s = await subp.status();
+	const s = await subp.status;
 	let stderr = "";
 	if (!s.success) {
-		stderr = new TextDecoder().decode(await subp.stderrOutput());
+		stderr = await toText(subp.stderr);
 		console.error(stderr);
 		return {
 			out: "",
@@ -381,7 +381,7 @@ async function helmTemplate(opts: helmOpts) {
 			err: new TemplateError("helm template failed"),
 		};
 	}
-	const out = new TextDecoder().decode(await Deno.readAll(subp.stdout!));
+	const out = await toText(subp.stdout);
 	if (out === "") {
 		return {
 			out,
@@ -396,20 +396,20 @@ async function helmFetch(repoName: string, repo: string, quiet = false) {
 	if (!quiet) console.error(`Checking for ${repoName} helm repo`);
 	let shouldFetch = true;
 	try {
-		const check = Deno.run({
-			cmd: ["helm", "repo", "ls", "-o", "json"],
+		const check = new Deno.Command("helm", {
+			args: ["repo", "ls", "-o", "json"],
 			stdout: "piped",
 			stderr: "piped",
-		});
+		}).spawn();
 		filter.clear();
-		filter.stream(check.stderr!, quiet);
-		const cs = await check.status();
+		filter.stream(check.stderr, quiet);
+		const cs = await check.status;
 		if (!cs.success) {
 			if (quiet) console.error(filter.flush());
 			throw new TemplateError("helm repo ls failed");
 		}
 		const out: { name: string; url: string }[] = JSON.parse(
-			new TextDecoder().decode(await Deno.readAll(check.stdout!)),
+			await toText(check.stdout),
 		);
 		const search = {
 			name: repoName,
@@ -423,15 +423,15 @@ async function helmFetch(repoName: string, repo: string, quiet = false) {
 	if (shouldFetch) {
 		if (!quiet) console.error(`Adding the ${repoName} helm repo`);
 		// adds or updates the given repo
-		const pa = Deno.run({
-			cmd: ["helm", "repo", "add", repoName, repo],
+		const pa = new Deno.Command("helm", {
+			args: ["repo", "add", repoName, repo],
 			stdout: "piped",
 			stderr: "piped",
-		});
+		}).spawn();
 		filter.clear();
-		filter.stream(pa.stderr!, quiet);
-		filter.stream(pa.stdout!, quiet);
-		const s = await pa.status();
+		filter.stream(pa.stderr, quiet);
+		filter.stream(pa.stdout, quiet);
+		const s = await pa.status;
 		if (!s.success) {
 			if (quiet) console.error(filter.flush());
 			throw new TemplateError("helm repo add failed");
@@ -441,15 +441,16 @@ async function helmFetch(repoName: string, repo: string, quiet = false) {
 
 async function helmRepoUpdate(quiet = false) {
 	if (!quiet) console.error(`Updating helm repos`);
-	const update = Deno.run({
-		cmd: ["helm", "repo", "update"],
+	const update = new Deno.Command("helm", {
+		args: ["repo", "update"],
 		stdout: "piped",
 		stderr: "piped",
-	});
+	}).spawn();
 	filter.clear();
-	filter.stream(update.stdout!, quiet);
-	filter.stream(update.stderr!, quiet);
-	const cs = await update.status();
+
+	filter.stream(update.stdout, quiet);
+	filter.stream(update.stderr, quiet);
+	const cs = await update.status;
 	if (!cs.success) {
 		if (quiet) console.error(filter.flush());
 		throw new TemplateError("helm repo update failed");
@@ -545,14 +546,17 @@ function addTopDashes(yamlText: string) {
 	return yamlText;
 }
 
-function isTerraformConfig(p: any) {
-	return (
-		p &&
-		p.apiVersion === "kite.run/v1alpha1" &&
-		p.kind === "Terraform" &&
+function isTerraformConfig(p: unknown): boolean {
+	if (
+		typeof p === "object" && p && "apiVersion" in p &&
+		p.apiVersion === "kite.run/v1alpha1" && "kind" in p &&
+		p.kind === "Terraform" && "spec" in p &&
 		p.spec &&
 		typeof p.spec === "object"
-	);
+	) {
+		return true;
+	}
+	return false;
 }
 
 const placeholderRe = /\(\((.+?)\)\)/g;
@@ -742,17 +746,17 @@ async function execTerraform(
 			await Deno.writeTextFile(tfConfigPath, tfConfig);
 		}
 
-		const init = Deno.run({
-			cmd: ["terraform", "init", "-no-color"],
+		const init = new Deno.Command("terraform", {
+			args: ["terraform", "init", "-no-color"],
 			cwd: tfDir,
 			stdout: "piped",
 			stderr: "piped",
 			env,
-		});
+		}).spawn();
 		filter.clear();
-		filter.stream(init.stderr!, quiet);
-		filter.stream(init.stdout!, quiet);
-		let s = await init.status();
+		filter.stream(init.stderr, quiet);
+		filter.stream(init.stdout, quiet);
+		let s = await init.status;
 		if (!s.success) {
 			if (quiet) console.error(filter.flush());
 			await backup();
@@ -761,7 +765,6 @@ async function execTerraform(
 
 		const applyCmd = buildCleanCommand(
 			[
-				"terraform",
 				"apply",
 				"-auto-approve",
 				"-no-color",
@@ -771,17 +774,17 @@ async function execTerraform(
 			tfDir,
 		);
 
-		const apply = Deno.run({
-			cmd: applyCmd,
+		const apply = new Deno.Command("terraform", {
+			args: applyCmd,
 			cwd: tfDir,
 			stderr: "piped",
 			stdout: "piped",
-		});
+		}).spawn();
 
 		filter.clear();
-		filter.stream(apply.stderr!, quiet);
-		filter.stream(apply.stdout!, quiet);
-		s = await apply.status();
+		filter.stream(apply.stderr, quiet);
+		filter.stream(apply.stdout, quiet);
+		s = await apply.status;
 		if (!s.success) {
 			if (quiet) console.error(filter.flush());
 			await backup();
@@ -791,21 +794,21 @@ async function execTerraform(
 	}
 
 	// Now suck in the needed state
-	const show = Deno.run({
-		cmd: ["terraform", "show", "-json"],
+	const show = new Deno.Command("terraform", {
+		args: ["show", "-json"],
 		stdout: "piped",
 		stderr: "piped",
 		cwd: tfDir,
 		env,
-	});
+	}).spawn();
 	filter.clear();
-	filter.stream(show.stderr!, quiet);
-	const s = await show.status();
+	filter.stream(show.stderr, quiet);
+	const s = await show.status;
 	if (!s.success) {
 		if (quiet) console.error(filter.flush());
 		throw new TemplateError("Terraform show -json failed");
 	}
-	const json = new TextDecoder().decode(await show.output());
+	const json = await toText(show.stdout);
 	if (!config.spec.quiet) {
 		console.error(); // log empty line before printing YAML output.
 	}

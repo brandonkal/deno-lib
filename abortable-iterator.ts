@@ -6,11 +6,11 @@
  */
 
 export class AbortError extends Error {
-	type = 'aborted'
-	code: string | number
+	type = "aborted";
+	code: string | number;
 	constructor(message?: string, code?: string | number) {
-		super(message || 'The operation was aborted')
-		this.code = code || 'ABORT_ERR'
+		super(message || "The operation was aborted");
+		this.code = code || "ABORT_ERR";
 	}
 }
 
@@ -20,121 +20,125 @@ export class AbortError extends Error {
  * else throw
  */
 function getIterator<T, TReturn = any, TNext = unknown>(
-	obj: Iterable<T> | Iterator<T, TReturn, TNext>
+	obj: Iterable<T> | Iterator<T, TReturn, TNext>,
 ): Iterator<T, TReturn, TNext> {
 	if (obj) {
 		//@ts-ignore -- safe
-		if (typeof obj[Symbol.iterator] === 'function') {
+		if (typeof obj[Symbol.iterator] === "function") {
 			//@ts-ignore -- safe
-			return obj[Symbol.iterator]()
+			return obj[Symbol.iterator]();
 			//@ts-ignore -- safe
-		} else if (typeof obj[Symbol.asyncIterator] === 'function') {
+		} else if (typeof obj[Symbol.asyncIterator] === "function") {
 			//@ts-ignore -- safe
-			return obj[Symbol.asyncIterator]()
+			return obj[Symbol.asyncIterator]();
 			//@ts-ignore -- safe
-		} else if (typeof obj.next === 'function') {
+		} else if (typeof obj.next === "function") {
 			//@ts-ignore -- safe
-			return obj // probably an iterator
+			return obj; // probably an iterator
 		}
 	}
-	throw new Error('argument is not an iterator or iterable')
+	throw new Error("argument is not an iterator or iterable");
 }
 
 interface AbortableOptions {
-	onAbort?: Function
-	abortMessage?: string
-	abortCode?: string | number
-	returnOnAbort?: boolean
+	// deno-lint-ignore ban-types
+	onAbort?: Function;
+	abortMessage?: string;
+	abortCode?: string | number;
+	returnOnAbort?: boolean;
 }
 
 /** Wrap an iterator to make it abortable, allow cleanup when aborted via onAbort */
 export const toAbortableSource = <T>(
 	source: Iterable<T> | Iterator<T>,
 	signal: AbortSignal,
-	options: AbortableOptions = {}
+	options: AbortableOptions = {},
 ) => {
 	return toMultiAbortableSource(
 		source,
-		Array.isArray(signal) ? signal : [{ signal, options }]
-	)
-}
+		Array.isArray(signal) ? signal : [{ signal, options }],
+	);
+};
 
 const toMultiAbortableSource = <T>(
 	theSource: Iterable<T> | Iterator<T>,
-	signals: { signal: AbortSignal; options: AbortableOptions }[]
+	signals: { signal: AbortSignal; options: AbortableOptions }[],
 ) => {
-	const source = getIterator(theSource)
+	const source = getIterator(theSource);
 	signals = signals.map(({ signal, options }) => ({
 		signal,
 		options: options || {},
-	}))
+	}));
 
 	async function* abortable() {
-		let nextAbortHandler: Function | undefined
+		// deno-lint-ignore ban-types
+		let nextAbortHandler: Function | undefined;
 		const abortHandler = () => {
-			if (nextAbortHandler) nextAbortHandler()
-		}
+			if (nextAbortHandler) nextAbortHandler();
+		};
 
 		for (const { signal } of signals) {
-			signal.addEventListener('abort', abortHandler)
+			signal.addEventListener("abort", abortHandler);
 		}
 
 		while (true) {
-			let result
+			let result;
 			try {
 				for (const { signal, options } of signals) {
 					if (signal.aborted) {
-						const { abortMessage, abortCode } = options!
-						throw new AbortError(abortMessage, abortCode)
+						const { abortMessage, abortCode } = options!;
+						throw new AbortError(abortMessage, abortCode);
 					}
 				}
 				// TODO: improve promise type
 				const abort = new Promise<any>((_resolve, reject) => {
 					nextAbortHandler = () => {
-						const abortedSignal = signals.find(({ signal }) => signal.aborted)
-						const msg = abortedSignal?.options.abortMessage
-						const code = abortedSignal?.options.abortCode
-						reject(new AbortError(msg, code))
-					}
-				})
+						const abortedSignal = signals.find(({ signal }) =>
+							signal.aborted
+						);
+						const msg = abortedSignal?.options.abortMessage;
+						const code = abortedSignal?.options.abortCode;
+						reject(new AbortError(msg, code));
+					};
+				});
 
 				// Race the iterator and the abort signals
-				result = await Promise.race([abort, source.next()])
-				nextAbortHandler = undefined
+				result = await Promise.race([abort, source.next()]);
+				nextAbortHandler = undefined;
 			} catch (err) {
 				for (const { signal } of signals) {
-					signal.removeEventListener('abort', abortHandler)
+					signal.removeEventListener("abort", abortHandler);
 				}
 
 				// Might not have been aborted by a known signal
-				const aborter = signals.find(({ signal }) => signal.aborted)!
-				const isKnownAborter = err.type === 'aborted' && aborter
+				const aborter = signals.find(({ signal }) => signal.aborted)!;
+				const isKnownAborter = err.type === "aborted" && aborter;
 
 				if (isKnownAborter && aborter.options?.onAbort) {
 					// Do any custom abort handling for the iterator
-					await aborter.options.onAbort(source)
+					await aborter.options.onAbort(source);
 				}
 
 				// End the iterator if it is a generator
-				if (typeof source.return === 'function') {
-					await source.return()
+				if (typeof source.return === "function") {
+					await source.return();
 				}
 
 				if (isKnownAborter && aborter.options?.returnOnAbort) {
-					return
+					return;
 				}
 
-				throw err
+				throw err;
 			}
 
-			if (result.done) break
-			yield result.value
+			if (result.done) break;
+			yield result.value;
 		}
 
 		for (const { signal } of signals) {
-			signal.removeEventListener('abort', abortHandler)
+			signal.removeEventListener("abort", abortHandler);
 		}
 	}
 
-	return abortable()
-}
+	return abortable();
+};

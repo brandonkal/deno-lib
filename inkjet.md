@@ -5,7 +5,7 @@
 > Run tests for Deno
 
 ```sh
-deno test --unstable `fd test`
+deno test `fd test`
 ```
 
 ## update
