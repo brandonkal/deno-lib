@@ -21,7 +21,7 @@ import { getArgsObject } from "./args.ts";
 import "./kite/extended-string.ts";
 import singleton from "https://deno.land/x/singleton@v1.1.0/mod.ts";
 
-const globals = singleton(() => {
+export const state = singleton(() => {
 	const outBuffer: (Resource | _Comment)[] = [];
 	const stack: string[] = [];
 	const registeredNames: Set<string> = new Set();
@@ -82,14 +82,14 @@ export class Resource {
 	 * When it is done, it calls Resource.end()
 	 */
 	static start(name: string) {
-		globals.getInstance().stack.push(name);
+		state.getInstance().stack.push(name);
 		new _Comment(`region ${name}`);
 	}
 	/**
 	 * Call to inform the stack that a ComponentResource will not create any more Resources.
 	 */
 	static end() {
-		const name = globals.getInstance().stack.pop();
+		const name = state.getInstance().stack.pop();
 		new _Comment(`endregion ${name}`);
 	}
 
@@ -149,7 +149,7 @@ class _Comment {
 	__type = "kite:Comment";
 	constructor(text: string) {
 		this.comment = text;
-		globals.getInstance().outBuffer.push(this);
+		state.getInstance().outBuffer.push(this);
 	}
 }
 function is_Comment(x: any): x is _Comment {
@@ -165,11 +165,11 @@ function registerResource(name: string, desc: any, instance: Resource) {
 			instance.setType(desc.__type);
 			delete desc.__type;
 		}
-		if (globals.getInstance().stack.length) {
+		if (state.getInstance().stack.length) {
 			Object.defineProperty(instance, "__parents", {
 				writable: false,
 				enumerable: false,
-				value: [...globals.getInstance().stack],
+				value: [...state.getInstance().stack],
 			});
 		}
 		if (!(instance as any).__type /* private */) {
@@ -188,20 +188,20 @@ function registerResource(name: string, desc: any, instance: Resource) {
 			enumerable: false,
 			value: name,
 		});
-		globals.getInstance().outBuffer.push(instance);
-		const number = globals.getInstance().outBuffer.length;
+		state.getInstance().outBuffer.push(instance);
+		const number = state.getInstance().outBuffer.length;
 		Object.defineProperty(instance, "__number", {
 			writable: false,
 			enumerable: false,
 			value: number,
 		});
 		const id = instance.uid(true);
-		if (globals.getInstance().registeredNames.has(id)) {
+		if (state.getInstance().registeredNames.has(id)) {
 			throw new Error(
 				"Duplicate names are not allowed for this resource type",
 			);
 		}
-		globals.getInstance().registeredNames.add(id);
+		state.getInstance().registeredNames.add(id);
 		return number;
 	} catch (e) {
 		throw new Error(`Unable to resolve resource inputs for ${name}: ${e}`);
@@ -248,8 +248,8 @@ export function log(config: string, includeHeader = true) {
  * clear state
  */
 function reset() {
-	globals.getInstance().outBuffer = [];
-	globals.getInstance().registeredNames.clear();
+	state.getInstance().outBuffer = [];
+	state.getInstance().registeredNames.clear();
 }
 
 /**
@@ -357,7 +357,7 @@ export function make(fn: Function, opts?: MakeOpts): string {
 		Deno.exit(1);
 	}
 
-	let buf = [...globals.getInstance().outBuffer];
+	let buf = [...state.getInstance().outBuffer];
 	if (post && post.length) {
 		post.forEach((transform) => {
 			if (typeof transform === "function") {
