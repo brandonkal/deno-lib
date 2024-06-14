@@ -116,7 +116,6 @@ export class Resource {
 				enumerable: false,
 				value: desc,
 			});
-			this.__cache = desc;
 			Object.defineProperty(this, "__name", {
 				writable: false,
 				enumerable: false,

@@ -24,7 +24,7 @@ import * as kite from "../../kite.ts";
  */
 export class RandomPassword extends kite.Resource {
 	public readonly keepers!: { [key: string]: any } | undefined;
-	public length!: number;
+	public readonly length!: number;
 	public readonly lower!: boolean | undefined;
 	public readonly minLower!: number | undefined;
 	public readonly minNumeric!: number | undefined;
