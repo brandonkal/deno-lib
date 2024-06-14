@@ -27,7 +27,7 @@
  * @param {object} obj
  */
 export function archieml(obj) {
-	let leafy = toLeaf(obj)
+	const leafy = toLeaf(obj)
 	return toArchieML(leafy)
 }
 
@@ -41,8 +41,7 @@ export function archieml(obj) {
  * accumulator.
  */
 function toLeaf(obj) {
-	let leafy = []
-	let curpath = []
+	const leafy = []
 
 	to_leaf_1(leafy, [], obj)
 	return leafy
@@ -54,7 +53,7 @@ function toLeaf(obj) {
 				to_leaf_1(acc, curpath, obj[i])
 			}
 		} else if (typeof obj === 'object') {
-			for (let k in obj) {
+			for (const k in obj) {
 				curpath.push(path_elem_1(obj, k))
 				to_leaf_1(acc, curpath, obj[k])
 				curpath.pop(k)
@@ -127,13 +126,13 @@ const rxArray = /^\[(.*)\]$/
  * Otherwise enter all the arrays needed and show the remaining value
  */
 function toArchieML(leafy) {
-	let state = {
+	const state = {
 		curobject: null,
 		curarrays: [],
 		firstelem: null,
 		moreelems: false,
 	}
-	let r = []
+	const r = []
 
 	for (let i = 0; i < leafy.length; i++) {
 		exit_arrays_needed_1(leafy[i], state, r)
@@ -158,7 +157,7 @@ function toArchieML(leafy) {
 	 * earlier during the `exit_arrays_needed_1` call.
 	 */
 	function enter_arrays_needed_1(leaf, state, r) {
-		let arrs = leafArraySplit(leaf.path)
+		const arrs = leafArraySplit(leaf.path)
 		for (let i = state.curarrays.length; i < arrs.length; i++) {
 			if (i == 0) r.push(`[${arrs[i]}]`)
 			else r.push(`[.${arrs[i]}]`)
@@ -182,7 +181,7 @@ function toArchieML(leafy) {
 	 * to make it look nicer.
 	 */
 	function show_array_elem_1(leaf, state, r) {
-		let p = array_path_1(leaf.path)
+		const p = array_path_1(leaf.path)
 		if (!p) {
 			r.push(`* ${leafVal(leaf)}`)
 		} else {
@@ -206,7 +205,7 @@ function toArchieML(leafy) {
 	 * marker, otherwise it can just be a simple value.
 	 */
 	function leafVal(leaf) {
-		let v = leaf.value
+		const v = leaf.value
 		if (v.match(/[\n\r]/)) return `${v}\n:end`
 		else return v
 	}
@@ -217,12 +216,12 @@ function toArchieML(leafy) {
 	 * exit the current object and then output the leaf path and value.
 	 */
 	function show_obj_1(leaf, state, r) {
-		let path = as_obj_path_1(leaf.path)
+		const path = as_obj_path_1(leaf.path)
 		if (!state.curobject) {
 			r.push(`${path}: ${leafVal(leaf)}`)
 		} else {
 			if (path.startsWith(state.curobject)) {
-				let rem = path.substring(state.curobject.length + 1)
+				const rem = path.substring(state.curobject.length + 1)
 				r.push(`${rem}: ${leafVal(leaf)}`)
 			} else {
 				r.push('{}')
@@ -257,12 +256,12 @@ function toArchieML(leafy) {
 	 * object' in our state.
 	 */
 	function resolve_object_path_1(leafy, ndx, state, r) {
-		let p1 = leafyObjPath(leafy[ndx])
+		const p1 = leafyObjPath(leafy[ndx])
 		if (!p1) return
 		if (p1 == state.curobject) return
-		let p2 = leafyObjPath(leafy[ndx + 1])
+		const p2 = leafyObjPath(leafy[ndx + 1])
 		if (!p2) return
-		let p3 = leafyObjPath(leafy[ndx + 2])
+		const p3 = leafyObjPath(leafy[ndx + 2])
 		if (!p3) return
 
 		if (p2.startsWith(p1) && p3.startsWith(p1)) {
@@ -289,7 +288,7 @@ function toArchieML(leafy) {
 	 */
 	function leafyObjPath(leaf) {
 		if (!leaf || !leaf.path || !leaf.path.length) return
-		let p = []
+		const p = []
 		for (let i = 0; i < leaf.path.length - 1; i++) {
 			if (isPathElemArray(leaf.path[i])) break
 			p.push(leaf.path[i])
@@ -304,7 +303,7 @@ function toArchieML(leafy) {
 	 * If we exit the last array, leave a line to make it look better.
 	 */
 	function exit_arrays_needed_1(leaf, state, r) {
-		let arrs = leafArraySplit(leaf.path)
+		const arrs = leafArraySplit(leaf.path)
 		let i
 		for (i = 0; i < state.curarrays.length; i++) {
 			if (arrs[i] != state.curarrays[i]) break
@@ -329,7 +328,7 @@ function toArchieML(leafy) {
 	 * [ "a", "[b]", "c", "[d]" ]  ==> [ "a.b", "c.d" ]
 	 */
 	function leafArraySplit(path) {
-		let arrs = []
+		const arrs = []
 		let start = 0
 		for (let i = 0; i < path.length; i++) {
 			if (isPathElemArray(path[i])) {
@@ -347,7 +346,7 @@ function toArchieML(leafy) {
 	function as_array_path_1(p) {
 		return p
 			.map((e) => {
-				let m = e.match(rxArray)
+				const m = e.match(rxArray)
 				if (m) return m[1]
 				else return e
 			})

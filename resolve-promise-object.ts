@@ -13,17 +13,15 @@
  * either be a concrete value or a promise of that value.
  */
 export type MPV<T> = {
-	[P in keyof T]: T[P] extends (infer U)[]
-		? MPV<U>[]
-		: T[P] extends object
-		? MPV<T[P]>
-		: PromiseLike<T[P]> | T[P]
-}
+	[P in keyof T]: T[P] extends (infer U)[] ? MPV<U>[]
+		: T[P] extends object ? MPV<T[P]>
+		: PromiseLike<T[P]> | T[P];
+};
 
 /**
  *  MPVMap is an object where each key is a MPV
  */
-export type MPVMap<T> = { [P in keyof T]: MPV<T[P]> }
+export type MPVMap<T> = { [P in keyof T]: MPV<T[P]> };
 
 /**
  * deepResolve takes a value and resolves all keys recursively to their promise-resolved values. Call this function to transform an object of promises and values to just their values.
@@ -31,106 +29,108 @@ export type MPVMap<T> = { [P in keyof T]: MPV<T[P]> }
  */
 export function deepResolve<T>(
 	object: MPV<T>,
-	_callback?: Function
+	// deno-lint-ignore ban-types
+	_callback?: Function,
 ): Promise<T> {
-	if (typeof _callback != 'function') {
-		_callback = noop
+	if (typeof _callback != "function") {
+		_callback = noop;
 	}
 
 	// If the property is not an object,
 	// it needs no further processing.
 	if (object === null || !isObject(object)) {
-		return _callback(null, object)
+		return _callback(null, object);
 	}
 
 	return new Promise(function (presolve, reject) {
-		var callback = function (err: any, res: any) {
+		const callback = function (err: any, res: any) {
 			if (err) {
-				reject(err)
+				reject(err);
 			} else {
-				presolve(res)
+				presolve(res);
 			}
-			_callback!(err, res)
-		}
+			_callback!(err, res);
+		};
 
 		// If it is a promise, wait for it to resolve.
 		// Run the check again to find nested promises.
 		if (isPromise(object)) {
-			return (object as any).then(checkAgain.bind(null, null), callback)
+			return (object as any).then(checkAgain.bind(null, null), callback);
 		}
 
 		// If it has a toJSON method, assume it can be used directly.
 		if (canJSON(object)) {
-			object = (object as any).toJSON()
+			object = (object as any).toJSON();
 			if (!isObject(object)) {
-				return callback(null, object)
+				return callback(null, object);
 			}
 		}
 
 		// Build a list of promises and promise-like structures to wait for.
-		let remains: any[] = []
+		const remains: any[] = [];
 		Object.keys(object).forEach(function (key) {
 			//@ts-ignore crazy any
-			var item = object[key]
+			const item = object[key];
 			if (isPromise(item) || isObject(item)) {
-				remains.push(key)
+				remains.push(key);
 			}
-		})
+		});
 
 		// If none were found, we must be done.
 		if (!remains.length) {
-			return callback(null, object)
+			return callback(null, object);
 		}
 
 		// Otherwise, loop through the list.
-		let pending = remains.length
+		let pending = remains.length;
 		remains.forEach(function (key) {
 			//@ts-ignore -- crazy any
-			var item = object[key]
+			const item = object[key];
 
 			// Promises and queries must be checked again upon success
 			// to ensure nested promises are properly processed.
 			if (isPromise(item)) {
 				item.then(
 					doneHandler(key, checkAgain).bind(null, null),
-					doneHandler(key, callback)
-				)
+					doneHandler(key, callback),
+				);
 			}
-			deepResolve(item, doneHandler(key, callback))
-		})
+			deepResolve(item, doneHandler(key, callback));
+		});
 
 		// All the check to be restarted so we
 		// can return promises from promises.
 		function checkAgain(err: any, res: any) {
-			if (err) return callback(err, undefined)
-			deepResolve(res, callback)
+			if (err) return callback(err, undefined);
+			deepResolve(res, callback);
 		}
 
 		// Promises need to call the restart the check,
 		// so we use this to allow them to swap out fn.
+		// deno-lint-ignore ban-types
 		function doneHandler(key: any, fn: Function) {
 			return function (err: any, result: any) {
-				if (err) return callback(err, undefined)
+				if (err) return callback(err, undefined);
 				//@ts-ignore crazy any
-				object[key] = result
+				object[key] = result;
 				if (--pending === 0) {
-					fn(null, object)
+					fn(null, object);
 				}
-			}
+			};
 		}
-	})
+	});
 }
 
 function canJSON(v: any) {
-	return typeof v.toJSON === 'function'
+	return typeof v.toJSON === "function";
 }
 
 function isObject(v: any) {
-	return typeof v === 'object'
+	return typeof v === "object";
 }
 
 function isPromise(v: any) {
-	return v && typeof v === 'object' && typeof v.then === 'function'
+	return v && typeof v === "object" && typeof v.then === "function";
 }
 
 function noop() {}

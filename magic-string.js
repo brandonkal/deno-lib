@@ -9,6 +9,8 @@
  * @version 0.25.6
  */
 
+// deno-lint-ignore-file
+
 import { encode } from './sourcemap-codec.ts'
 // NOTE: This
 

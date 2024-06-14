@@ -7,7 +7,7 @@
  * @license MIT
  */
 
-import { HmacSha256 } from "https://deno.land/std@0.92.0/hash/sha256.ts";
+import { HmacSha256 } from "https://deno.land/std@0.160.0/hash/sha256.ts";
 import { encodeBase64 } from "https://deno.land/std@0.224.0/encoding/base64.ts";
 
 /////
@@ -81,20 +81,20 @@ export function parseRequest(
 	req: ParseRequest,
 	opts: parseOptions = {},
 ): ParsedRequest {
-	let headers = req.headers;
-	let requiredHeaders = opts.headers ||
+	const headers = req.headers;
+	const requiredHeaders = opts.headers ||
 		[headers["x-date"] ? "x-date" : "date"];
 	const authz = headers[opts.authzHeader || ""] ||
 		headers.authorization ||
 		headers.signature;
 	if (!authz) {
-		let missing = opts.authzHeader
+		const missing = opts.authzHeader
 			? opts.authzHeader
 			: "authorization or signature";
 		throw new Error(`No ${missing} header present in the request`);
 	}
 	opts.clockSkew = opts.clockSkew || 300;
-	let parsed: ParsedRequest & { params: Record<string, any> } = {
+	const parsed: ParsedRequest & { params: Record<string, any> } = {
 		scheme: authz === headers["signature"] ? "Signature" : ("" as any),
 		params: {} as parsedParams,
 		signingString: "",
@@ -104,7 +104,8 @@ export function parseRequest(
 	let tmpName = "";
 	let tmpValue = "";
 	for (let i = 0; i < authz.length; i++) {
-		var c = authz.charAt(i);
+		const c = authz.charAt(i);
+		let code: number;
 
 		switch (Number(state)) {
 			case State.New:
@@ -115,7 +116,7 @@ export function parseRequest(
 			case State.Params:
 				switch (Number(substate)) {
 					case ParamsState.Name:
-						var code = c.charCodeAt(0);
+						code = c.charCodeAt(0);
 						// restricted name of A-Z / a-z
 						if (
 							(code >= 0x41 && code <= 0x5a) || // A-Z
@@ -207,7 +208,7 @@ export function parseRequest(
 
 	// Build the signingString
 	for (let i = 0; i < parsed.params.headers.length; i++) {
-		var h = parsed.params.headers[i].toLowerCase();
+		const h = parsed.params.headers[i].toLowerCase();
 		parsed.params.headers[i] = h;
 
 		if (h === "request-line") {
@@ -221,7 +222,7 @@ export function parseRequest(
 		} else if (h === "(algorithm)") {
 			parsed.signingString += "(algorithm): " + parsed.params.algorithm;
 		} else if (h === "(opaque)") {
-			var opaque = parsed.params.opaque;
+			const opaque = parsed.params.opaque;
 			if (opaque === undefined) {
 				throw new Error(
 					"opaque param was not in the " + opts.authzHeader +
@@ -230,7 +231,7 @@ export function parseRequest(
 			}
 			parsed.signingString += "(opaque): " + opaque;
 		} else {
-			var value = headers[h];
+			const value = headers[h];
 			if (value === undefined) {
 				throw new Error(h + " was not in the request");
 			}
@@ -241,15 +242,15 @@ export function parseRequest(
 	}
 
 	// Check against the constraints
-	var date;
+	let date: Date;
 	if (req.headers.date || req.headers["x-date"]) {
 		if (req.headers["x-date"]) {
 			date = new Date(req.headers["x-date"]);
 		} else {
 			date = new Date(req.headers.date);
 		}
-		var now = new Date();
-		var skew = Math.abs(now.getTime() - date.getTime());
+		const now = new Date();
+		const skew = Math.abs(now.getTime() - date.getTime());
 
 		if (skew > opts.clockSkew * 1000) {
 			throw new Error(
