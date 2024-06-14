@@ -1,6 +1,6 @@
 /**
  * @file doc-gen.ts
- * @copyright 2024 Brandon Kalinowski (@brandonkal)
+ * @copyright 2020-2024 Brandon Kalinowski (@brandonkal)
  * @description
  * Parse File-level JSDoc from a folder of TS/JS files for document generation
  * @license MIT

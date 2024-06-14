@@ -2,7 +2,7 @@
  * @file filter-terraform.ts
  * @author Brandon Kalinowski
  * @description Filters Terraform output
- * @copyright 2024 Brandon Kalinowski
+ * @copyright 2020-2024 Brandon Kalinowski
  * @license MIT
  */
 

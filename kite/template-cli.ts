@@ -1,6 +1,6 @@
 /**
  * @file template-cli.ts
- * @copyright 2024 Brandon Kalinowski (@brandonkal). All Rights Reserved.
+ * @copyright 2020-2024 Brandon Kalinowski (@brandonkal). All Rights Reserved.
  * @description Kite™️ Template Tool by Brandon Kalinowski (@brandonkal)
  * This CLI takes YAML input and renders the result.
  * It has been designed for Kubernetes and Terraform configuration but is useful for general YAML config.

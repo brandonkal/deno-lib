@@ -1,7 +1,7 @@
 /**
  * @file reload.ts
  * @description CLI to reload Deno files as required. Pass number of commits to have the files reloaded.
- * @copyright 2024 Brandon Kalinowski (brandonkal)
+ * @copyright 2020-2024 Brandon Kalinowski (brandonkal)
  * @license MIT
  */
 

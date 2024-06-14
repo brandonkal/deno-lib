@@ -1,7 +1,7 @@
 /**
  * @file dedent.ts
  * @author Brandon Kalinowski
- * @copyright 2024 Brandon Kalinowski (@brandonkal). All rights reserved.
+ * @copyright 2020-2024 Brandon Kalinowski (@brandonkal). All rights reserved.
  * @description Dedent is a tagged template literal function.
  * It is used by yaml-tag.ts and has tests to ensure consistency with a whitespace-sensitive content.
  * @license MIT

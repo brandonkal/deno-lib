@@ -2,7 +2,7 @@
  * @file template.ts
  * @author Brandon Kalinowski
  * @description Templates YAML and applies Terraform as required.
- * @copyright 2024 Brandon Kalinowski
+ * @copyright 2020-2024 Brandon Kalinowski
  * @license MIT
  */
 

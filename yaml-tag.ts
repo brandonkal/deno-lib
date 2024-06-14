@@ -1,7 +1,7 @@
 /**
  * @file yaml-tag.ts
  * @author Brandon Kalinowski
- * @copyright 2024 Brandon Kalinowski
+ * @copyright 2020-2024 Brandon Kalinowski
  * @description Write YAML within TypeScript programs for cleaner and more concise code.
  * This module provides the following exports:
  * - y (yaml text tagged template function)

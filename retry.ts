@@ -1,7 +1,7 @@
 /**
  * @file retry.ts
  * @description Retry an async function for exponential backoff. With a retryFetch implementation.
- * @copyright 2024 Brandon Kalinowski (brandonkal)
+ * @copyright 2020-2024 Brandon Kalinowski (brandonkal)
  * @license MIT
  */
 

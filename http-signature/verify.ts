@@ -3,7 +3,7 @@
  * @author Brandon Kalinowski
  * @description Verify and parse http-signature requests. Implements HMAC-256 support.
  * A port of node-http-signature@1.3.4
- * @copyright 2024 Brandon Kalinowski and Joyent, Inc
+ * @copyright 2020-2024 Brandon Kalinowski and Joyent, Inc
  * @license MIT
  */
 

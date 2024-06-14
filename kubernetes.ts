@@ -1,7 +1,7 @@
 // deno-lint-ignore-file no-explicit-any no-namespace
 /**
  * @file kubernetes.ts
- * @copyright 2024 Brandon Kalinowski (@brandonkal). All rights reserved.
+ * @copyright 2020-2024 Brandon Kalinowski (@brandonkal). All rights reserved.
  * @description Kubernetes Config Generation Library
  * Refer to kite.ts for more info.
  */

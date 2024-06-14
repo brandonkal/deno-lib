@@ -2,7 +2,7 @@
 /**
  * @file args.ts
  * @author Brandon Kalinowski
- * @copyright 2024 Brandon Kalinowski
+ * @copyright 2020-2024 Brandon Kalinowski
  * @description Utilities for parsing CLI arguments.
  * @license MIT
  */
