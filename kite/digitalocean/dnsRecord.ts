@@ -68,7 +68,7 @@ export class DnsRecord extends kite.Resource {
 	 * @param args The arguments to use to populate this resource's properties.
 	 */
 	constructor(name: string, args: DnsRecordArgs) {
-		let inputs: any = {};
+		const inputs: any = {};
 		if (!args || args.domain === undefined) {
 			throw new Error("Missing required property 'domain'");
 		}
@@ -118,7 +118,6 @@ export class DnsRecord extends kite.Resource {
 		const props: any = {};
 		Object.entries(this).forEach(([key, value]) => {
 			const newKey = DnsRecord.convertMap[key];
-			if (key === "__parents") return;
 			if (!newKey) {
 				throw new Error(
 					`Could not print key: ${key}. Not found in ${

@@ -1,5 +1,5 @@
 import * as digitalocean from "../digitalocean/mod.ts";
-import * as kite from "../../kite.ts";
+import * as kite from "https://x.kite.run/lib/kite.ts";
 import * as rt from "https://x.kite.run/lib/runtypes.ts";
 
 const Config = rt.Record({
@@ -18,6 +18,11 @@ export default function dnsRecords(cfg: rt.Static<typeof Config>) {
 		type: "A",
 		name: "@",
 		value: publicIP,
+	});
+	new digitalocean.Droplet("test-droplet", {
+		image: "ubuntu",
+		region: "nyc3",
+		size: "s-1vcpu-2gb",
 	});
 	new digitalocean.DnsRecord("openfaas-system", {
 		domain: domain,
@@ -42,6 +47,5 @@ export default function dnsRecords(cfg: rt.Static<typeof Config>) {
 console.log("Starting");
 
 if (import.meta.main) {
-	kite.start();
 	kite.out(() => dnsRecords({ domain: "example.com", publicIP: "1.2.3.4" }));
 }

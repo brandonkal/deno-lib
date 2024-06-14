@@ -49,12 +49,23 @@ export class Resource {
 	private __type!: string;
 	protected readonly __number!: number;
 	protected readonly __name!: string;
-	private readonly __parents?: string[];
+	private readonly __parents: string[] | undefined;
+	private __cache: any;
 
 	/**
 	 * Build a new Resource Object
 	 */
 	constructor(name: string, desc: any) {
+		const input = this._cleanInput(structuredClone(desc));
+		Object.defineProperty(this, "__parents", {
+			writable: false,
+			enumerable: false,
+			value: undefined,
+		});
+		this._registerResource(name, input);
+	}
+
+	private _cleanInput(desc: any) {
 		// Allow namespace as object
 		if (desc?.metadata?.namespace?.metadata?.name) {
 			desc.metadata.namespace = desc.metadata.namespace.metadata.name;
@@ -73,7 +84,69 @@ export class Resource {
 			);
 		}
 		stripUndefined(desc); // This makes things cleaner to debug.
-		registerResource(name, desc, this);
+		// These properties should not be set manually
+		delete desc.__name;
+		delete desc.__parents;
+		delete desc.__number;
+		return desc;
+	}
+
+	/**
+	 * Register a resource in the shared buffer and set private properties
+	 */
+	private _registerResource(name: string, desc: any) {
+		try {
+			if (desc.__type) {
+				this.setType(desc.__type);
+				delete desc.__type;
+			}
+			if (state.stack.length) {
+				Object.defineProperty(this, "__parents", {
+					writable: false,
+					enumerable: false,
+					value: [...state.stack],
+				});
+			}
+			if (!this.__type /* private */) {
+				this.setType("Resource"); // basic Resource type. Subclasses override this
+			}
+			Object.assign(this, desc);
+			Object.defineProperty(this, "__cache", {
+				writable: true,
+				enumerable: false,
+				value: desc,
+			});
+			this.__cache = desc;
+			Object.defineProperty(this, "__name", {
+				writable: false,
+				enumerable: false,
+				value: name,
+			});
+			const number = state.outBuffer.length + 1;
+			Object.defineProperty(this, "__number", {
+				writable: false,
+				enumerable: false,
+				value: number,
+			});
+			const id = this.uid(true);
+			if (state.registeredNames.has(id)) {
+				throw new Error(
+					"Duplicate names are not allowed for this resource type",
+				);
+			}
+
+			state.outBuffer.push(this);
+			state.registeredNames.add(id);
+			return number;
+		} catch (e) {
+			throw new Error(
+				`Unable to resolve resource inputs for ${name}: ${e}`,
+			);
+		}
+	}
+
+	protected uncache() {
+		Object.assign(this, this.__cache);
 	}
 
 	/**
@@ -155,58 +228,6 @@ class _Comment {
 }
 function is_Comment(x: any): x is _Comment {
 	return !!x && x.__type === "kite:Comment" && x.comment;
-}
-
-/**
- * Register a resource in the shared buffer and set private properties
- */
-function registerResource(name: string, desc: any, instance: Resource) {
-	try {
-		if (desc.__type) {
-			instance.setType(desc.__type);
-			delete desc.__type;
-		}
-		if (state.stack.length) {
-			Object.defineProperty(instance, "__parents", {
-				writable: false,
-				enumerable: false,
-				value: [...state.stack],
-			});
-		}
-		if (!(instance as any).__type /* private */) {
-			instance.setType("Resource"); // basic Resource type. Subclasses override this
-		}
-		// These properties should not be set manually
-		delete desc.__name;
-		delete desc.__parents;
-		delete desc.__number;
-		// load all properties
-		Object.entries(desc).forEach(([key, val]) => {
-			(instance as any)[key] = val;
-		});
-		Object.defineProperty(instance, "__name", {
-			writable: false,
-			enumerable: false,
-			value: name,
-		});
-		state.outBuffer.push(instance);
-		const number = state.outBuffer.length;
-		Object.defineProperty(instance, "__number", {
-			writable: false,
-			enumerable: false,
-			value: number,
-		});
-		const id = instance.uid(true);
-		if (state.registeredNames.has(id)) {
-			throw new Error(
-				"Duplicate names are not allowed for this resource type",
-			);
-		}
-		state.registeredNames.add(id);
-		return number;
-	} catch (e) {
-		throw new Error(`Unable to resolve resource inputs for ${name}: ${e}`);
-	}
 }
 
 /**
