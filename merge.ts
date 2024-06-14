@@ -1,6 +1,6 @@
 /**
  * @file merge.ts
- * @copyright 2020 Brandon Kalinowski (brandonkal)
+ * @copyright 2020-2024 Brandon Kalinowski (brandonkal)
  * @author jk authors
  * @description Provides generic object merging functions. Useful for config generation.
  * Portions of this work were obtained via the Apache 2.0 License.
@@ -344,7 +344,6 @@ export function deepWithKey(mergeKey: string, rules?: MergeObject<any>) {
  * ```
  */
 export function merge<A>(a: A, b: A, rule?: MergeObject<A>): any {
-	//@ts-ignore
 	if (a === b) {
 		return a;
 	}

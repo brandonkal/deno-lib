@@ -9,13 +9,12 @@
  * @license MIT
  */
 
-import * as YAML from "https://deno.land/std@0.224.0/yaml/mod.ts";
-import { Type } from "https://deno.land/std@0.224.0/yaml/type.ts";
+import * as YAML from "jsr:@std/yaml@0.224.1";
 import { Schema } from "https://deno.land/std@0.224.0/yaml/schema.ts";
 import { execDedent } from "./dedent.ts";
 import { stripUndefined } from "./utils.ts";
 
-const undefinedType = new Type("tag:yaml.org,2002:js/undefined", {
+const undefinedType = new YAML.Type("tag:yaml.org,2002:js/undefined", {
 	kind: "scalar",
 	resolve: () => true,
 	construct: () => undefined,

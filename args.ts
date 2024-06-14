@@ -7,8 +7,8 @@
  * @license MIT
  */
 
-import * as flags from "https://deno.land/std@0.224.0/flags/mod.ts";
-import { JSON_SCHEMA, parse } from "https://deno.land/std@0.224.0/yaml/mod.ts";
+import { parseArgs } from "jsr:@std/cli@0.224.6/parse-args";
+import { JSON_SCHEMA, parse } from "jsr:@std/yaml@0.224.1";
 
 /**
  * If the value is '-' stdin is read and returned.
@@ -51,7 +51,7 @@ export function getArgsObject(
 		: (_: string, value: string) => {
 			return !!looksLikeYamlRe.exec(value);
 		};
-	const rawArgs = flags.parse(argsArray || Deno.args);
+	const rawArgs = parseArgs(argsArray || Deno.args);
 	const parsedArgs: any = {};
 	Object.entries(rawArgs).forEach(([key, rawValue]) => {
 		let value = textOrStdIn(rawValue);

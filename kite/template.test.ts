@@ -1,4 +1,4 @@
-import { assertEquals } from "https://deno.land/std@0.224.0/assert/mod.ts";
+import { assertEquals } from "jsr:@std/assert@0.226.0";
 const it = Deno.test;
 import { getConfigFromYaml, TemplateConfig } from "./template.ts";
 import { dedent } from "../dedent.ts";

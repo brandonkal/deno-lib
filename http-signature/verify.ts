@@ -8,7 +8,7 @@
  */
 
 import { HmacSha256 } from "https://deno.land/std@0.160.0/hash/sha256.ts";
-import { encodeBase64 } from "https://deno.land/std@0.224.0/encoding/base64.ts";
+import { encodeBase64 } from "jsr:@std/encoding@0.224.3";
 
 /////
 interface parseOptions {

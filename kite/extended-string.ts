@@ -14,7 +14,7 @@
 import { sha1 } from "https://deno.land/x/sha1@v1.0.3/mod.ts";
 import titleCase from "https://deno.land/x/case@2.2.0/titleCase.ts";
 import { sha256 } from "https://deno.land/x/sha256@v1.0.2/mod.ts";
-import * as base32 from "https://deno.land/std@0.224.0/encoding/base32.ts";
+import { decodeBase32, encodeBase32 } from "jsr:@std/encoding@0.224.3/base32";
 
 const RE = /^{{.*}}$/;
 
@@ -91,10 +91,10 @@ class Helpers {
 	b64dec = atob;
 	b32enc = (a: string) => {
 		const binary = new TextEncoder().encode(a);
-		return base32.encodeBase32(binary);
+		return encodeBase32(binary);
 	};
 	b32dec = (a: string) => {
-		const decoded = base32.decodeBase32(a);
+		const decoded = decodeBase32(a);
 		return new TextDecoder().decode(decoded);
 	};
 	sha1sum = sha1;

@@ -6,10 +6,7 @@
  * Refer to kite.ts for more info.
  */
 
-import {
-	JSON_SCHEMA,
-	parseAll,
-} from "https://deno.land/std@0.224.0/yaml/mod.ts";
+import { JSON_SCHEMA, parseAll } from "jsr:@std/yaml@0.224.1";
 import * as kite from "./kite.ts";
 import { meta } from "./kubernetes/gen/types.ts";
 

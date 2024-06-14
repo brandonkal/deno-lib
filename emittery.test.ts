@@ -1,5 +1,5 @@
-import { assertEquals } from "https://deno.land/std@0.224.0/assert/mod.ts";
-import { delay } from "https://deno.land/std@0.224.0/async/delay.ts";
+import { assertEquals } from "jsr:@std/assert@0.226.0";
+import { delay } from "jsr:@std/async@0.224.2";
 import { Emittery } from "./emittery.ts";
 const emitter = new Emittery();
 

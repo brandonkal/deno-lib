@@ -6,14 +6,16 @@
  * @license MIT
  */
 
-import * as fs from "https://deno.land/std@0.224.0/fs/mod.ts";
-import * as path from "https://deno.land/std@0.224.0/path/mod.ts";
+import * as fs from "jsr:@std/fs@0.229.3";
+import * as path from "jsr:@std/path@0.225.2";
+import * as YAML from "jsr:@std/yaml@0.224.1";
+import { toText } from "jsr:@std/streams@0.224.4";
+import { decodeBase32, encodeBase32 } from "jsr:@std/encoding@0.224.3/base32";
+
 import { sha1 } from "https://deno.land/x/sha1@v1.0.3/mod.ts";
 import titleCase from "https://deno.land/x/case@2.2.0/titleCase.ts";
 import { sha256 } from "https://deno.land/x/sha256@v1.0.2/mod.ts";
-import * as YAML from "https://deno.land/std@0.224.0/yaml/mod.ts";
-import * as base32 from "https://deno.land/std@0.224.0/encoding/base32.ts";
-import { toText } from "https://deno.land/std@0.224.0/streams/to_text.ts";
+
 import * as k8s from "https://x.kite.run/lib/kubernetes.ts";
 
 import { dotProp, homedir, jsonItem, visitAll, withTimeout } from "../utils.ts";
@@ -901,10 +903,10 @@ function ops(envars: Record<string, string | undefined>) {
 		b64dec: atob,
 		b32enc: (a: string) => {
 			const binary = new TextEncoder().encode(a);
-			return base32.encodeBase32(binary);
+			return encodeBase32(binary);
 		},
 		b32dec: (a: string) => {
-			const decoded = base32.decodeBase32(a);
+			const decoded = decodeBase32(a);
 			return new TextDecoder().decode(decoded);
 		},
 		sha1sum: (a: string) => sha1(a, "utf8", "hex"),

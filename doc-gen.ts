@@ -6,7 +6,7 @@
  * @license MIT
  */
 
-import * as fs from "https://deno.land/std@0.224.0/fs/mod.ts";
+import * as fs from "jsr:@std/fs@0.229.3";
 
 const jsDocStartRe = /^\/\*\*/;
 const jsDocMidRe = /^\s+\*\s/;
